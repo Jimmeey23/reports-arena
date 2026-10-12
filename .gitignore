@@ -4,3 +4,10 @@ __pycache__/
 .DS_Store
 .env
 node_modules/
+
+# Generated review artifacts (rebuildable from uploaded exports; each run is
+# ~150MB including the uncapped records.json, so they stay out of Git).
+studio-app/runs/
+studio-app/data/ai.sqlite3
+studio-app/data/workspace.sqlite3
+studio-app/data/batches/

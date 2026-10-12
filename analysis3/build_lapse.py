@@ -49,13 +49,13 @@ LAPSED_CASH = LP[LP['Derived Status'] == 'Lapsed']['Amount Paid'].sum()
 BANDRA_CASH = LP['Amount Paid'].sum()
 AVG_TICKET = LP['Amount Paid'].mean()
 
-DURB = ['2\u20137 days','8\u201330 days','31\u201360 days','61\u201390 days','91\u2013180 days','181\u2013365 days','over a year']
+DURB = ['2–7 days','8–30 days','31–60 days','61–90 days','91–180 days','181–365 days','over a year']
 dur = LP[LP['Membership Duration (Days)'].notna() & (LP['Membership Duration (Days)'] >= 0)].copy()
 dur['band'] = pd.cut(dur['Membership Duration (Days)'], [-1,1,7,30,60,90,180,400,99999], labels=['same day']+DURB)
 DB = dur.groupby('band', observed=True).agg(n=('Member ID','size'), ticket=('Amount Paid','mean'),
                                              sessions=('Total Sessions Completed','mean'))
 
-UB = ['used \u226410%','11\u201325%','26\u201350%','51\u201375%','76\u201399%','used 100%']
+UB = ['used ≤10%','11–25%','26–50%','51–75%','76–99%','used 100%']
 uc = LP[LP['Sessions Used %'].notna()].copy()
 uc['band'] = pd.cut(uc['Sessions Used %'], [-1,10,25,50,75,99,100.1], labels=UB)
 UG = uc.groupby('band', observed=True).agg(n=('Member ID','size'), ticket=('Amount Paid','mean'),
@@ -69,7 +69,7 @@ DEC = {'wound down to nothing': (dec['Visits in Second Half'] == 0).mean()*100,
        'slipped a little': ((dec['ratio'] > 0.5) & (dec['ratio'] < 1)).mean()*100,
        'held steady or grew': (dec['ratio'] >= 1).mean()*100}
 
-RB = ['0\u201330 days','31\u201360 days','61\u201390 days','91\u2013180 days','181\u2013365 days','over a year']
+RB = ['0–30 days','31–60 days','61–90 days','91–180 days','181–365 days','over a year']
 rc = LP[LP['Days Since Last Visit'].notna()].copy()
 rc['band'] = pd.cut(rc['Days Since Last Visit'], [-1,30,60,90,180,365,99999], labels=RB)
 rd = rc.groupby('band', observed=True).agg(members=('Member ID','nunique'), inst=('Member ID','size'),
@@ -88,7 +88,7 @@ PRODT = pd.DataFrame([dict(p=k, sold=len(s), ticket=s['Amount Paid'].mean(), cls
                       for k in KEY if len(s := pr[pr['fam'] == k]) >= 15]).sort_values('renew')
 
 canc = LP.copy()
-CBC = ['never cancels','up to 10%','11\u201325%','26\u201350%','over 50%']
+CBC = ['never cancels','up to 10%','11–25%','26–50%','over 50%']
 canc['cband'] = pd.cut(canc['Cancellation Rate %'], [-1,0,10,25,50,1000], labels=CBC)
 cb = canc.groupby('cband', observed=True).agg(n=('Member ID','size'), sessions=('Total Sessions Completed','mean'),
         late=('Late Cancellations','mean'), win=('Derived Status', lambda x: (x=='Renewed').mean()*100))
@@ -112,7 +112,7 @@ CH_DEC = hbars([(k, v, A1 if k == 'held steady or grew' else (A2 if k == 'slippe
     'The second half of a membership, measured against its first half', as_pct=True,
     note=f'{len(dec):,} memberships with at least four completed visits, so the halves mean something.')
 CH_REC = bars(RB, [('Members', [float(rd['members'].get(k, 0)) for k in RB], A1),
-                   ('Mean price paid, \u20b9 hundreds', [rd['ticket'].get(k, 0)/100 for k in RB], B1)],
+                   ('Mean price paid, ₹ hundreds', [rd['ticket'].get(k, 0)/100 for k in RB], B1)],
     'Time since last visit, against what those members had paid', h=310, ymax=1400,
     note='Read together: the members most recently in the room are also the ones who paid the most. '
          'The further away someone has drifted, the smaller they were in the first place.')
@@ -143,7 +143,7 @@ RECS = [
   f'<strong>{GONE[1]:.1f}% of paid memberships end within fourteen days and {GONE[2]:.1f}% within thirty</strong>, and {cb["n"].get("never cancels",0):,.0f} memberships never '
   f'cancelled a single class because they never booked one. The median paid membership at Bandra lasts {d["obs"].median():.0f} days.',
   f'Getting one in ten of the memberships that currently die inside a fortnight to reach four visits would add roughly '
-  f'{int(len(d)*0.08)} members into the active habit band each year. On the studio\u2019s own attendance economics that is the largest single '
+  f'{int(len(d)*0.08)} members into the active habit band each year. On the studio’s own attendance economics that is the largest single '
   f'recoverable block in this report.'),
  ('02','Treat "bought and never attended" as a same-day alert, not a report line','Front Desk + CRM',
   f'There are <strong>{len(NOTACT):,} Bandra memberships across {NOTACT["Member ID"].nunique():,} people that were paid for and never activated</strong>, and the trend is rising: '
@@ -158,7 +158,7 @@ RECS = [
   'not a product change, and it moves the single largest cohort in the book.'),
  ('04','Write down the unused classes and go and collect them','Studio Manager + CRM',
   f'<strong>{UNUSED:,} paid classes sit unused</strong> across {len(uc):,} memberships, and {int((uc["Sessions Used %"]<=25).sum())} memberships used a quarter or less of what they bought. '
-  f'Memberships that used 10% or less of their allowance are carrying {UG["remaining"].get("used \u226410%", float("nan")):.0f} unspent classes each.',
+  f'Memberships that used 10% or less of their allowance are carrying {UG["remaining"].get("used ≤10%", float("nan")):.0f} unspent classes each.',
   'Every one of those classes has already been paid for. Asking a member to come and use what they own is the least expensive contact the studio can '
   'make, it requires no discount and no offer, and it puts a body back in the room.'),
  ('05','Watch the second half of every membership for the halving signal','CRM',
@@ -189,8 +189,8 @@ RECS = [
  ('10','Sell the first month as a programme, not a class count','Sales + Front Desk',
   f'Across {int(FIRSTP["people"].sum()):,} Bandra first-timers with a recorded first purchase, the product they started on predicts almost the whole of their lifetime value. '
   f'A member whose first purchase was a 1 Month Unlimited is worth <strong>{R(FIRSTP.loc["Studio 1 Month Unlimited","ltv"])}</strong> on average; one whose first purchase was a single class is worth '
-  f'{R(FIRSTP.loc["Studio Single Class","ltv"])}. Same studio, same period, same marketing \u2014 a {FIRSTP.loc["Studio 1 Month Unlimited","ltv"]/FIRSTP.loc["Studio Single Class","ltv"]:.1f}-fold difference decided at the point of sale.',
-  f'The studio\u2019s entry offer is the cheapest thing it can say yes to, and the cheapest thing is producing the least valuable members. Selling the first month as a timed programme with a '
+  f'{R(FIRSTP.loc["Studio Single Class","ltv"])}. Same studio, same period, same marketing — a {FIRSTP.loc["Studio 1 Month Unlimited","ltv"]/FIRSTP.loc["Studio Single Class","ltv"]:.1f}-fold difference decided at the point of sale.',
+  f'The studio’s entry offer is the cheapest thing it can say yes to, and the cheapest thing is producing the least valuable members. Selling the first month as a timed programme with a '
   f'named start date, rather than a pack of classes the member can spend at leisure, changes the product without changing the price. The trial class should be an audition for '
   f'{R(FIRSTP.loc["Studio 1 Month Unlimited","ltv"])}, not a coupon for one session.'),
  ('11','Book the second visit before the member leaves the building','Front Desk + CRM',
@@ -202,8 +202,8 @@ RECS = [
  ('12','Read the at-risk band fortnightly, not the lapsed band annually','Studio Manager + CRM',
   f'Of every Bandra first-timer on file, <strong>{LIFE.get("Churned",0):,} are recorded as churned and {LIFE.get("Lapsed",0):,} as lapsed</strong>, against {LIFE.get("Active",0):,} active and '
   f'only {LIFE.get("At Risk",0):,} flagged at risk. The members in the at-risk band are worth {R(_LT.loc["At Risk","ltv"])} each on average against {R(_LT.loc["Churned","ltv"])} for the churned band.',
-  f'The studio has one band where intervention is cheap and one where it is expensive, and the report it reads monthly is weighted towards the second. Moving the same effort one stage earlier \u2014 '
-  f'from the members who have already gone to the members whose visits have just slipped \u2014 multiplies the yield of every retention hour the team spends.'),
+  f'The studio has one band where intervention is cheap and one where it is expensive, and the report it reads monthly is weighted towards the second. Moving the same effort one stage earlier — '
+  f'from the members who have already gone to the members whose visits have just slipped — multiplies the yield of every retention hour the team spends.'),
 
 ]
 REC_HTML = rec_html(RECS)
@@ -220,9 +220,9 @@ Session-allowance and remaining-session fields are populated for package and cre
 Figures are gross value as recorded at snapshot, not contribution margin.</p>'''
 
 META = (f'Lapse ledger &middot; {len(L):,} Bandra membership instances and {len(LP):,} paid memberships<br/>'
-        f'Check-in ledger &middot; {E.L['Member ID'].nunique():,} members, 2022 to October 2026<br/>Snapshot 18 October 2026')
+        f'Check-in ledger &middot; {E.L["Member ID"].nunique():,} members, 2022 to October 2026<br/>Snapshot 18 October 2026')
 
-HTML = page('Supreme HQ, Bandra \u2014 Lapsed and Churned Memberships',
+HTML = page('Supreme HQ, Bandra — Lapsed and Churned Memberships',
     'Report four of seven &middot; Membership lifecycle',
     'Lapsed and churned memberships',
     'Every membership Bandra has ever sold, read forward from the day it was bought. The median paid membership lasts '
@@ -281,7 +281,7 @@ recommendations in this report keep them apart.</p>
 {CH_CC}
 {CH_CCB}
 
-{ev('Evidence \u2014 cancellation behaviour against outcome',
+{ev('Evidence — cancellation behaviour against outcome',
     T(['How often they cancelled','Memberships','Mean classes completed','Mean late cancellations','Share ever renewed'],
       [[b, int(r['n']), f"{r['sessions']:.1f}", f"{r['late']:.1f}", P(r['win'])] for b, r in cb.iterrows()], 'num') +
     '<p style="font-size:13.5px;color:#6B7280;margin-top:14px">Note how flat the renewal rate is across every band. Cancelling a lot is an early symptom '
@@ -296,7 +296,7 @@ used every class they bought</strong>, and a further {int(((uc['Sessions Used %'
 
 <p>The unused-credit group is the one to act on, commercially as much as humanly. A member who has paid and not attended has received nothing for their money;
 the studio has banked revenue it will eventually have to earn or give back in goodwill. It is also a countable, visible, unfinished transaction sitting in the
-CRM: memberships in the lowest usage band are carrying <strong>{UG['remaining'].get('used \u226410%', float('nan')):.0f} and {UG['remaining'].get('11\u201325%', float('nan')):.0f} unspent classes</strong>.</p>
+CRM: memberships in the lowest usage band are carrying <strong>{UG['remaining'].get('used ≤10%', float('nan')):.0f} and {UG['remaining'].get('11–25%', float('nan')):.0f} unspent classes</strong>.</p>
 
 {CH_UC}
 
@@ -326,10 +326,10 @@ member was sold a <em>programme</em> or a <em>quantity</em>.</p>
 
 {hbars([(r['p'].replace(' Membership','').replace(' Single Class Pack',' pack'), r['renew'],
          A1 if r['renew'] >= PRODT['renew'].median() else B1) for _, r in PRODT.iterrows()],
-       'Share of each product\u2019s memberships that renewed or are still live', as_pct=True,
+       'Share of each product’s memberships that renewed or are still live', as_pct=True,
        note='Paid Bandra memberships only, products with fifteen or more sold.')}
 
-{ev('Evidence \u2014 every paid product at Bandra',
+{ev('Evidence — every paid product at Bandra',
     T(['Product','Sold','Average ticket','Mean classes completed','Mean days in force','Renewed or still live'],
       [[r['p'], r['sold'], R(r['ticket']), f"{r['cls']:.1f}", f"{r['life']:.0f}", P(r['renew'])]
        for _, r in PRODT.sort_values('sold', ascending=False).iterrows()], 'num'))}
@@ -348,7 +348,7 @@ lapse. Someone last seen two years ago who paid {R(GONEM['Amount Paid'].mean())}
 
 {CH_REC}
 
-{ev('Evidence \u2014 the win-back list in numbers',
+{ev('Evidence — the win-back list in numbers',
     T(['Time since last visit','Members','Memberships','Mean paid','Mean classes completed'],
       [[b, int(r['members']), int(r['inst']), R(r['ticket']), f"{r['sessions']:.1f}"] for b, r in rd.iterrows()], 'num'))}
 
@@ -376,7 +376,7 @@ it is money the studio has already banked against relationships that have ended.
 
 {CH_FAM}
 
-{ev('Evidence \u2014 membership lifetime bands',
+{ev('Evidence — membership lifetime bands',
     T(['How long it lasted','Memberships','Mean price paid','Mean classes completed'],
       [[b, int(r['n']), R(r['ticket']), f"{r['sessions']:.1f}"] for b, r in DB.iterrows()], 'num'))}
 
@@ -385,7 +385,7 @@ it is money the studio has already banked against relationships that have ended.
 {REC_HTML}
 {SRC}
 ''')
-open('/home/user/Bandra_September_2026_4_Lapsed_Churned.html', 'w').write(HTML)
+open('/home/user/reports-arena/Bandra_September_2026_4_Lapsed_Churned.html', 'w').write(HTML)
 print(f'Report 4 written: {len(HTML)} bytes')
 print(f'survival 7d {SURV[0]:.1f} 14d {SURV[1]:.1f} 30d {SURV[2]:.1f} 60d {SURV[4]:.1f} 90d {SURV[5]:.1f} 1yr {SURV[-1]:.1f} | median {d["obs"].median():.0f}d')
 print('median end by year', {int(k): int(v) for k, v in MED_END.items()})

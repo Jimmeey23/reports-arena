@@ -1028,7 +1028,7 @@ def recs_leads(M, X):
             out.append((f'Answer on the day, because the win is decided the same day {rf.median():.0f}% of the time',
                         'Sales',
                         f'The median first response in this file came after {rf.median():.0f} days, and {share(float((rf > 1).sum()), len(rf))} '
-                        f'of leads waited more than a day, while {ld.get('same_day', 0):.0f}% of all wins closed on the '
+                        f'of leads waited more than a day, while {ld.get("same_day", 0):.0f}% of all wins closed on the '
                         f'day of the enquiry.',
                         'The lead is not waiting politely; they are calling the next studio on their list. A same-day response target with no exceptions is worth more than any change to the offer.'))
     except Exception:

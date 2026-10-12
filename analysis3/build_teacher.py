@@ -21,19 +21,19 @@ T3_SHARE = T3['sessions'].sum()/SESS*100
 
 # ------------------------------------------------------------------ charts
 CH_REV = hbars([(i, r['rev'], BLU if r['rev'] >= 120000 else GOLD) for i, r in TR.sort_values('rev', ascending=False).iterrows()],
-    'Revenue attributed to each trainer\u2019s classes, September 2026', maxv=215000,
-    note=f'The top three trainers \u2014 Vivaran Dhasmana, Atulan Purohit and Reshma Sharma \u2014 account for {R(TR.nlargest(3,"rev")["rev"].sum())}, or {TR.nlargest(3,"rev")["rev"].sum()/C26["rev"]*100:.0f}% of the month\u2019s class revenue.')
+    'Revenue attributed to each trainer’s classes, September 2026', maxv=215000,
+    note=f'The top three trainers — Vivaran Dhasmana, Atulan Purohit and Reshma Sharma — account for {R(TR.nlargest(3,"rev")["rev"].sum())}, or {TR.nlargest(3,"rev")["rev"].sum()/C26["rev"]*100:.0f}% of the month’s class revenue.')
 
 CH_FILL = hbars([(i, r['fill'], BLU if r['fill'] >= 50 else (GOLD if r['fill'] >= 38 else TER))
                  for i, r in TR.sort_values('fill', ascending=False).iterrows()],
-    'Capacity utilisation by trainer \u2014 who fills their room', maxv=72, as_pct=True,
-    note=f'From {TR["fill"].max():.0f}% to {TR["fill"].min():.0f}% \u2014 the strongest trainer fills {TR["fill"].max()/TR["fill"].min():.1f} times as many seats as the weakest. Utilisation is the cleanest single measure of whether a trainer is being given the right slots.')
+    'Capacity utilisation by trainer — who fills their room', maxv=72, as_pct=True,
+    note=f'From {TR["fill"].max():.0f}% to {TR["fill"].min():.0f}% — the strongest trainer fills {TR["fill"].max()/TR["fill"].min():.1f} times as many seats as the weakest. Utilisation is the cleanest single measure of whether a trainer is being given the right slots.')
 
 CH_SESS = bars([i for i in TR.sort_values('sessions', ascending=False).index[:10]],
     [('Sessions run', TR.sort_values('sessions', ascending=False)['sessions'].head(10).tolist(), GREY),
      ('Attendees (1/5 scale)', [v/5 for v in TR.sort_values('sessions', ascending=False)['att'].head(10)], TER)],
-    'Sessions run against attendance drawn \u2014 the top ten trainers', as_pct=False, ymax=60, h=330, rotate=True,
-    note='Vivaran Dhasmana teaches the most sessions but does not draw the most people. Atulan Purohit teaches 27 sessions and draws 205 attendees \u2014 the same as Vivaran draws from 39.')
+    'Sessions run against attendance drawn — the top ten trainers', as_pct=False, ymax=60, h=330, rotate=True,
+    note='Vivaran Dhasmana teaches the most sessions but does not draw the most people. Atulan Purohit teaches 27 sessions and draws 205 attendees — the same as Vivaran draws from 39.')
 
 CH_YOY = diverging([(i, r['d_att']) for i, r in TR.sort_values('d_att').iterrows() if not pd.isna(r['d_att'])],
     'Change in attendance drawn per trainer, September 2026 against September 2025', maxv=140,
@@ -41,8 +41,8 @@ CH_YOY = diverging([(i, r['d_att']) for i, r in TR.sort_values('d_att').iterrows
 
 CH_REVHEAD = hbars([(i, r['rev_head'], BLU if r['rev_head'] >= 1000 else GOLD)
                     for i, r in TR[TR['att'] > 0].sort_values('rev_head', ascending=False).iterrows()],
-    'Revenue per attendee by trainer \u2014 who teaches the members on richer plans', maxv=1150,
-    note='A narrow spread, from \u20b9798 to \u20b91,073. Unlike utilisation, revenue-per-head is fairly even, which means differences in trainer revenue come almost entirely from how many people they teach, not from who they teach.')
+    'Revenue per attendee by trainer — who teaches the members on richer plans', maxv=1150,
+    note='A narrow spread, from ₹798 to ₹1,073. Unlike utilisation, revenue-per-head is fairly even, which means differences in trainer revenue come almost entirely from how many people they teach, not from who they teach.')
 
 CH_PAYROLL = lines([str(p)[2:] for p in PAY_TREND.index[-12:]],
     [('New clients seen', PAY_TREND['new'].tail(12).tolist(), GREY),
@@ -52,7 +52,7 @@ CH_PAYROLL = lines([str(p)[2:] for p in PAY_TREND.index[-12:]],
 
 CH_SLOTS = hbars([(i, r['slots'], BLU) for i, r in ACT_SLOTS.iterrows()],
     'Recurring weekly slots held by each trainer (currently active)', maxv=15, unit='',
-    note=f'{int(ACT_SLOTS["slots"].sum())} active recurring slots across {len(ACT_SLOTS)} trainers. Vivaran Dhasmana holds {int(ACT_SLOTS["slots"].max())}, one in every seven of the studio\u2019s recurring timetable.')
+    note=f'{int(ACT_SLOTS["slots"].sum())} active recurring slots across {len(ACT_SLOTS)} trainers. Vivaran Dhasmana holds {int(ACT_SLOTS["slots"].max())}, one in every seven of the studio’s recurring timetable.')
 
 CH_CLIENTS = hbars([(i, r['conv_%'], BLU if r['conv_%'] >= 22 else GOLD)
                     for i, r in CLI[CLI['clients'] >= 40].sort_values('conv_%', ascending=False).iterrows()],
@@ -64,15 +64,15 @@ main_rows = []
 for i, r in TR.iterrows():
     main_rows.append([i, f"{int(r['sessions'])}", f"{int(r['att'])}", f"{r['avg_class']:.2f}", P(r['fill']),
                       P(r['lc_rate']), f"{int(r['formats'])}", R(r['rev']), R(r['rev_class']),
-                      R(r['rev_head']) if pd.notna(r['rev_head']) else '\u2014'])
+                      R(r['rev_head']) if pd.notna(r['rev_head']) else '—'])
 MAIN_T = T(['Trainer', 'Sessions', 'Attendees', 'Avg class', 'Utilisation', 'Late-cancel rate',
             'Formats', 'Revenue', 'Revenue / class', 'Revenue / attendee'], main_rows, 'mono')
 
 yoy_rows = []
 for i, r in TR.sort_values('d_att').iterrows():
     if pd.isna(r['d_att']): continue
-    yoy_rows.append([i, f"{int(r['s25'])}", f"{int(r['sessions'])}", f"{int(r['d_sessions']):+}".replace('-', '\u2212'),
-                     f"{int(r['a25'])}", f"{int(r['att'])}", f"{int(r['d_att']):+}".replace('-', '\u2212'),
+    yoy_rows.append([i, f"{int(r['s25'])}", f"{int(r['sessions'])}", f"{int(r['d_sessions']):+}".replace('-', '−'),
+                     f"{int(r['a25'])}", f"{int(r['att'])}", f"{int(r['d_att']):+}".replace('-', '−'),
                      R(r['r25']), R(r['rev']), Rs(r['rev']-r['r25'])])
 YOY_T = T(['Trainer', 'Sessions 2025', 'Sessions 2026', 'Change', 'Attendees 2025', 'Attendees 2026',
            'Change', 'Revenue 2025', 'Revenue 2026', 'Change'], yoy_rows, 'mono')
@@ -107,7 +107,7 @@ PAY_T = T(['Trainer', 'Sessions', 'Customers', 'Revenue paid', 'New clients', 'C
 
 payh = PAY_HIST.sort_values('convd', ascending=False)
 payh_rows = [[i, f"{int(r['months'])}", f"{int(r['sessions'])}", f"{int(r['new'])}", f"{int(r['convd'])}",
-              P(r['conv_calc']) if pd.notna(r['conv_calc']) else '\u2014', f"{int(r['retd'])}"]
+              P(r['conv_calc']) if pd.notna(r['conv_calc']) else '—', f"{int(r['retd'])}"]
              for i, r in payh.iterrows()]
 PAYH_T = T(['Trainer', 'Months on record', 'Sessions taught', 'New clients seen', 'Converted', 'Conversion rate',
             'Retained'], payh_rows, 'mono')
@@ -118,59 +118,59 @@ slot_hold = slot_hold.sort_values('slots', ascending=False)
 HOLD_T = T(['Trainer', 'Active recurring slots', 'Classes taught on those slots (lifetime)',
             'September sessions', 'September attendees', 'September utilisation'],
            [[i, f"{int(r['slots'])}", f"{int(r['classes'])}",
-             f"{int(r['sep_sessions'])}" if pd.notna(r['sep_sessions']) else '\u2014',
-             f"{int(r['sep_att'])}" if pd.notna(r['sep_att']) else '\u2014',
-             P(r['sep_fill']) if pd.notna(r['sep_fill']) else '\u2014'] for i, r in slot_hold.iterrows()], 'mono')
+             f"{int(r['sep_sessions'])}" if pd.notna(r['sep_sessions']) else '—',
+             f"{int(r['sep_att'])}" if pd.notna(r['sep_att']) else '—',
+             P(r['sep_fill']) if pd.notna(r['sep_fill']) else '—'] for i, r in slot_hold.iterrows()], 'mono')
 
 # ------------------------------------------------------------------ recommendations
 RECS = [
  ('01','Give Atulan Purohit and Rohan Dahima more of the week','Studio Manager + Head of Training',
-  f'Atulan Purohit drew <strong>{int(TR.loc["Atulan Purohit","d_att"]):+} more attendees</strong> than last September from only {int(TR.loc["Atulan Purohit","d_sessions"]):+} more sessions, at <strong>{TR.loc["Atulan Purohit","fill"]:.1f}% utilisation</strong> \u2014 the highest of any trainer above 20 sessions. Rohan Dahima filled <strong>{TR.loc["Rohan Dahima","fill"]:.1f}%</strong> on {int(TR.loc["Rohan Dahima","sessions"])} sessions, second-highest. Both also sit in the top half on lifetime client conversion ({CLI.loc["Atulan Purohit","conv_%"]:.1f}% and {CLI.loc["Rohan Dahima","conv_%"]:.1f}%).',
-  f'Both are currently under-used relative to their fill. Moving 6 of the studio\u2019s weakest slots to these two, and holding them to their current {TR.loc["Atulan Purohit","fill"]:.0f}% and {TR.loc["Rohan Dahima","fill"]:.0f}% utilisation, adds roughly {int(6*4.3*(TR.loc["Atulan Purohit","fill"]+TR.loc["Rohan Dahima","fill"])/200)} attendances a month against the slots they replace.'),
+  f'Atulan Purohit drew <strong>{int(TR.loc["Atulan Purohit","d_att"]):+} more attendees</strong> than last September from only {int(TR.loc["Atulan Purohit","d_sessions"]):+} more sessions, at <strong>{TR.loc["Atulan Purohit","fill"]:.1f}% utilisation</strong> — the highest of any trainer above 20 sessions. Rohan Dahima filled <strong>{TR.loc["Rohan Dahima","fill"]:.1f}%</strong> on {int(TR.loc["Rohan Dahima","sessions"])} sessions, second-highest. Both also sit in the top half on lifetime client conversion ({CLI.loc["Atulan Purohit","conv_%"]:.1f}% and {CLI.loc["Rohan Dahima","conv_%"]:.1f}%).',
+  f'Both are currently under-used relative to their fill. Moving 6 of the studio’s weakest slots to these two, and holding them to their current {TR.loc["Atulan Purohit","fill"]:.0f}% and {TR.loc["Rohan Dahima","fill"]:.0f}% utilisation, adds roughly {int(6*4.3*(TR.loc["Atulan Purohit","fill"]+TR.loc["Rohan Dahima","fill"])/200)} attendances a month against the slots they replace.'),
  ('02','Review the slots no one attends, whoever is teaching them','Studio Manager',
-  f'<strong>{len(TSLOT[(TSLOT["sessions"]>=2) & (TSLOT["fill"]<20)])} recurring slots ran at under 20% utilisation</strong> in September across {TSLOT[(TSLOT["sessions"]>=2) & (TSLOT["fill"]<20)]["Trainer"].nunique()} trainers. The three worst \u2014 Anmol Sharma\u2019s Thursday 18:00 ({P(TSLOT.set_index(["Trainer","Day","Time"]).loc[("Anmol Sharma","Thursday","18:00:00"),"fill"])}), Mrigakshi Jaiswal\u2019s Wednesday 19:30 ({P(TSLOT.set_index(["Trainer","Day","Time"]).loc[("Mrigakshi Jaiswal","Wednesday","19:30:00"),"fill"])}) and Vivaran Dhasmana\u2019s Wednesday 07:30 ({P(TSLOT.set_index(["Trainer","Day","Time"]).loc[("Vivaran Dhasmana","Wednesday","07:30:00"),"fill"])}) \u2014 drew a combined {int(TSLOT.set_index(["Trainer","Day","Time"]).loc[("Anmol Sharma","Thursday","18:00:00"),"att"] + TSLOT.set_index(["Trainer","Day","Time"]).loc[("Mrigakshi Jaiswal","Wednesday","19:30:00"),"att"] + TSLOT.set_index(["Trainer","Day","Time"]).loc[("Vivaran Dhasmana","Wednesday","07:30:00"),"att"])} people from 18 scheduled classes.',
-  f'Clearing or rescheduling these slots frees about {int(TSLOT[(TSLOT["sessions"]>=2) & (TSLOT["fill"]<20)]["seats"].sum()*0.5)} seat-hours a month and removes the single largest source of the studio\u2019s {int((x26["CheckedIn"]<=2).sum())} lean sessions. It also protects the trainers holding them, because a dead slot reads as a performance problem when it is a scheduling one.'),
+  f'<strong>{len(TSLOT[(TSLOT["sessions"]>=2) & (TSLOT["fill"]<20)])} recurring slots ran at under 20% utilisation</strong> in September across {TSLOT[(TSLOT["sessions"]>=2) & (TSLOT["fill"]<20)]["Trainer"].nunique()} trainers. The three worst — Anmol Sharma’s Thursday 18:00 ({P(TSLOT.set_index(["Trainer","Day","Time"]).loc[("Anmol Sharma","Thursday","18:00:00"),"fill"])}), Mrigakshi Jaiswal’s Wednesday 19:30 ({P(TSLOT.set_index(["Trainer","Day","Time"]).loc[("Mrigakshi Jaiswal","Wednesday","19:30:00"),"fill"])}) and Vivaran Dhasmana’s Wednesday 07:30 ({P(TSLOT.set_index(["Trainer","Day","Time"]).loc[("Vivaran Dhasmana","Wednesday","07:30:00"),"fill"])}) — drew a combined {int(TSLOT.set_index(["Trainer","Day","Time"]).loc[("Anmol Sharma","Thursday","18:00:00"),"att"] + TSLOT.set_index(["Trainer","Day","Time"]).loc[("Mrigakshi Jaiswal","Wednesday","19:30:00"),"att"] + TSLOT.set_index(["Trainer","Day","Time"]).loc[("Vivaran Dhasmana","Wednesday","07:30:00"),"att"])} people from 18 scheduled classes.',
+  f'Clearing or rescheduling these slots frees about {int(TSLOT[(TSLOT["sessions"]>=2) & (TSLOT["fill"]<20)]["seats"].sum()*0.5)} seat-hours a month and removes the single largest source of the studio’s {int((x26["CheckedIn"]<=2).sum())} lean sessions. It also protects the trainers holding them, because a dead slot reads as a performance problem when it is a scheduling one.'),
  ('03','Separate trainer assessment from slot assessment','Head of Training',
-  f'The spread across trainers looks alarming \u2014 {TR["fill"].max():.0f}% utilisation at the top against {TR["fill"].min():.0f}% at the bottom. But revenue per attendee is nearly flat across the whole group, from {R(TR["rev_head"].min())} to {R(TR["rev_head"].max())}. <strong>Trainers are not teaching different-value audiences; they are being handed differently-sized rooms at differently attractive times.</strong> Anmol Sharma is the clearest example: {P(CLI_SEP.loc["Anmol Sharma","conv_%"] if "Anmol Sharma" in CLI_SEP.index else np.nan)} conversion on September clients and the best client follow-through in the studio, while holding four 07:30 Monday slots that filled 11.5%.',
+  f'The spread across trainers looks alarming — {TR["fill"].max():.0f}% utilisation at the top against {TR["fill"].min():.0f}% at the bottom. But revenue per attendee is nearly flat across the whole group, from {R(TR["rev_head"].min())} to {R(TR["rev_head"].max())}. <strong>Trainers are not teaching different-value audiences; they are being handed differently-sized rooms at differently attractive times.</strong> Anmol Sharma is the clearest example: {P(CLI_SEP.loc["Anmol Sharma","conv_%"] if "Anmol Sharma" in CLI_SEP.index else np.nan)} conversion on September clients and the best client follow-through in the studio, while holding four 07:30 Monday slots that filled 11.5%.',
   'One rule: judge a trainer on utilisation of the slots they hold, not their raw fill rate. Applied for one quarter, it separates coaching problems from scheduling problems and stops the studio losing good instructors over dead hours.'),
  ('04','Stop the September concentration from repeating','Studio Manager',
-  f'Reshma Sharma received <strong>{CLI_SEP["clients"].max()} of September\u2019s 143 new clients \u2014 {CLI_SEP["clients"].max()/143*100:.0f}% of the month\u2019s intake</strong>, more than double any other trainer, and none of them returned for a second class. Across the studio, the top three trainers by session volume taught {T3["sessions"].sum()} of {SESS} classes ({T3_SHARE:.0f}%).',
-  'Cap any trainer\u2019s share of first-time clients at 15%, and route every new client to a second trainer and a second format. The concentration finding is set out in full in the September performance review; this recommendation is the standing rule that prevents it recurring.'),
+  f'Reshma Sharma received <strong>{CLI_SEP["clients"].max()} of September’s 143 new clients — {CLI_SEP["clients"].max()/143*100:.0f}% of the month’s intake</strong>, more than double any other trainer, and none of them returned for a second class. Across the studio, the top three trainers by session volume taught {T3["sessions"].sum()} of {SESS} classes ({T3_SHARE:.0f}%).',
+  'Cap any trainer’s share of first-time clients at 15%, and route every new client to a second trainer and a second format. The concentration finding is set out in full in the September performance review; this recommendation is the standing rule that prevents it recurring.'),
  ('05','Put trainer-level conversion into the monthly review','Head of Training + CRM',
-  f'Payroll records show Bandra&rsquo;s combined new-client conversion falling from <strong>{PAY_TREND.loc["2025-09-01","conv_calc"]:.1f}% in September 2025 to {PAY_TREND.loc["2026-08-01","conv_calc"]:.1f}% in August 2026</strong> \u2014 the last month for which payroll data exists. Within the same table individual trainers range from {PAY["conv"].min():.0f}% to {PAY["conv"].max():.0f}%. Pranjali Jain converted {PAY.set_index("Teacher Name").loc["Pranjali Jain","conv"]:.1f}% of new clients with {PAY.set_index("Teacher Name").loc["Pranjali Jain","ret"]:.1f}% retention in August; three trainers converted none.',
+  f'Payroll records show Bandra&rsquo;s combined new-client conversion falling from <strong>{PAY_TREND.loc["2025-09-01","conv_calc"]:.1f}% in September 2025 to {PAY_TREND.loc["2026-08-01","conv_calc"]:.1f}% in August 2026</strong> — the last month for which payroll data exists. Within the same table individual trainers range from {PAY["conv"].min():.0f}% to {PAY["conv"].max():.0f}%. Pranjali Jain converted {PAY.set_index("Teacher Name").loc["Pranjali Jain","conv"]:.1f}% of new clients with {PAY.set_index("Teacher Name").loc["Pranjali Jain","ret"]:.1f}% retention in August; three trainers converted none.',
   'A single monthly table of trainers by new clients seen, converted and retained would have surfaced both the studio-level decline and the individual spread several months earlier. It costs nothing to produce from data the studio already holds.'),
  ('06','Give the newer trainers a defined client-handover role','Head of Training',
-  f'Four trainers who barely taught in September 2025 now hold meaningful volume \u2014 Reshma Sharma ({int(TR.loc["Reshma Sharma","sessions"])} sessions), Pranjali Jain ({int(TR.loc["Pranjali Jain","sessions"])}), Anmol Sharma ({int(TR.loc["Anmol Sharma","sessions"])}) and Rohan Dahima ({int(TR.loc["Rohan Dahima","sessions"])}). Between them they drew {int(TR.loc[["Reshma Sharma","Pranjali Jain","Anmol Sharma","Rohan Dahima"],"att"].sum())} attendances. Their lifetime client conversion rates ({CLI.loc["Pranjali Jain","conv_%"]:.1f}% for Pranjali, {CLI.loc["Anmol Sharma","conv_%"]:.1f}% for Anmol) sit below the studio\u2019s established trainers.',
-  f'A structured pairing \u2014 every new client taught by a developing trainer gets one follow-up class with an experienced one \u2014 costs no acquisition spend and directly addresses the second-visit gap that the main review values at roughly \u20b92 lakh a month.'),
+  f'Four trainers who barely taught in September 2025 now hold meaningful volume — Reshma Sharma ({int(TR.loc["Reshma Sharma","sessions"])} sessions), Pranjali Jain ({int(TR.loc["Pranjali Jain","sessions"])}), Anmol Sharma ({int(TR.loc["Anmol Sharma","sessions"])}) and Rohan Dahima ({int(TR.loc["Rohan Dahima","sessions"])}). Between them they drew {int(TR.loc[["Reshma Sharma","Pranjali Jain","Anmol Sharma","Rohan Dahima"],"att"].sum())} attendances. Their lifetime client conversion rates ({CLI.loc["Pranjali Jain","conv_%"]:.1f}% for Pranjali, {CLI.loc["Anmol Sharma","conv_%"]:.1f}% for Anmol) sit below the studio’s established trainers.',
+  f'A structured pairing — every new client taught by a developing trainer gets one follow-up class with an experienced one — costs no acquisition spend and directly addresses the second-visit gap that the main review values at roughly ₹2 lakh a month.'),
  ('07','Rebuild the recurring timetable around 98 slots, not 14 trainers','Programming + Studio Manager',
   f'The studio currently runs <strong>{int(ACT_SLOTS["slots"].sum())} active recurring weekly slots</strong> across {len(ACT_SLOTS)} trainers. Vivaran Dhasmana holds {int(ACT_SLOTS["slots"].max())} of them and Anisha Shah holds 4. Lifetime fill on those slots ranges from {ACT_SLOTS["fill"].min():.0f}% to {ACT_SLOTS["fill"].max():.0f}%. Anisha Shah&rsquo;s 4 slots fill {ACT_SLOTS.set_index(ACT_SLOTS.index).loc["Anisha Shah","fill"]:.0f}% on aggregate; Anmol Sharma&rsquo;s 8 fill {ACT_SLOTS.loc["Anmol Sharma","fill"]:.0f}%.',
-  'The recurring timetable is the studio\u2019s product, and it should be reviewed slot by slot each quarter with utilisation as the criterion \u2014 not reassigned wholesale when a trainer joins or leaves. That is the difference between a schedule and an inheritance.'),
+  'The recurring timetable is the studio’s product, and it should be reviewed slot by slot each quarter with utilisation as the criterion — not reassigned wholesale when a trainer joins or leaves. That is the difference between a schedule and an inheritance.'),
  ('08','Protect the trainers who fill their rooms','Studio Manager',
   f'{TR["fill"].max() and TR.nlargest(3,"fill").index.tolist()[0]} fills {TR["fill"].max():.0f}% and {TR.nlargest(3,"fill").index.tolist()[1]} {TR.nlargest(3,"fill")["fill"].iloc[1]:.0f}%. Five trainers who carried a large share of 2025 classes took {abs(D.TCH.loc[["Cauveri Vikrant","Karanvir Bhatia","Karan Bhatia","Simonelle De Vitre","Mrigakshi Jaiswal"],"sessions"].sum()/D.TCH.loc[["Cauveri Vikrant","Karanvir Bhatia","Karan Bhatia","Simonelle De Vitre","Mrigakshi Jaiswal"],"s25"].sum()*100-100):.0f}% fewer classes this September, and their lifetime clients were worth ₹8,701 each against ₹6,617 for the group that replaced them.',
-  'Retention of proven instructors is cheaper than recruitment. A quarterly retention conversation anchored on each trainer\u2019s utilisation and client-conversion numbers gives the studio something concrete to manage, and gives the trainer something concrete to be recognised for.'),
+  'Retention of proven instructors is cheaper than recruitment. A quarterly retention conversation anchored on each trainer’s utilisation and client-conversion numbers gives the studio something concrete to manage, and gives the trainer something concrete to be recognised for.'),
  ('09','Align per-session pay with the room, not the day','Finance + Head of Training',
-  f'In August the studio paid {R(X.PAY_SESS)} per session across {int(X.PA["Total Sessions"].sum())} sessions. Split by discipline, Cycle sessions cost {R(X.CYCLE_RATE)} each and Barre sessions {R(X.BARRE_RATE)}. PowerCycle runs 35% of the timetable at a 35% fill rate, while Studio FIT fills 71% \u2014 so the highest per-session pay is attached to the emptiest product, and individual rates across the payroll span {R(X.RATE_MIN)} to {R(X.RATE_MAX)} with no relationship to utilisation.',
-  f'A modest re-weighting \u2014 holding the pay envelope constant but tying part of it to each session\u2019s fill against its format benchmark \u2014 makes the studio\u2019s biggest controllable cost respond to its biggest controllable problem, without cutting anyone\u2019s rate.'),
+  f'In August the studio paid {R(X.PAY_SESS)} per session across {int(X.PA["Total Sessions"].sum())} sessions. Split by discipline, Cycle sessions cost {R(X.CYCLE_RATE)} each and Barre sessions {R(X.BARRE_RATE)}. PowerCycle runs 35% of the timetable at a 35% fill rate, while Studio FIT fills 71% — so the highest per-session pay is attached to the emptiest product, and individual rates across the payroll span {R(X.RATE_MIN)} to {R(X.RATE_MAX)} with no relationship to utilisation.',
+  f'A modest re-weighting — holding the pay envelope constant but tying part of it to each session’s fill against its format benchmark — makes the studio’s biggest controllable cost respond to its biggest controllable problem, without cutting anyone’s rate.'),
  ('10','Give the first class to the trainers who convert it','Head of Training + Studio Manager',
   f'Across {int(X.Q_TR["n"].sum())} first-time visitors since January 2025, the share who reached a third visit ranges from {X.Q_TR["r3"].min():.1f}% to {X.Q_TR["r3"].max():.1f}% by who taught the first class. The top of that range is approached by trainers who each took {int(X.Q_TR.iloc[0]["n"])} and {int(X.Q_TR.iloc[1]["n"])} first classes, while others took {int(X.Q_TR.iloc[-1]["n"])} and {int(X.Q_TR.iloc[-2]["n"])}. The assignment is currently a by-product of the rota.',
-  f'If the bottom-half trainers moved to the group median, the studio would gain roughly {int(X.Q_TR["n"].sum()*(X.Q_TR["r3"].median()-X.Q_TR["r3"].min())/100)} additional members reaching a third visit a year \u2014 which, at the studio\u2019s own first-to-third conversion economics, is the single highest-value reallocation available that costs nothing.'),
+  f'If the bottom-half trainers moved to the group median, the studio would gain roughly {int(X.Q_TR["n"].sum()*(X.Q_TR["r3"].median()-X.Q_TR["r3"].min())/100)} additional members reaching a third visit a year — which, at the studio’s own first-to-third conversion economics, is the single highest-value reallocation available that costs nothing.'),
  ('11','Publish the shared-slot table every month','Head of Training',
   f'Twenty-four slots were taught by two or more trainers in September. The median gap between the best and worst trainer within the same slot was {X.MED_SPREAD:.1f} points, and six slots showed more than 30 points. In the remaining slots the gap was small enough that the trainer is not the variable.',
   'One table a month, naming the trainer on each side of every shared slot, ends the argument about whether utilisation differences are the trainer or the timetable. It also gives the studio a fair way to move slots: on evidence, in the same class, at the same hour.'),
  ('12','Match the premium formats to the rooms they deserve','Programming + Studio Manager',
-  f'PowerCycle is the studio\u2019s most expensive format to run ({R(X.CYCLE_RATE)} per session in August against {R(X.BARRE_RATE)} for Barre) and its least occupied ({X.PC_FILL:.1f}%). The same product fills {X.PCE_FILL:.1f}% in its express form and 52.6% at Cardio Barre Express. This is not a demand problem for the format; it is a demand problem for the slot and the room it sits in.',
-  f'Rebuilding PowerCycle at express length and eleven-seat rooms \u2014 the configuration where every other Cycling variant fills \u2014 addresses the two largest cost lines in the report at once: the most expensive sessions to run and the emptiest rooms in the studio.')
+  f'PowerCycle is the studio’s most expensive format to run ({R(X.CYCLE_RATE)} per session in August against {R(X.BARRE_RATE)} for Barre) and its least occupied ({X.PC_FILL:.1f}%). The same product fills {X.PCE_FILL:.1f}% in its express form and 52.6% at Cardio Barre Express. This is not a demand problem for the format; it is a demand problem for the slot and the room it sits in.',
+  f'Rebuilding PowerCycle at express length and eleven-seat rooms — the configuration where every other Cycling variant fills — addresses the two largest cost lines in the report at once: the most expensive sessions to run and the emptiest rooms in the studio.')
 ,
  ('13','Judge trainers on the client journey, not only the session','Head of Training + CRM',
-  f'One in four of September\u2019s classes drew two people or fewer, and the trainers who hold those slots show it in their utilisation whatever they do. '
-  f'The measure that separates them is what happens next: <strong>{X.Q_TR["r3"].max():.0f}% of one trainer\u2019s first-time visitors reach a third visit, against '
-  f'{X.Q_TR["r3"].min():.0f}% of another\u2019s</strong>.',
-  'Utilisation measures who walked into the room and is largely decided by the timetable. The share of a trainer\u2019s first-timers who come back a second and third '
-  'time measures what the trainer did once they were there, and it is the only trainer metric in this report that predicts the studio\u2019s economics.'),
+  f'One in four of September’s classes drew two people or fewer, and the trainers who hold those slots show it in their utilisation whatever they do. '
+  f'The measure that separates them is what happens next: <strong>{X.Q_TR["r3"].max():.0f}% of one trainer’s first-time visitors reach a third visit, against '
+  f'{X.Q_TR["r3"].min():.0f}% of another’s</strong>.',
+  'Utilisation measures who walked into the room and is largely decided by the timetable. The share of a trainer’s first-timers who come back a second and third '
+  'time measures what the trainer did once they were there, and it is the only trainer metric in this report that predicts the studio’s economics.'),
  ('14','Rotate one matched slot a month as a live test','Head of Training + Programming',
   f'Across the matched slots the median gap is {X.MED_SPREAD:.0f} points and {X.BIG} of {X.N_SLOT} separate by more than thirty. The rest of the spread is the slot. '
   f'Nobody currently knows which is which, because the timetable is rebuilt by programme rather than by comparison.',
-  'Taking the single widest matched slot each month and deliberately swapping the two trainers settles the question in four weeks, at no cost, with the studio\u2019s '
+  'Taking the single widest matched slot each month and deliberately swapping the two trainers settles the question in four weeks, at no cost, with the studio’s '
   'own data. Repeating it through the year turns a one-off analysis into a staffing principle.'),
 ]
 REC_HTML = rec_html(RECS)
@@ -283,7 +283,7 @@ also the most expensive one to run.</p>
 {CH_PAYROLL}
 {PAYH_T}
 <p>Across the whole payroll record, Bandra&rsquo;s combined conversion of new clients has fallen from <strong>{PAY_TREND.loc['2025-09-01','conv_calc']:.1f}% in September 2025 to {PAY_TREND.loc['2026-08-01','conv_calc']:.1f}% in August 2026</strong>, while the number of new clients seen rose from {int(PAY_TREND.loc['2025-09-01','new'])} to {int(PAY_TREND.loc['2026-08-01','new'])}. More new faces, fewer conversions &mdash; the same pattern the lead register and the member cohort file both show from their own directions.</p>
-{ev('View each trainer\u2019s full payroll record at Bandra', PAYH_T + '<p style="font-size:13.5px;color:#7A7267;margin-top:14px">Conversion rate is recomputed here from raw counts of new clients and conversions, because the platform\u2019s own monthly rate is computed on a subset and averages differently. Months on record indicates how many monthly payroll rows exist for that trainer at Bandra.</p>')}
+{ev('View each trainer’s full payroll record at Bandra', PAYH_T + '<p style="font-size:13.5px;color:#7A7267;margin-top:14px">Conversion rate is recomputed here from raw counts of new clients and conversions, because the platform’s own monthly rate is computed on a subset and averages differently. Months on record indicates how many monthly payroll rows exist for that trainer at Bandra.</p>')}
 
 {TEACH_B}
 
@@ -297,15 +297,15 @@ also the most expensive one to run.</p>
 <div class="sub">How to read these numbers, and what they cannot show</div>
 {SRC}'''
 
-HTML = page('Supreme HQ, Bandra \u2014 Instructor Performance, September 2026',
+HTML = page('Supreme HQ, Bandra — Instructor Performance, September 2026',
             'Instructor Performance Review &nbsp;&middot;&nbsp; September 2026',
             'Supreme HQ, Bandra',
-            f'{KN} trainers taught {SESS} classes to {ATT:,} attendances in September and generated {C26["rev"]/C25["rev"]*100-100:.0f}% more class revenue than a year earlier. Utilisation across them ranges {TR["fill"].max()/TR["fill"].min():.1f}-fold \u2014 but revenue per attendee varies by only {TR["rev_head"].max()/TR["rev_head"].min()*100-100:.0f}%, which says the spread is mostly in the slots trainers were given, not in the trainers themselves.',
+            f'{KN} trainers taught {SESS} classes to {ATT:,} attendances in September and generated {C26["rev"]/C25["rev"]*100-100:.0f}% more class revenue than a year earlier. Utilisation across them ranges {TR["fill"].max()/TR["fill"].min():.1f}-fold — but revenue per attendee varies by only {TR["rev_head"].max()/TR["rev_head"].min()*100-100:.0f}%, which says the spread is mostly in the slots trainers were given, not in the trainers themselves.',
             f'Held against the slot it was given, the picture changes: inside the same day, hour and format, the trainer still moved the room by a median of '
             f'{X.MED_SPREAD:.0f} points, and in {X.BIG} of {X.N_SLOT} slots the spread exceeded 30. That is a real effect &mdash; and in '
             f'{int((X.SLOTS["spread"] <= 10).sum())} slots it disappears entirely.',
             f'<span>{KN} trainers</span><span>{int(ACT_SLOTS["slots"].sum())} recurring slots</span><span>Class, recurring, payroll and member data</span><span>Snapshot 18 October 2026</span>',
             BODY)
-open('/home/user/Bandra_September_2026_3_Instructor_Performance.html','w').write(HTML)
+open('/home/user/reports-arena/Bandra_September_2026_3_Instructor_Performance.html','w').write(HTML)
 print('Report 3 written:', len(HTML), 'bytes')
 print('trainers', KN, '| spread', round(TR['fill'].max()/TR['fill'].min(),2), '| revhead spread', round(TR['rev_head'].max()/TR['rev_head'].min()*100-100,1))

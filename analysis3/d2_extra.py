@@ -5,11 +5,11 @@ import pandas as pd, numpy as np
 from d0_common import (R, Rs, P, N, T, ev, bars, lines, hbars, diverging, stacked, funnel, dumbbell,
                        A1, A2, A3, B1, B2, N1, N2, INK, MUT)
 
-B = 'Supreme HQ, Bandra'; U = '/home/user/uploads/'
-def num(s): return pd.to_numeric(pd.Series(s).astype(str).str.replace(r'[,\s\u20b9]', '', regex=True), errors='coerce')
+B = 'Supreme HQ, Bandra'; U = '/home/user/reports-arena/uploads/'
+def num(s): return pd.to_numeric(pd.Series(s).astype(str).str.replace(r'[,\s₹]', '', regex=True), errors='coerce')
 
 # =================================================================== CHECK-IN LEDGER
-CK = pd.read_csv('/home/user/google_drive/Day End Report - Part 4', low_memory=False, usecols=[
+CK = pd.read_csv('/home/user/reports-arena/google_drive/Day End Report - Part 4', low_memory=False, usecols=[
     'Member ID','Location','Date (IST)','Checked In','Cleaned Class','Is New'])
 CK = CK[CK['Location'] == B].copy()
 CK['dt'] = pd.to_datetime(CK['Date (IST)'], errors='coerce')
@@ -34,7 +34,7 @@ for y in range(2024, 2027):
                          spm=len(a)/a['Member ID'].nunique()))
 ACT = pd.DataFrame(rows)
 ACT_L = ACT[ACT['mon'] >= '25-01']
-LAB12 = [m[-2:] + ('\u00b7Jan' if m.endswith('-01') else '') for m in ACT_L['mon']]
+LAB12 = [m[-2:] + ('·Jan' if m.endswith('-01') else '') for m in ACT_L['mon']]
 LAB12 = [m.split('-')[1] for m in ACT_L['mon']]
 SPM = [(v, '') for v in ACT_L['spm'].tolist()]
 
@@ -49,7 +49,7 @@ x26 = X[(X['dt'] >= '2026-09-01') & (X['dt'] < '2026-10-01')].copy()
 x25 = X[(X['dt'] >= '2025-09-01') & (X['dt'] < '2025-10-01')].copy()
 def cb(d):
     d = d[d['cap'] >= 4].copy()
-    d['cband'] = pd.cut(d['cap'], [0, 9, 11, 13, 100], labels=['\u22649 seats', '10\u201311', '12\u201313', '14+'])
+    d['cband'] = pd.cut(d['cap'], [0, 9, 11, 13, 100], labels=['≤9 seats', '10–11', '12–13', '14+'])
     return d.groupby('cband', observed=True).agg(n=('SessionID','size'), att=('CheckedIn','sum'), cap=('cap','sum'))
 CB26, CB25 = cb(x26), cb(x25)
 CB_FILL_26 = (CB26['att']/CB26['cap']*100); CB_FILL_25 = (CB25['att']/CB25['cap']*100)
@@ -70,7 +70,8 @@ CONV['conv_rate'] = (CONV['Converted']/CONV['New'].replace(0, np.nan)*100)
 import d1_data as _D
 SB = _D.SB.copy()                      # already-parsed September-complete sales frame
 SB['val'] = SB['val'].astype(float)
-SB['disc'] = num(SB['Discount Value In Currency']).fillna(0)
+# disc stays item-level (unit discount x quantity) as set in d1_data; the
+# sale-level column repeats on every item row and must not be re-summed
 sale26 = SB[(SB['dt'] >= '2026-09-01') & (SB['dt'] < '2026-10-01')]
 sale25 = SB[(SB['dt'] >= '2025-09-01') & (SB['dt'] < '2025-10-01')]
 PM = sale26.groupby('Payment Method')['val'].agg(['size','sum']).sort_values('sum', ascending=False)
@@ -81,7 +82,7 @@ cx = sale26.groupby('Member ID')['Cleaned Category'].nunique()
 SINGLE_CAT = (cx == 1).mean()*100
 
 # =================================================================== FIRST-VISIT QUALITY
-CK2 = pd.read_csv('/home/user/google_drive/Day End Report - Part 4', low_memory=False, usecols=[
+CK2 = pd.read_csv('/home/user/reports-arena/google_drive/Day End Report - Part 4', low_memory=False, usecols=[
     'Member ID','Location','Date (IST)','Checked In','Cleaned Class','Teacher Name','Time','Day of Week','Is New'])
 CK2 = CK2[CK2['Location'] == B].copy(); CK2['dt'] = pd.to_datetime(CK2['Date (IST)'], errors='coerce')
 CK2 = CK2[CK2['dt'].notna() & (CK2['Checked In'] == True)].copy().sort_values(['Member ID','dt'])
@@ -90,7 +91,7 @@ depth_all = CK2.groupby('Member ID').size().rename('visits')
 F = CK2[CK2['vn'] == 1].join(depth_all, on='Member ID')
 F = F[F['dt'] >= '2025-01-01'].copy()
 F['hr'] = num(F['Time'].astype(str).str[:2])
-F['band'] = pd.cut(F['hr'], [0, 9, 12, 17, 24], labels=['Early, before 9am', 'Late morning, 9\u201312', 'Afternoon, 12\u201317', 'Evening, after 17'])
+F['band'] = pd.cut(F['hr'], [0, 9, 12, 17, 24], labels=['Early, before 9am', 'Late morning, 9–12', 'Afternoon, 12–17', 'Evening, after 17'])
 def quality(df, col, minn=12):
     g = df.groupby(col, observed=True).agg(n=('visits','size'), r3=('visits', lambda x: (x >= 3).mean()*100),
                                            r6=('visits', lambda x: (x >= 6).mean()*100), av=('visits','mean'))
@@ -103,7 +104,8 @@ Q_TR = quality(F, 'Teacher Name', 20)
 
 # =================================================================== LEAD SOURCE
 MB = pd.read_csv(U + 'Day End Report - Part 1 - New (9).csv', low_memory=False)
-MB = MB[MB['First Visit Location'] == B].copy()
+MB['is_new'] = MB['Is New'].map(_D._is_new)
+MB = MB[(MB['First Visit Location'] == B) & (MB['is_new'] == True)].copy()
 MB['fvd'] = pd.to_datetime(MB['First Visit Date'], errors='coerce')
 MB['Ltv'] = num(MB['Ltv']); MB['No of Visits'] = num(MB['No of Visits'])
 MB['Days To Second Visit'] = num(MB['Days To Second Visit'])
@@ -118,7 +120,7 @@ SEP_INTAKE = MB[(MB['fvd'] >= '2026-09-01') & (MB['fvd'] < '2026-10-01')]
 E = A1; E2 = B1; E3 = A3; E4 = N2
 
 # precomputed bits used inside the narrative strings
-CB_REV26 = (x26.assign(b=pd.cut(x26['cap'], [0, 9, 11, 13, 100], labels=['\u22649 seats','10\u201311','12\u201313','14+']))
+CB_REV26 = (x26.assign(b=pd.cut(x26['cap'], [0, 9, 11, 13, 100], labels=['≤9 seats','10–11','12–13','14+']))
             .groupby('b', observed=True)['Revenue'].sum())
 CB_RPS = {k: (CB_REV26.get(k, 0) / max(int(CB26.loc[k, 'n']) if k in CB26.index else 1, 1)) for k in CB_REV26.index}
 LEAVERS_ONE_AND_DONE = int((v25[v25.index.isin(m25 - m26)] == 1).sum())
@@ -155,7 +157,7 @@ weakening. The check-in ledger says the opposite: <strong>{s26['Member ID'].nuni
 there are just fewer visits in each of them. Fewer seats were sold, but they were better-paid seats.</p>
 
 {bars([str(m.split('-')[1]) for m in ACT_L['mon']], [('Visits per active member', ACT_L['spm'].tolist(), E)],
-      'Visits per active member, by month \u2014 the line has been sliding since mid-2025',
+      'Visits per active member, by month — the line has been sliding since mid-2025',
       h=290, ymax=5.4, note='Check-in ledger, attended visits only. September 2026 is the lowest figure since March 2024 excluding the '
       'part-month of October 2026. Breadth expanded while depth contracted.')}
 
@@ -190,14 +192,14 @@ and <strong>ZAP10 ({int(sale26.groupby('Discount Code').size().get('ZAP10',0))} 
 account for {R(sale26[sale26['Discount Code'].isin(['NC-2026-SHQ','ZAP10'])]['disc'].sum())} of the {R(sale26['disc'].sum())} given away. A single use of the <code>20OFFSHQ</code> code
 cost {R(41800)} on its own. Because a code requires intent, every rupee of discount here is a rupee someone asked for and was granted &mdash; which makes it a policy question, not a leakage question.</p>
 
-{hbars([(f'{k} \u00b7 {int(v)} sales', PM.loc[k,'sum'], E if i == 0 else (E2 if i == 1 else E3))
+{hbars([(f'{k} · {int(v)} sales', PM.loc[k,'sum'], E if i == 0 else (E2 if i == 1 else E3))
         for i, (k, v) in enumerate(PM['size'].items())],
        'Cash by payment channel, September 2026', note='Average ticket: Stripe ' +
        R(PM.loc['stripe','sum']/PM.loc['stripe','size']) + ', split payments ' +
        R(PM.loc['multiple-payment-methods','sum']/PM.loc['multiple-payment-methods','size']) + ', custom ' +
        R(PM.loc['custom','sum']/PM.loc['custom','size']) + ', cash ' + R(PM.loc['cash','sum']/PM.loc['cash','size']) + '.')}
 
-{ev('Evidence \u2014 discount codes used in September 2026',
+{ev('Evidence — discount codes used in September 2026',
     T(['Code', 'Sales', 'Revenue after discount', 'Discount given', 'Effective depth'],
       [[k, int(r['n']), R(r['rev']), R(r['disc']), P(r['disc']/(r['rev']+r['disc'])*100)]
        for k, r in sale26.groupby('Discount Code').agg(n=('val','size'), rev=('val','sum'), disc=('disc','sum'))
@@ -217,8 +219,8 @@ Only {int((cx>=2).sum())} of {len(cx)} members bought across two categories, and
 cross-selling happening: a member who joins for Barre and a member who joins for PowerCycle are, on this month&rsquo;s evidence, treated
 as the same customer until they leave.</p>
 
-{diverging([('Top 10 buyers', spend.nlargest(10).sum()), ('Buyers 11\u201320', spend.nlargest(20).sum()-spend.nlargest(10).sum()),
-            ('Buyers 21\u201370', spend.nlargest(70).sum()-spend.nlargest(20).sum()),
+{diverging([('Top 10 buyers', spend.nlargest(10).sum()), ('Buyers 11–20', spend.nlargest(20).sum()-spend.nlargest(10).sum()),
+            ('Buyers 21–70', spend.nlargest(70).sum()-spend.nlargest(20).sum()),
             ('Bottom half of buyers', spend.nsmallest(int(len(spend)/2)).sum())],
            'Cash by buyer tier, September 2026', note='Read as contribution, not as growth: the top decile is where retention '
            'spend earns the most, and where a single lapse costs the most.')}
@@ -242,16 +244,16 @@ acquisition failure at all. It is a frequency failure among people who already k
           'Visits per member in September, for members present in two consecutive Septembers',
           lo_lab='earlier September', hi_lab='later September',
           note='The same measurement applied to the two most recent September pairs. The decay is not new &mdash; it was '
-          '\u221211.5% between 2024 and 2025, and \u221235.3% between 2025 and 2026. It is accelerating.')}
+          '−11.5% between 2024 and 2025, and −35.3% between 2025 and 2026. It is accelerating.')}
 
-{ev('Evidence \u2014 the two September cohorts, member by member',
+{ev('Evidence — the two September cohorts, member by member',
     T(['Cohort', 'Members', 'Earlier September', 'Later September', 'Change in visits per member'],
-      [['Sept-2024 \u2192 Sept-2025 (present in both)', len(core_old), f'{core_old_prev.mean():.2f}',
+      [['Sept-2024 → Sept-2025 (present in both)', len(core_old), f'{core_old_prev.mean():.2f}',
         f'{core_old.mean():.2f}', P((core_old.mean()/core_old_prev.mean()-1)*100)],
-       ['Sept-2025 \u2192 Sept-2026 (present in both)', len(core_ix), f'{core_then.mean():.2f}',
+       ['Sept-2025 → Sept-2026 (present in both)', len(core_ix), f'{core_then.mean():.2f}',
         f'{core_now.mean():.2f}', P((core_now.mean()/core_then.mean()-1)*100)]], 'num') +
     '<p style="font-size:13.5px;color:#6B7280;margin-top:14px">Only members with at least one attended visit in both months are counted, '
-    'so no joining or leaving distorts the comparison. The 2025\u201326 pair is a smaller and more committed group by construction, which '
+    'so no joining or leaving distorts the comparison. The 2025–26 pair is a smaller and more committed group by construction, which '
     'makes its 35% decline more notable, not less.</p>')}
 
 <h2>Nobody was lost. Nothing was converted.</h2>
@@ -271,7 +273,7 @@ the top of the funnel and leaks at the bottom.</p>
 {bars(['Sept 2024', 'Sept 2025', 'Sept 2026'],
       [('Members trained', [s24['Member ID'].nunique(), s25['Member ID'].nunique(), s26['Member ID'].nunique()], E),
        ('Attendances', [len(s24), len(s25), len(s26)], E3)],
-      'Breadth versus depth \u2014 the two lines have crossed',
+      'Breadth versus depth — the two lines have crossed',
       h=290, ymax=1600,
       note='Attendances are shown on the same axis to make the divergence visible; the member count is an index of breadth, '
       'the attendance count of depth. Breadth is at a three-year high. Depth is not.')}
@@ -330,21 +332,21 @@ come &mdash; it changes how full the room looks and how much the same demand is 
 <strong>{R(x26[x26['cap'].between(10,11)]['Revenue'].sum()/max(len(x26[x26['cap'].between(10,11)]),1))}</strong> against
 {R(x26[x26['cap']>=12]['Revenue'].sum()/max(len(x26[x26['cap']>=12]),1))} elsewhere.</p>
 
-{bars(['10\u201311 seats', '12\u201313 seats', '14+ seats'],
-      [('Sept 2025', [CB_FILL_25.get('10\u201311', np.nan)/100, CB_FILL_25.get('12\u201313', np.nan)/100, CB_FILL_25.get('14+', np.nan)/100], E4),
-       ('Sept 2026', [CB_FILL_26.get('10\u201311', np.nan)/100, CB_FILL_26.get('12\u201313', np.nan)/100, CB_FILL_26.get('14+', np.nan)/100], E)],
+{bars(['10–11 seats', '12–13 seats', '14+ seats'],
+      [('Sept 2025', [CB_FILL_25.get('10–11', np.nan)/100, CB_FILL_25.get('12–13', np.nan)/100, CB_FILL_25.get('14+', np.nan)/100], E4),
+       ('Sept 2026', [CB_FILL_26.get('10–11', np.nan)/100, CB_FILL_26.get('12–13', np.nan)/100, CB_FILL_26.get('14+', np.nan)/100], E)],
       'How full the room ran, by how many seats it holds', as_pct=True, h=300, ymax=0.78,
-      note='Capacity bands are the per-session seat count. The 10\u201311 band is the studio\u2019s best-performing room size in both years; '
+      note='Capacity bands are the per-session seat count. The 10–11 band is the studio’s best-performing room size in both years; '
            'rooms of nine seats or fewer are omitted as they hold too few sessions to compare.')}
 
-{ev('Evidence \u2014 capacity bands, sessions, attendances and revenue',
+{ev('Evidence — capacity bands, sessions, attendances and revenue',
     T(['Room size', 'Sessions 2026', 'Attendances 2026', 'Fill 2026', 'Fill 2025', 'Revenue 2026', 'Revenue per session'],
       [[b, int(CB26.loc[b, 'n']) if b in CB26.index else 0,
         int(CB26.loc[b, 'att']) if b in CB26.index else 0,
-        P(CB_FILL_26.get(b, np.nan)) if b in CB_FILL_26.index else '\u2014',
-        P(CB_FILL_25.get(b, np.nan)) if b in CB_FILL_25.index else '\u2014',
+        P(CB_FILL_26.get(b, np.nan)) if b in CB_FILL_26.index else '—',
+        P(CB_FILL_25.get(b, np.nan)) if b in CB_FILL_25.index else '—',
         R(CB_REV26.get(b, 0)), R(CB_RPS.get(b, 0))]
-       for b in ['10\u201311', '12\u201313', '14+']], 'num'))}
+       for b in ['10–11', '12–13', '14+']], 'num'))}
 
 <h2>{COMP_SHARE:.0f} per cent of the room was free</h2>
 <div class="sub">Complimentary seats rose by more than half while paid attendance fell. Barre 57 is the most affected.</div>
@@ -359,7 +361,7 @@ meaning of the fill rate. <strong>A 42.6% fill on 3,293 seats is {int(x26['Check
 &mdash; the Physique 57 partner sessions on 13 and 23 September &mdash; were 100% complimentary, 24 seats, zero revenue, and are correctly recorded as marketing rather than trading.</p>
 
 {hbars([(k.replace('Studio ', ''), v, E if i == 0 else (E2 if i < 3 else E3)) for i, (k, v) in
-        enumerate(CBAR.head(7).items())], 'Complimentary seats as a share of each format\u2019s attendance',
+        enumerate(CBAR.head(7).items())], 'Complimentary seats as a share of each format’s attendance',
        as_pct=True, note='Formats with fewer than one per cent comp share (Back Body Blaze, FIT, PowerCycle Express) are omitted.')}
 
 <h2>Who a first class brings in &mdash; and whether they come back</h2>
@@ -370,7 +372,7 @@ circumstances of that first visit. The differences are large enough to schedule 
 
 <p>By day: people whose <strong>first class was on a Tuesday reach a third visit {Q_DAY.loc['Tuesday','r3']:.1f}% of the time</strong>; those who started on a
 <strong>Sunday, {Q_DAY.loc['Sunday','r3']:.1f}%</strong>. By hour: a first class <strong>before 9am converts to a third visit {Q_BAND.loc['Early, before 9am','r3']:.1f}%</strong>
-of the time and yields {Q_BAND.loc['Early, before 9am','av']:.1f} visits on average, against <strong>{Q_BAND.loc['Afternoon, 12\u201317','r3']:.1f}% and {Q_BAND.loc['Afternoon, 12\u201317','av']:.1f} visits</strong> for an afternoon start. By format: <strong>a first class in Studio Barre 57 leads to a third visit
+of the time and yields {Q_BAND.loc['Early, before 9am','av']:.1f} visits on average, against <strong>{Q_BAND.loc['Afternoon, 12–17','r3']:.1f}% and {Q_BAND.loc['Afternoon, 12–17','av']:.1f} visits</strong> for an afternoon start. By format: <strong>a first class in Studio Barre 57 leads to a third visit
 {Q_FMT.loc['Studio Barre 57','r3']:.1f}% of the time and {Q_FMT.loc['Studio Barre 57','av']:.1f} visits</strong>, while a first class in Studio Mat 57 leads to
 {Q_FMT.loc['Studio Mat 57','r3']:.1f}% and {Q_FMT.loc['Studio Mat 57','av']:.1f} visits.</p>
 
@@ -383,7 +385,7 @@ The data says that decision has a measurable twelve-month consequence, and it is
        as_pct=True, note='Every member whose first Bandra class fell from January 2025 onward, n = ' +
        f"{int(Q_DAY['n'].sum())} across these days. Depth measured over their entire history, so the group is still maturing.")}
 
-{ev('Evidence \u2014 first-class circumstances and lifetime depth',
+{ev('Evidence — first-class circumstances and lifetime depth',
     T(['Day of first class', 'Members', 'Reached a 3rd visit', 'Reached a 6th visit', 'Average lifetime visits'],
       [[k, int(r['n']), P(r['r3']), P(r['r6']), f"{r['av']:.1f}"] for k, r in Q_DAY.iterrows()], 'num') +
     '<h4 style="margin-top:24px">By hour of first class</h4>' +
@@ -443,12 +445,12 @@ benchmark. Excluding those, the median spread across the remaining <strong>{MULT
 <strong>{OVER20} of the {MULTI_SLOT}</strong> show a gap of more than twenty points. The finding does not depend on the outliers; it is the ordinary case.
 What the outliers do show is the size of the opportunity when a slot is systematically mis-assigned.</p></div>
 
-{hbars([(f"{r['slot']} \u00b7 {r['fmt']}", r['spread']/100, E if r['spread'] > 30 else (E2 if r['spread'] > 15 else E3))
+{hbars([(f"{r['slot']} · {r['fmt']}", r['spread']/100, E if r['spread'] > 30 else (E2 if r['spread'] > 15 else E3))
         for _, r in SLOTS.head(12).iterrows()],
        'Spread between the best and worst trainer in the same slot, September 2026', as_pct=True,
        note='Only slots taught by two or more trainers. A high spread means the slot is trainer-sensitive; a low spread means it is not.')}
 
-{ev('Evidence \u2014 every shared slot, with the best and worst trainer named',
+{ev('Evidence — every shared slot, with the best and worst trainer named',
     T(['Slot', 'Format', 'Trainers', 'Sessions', 'Worst fill', 'Best fill', 'Spread', 'Worst', 'Best'],
       [[r['slot'], r['fmt'], int(r['k']), r['n'], P(r['lo']), P(r['hi']), f"{r['spread']:.1f} pts",
         r['worst'], r['best']] for _, r in SLOTS.iterrows()], 'num small'))}
@@ -472,7 +474,7 @@ August payroll. A spread for experience is normal and defensible; what is not de
 the outcome the business actually needs. The two trainers paid the most in August were not the two who filled the most seats.</p>
 
 {bars(['Cycle', 'Barre', 'All'], [('Pay per session', [CYCLE_RATE, BARRE_RATE, PAY_SESS], E)],
-      'Teaching pay per session, by discipline \u2014 August 2026',
+      'Teaching pay per session, by discipline — August 2026',
       note='Cycle is PowerCycle and its variants; Barre covers Barre 57, Cardio Barre and Mat. The blended figure is ' +
       R(PAY_SESS) + ' per session across all ' + f"{int(PA['Total Sessions'].sum())}" + ' sessions.')}
 
@@ -494,7 +496,7 @@ another took {int(Q_TR['n'].min())}, and nobody decided that on purpose.</p>
 
 {hbars([(k, r['r3']/100, E if r['r3'] == Q_TR['r3'].max() else (E2 if r['r3'] >= Q_TR['r3'].mean() else E3))
         for k, r in Q_TR.iterrows() if r['n'] >= 40],
-       'Share of a trainer\u2019s first-time visitors who reached a third visit', as_pct=True,
+       'Share of a trainer’s first-time visitors who reached a third visit', as_pct=True,
        note='Trainers with at least 40 first classes since January 2025, so that the rate is not driven by a handful of visitors.')}
 '''
 

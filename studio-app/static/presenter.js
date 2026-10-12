@@ -76,7 +76,10 @@ const closeDrawer=button('Close',()=>{drawer.hidden=true;root.classList.remove('
 closeDrawer.classList.add('p57-close-btn');
 
 actionsBar.prepend(noteBtn,annotBtn,settingsBtn);
+const headClose=button('Close',()=>{drawer.hidden=true;root.classList.remove('p57-right-open');stopPrompt();});
+headClose.classList.add('p57-head-close');
 dh.append(titleGroup,actionsBar);
+dh.prepend(headClose);
 drawer.append(dh);
 
 // Collapsible Panel: Private Speaker Notes
@@ -206,6 +209,9 @@ function openSpeaker(expandNotes=false){
 const oldNotes=[...bar.querySelectorAll('button')].find(b=>b.textContent==='Notes');
 if(oldNotes){oldNotes.textContent='Speaker notes / annotations';oldNotes.onclick=()=>openSpeaker(true);}
 button('Teleprompter',()=>openSpeaker(false));
+// Hooks for the floating report-interface controls (speaker notes launcher,
+// AI assistant, layout editor).
+window.P57Speaker={open:openSpeaker,notes:()=>openSpeaker(true),drawer,bar,notice};
 // Only narrative fields are editable; computed table values retain their source definitions.
 const editables=[...document.querySelectorAll('.wrap p,.wrap h3,.wrap h4,.wrap .sub,body>header h1,body>header .lede')].filter(e=>!e.closest('table,svg,.rt-table-tools'));
 const originalText=new Map(editables.map(e=>[e,e.textContent]));

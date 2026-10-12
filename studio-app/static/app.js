@@ -238,16 +238,72 @@ function openRun(run){
   $('#runLabel').textContent = run.label || '';
   $('#runSub').textContent = `${run.studio} · built ${run.built || ''}`;
   $('#btnDownload').disabled = false;
-  $('#chlist').innerHTML = run.chapters.map((c,i) => `
-    <li data-i="${i}" class="${i===0?'on':''}">
-      <span class="n">${String(c.n||i+1).padStart(2,'0')}</span>
-      <span><span class="t">${esc(c.title)}</span><span class="s">${esc(c.subtitle||'')}</span></span>
-    </li>`).join('');
-  $$('#chlist li').forEach(li => li.onclick = () => { stopNarration(); show(+li.dataset.i); });
+  renderChList(run, 0);
   view('read');
   document.body.classList.add('report-full');
   $('#stage').src = `/api/report/${run.id}/report`;
   loadVoices();
+}
+
+/* Hierarchical chapter rail: each chapter lists its own sub-topics as
+   sub-headers beneath it (never as separate tabs). Clicking a sub-header opens
+   the chapter and scrolls straight to that section's anchor. */
+function renderChList(run, active){
+  $('#chlist').innerHTML = run.chapters.map((c,i) => {
+    const subs = (c.sections||[]).map(s => `
+      <li class="subitem" data-i="${i}" data-sec="${esc(s.id)}">
+        <button class="sublink" type="button">${esc(s.title)}</button>
+      </li>`).join('');
+    return `
+    <li data-i="${i}" class="chap ${i===active?'on open':''}">
+      <button class="chhead" type="button" data-i="${i}" aria-expanded="${i===active?'true':'false'}">
+        <span class="n">${String(c.n||i+1).padStart(2,'0')}</span>
+        <span class="chtx"><span class="t">${esc(c.title)}</span><span class="s">${esc(c.subtitle||'')}</span></span>
+        <span class="chev" aria-hidden="true">▾</span>
+      </button>
+      ${subs ? `<ul class="subs">${subs}</ul>` : ''}
+    </li>`;
+  }).join('');
+  $$('#chlist .chhead').forEach(b => b.onclick = () => {
+    const i = +b.dataset.i;
+    const was = b.closest('li').classList.contains('open');
+    stopNarration(); show(i);
+    if (was && i === CH) b.closest('li').classList.toggle('open');
+    syncChList();
+  });
+  $$('#chlist .sublink').forEach(b => b.onclick = e => {
+    e.stopPropagation();
+    const li = b.closest('.subitem');
+    stopNarration(); gotoSection(+li.dataset.i, li.dataset.sec);
+  });
+}
+function syncChList(){
+  $$('#chlist li.chap').forEach((li,k) => {
+    li.classList.toggle('on', k === CH);
+    li.classList.toggle('open', k === CH);
+    const h = li.querySelector('.chhead'); if (h) h.setAttribute('aria-expanded', k === CH ? 'true' : 'false');
+  });
+}
+function gotoSection(i, secId){
+  if (!RUN || !RUN.chapters[i]) return;
+  const flash = () => {
+    try{
+      const d = $('#stage').contentDocument; if (!d) return;
+      if (!d.getElementById('si-sec-style')){
+        const st = d.createElement('style'); st.id = 'si-sec-style';
+        st.textContent = '.si-flash{animation:siflash 1.8s ease} @keyframes siflash{0%,55%{background:#fde9c9;box-shadow:0 0 0 8px #fde9c9}100%{background:transparent}}';
+        d.head.appendChild(st);
+      }
+      const el = d.getElementById(secId); if (!el) return;
+      el.scrollIntoView({behavior:'smooth', block:'start'});
+      el.classList.remove('si-flash'); void el.offsetWidth; el.classList.add('si-flash');
+    }catch(e){}
+  };
+  if (CH === i){ flash(); syncChList(); return; }
+  show(i);
+  const st = $('#stage');
+  st.addEventListener('load', flash, {once:true});
+  syncChList();
 }
 
 function show(i){
@@ -257,7 +313,7 @@ function show(i){
   const c = RUN.chapters[i];
   $('#btnPrev').disabled = i === 0;
   $('#btnNext').disabled = i === RUN.chapters.length - 1;
-  $$('#chlist li').forEach((l,k) => l.classList.toggle('on', k===i));
+  syncChList();
   $('#cNum').textContent = String(c.n || i+1).padStart(2,'0');
   $('#cTitle').textContent = c.title;
   $('#cSub').textContent = c.subtitle || '';

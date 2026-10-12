@@ -1,13 +1,13 @@
 """Companion workbook for the seven Bandra September-2026 reports."""
 import pandas as pd, numpy as np, sys
-sys.path.insert(0, '/home/user/analysis3')
+sys.path.insert(0, '/home/user/reports-arena/analysis3')
 import e1_data as E
 import d1_data as D
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
 
 TODAY = pd.Timestamp('2026-10-18')
-OUT = '/home/user/Bandra_September_2026_Reports_4-9_Data.xlsx'
+OUT = '/home/user/reports-arena/Bandra_September_2026_Reports_4-9_Data.xlsx'
 SHEETS = []
 
 def add(name, df, note=''):
@@ -20,7 +20,7 @@ def septx(y, m=9):
     return s
 x24, x25, x26 = septx(2024), septx(2025), septx(2026)
 
-CK = pd.read_csv('/home/user/google_drive/Day End Report - Part 4', low_memory=False,
+CK = pd.read_csv('/home/user/reports-arena/google_drive/Day End Report - Part 4', low_memory=False,
     usecols=['Member ID', 'Location', 'Date (IST)', 'Checked In', 'Is Late Cancelled', 'Cleaned Class',
              'Teacher Name', 'Complementary', 'Paid', 'Class No'])
 CK = CK[CK['Location'] == E.B].copy(); CK['dt'] = pd.to_datetime(CK['Date (IST)'], errors='coerce')
@@ -33,7 +33,7 @@ v26 = a26.groupby('Member ID').size(); v25 = a25.groupby('Member ID').size()
 S25, S26, S24 = set(a25['Member ID']), set(a26['Member ID']), set(a24['Member ID'])
 
 SB = D.SB.copy()
-SB['disc'] = E.num(SB['Discount Value In Currency']).fillna(0)
+SB['disc'] = SB['disc']  # item-level, from d1_data
 SB['gross'] = SB['val'] + SB['disc']; SB['has_disc'] = SB['disc'] > 0; SB['yr'] = SB['dt'].dt.year
 R12 = SB[SB['dt'] >= '2025-10-01']; R26 = SB[(SB['dt'] >= '2026-09-01') & (SB['dt'] < '2026-10-01')]
 
@@ -42,7 +42,8 @@ N9 = N9[N9['First Visit Location'] == E.B].copy()
 N9['fvd'] = pd.to_datetime(N9['First Visit Date'], errors='coerce', dayfirst=False)
 for c in ['Ltv', 'No of Visits', 'Days To Second Visit', 'Visits Per Month']:
     N9[c] = E.num(N9[c])
-INTAKE = N9[(N9['fvd'] >= '2025-09-01') & (N9['fvd'] < '2026-09-01')].copy()
+INTAKE = N9[(N9['fvd'] >= '2025-09-01') & (N9['fvd'] < '2026-09-01') &
+            N9['Is New'].astype(str).str.startswith('New')].copy()
 INTAKE['conv'] = INTAKE['Conversion Status'] == 'Converted'
 SRC_MAP = {'Website': 'Website', 'Hosted Class': 'Hosted class', 'Client Referral': 'Client referral',
            'Yellow Messenger/Whatsapp Enquiry': 'WhatsApp enquiry', 'Social - Instagram': 'Instagram',
@@ -225,7 +226,7 @@ LCH = LCH.sort_values('Day of week')
 add('20 Cancellations by day', LCH, 'September 2026.')
 
 # ================================================================ 9 discounts
-DG = SB.groupby('yr').agg(Sales=('Sale ID', 'size'), Gross=('gross', 'sum'), Discount=('disc', 'sum'),
+DG = SB.groupby('yr').agg(Sales=('Sale ID', 'nunique'), Gross=('gross', 'sum'), Discount=('disc', 'sum'),
                           Discounted_sales=('has_disc', 'sum')).reset_index()
 DG.columns = ['Year', 'Sales', 'Gross', 'Discount', 'Discounted_sales']
 DG['Depth_pct'] = (DG['Discount'] / DG['Gross'] * 100).round(2)
@@ -234,7 +235,7 @@ DG['Gross'] = DG['Gross'].round(0); DG['Discount'] = DG['Discount'].round(0)
 add('21 Discount by year', DG, 'Raw sales export, all months on file.')
 
 D26 = SB[SB['yr'] == 2026]
-DP = D26.groupby('Cleaned Product').agg(Sales=('Sale ID', 'size'), Gross=('gross', 'sum'), Discount=('disc', 'sum'),
+DP = D26.groupby('Cleaned Product').agg(Sales=('Sale ID', 'nunique'), Gross=('gross', 'sum'), Discount=('disc', 'sum'),
                                         Discounted_sales=('has_disc', 'sum')).reset_index()
 DP['Depth_pct'] = (DP['Discount'] / DP['Gross'] * 100).round(1)
 DP['Spread_pct'] = (DP['Discounted_sales'] / DP['Sales'] * 100).round(1)
@@ -242,7 +243,7 @@ DP['Gross'] = DP['Gross'].round(0); DP['Discount'] = DP['Discount'].round(0)
 add('22 Discount by product', DP[DP['Sales'] >= 15].sort_values('Depth_pct', ascending=False),
     'Sales with fifteen or more transactions in 2026.')
 
-DS = D26.groupby('Sold By').agg(Sales=('Sale ID', 'size'), Gross=('gross', 'sum'), Discount=('disc', 'sum'),
+DS = D26.groupby('Sold By').agg(Sales=('Sale ID', 'nunique'), Gross=('gross', 'sum'), Discount=('disc', 'sum'),
                                 Discounted_sales=('has_disc', 'sum')).reset_index()
 DS['Depth_pct'] = (DS['Discount'] / DS['Gross'] * 100).round(1)
 DS['Spread_pct'] = (DS['Discounted_sales'] / DS['Sales'] * 100).round(1)
@@ -495,7 +496,7 @@ CHS2 = LB.groupby('Channel').agg(Leads=('ID', 'size'),
         Trial_completed_pct=('Trial Status', lambda x: round((x == 'Trial Completed').mean() * 100, 1)),
         Won_pct=('Status', lambda x: round((x == 'Won').mean() * 100, 1)),
         Mean_lifetime_value=('LTVn', 'mean')).reset_index()
-CHS2['Channel'] = CHS2['Channel'].str.replace(' \u25c9 Leads', '', regex=False)
+CHS2['Channel'] = CHS2['Channel'].str.replace(' ◉ Leads', '', regex=False)
 CHS2['Mean_lifetime_value'] = CHS2['Mean_lifetime_value'].round(0)
 add('44 Lead channels', CHS2.sort_values('Leads', ascending=False), 'Bandra leads by channel taxonomy.')
 
@@ -568,7 +569,7 @@ add('53 Sales by hour', BH, 'When the studio takes its money, January to Septemb
 _S26['dom'] = _S26['at'].dt.day
 BD = _S26.groupby('dom').agg(Sales=('val', 'size'), Value=('val', 'sum')).reset_index()
 BD['Value'] = BD['Value'].round(0)
-add('54 Sales by day of month', BD, 'Where the month\u2019s selling sits, January to September 2026.')
+add('54 Sales by day of month', BD, 'Where the month’s selling sits, January to September 2026.')
 
 _intake = _CKm[_CKm['dt'] < '2025-09-01'].groupby('Member ID')['dt'].min()
 _COH = _intake[_intake >= '2024-09-01'].index

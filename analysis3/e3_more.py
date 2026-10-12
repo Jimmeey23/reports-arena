@@ -54,7 +54,7 @@ def fC():
     X['cap'] = X['Capacity']/X['Classes'].clip(lower=1)
     x26 = X[(X['dt'] >= '2026-09-01') & (X['dt'] < '2026-10-01')]
     x25 = X[(X['dt'] >= '2025-09-01') & (X['dt'] < '2025-10-01')]
-    CK = pd.read_csv('/home/user/google_drive/Day End Report - Part 4', low_memory=False,
+    CK = pd.read_csv('/home/user/reports-arena/google_drive/Day End Report - Part 4', low_memory=False,
                      usecols=['Member ID','Location','Date (IST)','Checked In','Cleaned Class','Duration (Minutes)','Teacher Name'])
     CK = CK[(CK['Location'] == E.B) & (CK['Checked In'] == True)].copy()
     CK['dt'] = pd.to_datetime(CK['Date (IST)'], errors='coerce')
@@ -102,7 +102,7 @@ blk('D. FORMAT PREFERENCE AND BEHAVIOUR', fD)
 
 # ------------------------------------------------------------------ E cancellations
 def fE():
-    CK = pd.read_csv('/home/user/google_drive/Day End Report - Part 4', low_memory=False,
+    CK = pd.read_csv('/home/user/reports-arena/google_drive/Day End Report - Part 4', low_memory=False,
         usecols=['Member ID','Location','Date (IST)','Checked In','Is Late Cancelled','Cleaned Class','Time','Day of Week','Teacher Name'])
     CK = CK[CK['Location'] == E.B].copy(); CK['dt'] = pd.to_datetime(CK['Date (IST)'], errors='coerce')
     LC = CK[CK['Is Late Cancelled'] == True]
@@ -138,7 +138,7 @@ blk('E. LATE CANCELLATIONS', fE)
 def fF():
     import d1_data as D
     SB = D.SB.copy()
-    SB['disc'] = E.num(SB['Discount Value In Currency']).fillna(0)
+    # item-level disc arrives from d1_data
     SB['gross'] = SB['val'] + SB['disc']
     SB['has_disc'] = SB['disc'] > 0
     SB['yr'] = SB['dt'].dt.year; SB['mo'] = SB['dt'].dt.to_period('M')

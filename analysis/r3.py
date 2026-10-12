@@ -11,10 +11,10 @@ import pandas as pd, numpy as np
 import os
 
 BANDRA = 'Supreme HQ, Bandra'
-LEDGER = '/home/user/google_drive/Day End Report - Part 4'
-LEADS  = '/home/user/uploads/\u2756 PM - Leads \u2756 - \u25c9 Leads (31).csv'
-SALES  = '/home/user/uploads/Sales - Raw - Sales (23).csv'
-MASTER = '/home/user/uploads/Day End Report - Part 1 - New (9).csv'
+LEDGER = '/home/user/reports-arena/google_drive/Day End Report - Part 4'
+LEADS  = '/home/user/reports-arena/uploads/\u2756 PM - Leads \u2756 - \u25c9 Leads (31).csv'
+SALES  = '/home/user/reports-arena/uploads/Sales - Raw - Sales (23).csv'
+MASTER = '/home/user/reports-arena/uploads/Day End Report - Part 1 - New (9).csv'
 
 INK, MUT, LINE = '#1F1C18', '#7A7267', '#ECE6DC'
 TER, SAGE, BLU, GOLD, GREY = '#A8543A', '#4A7C59', '#4A6FA5', '#B08D3F', '#CBC3B6'
@@ -109,7 +109,11 @@ def _num(sr):
 S3 = pd.read_csv(SALES, low_memory=False)
 S3['dt'] = pd.to_datetime(S3['Payment Date'], errors='coerce')
 S3['val'] = _num(S3['Payment Value'])
-S3['disc_amt'] = _num(S3['Discount Value In Currency'])
+# Collected cash counts successful, non-voided payments only; item-level
+# discounts are unit discount x quantity (the sale-level column repeats).
+S3 = S3[S3['Payment Status'].astype(str).str.strip().str.lower().eq('succeeded') &
+        ~S3['Sec. Is Voided'].astype(str).str.strip().str.lower().eq('true')].copy()
+S3['disc_amt'] = (_num(S3['Sale Item Unit Discount Value']) * _num(S3['Sale Item Quantity'])).fillna(0)
 SB = S3[S3['Calculated Location'] == BANDRA].copy()
 
 L3 = pd.read_csv(LEADS, low_memory=False)
@@ -128,7 +132,8 @@ M3 = pd.read_csv(MASTER, low_memory=False)
 _mv = M3['Month Year'].astype(str)
 M3['cohort'] = pd.to_datetime(_mv, format='%b-%Y', errors='coerce')
 M3.loc[M3['cohort'].isna(), 'cohort'] = pd.to_datetime(_mv[M3['cohort'].isna()], format='%B-%Y', errors='coerce')
-MB = M3[M3['First Visit Location'] == BANDRA].copy()
+MB = M3[(M3['First Visit Location'] == BANDRA) &
+        M3['Is New'].astype(str).str.startswith('New')].copy()
 MB['conv'] = MB['Conversion Status'].eq('Converted')
 
 sep26 = MB[MB['cohort'] == pd.Timestamp('2026-09-01')].copy()
@@ -150,7 +155,7 @@ new_rs25 = c25[c25['Member ID'].isin(nc25)]['val'].sum()
 # ================================================================= 1. reconciliation
 K3 = dict(
     cash26=c26['val'].sum(), cash25=c25['val'].sum(), cash24=c24['val'].sum(),
-    tx26=len(c26), tx25=len(c25), pay26=c26['Member ID'].nunique(), pay25=c25['Member ID'].nunique(),
+    tx26=c26['Sale ID'].nunique(), tx25=c25['Sale ID'].nunique(), pay26=c26['Member ID'].nunique(), pay25=c25['Member ID'].nunique(),
     new_cash=new_rs, new_cash25=new_rs25,
     base_cash=c26['val'].sum()-new_rs, base_share=(1-new_rs/c26['val'].sum())*100,
     base_share25=(1-new_rs25/c25['val'].sum())*100,
@@ -174,7 +179,7 @@ recon_tbl = T(['Measure', 'Sept 2024', 'Sept 2025', 'Sept 2026'],
 RECON = f'''
 <div class="call blu">
 <h3>Two true statements that look like they contradict each other</h3>
-<p>The sales ledger shows September 2026 taking <strong>{R(K3['cash26'])}</strong> across {K3['tx26']} transactions — down only <strong>{abs(K3['cash_yoy']):.1f}%</strong> on September 2025 and, in isolation, an unremarkable month. The member cohort file shows the 143 clients acquired in September generating <strong>{R(coh26_cash)}</strong> of cash so far, against {R(coh25_cash)} for the 99 clients acquired a year earlier.</p>
+<p>The sales ledger shows September 2026 taking <strong>{R(K3['cash26'])}</strong> across {K3['tx26']} transactions — down only <strong>{abs(K3['cash_yoy']):.1f}%</strong> on September 2025 and, in isolation, an unremarkable month. The member cohort file shows the {len(sep26)} clients acquired in September generating <strong>{R(coh26_cash)}</strong> of cash so far, against {R(coh25_cash)} for the {len(sep25)} clients acquired a year earlier.</p>
 <p>Both are correct, and the distance between them is the single most useful thing in this review. <strong>{P(K3['base_share'])} of September's revenue came from members the studio already had</strong>, and only {P(100-K3['base_share'])} from anyone new. September's till looked healthy because the existing base kept paying. September's <em>future</em> got visibly thinner.</p>
 </div>
 <p>This is why the two figures should be read together rather than instead of one another. A flat top line is genuinely good news — it means the studio is not losing its existing members, which is the harder and more valuable half of the business. But it also means the ledger was masking the acquisition problem completely. Had this month's new-client shortfall been read only through the till, it would have been invisible.</p>
@@ -207,13 +212,19 @@ roster_rows = [[i, f"{int(r['s25'])}", f"{int(r['s26'])}",
 roster_tbl = T(['Trainer', 'Sept 2025 classes', 'Sept 2026 classes', 'Change', 'Lifetime clients',
                 'All-time conv.', 'LTV per client'], roster_rows, 'mono')
 
+# Sessions and capacity come from the Sessions export (Part 3), which sees
+# every scheduled class including zero-attendance ones; the check-in ledger
+# only sees sessions somebody attended, so it undercounts seats offered.
+_X3 = pd.read_csv('/home/user/reports-arena/uploads/Day End Report - Part 3 - Sessions (19).csv', low_memory=False)
+_X3['dt'] = pd.to_datetime(_X3['Date'], errors='coerce')
+for _c in ['Capacity', 'CheckedIn']:
+    _X3[_c] = pd.to_numeric(_X3[_c], errors='coerce').fillna(0)
+_XB3 = _X3[_X3['Location'] == BANDRA]
 seats = {}
 for lab, a, b_ in [('Sept 2025', '2025-09-01', '2025-10-01'), ('Sept 2026', '2026-09-01', '2026-10-01')]:
-    x = CB[(CB['dt'] >= a) & (CB['dt'] < b_)]
-    ss = x.groupby('Session ID').agg(cap=('cap', 'first'), att=('checked', 'sum'))
-    ss = ss[ss['cap'] > 0]
-    seats[lab] = dict(sessions=len(ss), seats=int(ss['cap'].sum()), filled=int(ss['att'].sum()),
-                      util=ss['att'].sum()/ss['cap'].sum()*100, avg=ss['att'].mean())
+    x = _XB3[(_XB3['dt'] >= a) & (_XB3['dt'] < b_)]
+    seats[lab] = dict(sessions=len(x), seats=int(x['Capacity'].sum()), filled=int(x['CheckedIn'].sum()),
+                      util=x['CheckedIn'].sum()/x['Capacity'].sum()*100, avg=x['CheckedIn'].mean())
 K3['seats25'], K3['seats26'] = seats['Sept 2025'], seats['Sept 2026']
 
 seats_tbl = T(['Measure', 'Sept 2025', 'Sept 2026', 'Change'],
@@ -266,7 +277,7 @@ conc_tbl = T(['Trainer', 'Sept-26 clients', 'Share of month', 'Converted', 'Conv
 CONC = f'''
 <div class="call">
 <h3>One trainer received {P(K3['resh_share'])} of September's new clients. None of them came back.</h3>
-<p>Reshma Sharma took <strong>{K3['resh_n']} of the month's 143 new clients — {P(K3['resh_share'])} of the entire month's intake, more than double any other trainer</strong>. Every one of those {K3['resh_n']} clients attended exactly one class. Across the entire group network, not a single one of them ever checked in again — not at Bandra, not anywhere. The other {K3['oth_n']} clients taught by the rest of the studio returned at <strong>{P(K3['oth_ret'])}</strong>, averaging {K3['oth_v']:.2f} visits against her group's {K3['resh_v']:.2f}.</p>
+<p>Reshma Sharma took <strong>{K3['resh_n']} of the month's {len(sep26)} new clients — {P(K3['resh_share'])} of the entire month's intake, more than double any other trainer</strong>. Every one of those {K3['resh_n']} clients attended exactly one class. Across the entire group network, not a single one of them ever checked in again — not at Bandra, not anywhere. The other {K3['oth_n']} clients taught by the rest of the studio returned at <strong>{P(K3['oth_ret'])}</strong>, averaging {K3['oth_v']:.2f} visits against her group's {K3['resh_v']:.2f}.</p>
 </div>
 <p>This deserves to be stated carefully and in full, because it is the kind of finding that is easy to over-read.</p>
 <p>Her all-time record at Bandra is <strong>not</strong> exceptional either way: {int(lv.loc['Reshma Sharma','n'])} clients, a {P(MB[MB['Trainer Name']=='Reshma Sharma']['conv'].mean()*100)} conversion rate against a studio average of {P(MB['conv'].mean()*100)}, and she has had genuinely strong months — 77.8% in July 2024, 53.8% in December 2024. On lifetime value per client she ranks {K3['resh_rank']} of {len(lv_big)} among trainers with 150 or more clients, at {R(K3['resh_ltv_all'])}. A zero month can happen to anyone.</p>
@@ -381,8 +392,6 @@ _sec = pd.Series(_sec)
 _pre = int(_sec.str.contains('2 For 1|Newcomer', case=False, na=False).sum())
 K3.update(mw_n=len(_mw), mw_head=len(_sec)/len(_mw)*100, mw_pre=_pre,
           mw_gen_n=len(_sec)-_pre, mw_gen=(len(_sec)-_pre)/len(_mw)*100)
-K3['mw_gen_gap'] = len(_mw)*0.294 - K3['mw_gen_n']
-K3['mw_gen_rec'] = K3['mw_gen_gap']*0.619*28160
 
 # The baseline, on the ledger's own method, so the comparison is like-for-like
 _bm = MB[(MB['cohort'] >= '2025-10-01') & (MB['cohort'] < '2026-09-01')].copy()
@@ -404,7 +413,8 @@ K3['prepaid_share_sep'] = K3['mw_pre']/max(len(_sec), 1)*100
 K3['sec_gap_alt'] = 11.6
 K3['gen_gap_n'] = K3['mw_n']*K3['base_gen']/100 - K3['mw_gen_n']
 K3['gen_gap_val'] = K3['gen_gap_n']*0.619*28160
-K3['mw_gen_rec'] = K3['mw_gen_gap']*0.619*28160
+K3['mw_gen_gap'] = K3['gen_gap_n']
+K3['mw_gen_rec'] = K3['gen_gap_val']
 
 # ================================================================= 5. intro pack
 nc_all = SB[SB['Cleaned Category'] == 'Newcomers Special']
@@ -509,7 +519,7 @@ top_tbl = T(['Member', 'First visit', 'Sept-26 spend', 'Transactions'],
    for _, r in top.iterrows()], 'mono')
 
 BASE = f'''
-<p>It is worth naming plainly who is actually funding the studio, because it shapes what September's numbers mean. <strong>The ten largest payers in September account for {R(K3['top10'])} — {P(K3['top10_share'])} of the month's entire revenue</strong>, from just ten people out of 139 paying members. The largest single transaction of the month was a {R(175560)} annual membership.</p>
+<p>It is worth naming plainly who is actually funding the studio, because it shapes what September's numbers mean. <strong>The ten largest payers in September account for {R(K3['top10'])} — {P(K3['top10_share'])} of the month's entire revenue</strong>, from just ten people out of {K3['pay26']} paying members. The largest single transaction of the month was a {R(c26.groupby('Sale ID')['val'].sum().max())} annual membership.</p>
 <p>This is normal for a boutique studio and it is not a criticism. It is, however, the reason the top line held while the acquisition line collapsed, and it is a risk worth stating: a business whose month is carried by its existing base is only as strong as that base's continued willingness to renew. The 170 members currently flagged At Risk and 635 Lapsed represent the other side of that dependency.</p>
 {top_tbl and ev('View the ten largest September payers', top_tbl)}
 '''
@@ -517,16 +527,15 @@ BASE = f'''
 # ================================================================= 8. capacity
 fill_tbl = None
 try:
-    x = b26
-    ss = x.groupby('Session ID').agg(cap=('cap', 'first'), att=('checked', 'sum'), cls=('Cleaned Class', 'first'))
-    ss = ss[ss['cap'] > 0]
-    fc = ss.groupby('cls').agg(sessions=('cap', 'size'), seats=('cap', 'sum'), filled=('att', 'sum'))
+    _x3 = _XB3[(_XB3['dt'] >= '2026-09-01') & (_XB3['dt'] < '2026-10-01')].copy()
+    _x3['Cleaned Class'] = _x3['Class'].astype(str).str.replace(r'^Studio\s+', '', regex=True)
+    fc = _x3.groupby('Cleaned Class').agg(sessions=('SessionID', 'size'), seats=('Capacity', 'sum'), filled=('CheckedIn', 'sum'))
     fc['fill'] = fc['filled']/fc['seats']*100
     fc = fc.sort_values('seats', ascending=False)
     fill_tbl = T(['Class format', 'Sessions', 'Seats', 'Filled', 'Fill rate'],
                  [[i, f"{int(r['sessions'])}", f"{int(r['seats']):,}", f"{int(r['filled'])}", P(r['fill'])] for i, r in fc.iterrows()], 'mono')
-    K3['seats_util'] = ss['att'].sum()/ss['cap'].sum()*100
-    K3['under50'] = (ss['att']/ss['cap'] < 0.5).mean()*100
+    K3['seats_util'] = fc['filled'].sum()/fc['seats'].sum()*100
+    K3['under50'] = (_x3['CheckedIn']/_x3['Capacity'].replace(0, np.nan) < 0.5).mean()*100
 except Exception:
     fc = None
 _lc = {}
@@ -553,7 +562,7 @@ CAP = f'''
 # ================================================================= recommendations
 RECS3 = [
  ('01','Cap any single trainer\u2019s share of new-client intake, and guarantee every new client a second touchpoint','Studio Manager + Head of Training',
-  f'Reshma Sharma received {K3["resh_share"]:.0f}% of September\u2019s new clients — 33 of 143 — and not one of them returned for a second class, against a {K3["oth_ret"]:.0f}% return rate for the rest of the studio. Trial-for-trial the comparison is 0 of {K3["tri_resh_n"]} against {K3["tri_oth_conv"]} of {K3["tri_oth_n"]} ({K3["tri_oth_rate"]:.1f}%). Her all-time record is ordinary rather than poor, which is precisely the point: any trainer can have a zero month, and the studio should never have {K3["resh_share"]:.0f}% of a month\u2019s intake resting on one person with no second look.',
+  f'Reshma Sharma received {K3["resh_share"]:.0f}% of September\u2019s new clients — {K3["resh_n"]} of {len(sep26)} — and not one of them returned for a second class, against a {K3["oth_ret"]:.0f}% return rate for the rest of the studio. Trial-for-trial the comparison is 0 of {K3["tri_resh_n"]} against {K3["tri_oth_conv"]} of {K3["tri_oth_n"]} ({K3["tri_oth_rate"]:.1f}%). Her all-time record is ordinary rather than poor, which is precisely the point: any trainer can have a zero month, and the studio should never have {K3["resh_share"]:.0f}% of a month\u2019s intake resting on one person with no second look.',
   f'Converting her {K3["resh_n"]} clients at the rest of the studio\u2019s rate would have produced {K3["missed"]:.1f} more members and lifted September from 8.4% to {K3["lift_conv"]/len(sep26)*100:.1f}% conversion on its own. Applied as a standing rule, it removes the single largest concentration risk in the acquisition funnel at no cost.'),
  ('02','Rebuild the trial follow-up around contact, not pricing','Studio Manager + Front Desk',
   f'{K3["unresp"]:.0f}% of Bandra leads that fail to close are simply unreachable, and a further 13% are postponements — "will get back to us", "asked to call back later". Only {K3["price_obj"]:.0f}% cite price. Meanwhile wins fell from {K3["w25"]} to {K3["w26"]} ({K3["win_yoy"]:+.0f}%) on leads that rose {K3["lead_yoy"]:+.0f}%. The blocking constraint is the follow-up sequence, not the offer.',

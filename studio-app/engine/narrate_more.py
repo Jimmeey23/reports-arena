@@ -50,10 +50,10 @@ def extra(M, cid, R_, add, cap=11):
         except Exception:
             pass
         try:
-            per_day = M.sales[y]['lines'] / max(M.days['sessions'].count() * 0 + 30, 1)
+            per_day = M.sales[y]['txn'] / max(M.days['sessions'].count() * 0 + 30, 1)
             add('Set a daily transaction target, not just a monthly one',
                 'Studio Manager',
-                f'{M.sales[y]["lines"]:,} transactions across the month is {per_day:.1f} a day, against {M.sales[y]["buyers"]:,} buyers.',
+                f'{M.sales[y]["txn"]:,} transactions across the month is {per_day:.1f} a day, against {M.sales[y]["buyers"]:,} buyers.',
                 'A daily number is visible while the month can still be changed. Monthly totals only ever arrive as news.')
         except Exception:
             pass

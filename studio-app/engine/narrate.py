@@ -29,7 +29,7 @@ def summary(M, ch):
     s = []
     if ch['id'] == 'sales':
         F = M.sales[y]; P1 = M.sales.get(y - 1)
-        s.append(f'{R(F["cash"])} was taken at {M.studio} in {lab}, across {F["lines"]} transactions from {F["buyers"]} buyers')
+        s.append(f'{R(F["cash"])} was taken at {M.studio} in {lab}, across {F["txn"]} transactions from {F["buyers"]} buyers')
         s.append(f'The average buyer spent {R(F["ticket"])}{_pc(F["ticket"], P1["ticket"]) if P1 else ""}')
         if hasattr(M, 'cats') and len(M.cats):
             s.append(f'The largest category was {M.cats.index[0]} at {R(M.cats["sum"].iloc[0])}')

@@ -244,9 +244,9 @@ META = (f'CRM lead master &middot; {N_L:,} Bandra leads &middot; all time on fil
         f'{WON:,} memberships sold &middot; {RETAIN:,} retained &middot; {OPEN:,} still open<br/>'
         f'September 2026 intake &middot; {int(FLOW["leads"].get(9, 0))} leads &middot; September 2025 &middot; {int(FLOWN.get(9, 0))}<br/>Snapshot 18 October 2026')
 
-HTML = page('Supreme HQ, Bandra \u2014 Lead Performance and Insights',
+HTML = page('Supreme HQ, Bandra — Lead Performance and Insights',
     'Lead Performance and Insights &nbsp;&middot;&nbsp; September 2026',
-    'Supreme HQ, Bandra \u2014 where the members come from',
+    'Supreme HQ, Bandra — where the members come from',
     f'{N_L:,} people have enquired at Bandra since the studio began recording leads. {WON:,} became members, {RETAIN:,} are still members today, and {OPEN:,} are still marked open. '
     f'This report reads the whole file to answer three questions: which channels produce members rather than enquiries, how fast a lead has to be handled to convert, and what the studio '
     f'is currently doing with the {OPEN:,} people who have not said no.',
@@ -321,7 +321,7 @@ not of how persuasive it is — and unlike persuasion, answering speed is entire
 
 <p>The named sources inside those channels sharpen the picture further. <strong>{BIG_S} is the largest source in the file at {int(SRC.loc[BIG_S,"leads"]):,} leads and the weakest of the major
 sources at {SRC.loc[BIG_S,"won"]:.1f}%.</strong> {BEST_S} is the strongest at {SRC.loc[BEST_S,"won"]:.1f}% on {int(SRC.loc[BEST_S,"leads"])} leads, and {BEST_LTV_S} carries the highest lifetime value at {R(SRC.loc[BEST_LTV_S,"ltv"])}.
-{WORST_S} is the weakest line in the file on every measure \u2014 {int(SRC.loc[WORST_S,"leads"])} leads, {SRC.loc[WORST_S,"trial"]:.0f}% trial completion, {SRC.loc[WORST_S,"won"]:.1f}% conversion and {R(SRC.loc[WORST_S,"ltv"])} of value.</p>
+{WORST_S} is the weakest line in the file on every measure — {int(SRC.loc[WORST_S,"leads"])} leads, {SRC.loc[WORST_S,"trial"]:.0f}% trial completion, {SRC.loc[WORST_S,"won"]:.1f}% conversion and {R(SRC.loc[WORST_S,"ltv"])} of value.</p>
 
 {CH_SRC}
 
@@ -399,7 +399,7 @@ and is losing the part it cannot — the top.</p>
 {REC_HTML}
 {SRCBOX}
 ''')
-open('/home/user/Bandra_September_2026_8_Lead_Performance.html', 'w').write(HTML)
+open('/home/user/reports-arena/Bandra_September_2026_8_Lead_Performance.html', 'w').write(HTML)
 print(f'Report 8 written: {len(HTML)} bytes')
 print('leads', N_L, 'won', WON, 'trial', TRIAL, 'retained', RETAIN, 'open', OPEN)
 print('trial gate:', round(TRIAL_WON,1), 'vs', round(NOTRIAL_WON,2), '| not-tried wins', int(LB[LB['Trial Status']=='Not Tried']['won'].sum()))

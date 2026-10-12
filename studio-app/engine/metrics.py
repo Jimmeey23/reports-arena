@@ -58,17 +58,28 @@ class Metrics:
             if s.empty:
                 continue
             seats = float(s['Capacity'].sum()); att = float(s['CheckedIn'].sum())
+            book = float(s['Booked'].sum()); lc = float(s['LateCancelled'].sum())
+            # No-shows are booked seats that were neither checked in nor
+            # released late (atlas: booked - checked_in - late_cancelled).
+            noshow = float((s['Booked'] - s['CheckedIn'] - s['LateCancelled']).sum())
+            empty = int((s['CheckedIn'] == 0).sum())
             self.room[y] = dict(
-                sessions=len(s), seats=seats, att=att, book=float(s['Booked'].sum()),
-                lc=float(s['LateCancelled'].sum()), comp=float(s['Complimentary'].sum()),
+                sessions=len(s), seats=seats, att=att, book=book,
+                lc=lc, comp=float(s['Complimentary'].sum()),
                 rev=float(s['Revenue'].sum()),
                 nonpaid=float(s['NonPaid'].sum()) if 'NonPaid' in s else 0.0,
+                noshow=noshow, empty=empty,
                 fill=att / seats * 100 if seats else 0,
+                empty_rate=empty / len(s) * 100 if len(s) else 0,
+                noshow_rate=noshow / book * 100 if book else 0,
+                lc_rate=lc / book * 100 if book else 0,
                 rpc=float(s['Revenue'].sum()) / len(s) if len(s) else 0,
                 rph=float(s['Revenue'].sum()) / att if att else 0,
+                rev_seat=float(s['Revenue'].sum()) / seats if seats else 0,
                 classavg=att / len(s) if len(s) else 0)
-            self.room[y]['book_pct'] = self.room[y]['book'] / seats * 100 if seats else 0
-            self.room[y]['conv'] = att / self.room[y]['book'] * 100 if self.room[y]['book'] else 0
+            self.room[y]['book_pct'] = book / seats * 100 if seats else 0
+            # Show-up rate: attended as a share of what was booked.
+            self.room[y]['conv'] = att / book * 100 if book else 0
         self.F = self.room.get(self.y, {})
 
         # room size bands
@@ -91,12 +102,26 @@ class Metrics:
             s = self._sl(S, y)
             if s.empty:
                 continue
-            self.sales[y] = dict(lines=len(s), cash=float(s['val'].sum()), buyers=int(s['Member ID'].nunique()),
-                                 disc=float(s['disc'].sum()), gross=float(s['gross'].sum()))
-            self.sales[y]['ticket'] = self.sales[y]['cash'] / max(self.sales[y]['buyers'], 1)
-            self.sales[y]['depth'] = self.sales[y]['disc'] / self.sales[y]['gross'] * 100 if self.sales[y]['gross'] else 0
-            self.sales[y]['spread'] = float(s['has_disc'].mean() * 100)
+            # Cash collection: successful, non-voided payments only.
+            ok = s[s['ok']] if 'ok' in s.columns else s
+            cash = float(ok['val'].sum())
+            # Transactions are distinct sales, not item rows.
+            txn = int(ok['Sale ID'].nunique()) if 'Sale ID' in ok.columns else len(ok)
+            buyers = int(ok['Member ID'].nunique())
+            disc = float(ok['disc'].sum())
+            self.sales[y] = dict(lines=len(ok), txn=txn, cash=cash, buyers=buyers,
+                                 disc=disc, gross=cash + disc,
+                                 vat=float(ok['vat'].sum()) if 'vat' in ok.columns else 0.0,
+                                 net=float(ok['net'].sum()) if 'net' in ok.columns else cash)
+            self.sales[y]['aov'] = cash / max(txn, 1)
+            self.sales[y]['ticket'] = cash / max(buyers, 1)
+            # Discount rate: discount as a share of discount + collected
+            # revenue (atlas discount_rate), at item-level discount values.
+            self.sales[y]['depth'] = disc / (cash + disc) * 100 if (cash + disc) else 0
+            self.sales[y]['spread'] = float(ok['has_disc'].mean() * 100) if len(ok) else 0.0
         f = self._sl(S, self.y)
+        if not f.empty and 'ok' in f.columns:
+            f = f[f['ok']]
         if not f.empty:
             cat = 'Cleaned Category' if 'Cleaned Category' in f.columns else None
             if cat:
@@ -115,6 +140,24 @@ class Metrics:
             v = a.groupby('Member ID').size()
             self.people[y] = dict(members=int(a['Member ID'].nunique()), visits=len(a),
                                   per=len(a) / max(a['Member ID'].nunique(), 1), v=v)
+            # Check-in economics run on attended rows only (atlas: attended
+            # in both numerator and denominator).
+            if 'Complementary' in a.columns:
+                self.people[y]['comp_rate'] = float((a['Complementary'] == True).mean() * 100)
+            if 'Paid Amount' in a.columns:
+                self.people[y]['rev_checkin'] = float(a['Paid Amount'].sum())
+                self.people[y]['rev_per_checkin'] = self.people[y]['rev_checkin'] / len(a)
+            # Teaching time counts each session's duration once, not once per
+            # attendee row (atlas: duration repeats on attendee rows).
+            if 'Duration Minutes' in a.columns and a['Duration Minutes'].notna().any():
+                d = a[a['Duration Minutes'].notna()]
+                if 'Class No' in d.columns and d['Class No'].notna().any():
+                    dd = d.dropna(subset=['Class No']).drop_duplicates(subset=['Class No'])
+                    rem = d[d['Class No'].isna()]
+                    hours = (dd['Duration Minutes'].sum() + rem['Duration Minutes'].sum()) / 60
+                else:
+                    hours = float(d['Duration Minutes'].sum()) / 60
+                self.people[y]['teaching_hours'] = float(hours)
         self.V = self.people.get(self.y, {}).get('v')
 
         # the returning core: same month, two years running
@@ -234,6 +277,8 @@ class Metrics:
         if S is None:
             return
         d = S[S['_loc'] == self.studio].copy()
+        if 'ok' in d.columns:
+            d = d[d['ok']]
         self.disc_year = {}
         for y in [self.y] + self.prev + [self.y - 3, self.y - 4]:
             s = d[d['_dt'].dt.year == y]
@@ -268,6 +313,40 @@ class Metrics:
             pay = d[d['Amount Paid'].fillna(0) > 0]
         self.led['paid'] = len(pay); self.led['paid_members'] = int(pay['Member ID'].nunique()) if len(pay) else 0
         self.led['cash'] = float(pay['Amount Paid'].sum()) if 'Amount Paid' in pay else 0
+        # Atlas ledger measures -------------------------------------------
+        today = pd.Timestamp.today().normalize()
+        if 'Churned Date_d' in d.columns:
+            churned = int(d['Churned Date_d'].notna().sum())
+            self.led['churned'] = churned
+            self.led['churn_rate'] = churned / len(d) * 100 if len(d) else 0
+        if 'Status' in d.columns and 'End Date_d' in d.columns:
+            act = d[d['Status'].astype(str).str.strip().eq('Active')]
+            live = act[act['End Date_d'].isna() | (act['End Date_d'] >= today)]
+            self.led['active_memberships'] = int(len(live))
+            if 'Days Since Last Visit' in live.columns:
+                self.led['dormant_actives'] = int((live['Days Since Last Visit'] > 21).sum())
+        if 'Sessions Limit' in d.columns and 'Remaining Sessions' in d.columns:
+            lim = d['Sessions Limit']; rem = d['Remaining Sessions']
+            m = (lim > 0) & (rem >= 0) & (rem <= lim)
+            tot = float(lim[m].sum())
+            self.led['utilisation'] = float((lim[m] - rem[m]).sum()) / tot * 100 if tot else 0
+        if 'Total Sessions Completed' in d.columns and 'Start Date_d' in d.columns:
+            z = d[(d['Total Sessions Completed'].fillna(0) == 0)]
+            z = z[(today - z['Start Date_d']).dt.days > 7]
+            self.led['zero_usage'] = int(len(z))
+        if 'End Date_d' in d.columns and 'Amount Paid' in d.columns:
+            exp = d[d['End Date_d'].between(today, today + pd.Timedelta(days=30))]
+            self.led['revenue_at_risk_30d'] = float(exp['Amount Paid'].fillna(0).sum())
+        if all(c in d.columns for c in ['Total Sessions Completed', 'Sessions Limit', 'Days Since Last Visit',
+                                        'Cancellation Rate %', 'Attendance Rate %']):
+            lim = d['Sessions Limit'].replace(0, np.nan)
+            used = (d['Total Sessions Completed'] / lim).clip(upper=1).fillna(0)
+            absent = (d['Days Since Last Visit'] / 60).clip(upper=1).fillna(0)
+            canc = (d['Cancellation Rate %'] / 100).clip(upper=1).fillna(0)
+            attr = d['Attendance Rate %']
+            attr = (attr / 100 if float(attr.max(skipna=True) or 0) > 1.5 else attr).clip(upper=1).fillna(0)
+            score = 100 * (0.3 * (1 - used) + 0.35 * absent + 0.15 * canc + 0.20 * (1 - attr))
+            self.led['risk_score'] = float(score.mean())
         if 'Derived Status' in d.columns:
             self.status_mix = d['Derived Status'].value_counts()
         if len(pay) and 'Amount Paid' in pay.columns:
@@ -341,8 +420,38 @@ class Metrics:
         self.lead_fun['trial_pct'] = self.lead_fun['trial'] / len(d) * 100
         self.lead_fun['won_pct'] = self.lead_fun['won'] / len(d) * 100
         self.lead_fun['retained_pct'] = self.lead_fun['retained'] / len(d) * 100
+        # Follow-up discipline (atlas lead measures) --------------------
+        fus = [f'Follow Up {i} Date' for i in range(1, 5) if f'Follow Up {i} Date' in d.columns]
+        if fus:
+            F = pd.DataFrame({c: pd.to_datetime(d[c], errors='coerce') for c in fus}, index=d.index)
+            d = d.copy()
+            d['_touches'] = F.notna().sum(axis=1)
+            d['_resp_h'] = (F['Follow Up 1 Date'] - d['_dt']).dt.total_seconds() / 3600 \
+                if 'Follow Up 1 Date' in F else np.nan
+            resp = d['_resp_h'].dropna()
+            resp = resp[resp >= 0]
+            self.lead_resp_hours = float(resp.mean()) if len(resp) else None
+            self.lead_touches = float(d['_touches'].mean())
+            if 'Status' in d.columns:
+                openm = ~d['Status'].astype(str).str.strip().isin(['Won', 'Lost'])
+                stale = (pd.Timestamp.today().normalize() - d['_dt']).dt.total_seconds() / 3600 > 48
+                self.lead_untouched = int(((d['_touches'] == 0) & stale & openm).sum())
         if 'Status' in d.columns:
             self.lead_status = d['Status'].value_counts()
+            st = d['Status'].astype(str).str.strip()
+            self.lead_open = int((~st.isin(['Won', 'Lost'])).sum())
+            # Estimated pipeline: open leads x observed win rate x the average
+            # first purchase of converted newcomers (atlas pipeline_value).
+            N = getattr(self.D, 'new', None)
+            fp = None
+            if N is not None and 'First Purchase Value' in N.columns:
+                nn = N[(N['_loc'] == self.studio) & (N['is_new'] == True)]
+                nn = nn[nn['Conversion Status'].astype(str).str.strip().eq('Converted')] \
+                    if 'Conversion Status' in nn.columns else nn
+                fp = float(nn['First Purchase Value'].mean()) if len(nn) else None
+            if fp:
+                wr = self.lead_fun['won'] / len(d) if len(d) else 0
+                self.lead_pipeline = float(self.lead_open * wr * fp)
         if 'Channel' in d.columns:
             self.lead_ch = d.groupby('Channel').agg(leads=('ID', 'size') if 'ID' in d else ('Status', 'size'),
                     trial=('Trial Status', lambda x: (x == 'Trial Completed').mean() * 100),
@@ -456,15 +565,70 @@ class Metrics:
             self.beh['same3_members'] = int(loy[loy >= 3].reset_index()['Member ID'].nunique())
 
     # ------------------------------------------------------------------ new
+    def _newcohort_rows(self, month_only=True):
+        """The explicit newcomer population (atlas: acquisition measures run
+        on is_new rows only, never on every first-visit record)."""
+        N = getattr(self.D, 'new', None)
+        if N is None:
+            return None
+        d = N[(N['_loc'] == self.studio) & (N['is_new'] == True)]
+        if month_only and '_dt' in d.columns:
+            a, b = rng(self.y, self.m)
+            d = d[(d['_dt'] >= a) & (d['_dt'] < b)]
+        return d
+
+    def newcohort(self):
+        """Atlas acquisition measures for the report month's newcomers."""
+        d = self._newcohort_rows(month_only=True)
+        out = {}
+        if d is None or d.empty:
+            return out
+        n = len(d)
+        conv = d['Conversion Status'].astype(str).str.strip().eq('Converted') \
+            if 'Conversion Status' in d.columns else pd.Series(False, index=d.index)
+        visits_post = d['Visits Post Trial'].fillna(0) if 'Visits Post Trial' in d.columns else None
+        out['n'] = n
+        out['converted'] = int(conv.sum())
+        out['conversion_rate'] = conv.mean() * 100
+        if visits_post is not None:
+            out['second_visit_rate'] = float((visits_post > 0).mean() * 100)
+            out['zero_return_rate'] = float((visits_post == 0).mean() * 100)
+        if 'Conversion Span (Days)' in d.columns:
+            cs = d.loc[conv, 'Conversion Span (Days)'].dropna()
+            if len(cs):
+                out['avg_conversion_span'] = float(cs.mean())
+                out['median_conversion_span'] = float(cs.median())
+        if 'Ltv' in d.columns:
+            out['avg_ltv'] = float(d['Ltv'].mean())
+        if 'First Purchase Value' in d.columns:
+            fp = d['First Purchase Value'].dropna()
+            if len(fp):
+                out['avg_first_purchase'] = float(fp.mean())
+                if out.get('avg_ltv'):
+                    out['ltv_to_first_purchase'] = out['avg_ltv'] / float(fp.mean()) if fp.mean() else None
+        if 'Retention Status' in d.columns:
+            out['retention_rate'] = float(d['Retention Status'].astype(str).str.strip().eq('Retained').mean() * 100)
+        if 'Lifecycle Status' in d.columns:
+            lc = d['Lifecycle Status'].astype(str).str.strip()
+            act = d[lc.eq('Active')]
+            out['active_base'] = int(act['Member Id'].nunique()) if 'Member Id' in act.columns else int(len(act))
+            if 'Days Since Last Visit' in act.columns:
+                out['at_risk_actives'] = int((act['Days Since Last Visit'] > 21).sum())
+        return out
+
     def newfile(self):
         N = getattr(self.D, 'new', None)
         if N is None:
             return {}
-        d = N[N['_loc'] == self.studio]
+        # Newcomers only: import and existing-member rows in this file must
+        # not dilute LTV, visit and conversion averages.
+        d = N[(N['_loc'] == self.studio) & (N['is_new'] == True)] \
+            if 'is_new' in N.columns else N[N['_loc'] == self.studio]
         out = {}
         if 'First Purchase Post Trial' in d.columns:
+            idc = 'Member Id' if 'Member Id' in d.columns else 'Member ID'
             g = d.dropna(subset=['First Purchase Post Trial']).groupby('First Purchase Post Trial').agg(
-                n=('Member Id', 'size'), ltv=('Ltv', 'mean'), visits=('No of Visits', 'mean'))
+                n=(idc, 'size'), ltv=('Ltv', 'mean'), visits=('No of Visits', 'mean'))
             out['first'] = g[g['n'] >= 20].sort_values('ltv', ascending=False)
         if 'Days To Second Visit' in d.columns:
             dd = d.dropna(subset=['Days To Second Visit'])

@@ -19,8 +19,8 @@ _MB6['Ltv_n'] = E.num(_MB6['Ltv'])
 DT = {}
 for _p in ['Studio 12 Class Package', 'Studio 1 Month Unlimited']:
     _sub = D.SB[D.SB['Cleaned Product'] == _p].copy()
-    _f = _sub.groupby('Member ID').agg(fd=('dt', 'min'), dsc=('Discount Value In Currency',
-                                  lambda x: (E.num(x).fillna(0) > 0).any()), v=('val', 'sum'), n=('Sale ID', 'nunique'))
+    _f = _sub.groupby('Member ID').agg(fd=('dt', 'min'), dsc=('disc',
+                                  lambda x: (x.fillna(0) > 0).any()), v=('val', 'sum'), n=('Sale ID', 'nunique'))
     _f['obs'] = (TODAY - _f['fd']).dt.days
     _f = _f[_f['obs'] >= 180]
     DT[_p] = _f.groupby('dsc').agg(n=('n', 'size'), rpt=('n', lambda x: (x > 1).mean() * 100), ltv=('v', 'mean'))
@@ -28,10 +28,12 @@ TRAIN_LC = x26.groupby('Trainer').agg(book=('Booked', 'sum'), lc=('LateCancelled
 TRAIN_LC['rate'] = TRAIN_LC['lc'] / TRAIN_LC['book'].replace(0, np.nan) * 100
 TRAIN_LC = TRAIN_LC[TRAIN_LC['book'] >= 100].sort_values('rate', ascending=False)
 GN = D.SB[D.SB['dt'].dt.year == 2026]
-GDEEP = float(E.num(GN['Discount Value In Currency']).fillna(0).sum())
-GDEEP = float((GDEEP / (GN['val'].sum() + GDEEP)) * 100)
+# Item-level discounts only (unit discount x quantity): the sale-level
+# column repeats on every item row and double-counts when summed.
+G26DISC = float(GN['disc'].sum())
+GDEEP = float((G26DISC / (GN['val'].sum() + G26DISC)) * 100) if (GN['val'].sum() + G26DISC) else 0.0
 GTOT = float(LP['Amount Paid'].sum()) if 'Amount Paid' in LP else 0.0
-GDISC_ALL = float(E.num(D.SB['Discount Value In Currency']).fillna(0).sum())
+GDISC_ALL = float(D.SB['disc'].sum())
 
 
 YR = X.groupby(X['dt'].dt.year).agg(sessions=('SessionID','size'), booked=('Booked','sum'),
@@ -52,7 +54,7 @@ SEP['rev_head'] = SEP['rev']/SEP['att']
 SEP['booked_sess'] = SEP['booked']/SEP['sessions']
 
 # who cancels, Sept-26
-CK = pd.read_csv('/home/user/google_drive/Day End Report - Part 4', low_memory=False,
+CK = pd.read_csv('/home/user/reports-arena/google_drive/Day End Report - Part 4', low_memory=False,
     usecols=['Member ID','Location','Date (IST)','Checked In','Is Late Cancelled','Cleaned Class','Time',
              'Day of Week','Teacher Name','Complementary','Paid'])
 CK = CK[CK['Location'] == E.B].copy(); CK['dt'] = pd.to_datetime(CK['Date (IST)'], errors='coerce')
@@ -71,7 +73,7 @@ LCDW = lc26['Day of Week'].value_counts()
 
 # ledger-side cancellation behaviour
 cb = LP.copy()
-CBC = ['never cancels','up to 10%','11\u201325%','26\u201350%','over 50%']
+CBC = ['never cancels','up to 10%','11–25%','26–50%','over 50%']
 cb['band'] = pd.cut(cb['Cancellation Rate %'], [-1,0,10,25,50,1000], labels=CBC)
 CB = cb.groupby('band', observed=True).agg(n=('Member ID','size'), sess=('Total Sessions Completed','mean'),
         late=('Late Cancellations','mean'), noshow=('No Shows','mean'),
@@ -80,20 +82,18 @@ TOTLC_L = int(cb['Late Cancellations'].sum())
 TOP10 = cb['Late Cancellations'].nlargest(int(len(cb)*0.1)).sum()/cb['Late Cancellations'].sum()*100
 
 # -------- discounts
-SB = D.SB.copy()
-SB['disc'] = E.num(SB['Discount Value In Currency']).fillna(0)
-SB['gross'] = SB['val'] + SB['disc']
+SB = D.SB.copy()   # item-level disc/gross arrive from d1_data
 SB['has_disc'] = SB['disc'] > 0
 SB['yr'] = SB['dt'].dt.year
-DG = SB.groupby('yr').agg(sales=('Sale ID','size'), gross=('gross','sum'), disc=('disc','sum'), n=('has_disc','sum'))
+DG = SB.groupby('yr').agg(sales=('Sale ID','nunique'), gross=('gross','sum'), disc=('disc','sum'), n=('has_disc','sum'))
 DG['depth'] = DG['disc']/DG['gross']*100
 DG['pct_sales'] = DG['n']/DG['sales']*100
 D26 = SB[SB['yr'] == 2026]
-DP = D26.groupby('Cleaned Product').agg(sales=('Sale ID','size'), gross=('gross','sum'), disc=('disc','sum'), n=('has_disc','sum'))
+DP = D26.groupby('Cleaned Product').agg(sales=('Sale ID','nunique'), gross=('gross','sum'), disc=('disc','sum'), n=('has_disc','sum'))
 DP['depth'] = DP['disc']/DP['gross']*100
 DP['pct_sales'] = DP['n']/DP['sales']*100
 DP = DP[DP['sales'] >= 15].sort_values('depth', ascending=False)
-DS = D26.groupby('Sold By').agg(sales=('Sale ID','size'), gross=('gross','sum'), disc=('disc','sum'), n=('has_disc','sum'))
+DS = D26.groupby('Sold By').agg(sales=('Sale ID','nunique'), gross=('gross','sum'), disc=('disc','sum'), n=('has_disc','sum'))
 DS['depth'] = DS['disc']/DS['gross']*100
 DS['pct_sales'] = DS['n']/DS['sales']*100
 DS = DS[DS['sales'] >= 20].sort_values('depth', ascending=False)
@@ -135,12 +135,12 @@ CH_LCCONV = lines(['2024','2025','2026'],
     note='Of every hundred seats booked at Bandra, more are now honoured and fewer are released late.')
 
 CH_LCFOR = hbars([(k.replace('Studio ',''), v, A1 if v >= 3 else N1) for k, v in LCFIN.head(8).items()],
-    'Late cancellations as a share of each format\u2019s attendance, September 2026', as_pct=True)
+    'Late cancellations as a share of each format’s attendance, September 2026', as_pct=True)
 
 CH_LCHR = bars([f'{int(h)}:00' if h < 12 else f'{int(h)}pm' for h in LCHR.index],
                [('Late cancellations', LCHR.tolist(), B1)],
     'When the cancelled classes were scheduled', h=280, ymax=48,
-    note='Cancellations cluster in the mid-morning and the early evening \u2014 exactly where the paying demand sits.')
+    note='Cancellations cluster in the mid-morning and the early evening — exactly where the paying demand sits.')
 
 CH_LCMEM = hbars([(f'{int(k)}' + (' cancellation' if k == 1 else ' cancellations'), int(v), B1 if k >= 3 else A1)
                   for k, v in LCM.value_counts().sort_index().items() if k <= 6],
@@ -170,8 +170,8 @@ RECS = [
   f'A late cancellation at an average of {R(YR.loc[2026,"rev_seat"])} a seat is worth real money. Charging or crediting a fraction of it, and applying the rule to everyone, '
   f'is the single cheapest revenue line available and it costs the studio nothing to introduce.'),
  ('02','Offer the released seat back to the waitlist, automatically','CRM + Front Desk',
-  f'September\u2019s {len(lc26)} late cancellations were released at an average of '
-  f'{SEP.loc[2026,"book_on_board"]:.1f}% board occupancy \u2014 a third of the board was still unsold when they were given back. '
+  f'September’s {len(lc26)} late cancellations were released at an average of '
+  f'{SEP.loc[2026,"book_on_board"]:.1f}% board occupancy — a third of the board was still unsold when they were given back. '
   f'{int(LCF.get("Studio PowerCycle",0))} of them were PowerCycle, {int(LCF.get("Studio FIT",0))} were FIT.',
   'A seat released four hours before the class is worth almost nothing to the studio and a great deal to a member who could not book. '
   'Auto-offering released seats to the waitlist and to members who have not trained that week converts a loss into a visit at no cost.'),
@@ -212,23 +212,23 @@ RECS = [
   f'{SB["disc"].sum()/SB["gross"].sum()*100:.1f}% &mdash; and 2026 is the deepest year on record at {DG.loc[2026,"depth"]:.1f}%.',
   'Discount is a cost of sale and belongs on the same line as marketing. Reported together, the studio can see what it spent to acquire demand in cash versus in price, '
   'and can compare the two for the first time.'),
- ('10','Never discount the first month \u2014 discount the second','Marketing + Finance',
+ ('10','Never discount the first month — discount the second','Marketing + Finance',
   f'On the 12 Class Package, first-buyers who paid full price repeat at {DT["Studio 12 Class Package"].loc[False,"rpt"]:.1f}% and are worth '
   f'{R(DT["Studio 12 Class Package"].loc[False,"ltv"])}. First-buyers who were discounted repeat at {DT["Studio 12 Class Package"].loc[True,"rpt"]:.1f}% and are worth '
-  f'{R(DT["Studio 12 Class Package"].loc[True,"ltv"])}. The same pattern holds on the 1 Month Unlimited \u2014 {DT["Studio 1 Month Unlimited"].loc[False,"rpt"]:.1f}% against '
+  f'{R(DT["Studio 12 Class Package"].loc[True,"ltv"])}. The same pattern holds on the 1 Month Unlimited — {DT["Studio 1 Month Unlimited"].loc[False,"rpt"]:.1f}% against '
   f'{DT["Studio 1 Month Unlimited"].loc[True,"rpt"]:.1f}% repeat, at {R(DT["Studio 1 Month Unlimited"].loc[False,"ltv"])} against {R(DT["Studio 1 Month Unlimited"].loc[True,"ltv"])}.',
   f'The offer is not the problem; its timing is. A discount on the first purchase lowers the value of the members the studio attracts at the exact moment it is trying to establish a habit at full '
-  f'commitment. Moving the same money to the first renewal \u2014 a retention offer rather than an acquisition offer \u2014 rewards the behaviour the studio actually wants and stops setting the '
+  f'commitment. Moving the same money to the first renewal — a retention offer rather than an acquisition offer — rewards the behaviour the studio actually wants and stops setting the '
   f'price expectation at the beginning of the relationship.'),
  ('11','Publish late-cancellation rate by trainer as a coaching number','Studio Manager',
-  f'Across trainers with a hundred or more September bookings the late-cancellation rate runs from <strong>{TRAIN_LC["rate"].min():.1f}% to {TRAIN_LC["rate"].max():.1f}%</strong> \u2014 a four-fold spread on the same booking policy. '
+  f'Across trainers with a hundred or more September bookings the late-cancellation rate runs from <strong>{TRAIN_LC["rate"].min():.1f}% to {TRAIN_LC["rate"].max():.1f}%</strong> — a four-fold spread on the same booking policy. '
   f'{TRAIN_LC.index[0]} runs {TRAIN_LC["rate"].iloc[0]:.1f}% and {TRAIN_LC.index[-1]} {TRAIN_LC["rate"].iloc[-1]:.1f}%.',
   f'A released seat is a member deciding, at short notice, that the hour no longer fits. When the rate is high for one trainer and low for another teaching the same policy, the difference is usually the '
-  f'slot rather than the person. Read as a coaching number rather than a compliance one, it is the earliest signal the studio has that a slot is drifting out of its members\u2019 lives.'),
+  f'slot rather than the person. Read as a coaching number rather than a compliance one, it is the earliest signal the studio has that a slot is drifting out of its members’ lives.'),
  ('12','Show the member what the discount was worth','Marketing + Front Desk',
-  f'The studio gave away <strong>{R(E.num(GN['Discount Value In Currency']).fillna(0).sum())} in 2026 alone</strong>, at an average depth of {GDEEP:.1f}% of gross. Across the years on file the figure is '
+  f'The studio gave away <strong>{R(G26DISC)} in 2026 alone</strong>, at an average depth of {GDEEP:.1f}% of gross. Across the years on file the figure is '
   f'{R(GDISC_ALL)} across every year on file.',
-  f'A discount that arrives silently as a lower price is read as the price. A discount that arrives as a line on the receipt, with a value against it, is read as a favour \u2014 and favours are repaid. '
+  f'A discount that arrives silently as a lower price is read as the price. A discount that arrives as a line on the receipt, with a value against it, is read as a favour — and favours are repaid. '
   f'Showing the saving costs nothing, changes no policy, and is the only part of the discount programme the member ever sees.'),
 
 ]
@@ -252,11 +252,11 @@ Cash-basis figures as recorded at snapshot, not contribution margin.</p>'''
 META = (f'Cancellation ledger &middot; {len(lc_all):,} late cancellations, 2024 to October 2026<br/>'
         f'Sales ledger &middot; {len(SB):,} line items &middot; {R(SB["disc"].sum())} of discount on file<br/>Snapshot 18 October 2026')
 
-HTML = page('Supreme HQ, Bandra \u2014 Late Cancellations and Discounts',
+HTML = page('Supreme HQ, Bandra — Late Cancellations and Discounts',
     'Report six of seven &middot; Booking behaviour and price',
     'Late cancellations and discounts',
     f'Two ways a studio gives away value: a seat booked and released too late, and a price quietly marked down. In September, Bandra released '
-    f'{len(lc26)} seats late. In 2026 it has given away {R(D_GIVE)} in discounts at a depth of {D_DEPTH:.1f}% \u2014 the deepest it has ever discounted. '
+    f'{len(lc26)} seats late. In 2026 it has given away {R(D_GIVE)} in discounts at a depth of {D_DEPTH:.1f}% — the deepest it has ever discounted. '
     'This report measures both, and separates the part of each that is a real problem from the part that is simply the cost of running a studio.',
     META, f'''
 <h2>Start here</h2>
@@ -288,7 +288,7 @@ More than half the seats were unsold at the moment they were given back.</p>
 And the seats are not evenly distributed: {int(LCF.get("Studio PowerCycle",0))} of them were PowerCycle, {int(LCF.get("Studio FIT",0))} FIT and {int(LCF.get("Studio Barre 57",0))} Barre 57,
 so the recovery problem is concentrated in the three formats that between them carry most of the week.</p>
 
-{ev('Evidence \u2014 the booking book, September 2024, 2025 and 2026',
+{ev('Evidence — the booking book, September 2024, 2025 and 2026',
     T(['September','Sessions','Seats on the board','Seats booked','Booked per session','Board occupancy','Attended','Late cancellations','Attended of booked','Revenue per head'],
       [[str(y), int(SEP.loc[y,'sessions']), int(SEP.loc[y,'seats']), int(SEP.loc[y,'booked']),
         f"{SEP.loc[y,'booked_sess']:.1f}", P(SEP.loc[y,'book_on_board']), int(SEP.loc[y,'att']), int(SEP.loc[y,'lc']),
@@ -308,7 +308,7 @@ acts of forgetfulness; they are the hours where a working member&rsquo;s day mos
 {CH_LCHR}
 {CH_LCMEM}
 
-{ev('Evidence \u2014 September 2026 cancellations by format, day and hour',
+{ev('Evidence — September 2026 cancellations by format, day and hour',
     T(['Format','Late cancellations','Attendance','As a share of its attendance'],
       [[k.replace('Studio ',''), int(LCF.get(k,0)), int(a26['Cleaned Class'].value_counts().get(k,0)), P(LCFIN.get(k, float('nan')))]
        for k in LCF.index[:10]], 'num') +
@@ -328,7 +328,7 @@ That is precisely why it is valuable: it appears weeks before the member stops c
 
 {CH_CBB}
 
-{ev('Evidence \u2014 cancellation bands across the paid book',
+{ev('Evidence — cancellation bands across the paid book',
     T(['How often they cancelled','Memberships','Mean classes completed','Mean late cancellations','Mean no-shows','Still live or renewed'],
       [[b, int(r['n']), f"{r['sess']:.1f}", f"{r['late']:.1f}", f"{r['noshow']:.1f}", P(r['renew'])] for b, r in CB.iterrows()], 'num'))}
 
@@ -348,7 +348,7 @@ while the 12 Class Package sat at {DP["depth"].get("Studio 12 Class Package", fl
 {CH_MOM}
 {CH_DISCP}
 
-{ev('Evidence \u2014 discount by product and by seller, 2026',
+{ev('Evidence — discount by product and by seller, 2026',
     T(['Product','Sales','Gross','Discount given','Depth','Share of sales discounted'],
       [[k.replace('Studio ',''), int(r['sales']), R(r['gross']), R(r['disc']), P(r['depth']), P(r['pct_sales'])]
        for k, r in DP.iterrows()], 'num') +
@@ -358,7 +358,7 @@ while the 12 Class Package sat at {DP["depth"].get("Studio 12 Class Package", fl
 
 {CH_DISCS}
 
-{ev('Evidence \u2014 the discount codes that cost the most in 2026',
+{ev('Evidence — the discount codes that cost the most in 2026',
     T(['Code','Sales','Value given away'], [[k, int(r['n']), R(r['disc'])] for k, r in DCODE.iterrows()], 'num') +
     '<p style="font-size:13.5px;color:#6B7280;margin-top:16px">The codes read as a calendar of the studio&rsquo;s campaigns: anniversary offers, a new-customer code, '
     'festival and self-love promotions. Two codes alone account for the largest single blocks of value given away this year.</p>')}
@@ -379,7 +379,7 @@ spectacular: discounted first-buyers repeat at <strong>{EPOOL.loc[True,"repeat"]
 carry the offers. <strong>On this evidence the studio has no proof that its discounts buy loyalty &mdash; only that they reduce the price of sales it would largely have made anyway.</strong>
 That is a testable proposition, and it is not currently being tested.</p>
 
-{ev('Evidence \u2014 discount effectiveness, pooled and controlled for the first product bought',
+{ev('Evidence — discount effectiveness, pooled and controlled for the first product bought',
     T(['First purchase was discounted','Buyers','Repeat rate','Mean transactions','Lifetime value'],
       [[('Yes' if k else 'No'), int(r['buyers']), P(r['repeat']), f"{r['txns']:.2f}", R(r['ltv'])] for k, r in EPOOL.iterrows()], 'num') +
     ''.join('<p style="font-size:13.5px;color:#6B7280;margin-top:16px"><strong>' + k.replace('Studio ','') + '</strong></p>' +
@@ -392,7 +392,7 @@ That is a testable proposition, and it is not currently being tested.</p>
 {REC_HTML}
 {SRC}
 ''')
-open('/home/user/Bandra_September_2026_6_Cancellations_Discounts.html', 'w').write(HTML)
+open('/home/user/reports-arena/Bandra_September_2026_6_Cancellations_Discounts.html', 'w').write(HTML)
 print(f'Report 6 written: {len(HTML)} bytes')
 print('conv', YR['conv'].round(1).to_dict(), '| lc_rate', YR['lc_rate'].round(1).to_dict())
 print('Sept board occ', SEP['book_on_board'].round(1).to_dict())

@@ -54,6 +54,31 @@ const filter=make('input');filter.type='search';filter.placeholder='Filter these
 filter.oninput=()=>{const q=filter.value.toLowerCase();data.forEach(r=>r.hidden=!r.textContent.toLowerCase().includes(q));count.textContent=`${data.filter(r=>!r.hidden).length} / ${data.length} records`;};
 button('Export CSV',()=>{const visible=rows.filter(r=>!r.hidden);download('\uFEFF'+visible.map(r=>[...r.cells].map(c=>csvValue(c.textContent.trim())).join(',')).join('\r\n'),`report-table-${ti+1}.csv`,'text/csv;charset=utf-8');},tools);
 heads.forEach((th,ci)=>{if(th.colSpan!==1)return;const b=make('button',titles[ci]+' ↕');b.setAttribute('aria-label',`Sort by ${titles[ci]}`);th.replaceChildren(b);th.setAttribute('aria-sort','none');let desc=false;b.onclick=()=>{desc=!desc;const val=r=>{const t=r.cells[ci]?.textContent.trim()||'';const clean=t.replace(/[₹,%\s]/g,'').replace(/−/g,'-');return /^[-+]?\d*\.?\d+$/.test(clean)?Number(clean):t;};const sorted=[...data].sort((a,b)=>{const x=val(a),y=val(b);return (typeof x==='number'&&typeof y==='number'?x-y:String(x).localeCompare(String(y),undefined,{numeric:true}))*(desc?-1:1);});sorted.forEach(r=>r.parentElement.append(r));heads.forEach(h=>h.setAttribute('aria-sort','none'));th.setAttribute('aria-sort',desc?'descending':'ascending');};});
+// Totals row: every table gets one. Currency and count columns are summed,
+// percentage columns show the (labelled) average — summing percentages is
+// meaningless — and text columns stay empty. Computed over every row the
+// chapter generated, matching the report's own figures.
+(function totals(){
+if(table.querySelector('tfoot')||data.length<1||heads.some(h=>h.colSpan>1))return;
+const cleanN=t=>{const c=String(t).replace(/[₹,%\s\u00a0\u2009,]/g,'').replace(/[−–—]/g,'-');return /^[-+]?\d*\.?\d+$/.test(c)?Number(c):null;};
+const inr=v=>{const neg=v<0;v=Math.abs(v);const dec=Math.abs(v%1)>1e-9?v.toLocaleString('en-IN',{minimumFractionDigits:1,maximumFractionDigits:1}):v.toLocaleString('en-IN');return(neg?'−':'')+'₹'+dec;};
+const num=v=>{const neg=v<0;v=Math.abs(v);const s=Math.abs(v%1)>1e-9?v.toLocaleString('en-IN',{minimumFractionDigits:1,maximumFractionDigits:1}):v.toLocaleString('en-IN');return(neg?'−':'')+s;};
+const cells=[];let any=false;
+for(let ci=0;ci<heads.length;ci++){
+let vals=[],pct=0,cur=0,seen=0;
+data.forEach(r=>{const c=r.cells[ci];if(!c)return;const t=c.textContent.trim();if(!t||t==='·'||t==='—')return;seen++;if(t.includes('%'))pct++;if(t.includes('₹'))cur++;const v=cleanN(t);if(v!==null)vals.push(v);});
+const numeric=vals.length>=1&&vals.length>=Math.ceil(seen*0.5);
+if(ci===0){cells.push('Total');continue;}
+if(!numeric){cells.push('');continue;}
+any=true;
+const sum=vals.reduce((a,b)=>a+b,0);
+cells.push(pct>vals.length*0.6?`≈ ${num(sum/vals.length)}% avg`:(cur>vals.length*0.6?inr(sum):num(sum)));
+}
+if(!any)return;
+const tf=document.createElement('tfoot'),tr=document.createElement('tr');
+cells.forEach((c,i)=>{const td=document.createElement('td');td.textContent=c;td.setAttribute('data-totals','1');if(i===0)td.setAttribute('colspan','1');tr.append(td);});
+tf.append(tr);table.append(tf);
+})();
 data.forEach(row=>{if(row.cells.length!==heads.length)return;row.classList.add('rt-record');const first=row.cells[0],b=make('button',first.textContent.trim());b.style.cssText='background:none;border:0;color:inherit;font:inherit;padding:0;text-align:left;text-decoration:underline;text-underline-offset:3px';b.setAttribute('aria-label','View record: '+b.textContent);first.replaceChildren(b);b.onclick=()=>{const dl=make('dl');[...row.cells].forEach((c,i)=>dl.append(make('dt',titles[i]),make('dd',c.textContent.trim())));openDialog('Record details · '+titles[0],dl);};});
 });
 window.addEventListener('scroll',()=>{const max=root.scrollHeight-innerHeight;progress.style.width=(max>0?scrollY/max*100:0)+'%';},{passive:true});

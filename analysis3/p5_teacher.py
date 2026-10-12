@@ -1,9 +1,9 @@
 import pandas as pd, numpy as np
 pd.set_option('display.width', 260); pd.set_option('display.max_columns', 80)
 
-R = pd.read_csv('/home/user/uploads/Day End Report - Part 3 - Teacher Recurring (7).csv', low_memory=False)
-X = pd.read_csv('/home/user/uploads/Day End Report - Part 3 - Sessions (19).csv', low_memory=False)
-P = pd.read_csv('/home/user/uploads/Day End Report - Part 1 - Payroll (4).csv', low_memory=False)
+R = pd.read_csv('/home/user/reports-arena/uploads/Day End Report - Part 3 - Teacher Recurring (7).csv', low_memory=False)
+X = pd.read_csv('/home/user/reports-arena/uploads/Day End Report - Part 3 - Sessions (19).csv', low_memory=False)
+P = pd.read_csv('/home/user/reports-arena/uploads/Day End Report - Part 1 - Payroll (4).csv', low_memory=False)
 R['dt'] = pd.to_datetime(R['Date'], errors='coerce'); X['dt'] = pd.to_datetime(X['Date'], errors='coerce')
 P['dt'] = pd.to_datetime(P['Month Year'], format='%b-%Y', errors='coerce')
 
