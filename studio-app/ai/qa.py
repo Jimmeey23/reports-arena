@@ -183,6 +183,37 @@ def _answer_overview(pack):
 
 
 # ------------------------------------------------------------------ entry
+_MONTHS = {'jan': 'january', 'feb': 'february', 'mar': 'march', 'apr': 'april',
+           'may': 'may', 'jun': 'june', 'jul': 'july', 'aug': 'august',
+           'sep': 'september', 'oct': 'october', 'nov': 'november', 'dec': 'december'}
+
+
+def _kpi_match(q, lab):
+    """Score a KPI label against the question: every significant label word must
+    be present (month abbreviations like 'Sep' match the full month name, and a
+    generic 'the period / this month' matches the report's own month)."""
+    month_words = set(_MONTHS) | set(_MONTHS.values())
+    words = [w for w in re.split(r'\s+', lab.strip()) if len(w) > 1 and w not in ('in', 'of', 'the', 'for', 'and')]
+    if not words:
+        return 0
+    q_months = {m for m in _MONTHS.values() if re.search(r'\b' + m + r'\b', q)}
+    generic_period = not q_months and bool(re.search(r'\b(period|month)\b', q))
+    hits = 0
+    for w in words:
+        if w in month_words:
+            full = _MONTHS.get(w, w)
+            if full in q_months:
+                hits += 1
+            elif generic_period:
+                hits += 1
+            elif re.search(r'\b' + re.escape(full[:3]), q):
+                hits += 1
+        elif (re.search(r'\b' + re.escape(w) + r'\b', q)
+                or (len(w) > 3 and re.search(r'\b' + re.escape(w[:3]), q))):
+            hits += 1
+    return hits if hits == len(words) else 0
+
+
 def answer(question, pack):
     q = _norm(question)
     if not q or not pack:
@@ -217,12 +248,28 @@ def answer(question, pack):
         r = _answer_metric(pack, mid, compare)
         if r:
             return r
-    # KPI-label fallback: match against the run's displayed KPI labels.
+    # KPI-label fallback: match against the run's displayed KPI labels, both in
+    # the flat metric list and in each chapter's KPI cards (where the new
+    # period-scoped figures such as "Churned in Sep" live).
+    candidates = []
     for m in pack.get('metrics', []):
-        lab = (m.get('label') or '').lower()
-        if lab and lab in q:
-            text = f"{m['label']} for {pack.get('studio','')} in {pack.get('period','')}: {m.get('value')}"
-            if m.get('detail'):
-                text += f" ({m['detail']})"
-            return _reply(text + '.', [m.get('chapter')], [])
+        if m.get('label'):
+            candidates.append((m.get('label'), m.get('value'), m.get('detail'), m.get('chapter')))
+    for c in pack.get('chapters', []):
+        for k in c.get('kpis', []):
+            candidates.append((k.get('label'), k.get('value'), k.get('detail'), c.get('id')))
+    best = None
+    for lab, val, detail, chap in candidates:
+        lab = (lab or '').lower()
+        if not lab or val in (None, ''):
+            continue
+        score = _kpi_match(q, lab)
+        if score and (best is None or score > best[0]):
+            best = (score, lab, val, detail, chap)
+    if best:
+        _, lab, val, detail, chap = best
+        text = f"{lab} for {pack.get('studio','')} in {pack.get('period','')}: {val}"
+        if detail:
+            text += f" ({detail})"
+        return _reply(text + '.', [chap], [])
     return _miss(pack, q)

@@ -119,6 +119,64 @@ class StoreTests(unittest.TestCase):
         self.assertEqual(s.cache_get('k'), dict(a=1))
         os.remove(path)
 
+    def test_report_and_config_roundtrip(self):
+        path = os.path.join(HERE, '_ai_test.sqlite3')
+        if os.path.exists(path):
+            os.remove(path)
+        s = SqliteStore(path)
+        meta = dict(run_id='r1', studio='Bandra', label='September 2026', built='12 October 2026',
+                    chapters=[dict(id='lapse', title='Lapsed', kpis=[dict(label='Churned in Sep', value=164)])])
+        s.save_report('r1', meta)
+        got = s.report('r1')
+        self.assertEqual(got['studio'], 'Bandra')
+        self.assertEqual(got['meta']['chapters'][0]['kpis'][0]['value'], 164)
+        rows = s.list_reports(studio='Bandra')
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(s.list_reports(studio='Nowhere'), [])
+        s.config_put('ai', dict(model='gpt-4o-mini'))
+        self.assertEqual(s.config_get('ai'), dict(model='gpt-4o-mini'))
+        self.assertIn('ai', s.config_all())
+        os.remove(path)
+
+
+class PeriodKpiTests(unittest.TestCase):
+    """The deterministic engine must resolve the period-scoped KPIs the lapse
+    chapter now leads with, without any model tokens."""
+
+    PACK = dict(studio='Bandra', period='September 2026', year=2026, month=9,
+                metrics=[], definitions={}, tops={},
+                chapters=[dict(id='lapse', title='Memberships Lapsed and Churned', summary='',
+                               kpis=[dict(label='Churned in September', value=164, detail='closed out'),
+                                     dict(label='Bought in September', value=121, detail='new money'),
+                                     dict(label='Expiring next 30 days', value=298, detail='at risk')],
+                               facts=[], recs=[])])
+
+    def test_period_churn_resolves_zero_tokens(self):
+        r = qa.answer('how many memberships churned in September?', self.PACK)
+        self.assertIn('164', r['answer'])
+        self.assertEqual(r['mode'], 'deterministic')
+
+    def test_period_bought_via_generic_period(self):
+        r = qa.answer('memberships bought in the period', self.PACK)
+        self.assertIn('121', r['answer'])
+
+    def test_expiring_resolves(self):
+        r = qa.answer('expiring next 30 days', self.PACK)
+        self.assertIn('298', r['answer'])
+
+    def test_history_block_lists_prior_periods(self):
+        path = os.path.join(HERE, '_ai_test.sqlite3')
+        if os.path.exists(path):
+            os.remove(path)
+        from ai.store import SqliteStore
+        s = SqliteStore(path)
+        s.save_report('old', dict(run_id='old', studio='Bandra', label='August 2026',
+                                  chapters=[dict(id='sales', title='Sales',
+                                                 kpis=[dict(label='Cash taken', value='₹1,000,000')])]))
+        block = agent.history_block(s, 'Bandra', exclude_rid='current')
+        self.assertIn('August 2026', block)
+        os.remove(path)
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
