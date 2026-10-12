@@ -1,30 +1,32 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
-  "cleanUrls": true,
+  "framework": null,
+  "buildCommand": "node scripts/build-vercel.cjs",
+  "outputDirectory": "vercel-public",
   "rewrites": [
-    { "source": "/", "destination": "/index.html" },
-    { "source": "/api/state", "destination": "/api/state.json" },
-    { "source": "/api/report/:run/full", "destination": "/studio-app/runs/:run/report" },
-    { "source": "/api/report/:run/report", "destination": "/studio-app/runs/:run/report" },
-    { "source": "/api/report/:run/all", "destination": "/studio-app/runs/:run/report" },
-    { "source": "/api/report/:run/:chapter", "destination": "/studio-app/runs/:run/:chapter" },
-    { "source": "/api/download/:run", "destination": "/studio-app/runs/:run/report" },
-    { "source": "/api/raw/:run/:path*", "destination": "/studio-app/runs/:run/:path*" },
-    { "source": "/runs/:path*", "destination": "/studio-app/runs/:path*" },
-    { "source": "/static/:path*", "destination": "/static/:path*" }
+    {
+      "source": "/api/:path*",
+      "destination": "https://reports-arena-production.up.railway.app/api/:path*"
+    }
   ],
   "headers": [
     {
-      "source": "/api/state.json",
+      "source": "/api/:path*",
       "headers": [
-        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" },
-        { "key": "Content-Type", "value": "application/json; charset=utf-8" }
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
       ]
     },
     {
-      "source": "/studio-app/runs/(.*).html",
+      "source": "/static/:path*",
       "headers": [
-        { "key": "Content-Type", "value": "text/html; charset=utf-8" }
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
       ]
     }
   ]
