@@ -199,3 +199,26 @@ Leads use the selected month’s enquiry-creation cohort. Membership detail uses
 Manual component tools support paragraphs, callouts, metric cards, lists, tables and SVG charts. AI replace/add previews structured components for review before Apply. Shared structural and appearance changes save per report run. Failed saves retain a local pending copy; **Save all changes** retries them. Offline edited downloads embed structural edits and appearance.
 
 Additional checks: `python3 tests/period_scope_test.py` and `NODE_PATH=/path/to/jsdom/node_modules node tests/report-edit.cjs`.
+
+
+Report evidence and presentation controls
+-----------------------------------------
+Metric cards and numeric table cells open the saved studio/month source rows.
+The explorer waits for the complete records file, supports dataset selection,
+search across all available fields, column selection, 25/50/100/250-row pages,
+CSV export and full item details. Click a computed group to inspect its items.
+If a table label cannot be resolved to a source field, the explorer explicitly
+shows the full source population rather than substituting one summary row.
+
+Use Present in the report header for a section agenda, previous/next navigation,
+elapsed-time pause/reset, laser pointer, fullscreen and audience blackout.
+Arrow keys and Page Up/Down navigate; B toggles blackout; Escape returns from
+blackout or finishes presentation. Finish restores the report and sidebar state.
+
+AI requests reuse complete exact-input results within the current process for
+24 hours (maximum 128 entries) and share identical concurrent requests. Evidence,
+model, instructions, output limits and credential identity are part of the key.
+Failures, incomplete provider responses and rejected grounding checks are not
+retained. Report summary rewrites must retain source figures and at least the
+original word and sentence counts; failed checks keep the original analysis.
+Cache entries do not persist across a server restart.

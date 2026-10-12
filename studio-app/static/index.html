@@ -5,21 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Studio Intelligence — performance reviews from your own exports</title>
 <link rel="stylesheet" href="/static/app.css"/>
+<link rel="stylesheet" href="/static/atlas-theme.css"/>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230F4C5C'/><path d='M8 21V11m5 10V8m5 13v-7m5 7v-11' stroke='white' stroke-width='2.4' stroke-linecap='round'/></svg>"/>
 </head>
-<body>
+<body id="top">
 
 <header class="top">
-  <div class="brand">
-    <svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true">
-      <rect width="32" height="32" rx="7" fill="#0F4C5C"/>
-      <path d="M8 21V11m5 10V8m5 13v-7m5 7v-11" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>
-    </svg>
-    <div>
-      <div class="bt">PHYSIQUE 57 <span class="brand-divider">/</span> Intelligence</div>
-      <div class="bs" id="brandSub">no data loaded yet</div>
-    </div>
-  </div>
+  <a class="brand" id="homeLogo" href="/#top" aria-label="Physique 57 Intelligence home">
+    <img src="/static/logo.svg" width="40" height="40" alt=""/>
+    <div><div class="bt">Physique 57 <span class="brand-divider">/</span> Intelligence</div><div class="bs" id="brandSub">Your studio intelligence workspace</div></div>
+  </a>
   <nav class="tabs" id="tabs">
     <button data-view="upload" class="on"><span class="tn">01</span> Data</button>
     <button data-view="build"><span class="tn">02</span> Build</button>
@@ -119,6 +114,12 @@
 
 <!-- ────────────────────────────────────────────── 03 read -->
 <section class="view" id="v-read">
+  <nav class="studio-workspace" id="studioWorkspace" aria-label="Studio report workspace">
+    <div id="studioTabs" role="tablist" aria-label="Open studio reports"></div>
+    <label class="studio-period-select"><span>Report</span><select id="studioReportPicker" aria-label="Report for selected studio"></select></label>
+    <button type="button" id="addStudioReport" class="btn ghost sm">＋ Add report</button>
+  </nav>
+
   <div class="review-heading"><div><div class="kick">Studio intelligence / Performance review</div><h1>Your monthly briefing.</h1></div><p>Explore the evidence. Decide what comes next.</p></div><div class="runs" id="runs"></div>
   <div class="reader">
     <aside class="rail">

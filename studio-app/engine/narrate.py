@@ -326,13 +326,20 @@ def recommendations(M, cid, extra=None):
 def llm(text, key, model='gpt-4o-mini', base='https://api.openai.com/v1/chat/completions'):
     """Optional: rewrite composed text with a language model. Never used to
     invent facts - the model only sees what the metrics layer produced."""
-    prompt = ('You are the analyst who wrote the following notes about a fitness studio. '
-              'Rewrite them as three short, plain, confident sentences for the studio owner. '
-              'Use only the facts given; do not add numbers, do not use marketing language, '
-              'and do not use em dashes.\n\n' + text)
-    body = json.dumps({'model': model, 'messages': [{'role': 'user', 'content': prompt}],
-                       'temperature': 0.4, 'max_tokens': 320}).encode()
-    req = urllib.request.Request(base, data=body, headers={
-        'Content-Type': 'application/json', 'Authorization': f'Bearer {key}'})
-    with urllib.request.urlopen(req, timeout=45) as r:
-        return json.loads(r.read())['choices'][0]['message']['content'].strip()
+    from ai import llm as provider
+    from ai.agent import _ground
+    messages = [
+        {'role':'system','content':'Rewrite the supplied studio analysis in clear, factual prose. Preserve every finding, figure, caveat, recommendation and the original reporting scope. Preserve or expand the original sentence count and detail; do not summarise it into fewer sentences. Do not add facts, causal claims or numbers. Return prose only.'},
+        {'role':'user','content':text},
+    ]
+    result=provider.complete(messages,max_tokens=max(1200,len(text)//2),temperature=0.4,
+                             key_override=key,model_override=model,base_override=base)
+    from decimal import Decimal
+    figures=lambda value:{Decimal(n.replace(',', '')) for n in re.findall(r'\d[\d,]*(?:\.\d+)?',value)}
+    sentence_count=lambda value:len(re.split(r'(?<=[.!?])\s+',value.strip()))
+    if (not _ground(result['text'],{'source':text})[0] or figures(text)-figures(result['text'])
+            or len(result['text'].split()) < len(text.split())
+            or sentence_count(result['text']) < sentence_count(text)):
+        provider.discard(result)
+        raise ValueError('AI rewrite failed evidence or content-depth checks; the original analysis is retained.')
+    return result['text']

@@ -36,10 +36,33 @@ function view(v){
   $$('.view').forEach(s => s.classList.toggle('on', s.id === 'v-' + v));
   $$('#tabs button').forEach(b => b.classList.toggle('on', b.dataset.view === v));
   if (v === 'read'){
+    document.body.classList.add('report-full');
     $('#tabRead').disabled = !RUN;
     if (!RUN && STATE && STATE.runs.length) openRun(STATE.runs[0]);   /* never show an empty reader */
   }
 }
+
+/* Each studio keeps an independent, mounted reader and selected report. */
+const STUDIO_WORKSPACE=[];
+let restoredWorkspace=false;
+function saveWorkspace(){try{localStorage.setItem('p57-studio-workspace',JSON.stringify({reports:STUDIO_WORKSPACE.map(e=>e.run.id),active:RUN?.id}));}catch{}}
+function home(){stopNarration();view('upload');window.scrollTo({top:0,behavior:'instant'});history.replaceState(null,'','/#top');}
+function workspaceFrame(run){
+ let entry=STUDIO_WORKSPACE.find(e=>e.run.studio===run.studio);
+ if(!entry){const original=$('#stage');const frame=STUDIO_WORKSPACE.length?original.cloneNode(false):original;frame.removeAttribute('src');frame.id='';frame.classList.add('studio-report-frame');frame.title=run.studio+' report';if(frame!==original)original.parentElement.append(frame);entry={run,frame,chapter:0};STUDIO_WORKSPACE.push(entry);}
+ const changed=entry.run.id!==run.id||!entry.frame.getAttribute('src');entry.run=run;
+ STUDIO_WORKSPACE.forEach(e=>{e.frame.hidden=e!==entry;e.frame.id=e===entry?'stage':'stage-'+STUDIO_WORKSPACE.indexOf(e);});
+ if(changed){entry.chapter=0;entry.frame.src='/api/report/'+encodeURIComponent(run.id)+'/report';}
+ CH=entry.chapter;renderWorkspace();saveWorkspace();return entry;
+}
+function renderWorkspace(){
+ const tabs=$('#studioTabs');if(!tabs)return;tabs.replaceChildren();
+ STUDIO_WORKSPACE.forEach(entry=>{const b=document.createElement('button');b.type='button';b.className='studio-tab';b.setAttribute('role','tab');b.setAttribute('aria-selected',String(entry.run.studio===RUN?.studio));b.setAttribute('aria-controls','stage');b.tabIndex=entry.run.studio===RUN?.studio?0:-1;const mark=document.createElement('span');mark.className='studio-tab-mark';mark.textContent=entry.run.studio.replace(/^Supreme HQ, |^Kwality House, /,'').slice(0,1);const title=document.createElement('span');title.textContent=entry.run.studio.replace(/^Supreme HQ, |^Kwality House, /,'');const period=document.createElement('small');period.textContent=entry.run.label;b.append(mark,title,period);b.onclick=()=>openRun(entry.run);b.onkeydown=e=>{if(['ArrowLeft','ArrowRight'].includes(e.key)){e.preventDefault();const i=STUDIO_WORKSPACE.indexOf(entry),next=STUDIO_WORKSPACE[(i+(e.key==='ArrowRight'?1:-1)+STUDIO_WORKSPACE.length)%STUDIO_WORKSPACE.length];openRun(next.run);$('#studioTabs [aria-selected=true]').focus();}};tabs.append(b);});
+ const picker=$('#studioReportPicker');picker.replaceChildren();(STATE?.runs||[]).filter(r=>r.studio===RUN?.studio).forEach(r=>{const o=document.createElement('option');o.value=r.id;o.textContent=r.label+' · '+(r.built||'Saved report');picker.append(o);});picker.value=RUN?.id||'';picker.onchange=()=>openRun(STATE.runs.find(r=>r.id===picker.value));
+}
+function addReport(){const dialog=document.createElement('dialog');dialog.className='studio-add-dialog';const title=document.createElement('h2');title.textContent='Add a studio report';const hint=document.createElement('p');hint.textContent='Open saved reviews side by side in separate studio tabs.';dialog.append(title,hint);(STATE?.runs||[]).forEach(run=>{const b=document.createElement('button');b.type='button';b.className='saved-review';b.textContent=run.studio+' · '+run.label;b.onclick=()=>{dialog.close();openRun(run);dialog.remove();};dialog.append(b);});const generate=document.createElement('button');generate.type='button';generate.className='btn';generate.textContent='Generate another report';generate.onclick=()=>{dialog.close();dialog.remove();view('build');};const close=document.createElement('button');close.type='button';close.className='btn ghost';close.textContent='Cancel';close.onclick=()=>{dialog.close();dialog.remove();};dialog.append(generate,close);dialog.addEventListener('close',()=>dialog.remove(),{once:true});document.body.append(dialog);dialog.showModal();}
+window.P57Workspace={open:openRun,home,entries:STUDIO_WORKSPACE};
+window.addEventListener('message',e=>{if(e.origin===location.origin&&e.data?.type==='p57-home'&&STUDIO_WORKSPACE.some(entry=>entry.frame.contentWindow===e.source))home();});
 
 /* ─────────────────────────────────────────── state */
 async function loadState(){
@@ -49,6 +72,8 @@ async function loadState(){
     ? `${n} files · ${rows.toLocaleString()} rows · ${STATE.studios.length} studios`
     : 'no data loaded yet';
   renderSources(); renderNeeds(); renderStudios(); renderRuns(); renderLibrary();
+  if(!restoredWorkspace){restoredWorkspace=true;try{const saved=JSON.parse(localStorage.getItem('p57-studio-workspace')||'null');if(saved){for(const id of saved.reports||[]){const run=STATE.runs.find(r=>r.id===id);if(run){RUN=run;workspaceFrame(run);}}const active=STATE.runs.find(r=>r.id===saved.active);if(active){RUN=active;workspaceFrame(active);if(location.hash!=='#top')openRun(active);}}}catch{}}
+  renderWorkspace();
 }
 
 function renderNeeds(){
@@ -239,14 +264,15 @@ function renderRuns(){
 
 function openRun(run){
   if (!run) return;
-  RUN = run; CH = 0;
+  const previous=STUDIO_WORKSPACE.find(e=>e.run.id===RUN?.id);if(previous)previous.chapter=CH;
+  RUN = run;workspaceFrame(run);
   $('#runLabel').textContent = run.label || '';
   $('#runSub').textContent = `${run.studio} · built ${run.built || ''}`;
   $('#btnDownload').disabled = false;
-  renderChList(run, 0);
+  renderChList(run, CH);
   view('read');
   document.body.classList.add('report-full');
-  $('#stage').src = `/api/report/${run.id}/report`;
+  renderWorkspace();saveWorkspace();
   loadVoices();
 }
 
@@ -432,6 +458,8 @@ function wire(){
   $('#btnPrint').onclick = () => { try{ $('#stage').contentWindow.print(); }catch(e){} };
   $('#btnFull').onclick = () => { if (RUN) window.open(`/api/report/${RUN.id}/full`, '_blank'); };
   $('#btnDownload').onclick = () => { if (RUN) location.href = `/api/download/${encodeURIComponent(RUN.id)}`; };
+  $('#homeLogo').onclick=e=>{e.preventDefault();home();};
+  $('#addStudioReport').onclick=addReport;
   view('upload');
   loadState();
 }
