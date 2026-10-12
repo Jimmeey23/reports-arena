@@ -215,7 +215,7 @@ def edit_element(instruction, current_html, pack):
         return dict(error='AI editing requires a connected model. Manual component editing is available.')
     try:
         out = llm.complete([
-            {'role':'system','content':'Edit ONE report component. Return only HTML for the inside of the supplied component, without Markdown fences. You may use headings, lists, callouts, metric cards, tables and SVG charts. No scripts, styles, links, event handlers or external resources. Preserve all existing figures. Never invent facts or numbers. Focus on the selected reporting period in METRICS.\nMETRICS:\n'+_pack_text(pack)},
+            {'role':'system','content':'Edit ONE report component. Return only HTML for the inside of the supplied component, without Markdown fences. You may use headings, lists, callouts, metric cards, tables and SVG charts. No scripts, styles, links, event handlers or external resources. Write simple, concise headlines and lightly witty catchphrases grounded in the evidence. Call payment totals sales revenue, never money taken or borrowed. Distinguish sales from delivered session revenue. Preserve all existing figures. Never invent facts or numbers. Focus on the selected reporting period in METRICS.\nMETRICS:\n'+_pack_text(pack)},
             {'role':'user','content':f'Instruction: {instruction[:400]}\nCOMPONENT:\n{current_html[:16000]}'},
         ],max_tokens=2600)
     except llm.AIUnavailable as e: return dict(error=str(e))
@@ -240,7 +240,7 @@ def create_element(instruction, pack):
         return dict(error='AI component creation requires a connected model.')
     try:
         out = llm.complete([
-            {'role':'system','content':'Create ONE report component using ONLY facts and figures from METRICS for the selected period. Return HTML only, no Markdown fences. Follow the requested component type: paragraph, list, callout, metric cards, table or SVG chart. Use class="call" for callouts, class="kpis" and class="kpi" for metric cards, class="chart" for charts. No scripts, styles, links, event handlers or external resources. Label units and reporting period. Keep text under 200 words.\nMETRICS:\n'+_pack_text(pack)},
+            {'role':'system','content':'Create ONE report component using ONLY facts and figures from METRICS for the selected period. Return HTML only, no Markdown fences. Follow the requested component type: paragraph, list, callout, metric cards, table or SVG chart. Use class="call" for callouts, class="kpis" and class="kpi" for metric cards, class="chart" for charts. No scripts, styles, links, event handlers or external resources. Use simple, concise headlines and lightly witty catchphrases grounded in evidence. Call payment totals sales revenue, never money taken or borrowed. Distinguish sales from delivered session revenue. Label units and reporting period. Keep text under 200 words.\nMETRICS:\n'+_pack_text(pack)},
             {'role':'user','content':f'Request: {instruction[:400]}'},
         ],max_tokens=2200)
     except llm.AIUnavailable as e: return dict(error=str(e))

@@ -195,11 +195,28 @@ controls.append(timerBox);
 const timerInterval=setInterval(()=>{const secs=Math.floor((timerElapsed+(timerStart?Date.now()-timerStart:0))/1000);timer.textContent=String(Math.floor(secs/60)).padStart(2,'0')+':'+String(secs%60).padStart(2,'0');},1000);
 window.addEventListener('pagehide',()=>clearInterval(timerInterval));
 
-function updatePrompt(){const h=document.getElementById(current);let text=note.value.trim();if(!text){text=h?.textContent||document.title;for(let e=h?.closest('.p57-chapter-hero')?.nextElementSibling||h?.nextElementSibling;e&&e.tagName!=='H2';e=e.nextElementSibling)if(e.matches('p,.sub,.call'))text+='\n\n'+e.textContent;}prompt.textContent=text;}
+function speakerPoints(h){
+  if(!h)return [];
+  const items=[],seen=new Set();
+  const add=(label,text)=>{text=(text||'').replace(/\s+/g,' ').trim();if(!text||seen.has(text))return;seen.add(text);items.push(label+': '+text);};
+  const start=h.closest('.p57-chapter-hero')||h;
+  const summary=start.querySelector?.('.p57-hero-description');
+  const sentence=t=>(t||'').match(/^.*?[.!?](?=\s|$)/)?.[0]||t;
+  if(summary)add('Lead with',sentence(summary.textContent));
+  for(let e=start.nextElementSibling;e&&!e.matches('h2,.p57-chapter-hero');e=e.nextElementSibling){
+    if(e.matches('.kpis,.stat'))[...e.querySelectorAll('.kpi,.stat>div')].slice(0,3).forEach(k=>{const value=k.querySelector('.v')?.textContent;if(value)add(k.querySelector('.l')?.textContent||'Key figure',value);});
+    else if(e.matches('.call,p'))add(items.length?'Highlight':'Lead with',sentence(e.querySelector('p')?.textContent||e.textContent));
+    else if(e.matches('.rec'))add('Next step',e.querySelector('h3')?.textContent);
+    if(items.length>=4)break;
+  }
+  return items.slice(0,4);
+}
+R.speakerPoints=speakerPoints;
+function updatePrompt(){const h=document.getElementById(current);let text=note.value.trim();if(!text){text=h?.textContent||document.title;for(let e=h?.closest('.p57-chapter-hero')?.nextElementSibling||h?.nextElementSibling;e&&e.tagName!=='H2';e=e.nextElementSibling)if(e.matches('p,.sub,.call'))text+='\n\n'+e.textContent;}prompt.replaceChildren(...text.split(/\n\s*\n|\n(?=[•-])/).filter(Boolean).map(t=>make('p',t,'p57-prompt-point')));}
 function renderNotes(){
   const h=document.getElementById(current);
   sectionLabel.textContent=h?.textContent||'Overview';
-  note.value=saved.notes[current]||'';
+  note.value=Object.hasOwn(saved.notes,current)?saved.notes[current]:(meeting&&!meeting.is_host?'':speakerPoints(h).map(t=>'• '+t).join('\n\n'));
   annotation.value=saved.annotations[current]||'';
   noteDot.hidden=!note.value.trim();
   annotDot.hidden=!annotation.value.trim();

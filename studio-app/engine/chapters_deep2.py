@@ -847,7 +847,7 @@ def instructor(M):
     body = run([start, scorecard, controlled, individual, yoy, week, clients, own_measure, pay, first_class, causes])
     defs = [('Trainer', 'the Trainer column of the sessions export, trimmed and matched case-insensitively to the payroll file.'),
             ('Utilisation', 'check-ins against the capacity configured for that class, not against who booked it.'),
-            ('Revenue', 'the Revenue column on the session row: the value of classes delivered, not cash taken.'),
+            ('Revenue', 'the Revenue column on the session row: the value of classes delivered, not sales revenue.'),
             ('First class', 'a member\’s first recorded visit at this studio in the member file, attributed to the trainer named against that visit.'),
             ('Payroll figures', 'the total paid for the cycle the file reports, with per-session and per-attendance rates derived from it.')]
     caut = [('A trainer\’s utilisation is a function of the slots they were given. Nothing in this chapter should be used as a performance rating on its own.'),

@@ -29,7 +29,7 @@ def summary(M, ch):
     s = []
     if ch['id'] == 'sales':
         F = M.sales[y]; P1 = M.sales.get(y - 1)
-        s.append(f'{R(F["cash"])} was taken at {M.studio} in {lab}, across {F["txn"]} transactions from {F["buyers"]} buyers')
+        s.append(f'Sales revenue reached {R(F["cash"])} at {M.studio} in {lab}, across {F["txn"]} transactions from {F["buyers"]} buyers')
         s.append(f'The average buyer spent {R(F["ticket"])}{_pc(F["ticket"], P1["ticket"]) if P1 else ""}')
         if hasattr(M, 'cats') and len(M.cats):
             s.append(f'The largest category was {M.cats.index[0]} at {R(M.cats["sum"].iloc[0])}')
@@ -74,7 +74,7 @@ def summary(M, ch):
     elif ch['id'] == 'overview':
         F = M.room.get(y, {}); S = M.sales.get(y, {})
         s.append(f'{M.studio} ran {F.get("sessions", 0)} classes at {F.get("fill", 0):.1f}% utilisation in {lab}, earning {R(F.get("rev", 0))} from the room')
-        s.append(f'{R(S.get("cash", 0))} was taken from {S.get("buyers", 0)} buyers')
+        s.append(f'Sales revenue totalled {R(S.get("cash", 0))} from {S.get("buyers", 0)} buyers')
         if hasattr(M, 'core'):
             s.append(f'The {M.core["n"]} members who returned from the same month last year gave {abs(M.core["lost"]):,.0f} fewer visits, about {M.core["share_of_month"]:.0f}% of the month')
         if hasattr(M, 'lead_fun'):
@@ -329,7 +329,7 @@ def llm(text, key, model='gpt-4o-mini', base='https://api.openai.com/v1/chat/com
     from ai import llm as provider
     from ai.agent import _ground
     messages = [
-        {'role':'system','content':'Rewrite the supplied studio analysis in clear, factual prose. Preserve every finding, figure, caveat, recommendation and the original reporting scope. Preserve or expand the original sentence count and detail; do not summarise it into fewer sentences. Do not add facts, causal claims or numbers. Return prose only.'},
+        {'role':'system','content':'Rewrite the supplied studio analysis in simple, direct language. Use short, easily spoken sentences. Headlines and catchphrases should be brief, memorable and lightly witty only when supported by the finding; avoid jargon, melodrama and financial metaphors. Describe payment totals as sales revenue, never money taken, takings, borrowing or loans. Keep sales revenue distinct from delivered session revenue. Preserve every finding, figure, caveat, recommendation and the original reporting scope. Preserve or expand the original sentence count and detail; do not summarise it into fewer sentences. Do not add facts, causal claims or numbers. Return prose only.'},
         {'role':'user','content':text},
     ]
     result=provider.complete(messages,max_tokens=max(1200,len(text)//2),temperature=0.4,

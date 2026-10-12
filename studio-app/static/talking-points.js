@@ -19,7 +19,7 @@ const list=document.createElement('ul');list.className='p57-talk-list';
 const foot=document.createElement('div');foot.className='p57-talk-foot';
 const copy=document.createElement('button');copy.type='button';copy.textContent='Copy points';
 copy.onclick=async()=>{const text=title.textContent+'\n'+[...list.children].map(li=>'• '+li.textContent).join('\n');try{await navigator.clipboard.writeText(text);copy.textContent='Copied';setTimeout(()=>copy.textContent='Copy points',1400);}catch{copy.textContent='Copy unavailable';}};
-const toNotes=document.createElement('button');toNotes.type='button';toNotes.textContent='Add a note';toNotes.onclick=()=>{setView('notes');drawer.querySelector('.p57-notes-panel textarea')?.focus();};
+const toNotes=document.createElement('button');toNotes.type='button';toNotes.textContent='Edit speaker notes';toNotes.onclick=()=>{setView('notes');drawer.querySelector('.p57-notes-panel textarea')?.focus();};
 foot.append(copy,toNotes);talk.append(where,title,list,foot);
 head.after(tabs,talk);
 function setView(id){drawer.dataset.view=id;tabs.querySelectorAll('button').forEach(b=>{b.setAttribute('aria-selected',String(b.dataset.view===id));});
@@ -33,6 +33,7 @@ const headings=()=>[...document.querySelectorAll('.wrap h2')].filter(h=>!h.close
 function currentHeading(){const line=innerHeight*.35;let cur=null;for(const h of headings()){if(h.getBoundingClientRect().top<=line)cur=h;else break;}return cur||headings()[0];}
 function nodesFor(h){const out=[];let start=h.closest('.p57-chapter-hero')||h;let el=start.nextElementSibling;while(el&&!(el.matches('h2')||el.querySelector?.(':scope>h2'))){out.push(el);el=el.nextElementSibling;}return out;}
 function points(h){
+ if(window.P57Reader?.speakerPoints)return window.P57Reader.speakerPoints(h);
  const nodes=nodesFor(h),pts=[],seen=new Set();
  const add=t=>{t=clean(t);if(t.length<8)return;const k=t.toLowerCase().slice(0,60);if(seen.has(k))return;seen.add(k);pts.push(t);};
  const hero=h.closest('.p57-chapter-hero');
@@ -53,10 +54,11 @@ function render(force){if(drawer.hidden&&!force)return;const h=currentHeading();
  const chapter=h.closest('.wrap>section')?.querySelector('.p57-chapter-hero h2');
  where.textContent=chapter&&chapter!==h?clean(chapter.textContent).replace(/^Chapter\s+(\d+)\s*/i,'Chapter $1 · '):'';
  title.textContent=clean(h.textContent);
- const pts=points(h);list.replaceChildren(...(pts.length?pts:['No summary lines in this section yet. Add your own in My notes.']).map(t=>{const li=document.createElement('li');li.textContent=t;return li;}));
+ const pts=points(h);list.replaceChildren(...(pts.length?pts:['No summary lines in this section yet. Add your own in My notes.']).map(t=>{const li=document.createElement('li');const split=t.indexOf(': ');if(split>0){const label=document.createElement('strong');label.textContent=t.slice(0,split);const body=document.createElement('span');body.textContent=t.slice(split+2);li.append(label,body);}else li.textContent=t;return li;}));
  talk.classList.remove('p57-talk-in');void talk.offsetWidth;talk.classList.add('p57-talk-in');
 }
 let raf=0;addEventListener('scroll',()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>render(false));},{passive:true});
-new MutationObserver(()=>{if(!drawer.hidden)render(true);}).observe(drawer,{attributes:true,attributeFilter:['hidden']});
+const observer=new MutationObserver(()=>{if(!drawer.hidden)render(true);});observer.observe(drawer,{attributes:true,attributeFilter:['hidden']});
+addEventListener('pagehide',()=>{observer.disconnect();cancelAnimationFrame(raf);},{once:true});
 render(true);
 })();

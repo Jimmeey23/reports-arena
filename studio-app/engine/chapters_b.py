@@ -112,11 +112,11 @@ def overview(M):
         _k('Classes run', f"{F.get('sessions', 0):,}", f"{F.get('att', 0):,.0f} attendances", 'neu'),
         _k('Utilisation', P(F.get('fill', 0)), (f"from {p1['fill']:.1f}% a year earlier" if p1 else ''), 'pos'),
         _k('Class revenue', R(F.get('rev', 0)), f"{R(F.get('rpc', 0))} a class", 'pos'),
-        _k('Cash taken', R(S.get('cash', 0)), f"{S.get('buyers', 0)} buyers", 'pos')]
+        _k('Sales revenue', R(S.get('cash', 0)), f"{S.get('buyers', 0)} buyers", 'pos')]
 
     body.append(f'''<h2>Start here</h2>
 <p>{M.studio} in {M.label}: <strong>{F.get('sessions', 0)} classes, {F.get('att', 0):,.0f} attendances, {R(F.get('rev', 0))} of class revenue</strong>
-and {R(S.get('cash', 0))} of cash taken from {S.get('buyers', 0)} buyers. This chapter joins the ledgers — room, sales, members, leads — into one page.</p>''')
+and {R(S.get('cash', 0))} of sales revenue from {S.get('buyers', 0)} buyers. This chapter joins the ledgers — room, sales, members, leads — into one page.</p>''')
 
     if p1:
         body.append(f'''<p>Against {MONTH_NAMES[M.m-1]} {M.y-1}: utilisation {'up' if F.get('fill', 0) >= p1['fill'] else 'down'} from

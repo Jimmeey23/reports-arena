@@ -378,7 +378,7 @@ def overview(M):
             ('Class revenue', F.get('rev'), P1.get('rev'), 'm'),
             ('Revenue per class', F.get('rpc'), P1.get('rpc'), 'm'),
             ('Late cancellations', F.get('lc'), P1.get('lc'), 'n'),
-            ('Cash taken', Fx.get('cash'), Sp.get('cash'), 'm'),
+            ('Sales revenue', Fx.get('cash'), Sp.get('cash'), 'm'),
             ('Buyers', Fx.get('buyers'), Sp.get('buyers'), 'n'),
             ('Average buyer', Fx.get('ticket'), Sp.get('ticket'), 'm')]:
             if cur is None:
@@ -598,7 +598,7 @@ def overview(M):
             ('Classes taught', M.room, 'sessions', _n), ('Attendances', M.room, 'att', _n),
             ('Utilisation %', M.room, 'fill', lambda v: f'{v:.1f}'), ('Class revenue', M.room, 'rev', R),
             ('Revenue per class', M.room, 'rpc', R), ('Late cancellations', M.room, 'lc', _n),
-            ('Cash taken', M.sales, 'cash', R), ('Buyers', M.sales, 'buyers', _n),
+            ('Sales revenue', M.sales, 'cash', R), ('Buyers', M.sales, 'buyers', _n),
             ('Average buyer', M.sales, 'ticket', R),
             ('Members who trained', M.people, 'members', _n), ('Visits per member', M.people, 'per', lambda v: f'{v:.2f}')]:
             rows.append([name] + [cell(z, key, src, f) for z in yrs])
@@ -693,7 +693,7 @@ def overview(M):
             kpi('Utilisation', f'{F.get("fill", 0):.1f}%', f'{share(F.get("rev", 0), Fx.get("cash", 1))} of cash delivered' if Fx.get('cash') else ''),
             kpi('Cash', R(Fx.get('cash', 0)), f'{Fx.get("buyers", 0)} buyers'),
             kpi('Visits per member', f'{M.people.get(y, {}).get("per", 0):.2f}', f'{M.people.get(y, {}).get("members", 0)} members')]
-    facts = [f'{F.get("sessions", 0)} classes, {F.get("fill", 0):.1f}% utilisation and {R(F.get("rev", 0))} of delivered revenue in {lab}, against {R(Fx.get("cash", 0))} of cash taken.',
+    facts = [f'{F.get("sessions", 0)} classes, {F.get("fill", 0):.1f}% utilisation and {R(F.get("rev", 0))} of delivered revenue in {lab}, against {R(Fx.get("cash", 0))} of sales revenue.',
              f'{M.people.get(y, {}).get("members", 0)} people trained here at {M.people.get(y, {}).get("per", 0):.2f} visits each.']
     if hasattr(M, 'core') and M.core.get('n'):
         facts.append(f'{M.core["n"]} members came in both {yrp(M)} and {lab}; they came {abs(M.core["lost"]):,.0f} fewer times this year, worth about {R(abs(M.core["lost"]) * F.get("rph", 0))} of delivered revenue.')

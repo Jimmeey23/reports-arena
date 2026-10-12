@@ -100,15 +100,15 @@ def sales(M):
         d = ((F['cash'] - P1['cash']) / P1['cash'] * 100) if P1.get('cash') else None
         delivered = L.get('rev', 0)
         paras = [para(
-            f'{lab} banked <strong>{R(F["cash"])}</strong> across {F["txn"]} transactions from {F["buyers"]} people'
+            f'{lab} recorded sales revenue of <strong>{R(F["cash"])}</strong> across {F["txn"]} transactions from {F["buyers"]} people'
             + (f' &mdash; a movement of {abs(d):.1f}% against {yrp(M)}, and on the headline alone an unremarkable month'
                if d is not None else '')
             + f'. The average transaction was {R(F["aov"])} and the average buyer {R(F["ticket"])}'
             + (f', against {R(P1["ticket"])} a year earlier' if P1.get('ticket') else '') + '.')]
         paras.append(para(
-            f'Cash is the least interesting number in this chapter. The month delivered {R(delivered)} of attended-class '
-            f'revenue against {R(F["cash"])} taken, so {share(delivered, F["cash"])} of what was collected has already been '
-            f'served. That ratio is what tells a studio whether it is trading or borrowing from next month.'))
+            f'Read sales alongside session revenue. The month delivered {R(delivered)} of attended-class '
+            f'revenue against {R(F["cash"])} in sales revenue. Delivered session revenue was {share(delivered, F["cash"])} of sales revenue. These totals measure different activity and are not directly '
+            f'reconciled; they do not show how much of this month’s purchases has been used.'))
         claim = None
         if M.y in M.people and (M.y - 1) in M.people:
             pn, pp = M.people[y], M.people.get(y - 1, {})
@@ -205,7 +205,7 @@ def sales(M):
         if mv is not None and len(mv) and 'd' in mv:
             b.append(diverging([(clean(i), float(v)) for i, v in mv['d'].items()],
                                f'Product by product, {lab} against {yrp(M)}', maxv=float(np.nanmax(mv['d'].abs()) * 1.2),
-                               note='The change in cash taken on each product, one year apart. Products that appear in only one of the two months show their whole value as a movement.'))
+                               note='The change in sales revenue on each product, one year apart. Products that appear in only one of the two months show their whole value as a movement.'))
             b.append(tab(mv.reset_index()[['Cleaned Product', 'n', 'rev', 'n2', 'rev2', 'd']]
                          if 'Cleaned Product' in mv.reset_index().columns else mv,
                          ['Product', 'Sold this year', 'Cash this year', 'Sold last year', 'Cash last year', 'Movement'],
@@ -495,8 +495,8 @@ def sales(M):
                    [hyp(items)])
 
     body = run([start, base, core, mix, commit, ladder, trading, paidfor, soldby, disc, arrived, who, retail, starter, causes])
-    defs = [('Cash taken', 'the Payment Value column of the sales export, dated on Payment Date, filtered to this studio. Only successful, non-voided payments count.'),
-            ('Net of VAT', 'cash taken minus the Payment VAT recorded on the same lines.'),
+    defs = [('Sales revenue', 'the Payment Value column of the sales export, dated on Payment Date, filtered to this studio. Only successful, non-voided payments count.'),
+            ('Net of VAT', 'sales revenue minus the Payment VAT recorded on the same lines.'),
             ('Delivered class revenue', 'the Revenue column of the sessions export, on classes actually taught, with at least one attendance.'),
             ('Buyer', 'a distinct Member ID with at least one payment in the month. A household paying twice counts once.'),
             ('Transaction', 'a distinct Sale ID. One invoice with several items counts once.'),
@@ -508,7 +508,7 @@ def sales(M):
             ('Year-on-year comparisons of September are not directly comparable across years when the festival week shifts; the pattern inside the month is shown so the shift can be seen rather than assumed.')]
     body += appendix(M, X, 'sales')
     body += method(M, defs, caut)
-    kpis = [kpi('Cash taken', R(F['cash']), (f'{(F["cash"] - P1["cash"]) / P1["cash"] * 100:+.1f}% on {yrp(M)}' if P1.get('cash') else ''), 'pos' if P1.get('cash') and F['cash'] >= P1['cash'] else 'neg'),
+    kpis = [kpi('Sales revenue', R(F['cash']), (f'{(F["cash"] - P1["cash"]) / P1["cash"] * 100:+.1f}% on {yrp(M)}' if P1.get('cash') else ''), 'pos' if P1.get('cash') and F['cash'] >= P1['cash'] else 'neg'),
             kpi('Transactions', _n(F['txn']), f'{F["buyers"]} buyers'),
             kpi('Average buyer', R(F['ticket']), (f'{(F["ticket"] - P1["ticket"]) / P1["ticket"] * 100:+.1f}% on the year' if P1.get('ticket') else ''), 'pos' if P1.get('ticket') and F['ticket'] >= P1['ticket'] else 'neg'),
             kpi('Discount given', R(F['disc']), share(F['disc'], F['gross']) + ' of gross')]

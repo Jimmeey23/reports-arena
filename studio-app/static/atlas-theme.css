@@ -592,3 +592,20 @@ text.p57-legend-off{text-decoration:line-through}
 .p57-talk-tabs button{font-size:12px!important;white-space:nowrap}
 .p57-art.p57-hero-art{opacity:1!important;animation:none!important;top:0!important;height:100%!important}
 @media(max-width:800px){.p57-art.p57-hero-art{opacity:.16!important;width:80%}}
+/* Compact report controls and readable speaker cues. */
+.p57-reader-header{gap:4px!important;padding-inline:18px!important}
+.p57-reader-brand small{display:none}
+.p57-reader-brand span{font-size:13px}
+.p57-reader-period{background:transparent;border:0;padding-inline:8px;font-weight:500}
+.p57-reader-period:before,.p57-hgroup+.p57-hgroup:before{display:none}
+.p57-hgroup{padding-inline:3px}
+.p57-reader-header .p57-hgroup button{font-size:12px!important;font-weight:500!important;border-radius:7px!important;padding-inline:9px!important}
+.p57-reader-header>button{box-shadow:none!important;font-size:12px!important;border-radius:7px!important}
+.p57-talk-list{display:grid;gap:12px;padding:0!important;list-style:none!important}
+.p57-talk-list li{padding:14px 16px!important;background:var(--soft);border:1px solid var(--line);border-radius:10px;font-size:14px!important;line-height:1.6!important}
+.p57-talk-list li:before{display:none!important}
+.p57-talk-list li strong{display:block;margin-bottom:5px;font:600 10px var(--font-ui);text-transform:uppercase;letter-spacing:.08em;color:var(--accent)}
+.p57-talk-list li span{display:block}
+.p57-speaker #p57-speaker-notes{min-height:260px!important;font:14px/1.8 var(--font-ui)!important;padding:16px!important}
+.p57-prompt-point{margin:0 0 1.3em;padding-bottom:1em;border-bottom:1px solid var(--line);font:inherit;color:inherit}
+@media(max-width:600px){.p57-reader-header .p57-hgroup button .p57-hl{display:none}.p57-reader-header .p57-hgroup button{width:38px!important;padding:0!important;justify-content:center}}

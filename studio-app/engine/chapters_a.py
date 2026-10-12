@@ -17,7 +17,7 @@ def sales(M):
     F, P1 = M.sales[M.y], M.sales.get(M.y - 1)
     L = M.room.get(M.y, {})
     body = []
-    kpis = [_k('Cash taken', R(F['cash']), f"{F['txn']} transactions from {F['buyers']} buyers", 'pos'),
+    kpis = [_k('Sales revenue', R(F['cash']), f"{F['txn']} transactions from {F['buyers']} buyers", 'pos'),
             _k('Average buyer', R(F['ticket']), (f"{F['ticket']/P1['ticket']*100-100:+.0f}% on {M.y-1}" if P1 else ''), 'pos'),
             _k('Class revenue', R(L.get('rev', 0)), 'attributed to attended classes', 'pos'),
             _k('Revenue per class', R(L.get('rpc', 0)), f"against {R(M.room[M.y-1]['rpc'])} a year earlier" if (M.y-1) in M.room else '', 'pos')]
@@ -47,7 +47,7 @@ studio fills better, prices better, or sells better products, and it is the only
 <p>Discounted sales account for {F['spread']:.0f}% of the month{f", against {P1['spread']:.0f}% a year earlier" if P1 else ""}, at an average depth of
 {F['depth']:.1f}%{f" against {P1['depth']:.1f}%" if P1 else ""}.</p>''')
         body.append(bars([f'{MONTH_NAMES[M.m-1][:3]} {y}' for y in sorted(M.sales)],
-                         [('Cash taken', [M.sales[y]['cash'] for y in sorted(M.sales)], A1),
+                         [('Sales revenue', [M.sales[y]['cash'] for y in sorted(M.sales)], A1),
                           ('Average buyer, ×3', [M.sales[y]['ticket'] * 3 for y in sorted(M.sales)], B1)],
                          f'Cash and buyer value, {MONTH_NAMES[M.m-1]} across the years on file', h=300,
                          note='The second series is the average buyer value drawn at three times its true height so both fit one axis.'))
