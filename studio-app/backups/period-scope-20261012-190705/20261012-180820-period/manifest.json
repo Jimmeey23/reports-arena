@@ -1,0 +1,2210 @@
+{
+ "studio": "Kwality House, Kemps Corner",
+ "year": 2026,
+ "month": 9,
+ "label": "September 2026",
+ "built": "12 October 2026, 18:39 IST",
+ "seconds": 1.5,
+ "chapters": [
+  {
+   "id": "sales",
+   "n": 1,
+   "title": "Sales Performance",
+   "kpis": [
+    {
+     "label": "Cash taken",
+     "value": "\u20b932,06,431",
+     "detail": "+27.4% on September 2025",
+     "tone": "pos"
+    },
+    {
+     "label": "Transactions",
+     "value": "233",
+     "detail": "179 buyers",
+     "tone": "neu"
+    },
+    {
+     "label": "Average buyer",
+     "value": "\u20b917,913",
+     "detail": "+76.5% on the year",
+     "tone": "pos"
+    },
+    {
+     "label": "Discount given",
+     "value": "\u20b93,40,365",
+     "detail": "10% of gross",
+     "tone": "neu"
+    }
+   ],
+   "facts": [
+    "\u20b932,06,431 of cash from 233 transactions and 179 buyers in September 2026, at an average of \u20b917,913 each.",
+    "59% of that cash has already been delivered as attended classes (\u20b919,01,973).",
+    "38 buyers (21%) bought more than once and produced 18% of the month."
+   ],
+   "subtitle": "\u20b932,06,431 of cash, 179 buyers, \u20b917,913 each",
+   "recs_extra": [
+    [
+     "Re-price the ladder so the bigger commitment is always cheaper per class",
+     "Sales + Finance",
+     "4 Class Package sells at \u20b912,403 a class while Private Class sells at \u20b960,296; 14 lines went out at the dearer per-class rate.",
+     "Moving even a quarter of the 21 class-count sales onto the best per-class tier adds credits to the delivered base at no revenue cost, and removes the single clearest pricing inconsistency on the board."
+    ],
+    [
+     "Sell the second purchase while the first is being served",
+     "Front Desk",
+     "38 of 179 buyers bought more than once and produced 18% of the cash. 79% bought once and were not offered anything further.",
+     "A renewal conversation at the moment of highest engagement is worth more than the same conversation in an email three weeks later; on this month\u2019s mix it is the difference between a one-purchase member and a repeat one."
+    ],
+    [
+     "Put every discount code under one owner and one ceiling",
+     "Marketing + Finance",
+     "9 codes were used in September 2026, giving away \u20b93,40,365 at depths between 10% and 19%. The largest single code is 49% of all discounting.",
+     "One owner and one depth cap turns discounting from a leak into a lever, and makes the month comparable to next month."
+    ],
+    [
+     "Lead with 3 Month Unlimited, not with the cheapest offer",
+     "Sales + Marketing",
+     "Lifetime value by first purchase ranges from \u20b913,964 (Session) to \u20b91,23,781 (3 Month Unlimited) across 800 recorded first-timers.",
+     "The first product decides the lifetime. Changing which offer the desk leads with costs nothing and moves the whole cohort."
+    ],
+    [
+     "Own the interval between the first visit and the second",
+     "Front Desk + Studio Manager",
+     "Members who came back within a day of a first visit are worth \u20b937,075 across a lifetime; those who took over a month are worth \u20b915,827.",
+     "Booking the next class before the member leaves the building converts the only moment when they are certain they want to come back."
+    ]
+   ],
+   "depth": 96539,
+   "sections": [
+    {
+     "n": 1,
+     "id": "sec-sales-1",
+     "title": "Start here",
+     "slug": "start-here"
+    },
+    {
+     "n": 2,
+     "id": "sec-sales-2",
+     "title": "The base is narrowing",
+     "slug": "the-base-is-narrowing"
+    },
+    {
+     "n": 3,
+     "id": "sec-sales-3",
+     "title": "The loyal core halved its frequency",
+     "slug": "the-loyal-core-halved-its-frequency"
+    },
+    {
+     "n": 4,
+     "id": "sec-sales-4",
+     "title": "Where the money came from",
+     "slug": "where-the-money-came-from"
+    },
+    {
+     "n": 5,
+     "id": "sec-sales-5",
+     "title": "The commitment-length problem",
+     "slug": "the-commitment-length-problem"
+    },
+    {
+     "n": 6,
+     "id": "sec-sales-6",
+     "title": "Pricing and the product ladder",
+     "slug": "pricing-and-the-product-ladder"
+    },
+    {
+     "n": 7,
+     "id": "sec-sales-7",
+     "title": "Trading pattern through the month",
+     "slug": "trading-pattern-through-the-month"
+    },
+    {
+     "n": 8,
+     "id": "sec-sales-8",
+     "title": "How the month was paid for",
+     "slug": "how-the-month-was-paid-for"
+    },
+    {
+     "n": 9,
+     "id": "sec-sales-9",
+     "title": "Who sold it",
+     "slug": "who-sold-it"
+    },
+    {
+     "n": 10,
+     "id": "sec-sales-10",
+     "title": "Discounting",
+     "slug": "discounting"
+    },
+    {
+     "n": 11,
+     "id": "sec-sales-11",
+     "title": "How the money arrived",
+     "slug": "how-the-money-arrived"
+    },
+    {
+     "n": 12,
+     "id": "sec-sales-12",
+     "title": "Who the money came from",
+     "slug": "who-the-money-came-from"
+    },
+    {
+     "n": 13,
+     "id": "sec-sales-13",
+     "title": "Retail",
+     "slug": "retail"
+    },
+    {
+     "n": 14,
+     "id": "sec-sales-14",
+     "title": "What the first purchase predicts",
+     "slug": "what-the-first-purchase-predicts"
+    },
+    {
+     "n": 15,
+     "id": "sec-sales-15",
+     "title": "What else could explain it",
+     "slug": "what-else-could-explain-it"
+    },
+    {
+     "n": 16,
+     "id": "sec-sales-16",
+     "title": "The underlying tables",
+     "slug": "the-underlying-tables"
+    },
+    {
+     "n": 17,
+     "id": "sec-sales-17",
+     "title": "Method and limitations",
+     "slug": "method-and-limitations"
+    }
+   ],
+   "summary": "\u20b932,06,431 was taken at Kwality House, Kemps Corner in September 2026, across 233 transactions from 179 buyers. The average buyer spent \u20b917,913, up 77% on the same month last year. The largest category was Memberships at \u20b916,30,524. Class revenue reached \u20b919,01,973 at \u20b95,799 a class.",
+   "narration": "Sales Performance. Kwality House, Kemps Corner, September 2026. 32,06,431 of cash from 233 transactions and 179 buyers in September 2026, at an average of 17,913 each. 59 per cent of that cash has already been delivered as attended classes (19,01,973). 38 buyers (21 per cent) bought more than once and produced 18 per cent of the month. The question this chapter leaves is not whether the month sold, but how much of it was sold at full price.",
+   "recs": [
+    [
+     "01",
+     "Re-price the ladder so the bigger commitment is always cheaper per class",
+     "Sales + Finance",
+     "4 Class Package sells at \u20b912,403 a class while Private Class sells at \u20b960,296; 14 lines went out at the dearer per-class rate.",
+     "Moving even a quarter of the 21 class-count sales onto the best per-class tier adds credits to the delivered base at no revenue cost, and removes the single clearest pricing inconsistency on the board."
+    ],
+    [
+     "02",
+     "Sell the second purchase while the first is being served",
+     "Front Desk",
+     "38 of 179 buyers bought more than once and produced 18% of the cash. 79% bought once and were not offered anything further.",
+     "A renewal conversation at the moment of highest engagement is worth more than the same conversation in an email three weeks later; on this month\u2019s mix it is the difference between a one-purchase member and a repeat one."
+    ],
+    [
+     "03",
+     "Put every discount code under one owner and one ceiling",
+     "Marketing + Finance",
+     "9 codes were used in September 2026, giving away \u20b93,40,365 at depths between 10% and 19%. The largest single code is 49% of all discounting.",
+     "One owner and one depth cap turns discounting from a leak into a lever, and makes the month comparable to next month."
+    ],
+    [
+     "04",
+     "Lead with 3 Month Unlimited, not with the cheapest offer",
+     "Sales + Marketing",
+     "Lifetime value by first purchase ranges from \u20b913,964 (Session) to \u20b91,23,781 (3 Month Unlimited) across 800 recorded first-timers.",
+     "The first product decides the lifetime. Changing which offer the desk leads with costs nothing and moves the whole cohort."
+    ],
+    [
+     "05",
+     "Own the interval between the first visit and the second",
+     "Front Desk + Studio Manager",
+     "Members who came back within a day of a first visit are worth \u20b937,075 across a lifetime; those who took over a month are worth \u20b915,827.",
+     "Booking the next class before the member leaves the building converts the only moment when they are certain they want to come back."
+    ],
+    [
+     "06",
+     "Put a named owner on the largest category",
+     "Sales + Studio Manager",
+     "Memberships produced \u20b916,30,524 of the month\u2019s \u20b932,06,431 across 33 transactions.",
+     "The largest line in any month deserves a target, a price test and a person accountable for it. Managing the total hides the composition."
+    ],
+    [
+     "07",
+     "Sell the next purchase at the point of the last one",
+     "Front Desk",
+     "The average buyer spent \u20b917,913 and repeat buying at this studio clusters tightly around a monthly rhythm.",
+     "A renewal offered while a member is at peak usage converts far more often than one offered after the visits have already stopped."
+    ],
+    [
+     "08",
+     "Report cash per buyer, not just cash",
+     "Finance",
+     "Revenue per class is \u20b95,799 and revenue per attendance \u20b9910; the buyer, not the seat, is the unit that has to be replaced.",
+     "A studio can grow transactions while shrinking buyers. One column prevents that."
+    ],
+    [
+     "09",
+     "Staff the desk where the money already is",
+     "Front Desk + Studio Manager",
+     "The busiest trading hour of the month was 10:00, taking 45 transactions.",
+     "Placing the sales conversation in that hour costs nothing and works with the members\u2019 own routine rather than against it."
+    ],
+    [
+     "10",
+     "Watch the discount mix, not the discount total",
+     "Marketing + Finance",
+     "15% of sales carried a discount at 9.6% depth, against 10% at 6.1% a year earlier.",
+     "Depth and spread move independently, and only one of them is visible in the revenue line."
+    ],
+    [
+     "11",
+     "Put a second pair of hands on the counter at the peak hour",
+     "Front Desk",
+     "10:00 took 45 transactions, 00:00 took 1.",
+     "The counter is the only place where a faster response converts directly into a larger ticket. Staffing should follow the hour grid, not the shift rota."
+    ],
+    [
+     "12",
+     "Give the top two categories a bundle price",
+     "Sales + Marketing",
+     "Memberships and Class Packages together produced \u20b922,77,168, 71% of the month, across 74 transactions.",
+     "Two categories that are usually bought together can be priced together. It raises the average ticket without touching list prices."
+    ],
+    [
+     "13",
+     "Cap the depth and keep the spread",
+     "Finance + Management",
+     "15% of transactions carried a discount at 9.6% average depth, on \u20b93,40,365 of gross value.",
+     "Spread is a policy decision and depth is a margin decision. Publishing an approved depth band converts an open negotiation into a rule the desk can apply."
+    ],
+    [
+     "14",
+     "Set a daily transaction target, not just a monthly one",
+     "Studio Manager",
+     "233 transactions across the month is 7.8 a day, against 179 buyers.",
+     "A daily number is visible while the month can still be changed. Monthly totals only ever arrive as news."
+    ]
+   ],
+   "slug": "sales-performance"
+  },
+  {
+   "id": "class",
+   "n": 2,
+   "title": "Class Performance",
+   "kpis": [
+    {
+     "label": "Classes taught",
+     "value": "328",
+     "detail": "-32 on last year",
+     "tone": "neu"
+    },
+    {
+     "label": "Utilisation",
+     "value": "45.4%",
+     "detail": "+2.1 points",
+     "tone": "pos"
+    },
+    {
+     "label": "Attendances",
+     "value": "2,090",
+     "detail": "90% of booked seats",
+     "tone": "neu"
+    },
+    {
+     "label": "Revenue per class",
+     "value": "\u20b95,799",
+     "detail": "\u20b9910 per attendance",
+     "tone": "neu"
+    }
+   ],
+   "facts": [
+    "328 classes, 4,606 seats, 2,090 attendances and 45.4% utilisation in September 2026.",
+    "\u20b919,01,973 of class revenue at \u20b95,799 a class and \u20b9910 per attendance.",
+    "235 booked seats went empty; 234 of those were late cancellations."
+   ],
+   "subtitle": "328 classes at 45.4% utilisation, \u20b95,799 a class",
+   "recs_extra": [
+    [
+     "Recover the 61 booked seats PowerCycle leaves empty",
+     "Studio Manager + Programming",
+     "PowerCycle is the largest single source of unoccupied booked seats this month: 61 of them, on a 87% show rate against a studio-wide 90%.",
+     "The scale of the format is what makes the number worth chasing: one class a week tighter, or a waitlist that fires the moment a seat returns, recovers roughly 15 seats a month without a single new member being asked for money."
+    ],
+    [
+     "Review every class that ran to nobody before it is scheduled again",
+     "Programming",
+     "4 classes in September 2026 were taught to an empty room, concentrated in PowerCycle (3).",
+     "Each one is a paid hour that produced nothing. A monthly rule - three empties and the slot is retired or re-timed - is the cheapest capacity the studio has."
+    ],
+    [
+     "Close or re-time the hour nobody uses",
+     "Programming + Studio Manager",
+     "10:00 fills at 50% while 16:00 fills at 28% on 10 classes.",
+     "Moving an hour of capacity from the weakest slot to the strongest is a same-month change to utilisation that needs no new members, no price change and no marketing spend."
+    ],
+    [
+     "Set a minimum viable class size and publish it",
+     "Programming",
+     "35 classes ran to one or two people out of 328. A room of two costs the same as a room of ten and reads, to the member in it, as a class nobody wants.",
+     "Merging thin classes into the adjacent slot protects the format and raises the perceived quality of both."
+    ],
+    [
+     "Give event classes a purpose and a number",
+     "Marketing + Studio Manager",
+     "5 hosted or partner sessions took 60 attendances (3%) and \u20b90 of revenue on 2% of the month\\\u2019s capacity.",
+     "Decide in advance whether each event is buying reach or making money, and the next month can be judged on the one that was chosen."
+    ]
+   ],
+   "depth": 101830,
+   "sections": [
+    {
+     "n": 1,
+     "id": "sec-class-1",
+     "title": "Start here",
+     "slug": "start-here"
+    },
+    {
+     "n": 2,
+     "id": "sec-class-2",
+     "title": "Nobody was lost. Nothing was converted",
+     "slug": "nobody-was-lost-nothing-was-converted"
+    },
+    {
+     "n": 3,
+     "id": "sec-class-3",
+     "title": "What the booking book says",
+     "slug": "what-the-booking-book-says"
+    },
+    {
+     "n": 4,
+     "id": "sec-class-4",
+     "title": "The room is bigger than the demand",
+     "slug": "the-room-is-bigger-than-the-demand"
+    },
+    {
+     "n": 5,
+     "id": "sec-class-5",
+     "title": "The free seats",
+     "slug": "the-free-seats"
+    },
+    {
+     "n": 6,
+     "id": "sec-class-6",
+     "title": "Who a first class brings in",
+     "slug": "who-a-first-class-brings-in"
+    },
+    {
+     "n": 7,
+     "id": "sec-class-7",
+     "title": "Format by format",
+     "slug": "format-by-format"
+    },
+    {
+     "n": 8,
+     "id": "sec-class-8",
+     "title": "When the studio is busy",
+     "slug": "when-the-studio-is-busy"
+    },
+    {
+     "n": 9,
+     "id": "sec-class-9",
+     "title": "The classes nobody came to",
+     "slug": "the-classes-nobody-came-to"
+    },
+    {
+     "n": 10,
+     "id": "sec-class-10",
+     "title": "The month within the month",
+     "slug": "the-month-within-the-month"
+    },
+    {
+     "n": 11,
+     "id": "sec-class-11",
+     "title": "How the room pays for itself",
+     "slug": "how-the-room-pays-for-itself"
+    },
+    {
+     "n": 12,
+     "id": "sec-class-12",
+     "title": "Hosted and partner classes",
+     "slug": "hosted-and-partner-classes"
+    },
+    {
+     "n": 13,
+     "id": "sec-class-13",
+     "title": "What else could explain it",
+     "slug": "what-else-could-explain-it"
+    },
+    {
+     "n": 14,
+     "id": "sec-class-14",
+     "title": "The underlying tables",
+     "slug": "the-underlying-tables"
+    },
+    {
+     "n": 15,
+     "id": "sec-class-15",
+     "title": "Method and limitations",
+     "slug": "method-and-limitations"
+    }
+   ],
+   "summary": "328 classes ran at Kwality House, Kemps Corner in September 2026, offering 4,606 seats and filling 2,090 of them. Utilisation came in at 45.4%, up 5% on the same month last year. Revenue per class was \u20b95,799 and revenue per seat filled \u20b9910. 39 classes ran to two people or fewer.",
+   "narration": "Class Performance. Kwality House, Kemps Corner, September 2026. 328 classes, 4,606 seats, 2,090 attendances and 45.4 per cent utilisation in September 2026. 19,01,973 of class revenue at 5,799 a class and 910 per attendance. 235 booked seats went empty; 234 of those were late cancellations. The room is the studio\u2019s fixed cost. Every seat that goes unfilled was paid for anyway.",
+   "recs": [
+    [
+     "01",
+     "Recover the 61 booked seats PowerCycle leaves empty",
+     "Studio Manager + Programming",
+     "PowerCycle is the largest single source of unoccupied booked seats this month: 61 of them, on a 87% show rate against a studio-wide 90%.",
+     "The scale of the format is what makes the number worth chasing: one class a week tighter, or a waitlist that fires the moment a seat returns, recovers roughly 15 seats a month without a single new member being asked for money."
+    ],
+    [
+     "02",
+     "Review every class that ran to nobody before it is scheduled again",
+     "Programming",
+     "4 classes in September 2026 were taught to an empty room, concentrated in PowerCycle (3).",
+     "Each one is a paid hour that produced nothing. A monthly rule - three empties and the slot is retired or re-timed - is the cheapest capacity the studio has."
+    ],
+    [
+     "03",
+     "Close or re-time the hour nobody uses",
+     "Programming + Studio Manager",
+     "10:00 fills at 50% while 16:00 fills at 28% on 10 classes.",
+     "Moving an hour of capacity from the weakest slot to the strongest is a same-month change to utilisation that needs no new members, no price change and no marketing spend."
+    ],
+    [
+     "04",
+     "Set a minimum viable class size and publish it",
+     "Programming",
+     "35 classes ran to one or two people out of 328. A room of two costs the same as a room of ten and reads, to the member in it, as a class nobody wants.",
+     "Merging thin classes into the adjacent slot protects the format and raises the perceived quality of both."
+    ],
+    [
+     "05",
+     "Give event classes a purpose and a number",
+     "Marketing + Studio Manager",
+     "5 hosted or partner sessions took 60 attendances (3%) and \u20b90 of revenue on 2% of the month\\\u2019s capacity.",
+     "Decide in advance whether each event is buying reach or making money, and the next month can be judged on the one that was chosen."
+    ],
+    [
+     "06",
+     "Cut or re-time the sessions nobody comes to",
+     "Programming + Studio Manager",
+     "39 classes ran to two people or fewer and 4 had nobody at all.",
+     "Every empty class costs the same as a full one. Moving those hours is a timetable edit and it is reversible after four weeks."
+    ],
+    [
+     "07",
+     "Rebuild the weakest hour of the day",
+     "Programming",
+     "16:00 was the emptiest hour of the month at 28% utilisation across 10 classes.",
+     "One hour, repeated weekly, is the cheapest capacity decision available. It should be a test with a review date, not a habit."
+    ],
+    [
+     "08",
+     "Match the room to the demand, not the format",
+     "Studio Manager",
+     "10 to 11 seats filled 59.4% while 14 or more seats filled 39.6%.",
+     "Small rooms fill and large ones do not. Where the timetable allows, the smaller room for the same class raises utilisation with no new demand."
+    ],
+    [
+     "09",
+     "Publish utilisation weekly, by day and hour",
+     "Studio Manager",
+     "The month\u2019s utilisation was 45.4% against 43.3% a year earlier.",
+     "A weekly number turns a monthly post-mortem into a decision the team can still act on."
+    ],
+    [
+     "10",
+     "Rebuild the weakest weekday before adding any class",
+     "Programming + Studio Manager",
+     "Friday filled 39.2% across 37 classes while Tuesday filled 49.3%.",
+     "Shifting a class from the weakest day to the strongest costs nothing and lifts the room without touching the timetable size."
+    ],
+    [
+     "11",
+     "Test a smaller room in the emptiest hours",
+     "Studio Manager",
+     "16:00 ran 10 classes at 28% fill, while the studio average was 45.4%.",
+     "Capacity is only wasted relative to demand. A short class in a small room can fill without changing who books it."
+    ],
+    [
+     "12",
+     "Check the seat count against the book, class by class",
+     "Programming",
+     "4,606 seats were offered for 2,090 attendances, so 2,516 seats went unsold.",
+     "Half the capacity problem is created by the room a class is put in. The seat count is editable and it costs nothing to change."
+    ],
+    [
+     "13",
+     "Decide the fate of every class that ran to nobody",
+     "Programming",
+     "4 classes had no attendees at all against 39 with two or fewer.",
+     "These are individual decisions, not a category. A one-page list with a keep, move or drop box next to each one clears the question in a single meeting."
+    ],
+    [
+     "14",
+     "Publish capacity, bookings and show rate for the coming week",
+     "Studio Manager",
+     "Utilisation for the month closed at 45.4%.",
+     "Seats sold three days ahead is a leading measure and it is available before the class runs. Show rate at the door is a lagging one."
+    ]
+   ],
+   "slug": "class-performance"
+  },
+  {
+   "id": "instructor",
+   "n": 3,
+   "title": "Instructor Performance",
+   "kpis": [
+    {
+     "label": "Trainers",
+     "value": "14",
+     "detail": "328 classes",
+     "tone": "neu"
+    },
+    {
+     "label": "Utilisation spread",
+     "value": "2.2\u00d7",
+     "detail": "28% to 62%",
+     "tone": "neg"
+    },
+    {
+     "label": "Revenue per attendee",
+     "value": "\u20b9910",
+     "detail": "flat, whatever the room size",
+     "tone": "neu"
+    },
+    {
+     "label": "Empty classes",
+     "value": "4",
+     "detail": "1.2% of all classes",
+     "tone": "neg"
+    }
+   ],
+   "facts": [
+    "14 trainers taught 328 classes and filled 2,090 seats for \u20b919,01,973 in September 2026.",
+    "Utilisation spread 2.2 times, but revenue per attendee only 1.4 times - most of the gap is the slot.",
+    "4 classes ran to nobody; 10.1% of their booked seats were late-cancelled."
+   ],
+   "subtitle": "14 trainers, 2.2 times utilisation spread",
+   "recs_extra": [
+    [
+     "Give Raunak Khemuka the slots that already work",
+     "Studio Manager",
+     "Raunak Khemuka fills 28.4% of 19 classes, the lowest on the roster, at \u20b9975 of revenue per attendee.",
+     "Re-timing rather than removing is the change: the same hands in a better hour usually closes half the gap without a single class being cut."
+    ],
+    [
+     "Pay for attendance, not for the size of the room",
+     "Studio Manager + Finance",
+     "Anmol Sharma delivers \u20b91,076 of class revenue per attendee against a roster average of \u20b9910. Cost per attendance, not per class, is what decides whether an hour was worth having.",
+     "A rate anchored to attendance aligns the trainer, the timetable and the P&L on the same number and ends the incentive to fill a big room badly."
+    ],
+    [
+     "Assign first classes deliberately, by conversion",
+     "Programming + Sales",
+     "Conversion from a first class ranges from 19% to 42% across 2,915 recorded first classes.",
+     "This is the cheapest conversion growth available: no new leads, no price change, only a decision about who stands in front of a newcomer."
+    ],
+    [
+     "Stop separating trainer assessment from the ledger",
+     "Studio Manager",
+     "The payroll scorecard rates trainers on conversion and retention over a cycle; this chapter measures what they actually delivered, class by class. The two currently do not inform each other.",
+     "One page a month that shows both, side by side, turns an opinion about a trainer into an argument with evidence."
+    ],
+    [
+     "Review the slots nobody attended, with the trainer in the room",
+     "Programming",
+     "4 classes ran to nobody, and 3 trainers carry at least one of them.",
+     "An empty class is usually an hour rather than a person; the review should decide which one it found before anyone is reassigned."
+    ]
+   ],
+   "depth": 94072,
+   "sections": [
+    {
+     "n": 1,
+     "id": "sec-instructor-1",
+     "title": "Start here",
+     "slug": "start-here"
+    },
+    {
+     "n": 2,
+     "id": "sec-instructor-2",
+     "title": "The scorecard",
+     "slug": "the-scorecard"
+    },
+    {
+     "n": 3,
+     "id": "sec-instructor-3",
+     "title": "The controlled test",
+     "slug": "the-controlled-test"
+    },
+    {
+     "n": 4,
+     "id": "sec-instructor-4",
+     "title": "The roster, name by name",
+     "slug": "the-roster-name-by-name"
+    },
+    {
+     "n": 5,
+     "id": "sec-instructor-5",
+     "title": "What changed in a year",
+     "slug": "what-changed-in-a-year"
+    },
+    {
+     "n": 6,
+     "id": "sec-instructor-6",
+     "title": "Where the week actually goes",
+     "slug": "where-the-week-actually-goes"
+    },
+    {
+     "n": 7,
+     "id": "sec-instructor-7",
+     "title": "What happens to the clients",
+     "slug": "what-happens-to-the-clients"
+    },
+    {
+     "n": 8,
+     "id": "sec-instructor-8",
+     "title": "The studio\\\u2019s own measure",
+     "slug": "the-studio-s-own-measure"
+    },
+    {
+     "n": 9,
+     "id": "sec-instructor-9",
+     "title": "What the studio pays for a session",
+     "slug": "what-the-studio-pays-for-a-session"
+    },
+    {
+     "n": 10,
+     "id": "sec-instructor-10",
+     "title": "Whose first class becomes a member",
+     "slug": "whose-first-class-becomes-a-member"
+    },
+    {
+     "n": 11,
+     "id": "sec-instructor-11",
+     "title": "What else could explain it",
+     "slug": "what-else-could-explain-it"
+    },
+    {
+     "n": 12,
+     "id": "sec-instructor-12",
+     "title": "The underlying tables",
+     "slug": "the-underlying-tables"
+    },
+    {
+     "n": 13,
+     "id": "sec-instructor-13",
+     "title": "Method and limitations",
+     "slug": "method-and-limitations"
+    }
+   ],
+   "summary": "14 trainers taught 328 classes in September 2026, drawing 2,090 attendances and \u20b919,01,973 of revenue. Utilisation ranged from 28.4% to 61.6%, a 2.2-fold spread. But revenue per attendee ran only \u20b9769 to \u20b91,076, so most of the spread is the slots rather than the trainers.",
+   "narration": "Instructor Performance. Kwality House, Kemps Corner, September 2026. 14 trainers taught 328 classes and filled 2,090 seats for 19,01,973 in September 2026. Utilisation spread 2.2 times, but revenue per attendee only 1.4 times - most of the gap is the slot. 4 classes ran to nobody; 10.1 per cent of their booked seats were late-cancelled. The fairest way to read a trainer is against the slots they were given, and then to ask whether those slots should exist.",
+   "recs": [
+    [
+     "01",
+     "Give Raunak Khemuka the slots that already work",
+     "Studio Manager",
+     "Raunak Khemuka fills 28.4% of 19 classes, the lowest on the roster, at \u20b9975 of revenue per attendee.",
+     "Re-timing rather than removing is the change: the same hands in a better hour usually closes half the gap without a single class being cut."
+    ],
+    [
+     "02",
+     "Pay for attendance, not for the size of the room",
+     "Studio Manager + Finance",
+     "Anmol Sharma delivers \u20b91,076 of class revenue per attendee against a roster average of \u20b9910. Cost per attendance, not per class, is what decides whether an hour was worth having.",
+     "A rate anchored to attendance aligns the trainer, the timetable and the P&L on the same number and ends the incentive to fill a big room badly."
+    ],
+    [
+     "03",
+     "Assign first classes deliberately, by conversion",
+     "Programming + Sales",
+     "Conversion from a first class ranges from 19% to 42% across 2,915 recorded first classes.",
+     "This is the cheapest conversion growth available: no new leads, no price change, only a decision about who stands in front of a newcomer."
+    ],
+    [
+     "04",
+     "Stop separating trainer assessment from the ledger",
+     "Studio Manager",
+     "The payroll scorecard rates trainers on conversion and retention over a cycle; this chapter measures what they actually delivered, class by class. The two currently do not inform each other.",
+     "One page a month that shows both, side by side, turns an opinion about a trainer into an argument with evidence."
+    ],
+    [
+     "05",
+     "Review the slots nobody attended, with the trainer in the room",
+     "Programming",
+     "4 classes ran to nobody, and 3 trainers carry at least one of them.",
+     "An empty class is usually an hour rather than a person; the review should decide which one it found before anyone is reassigned."
+    ],
+    [
+     "06",
+     "Assess trainers on the slots they hold, and separately on the slots themselves",
+     "Studio Manager",
+     "Revenue per attendee runs only \u20b9769 to \u20b91,076, while utilisation runs 28.4% to 61.6%.",
+     "The two tables answer different questions. Confusing them penalises trainers for the studio\u2019s scheduling decisions."
+    ],
+    [
+     "07",
+     "Give the strongest filler more of the week",
+     "Programming + Studio Manager",
+     "Anmol Sharma fills 61.6% across 14 classes.",
+     "Where a trainer repeatedly fills the room they were given, the next marginal slot should be theirs before it is anyone else\u2019s."
+    ],
+    [
+     "08",
+     "Track who brings new members, not just who teaches",
+     "Studio Manager + CRM",
+     "New-member flow varies by trainer and is recorded in the check-in ledger, but it is not on any scorecard.",
+     "A trainer who attracts first visits is doing acquisition work. That deserves to be visible."
+    ],
+    [
+     "09",
+     "Watch late-cancellation rate by trainer as a coaching number",
+     "Studio Manager",
+     "Rates range from 4.1% to 14.3% on the same booking policy.",
+     "A high rate usually means a slot that has drifted out of the members\u2019 week, which is a scheduling answer, not a compliance one."
+    ],
+    [
+     "10",
+     "Pair the strongest filler with the weakest slot before cutting it",
+     "Programming + Studio Manager",
+     "Anmol Sharma fills 61.6% and Raunak Khemuka fills 28.4% on the same timetable.",
+     "Trialling the best performer in the weakest slot separates a demand problem from a coaching one, and it costs four weeks."
+    ],
+    [
+     "11",
+     "Give every regular a named trainer",
+     "Studio Manager + CRM",
+     "14 trainers taught 328 classes for 2,090 attendances.",
+     "The trainer relationship is the most durable retention asset a studio has. It has to be visible in the roster to be managed."
+    ],
+    [
+     "12",
+     "Review late-cancellation rate in the coaching conversation",
+     "Studio Manager",
+     "Rates run from 4.1% to 14.3% on one policy.",
+     "A rate that high is usually a slot that has slipped out of the members\u2019 week. The fix is a timetable edit, not a reminder."
+    ],
+    [
+     "13",
+     "Cost the roster per attendance, not per class",
+     "Management + Finance",
+     "Revenue per attendance was \u20b9910 across the month.",
+     "Payroll per attendance is the only teaching cost that sits on the same basis as the revenue it supports."
+    ],
+    [
+     "14",
+     "Watch how many trainers share one format",
+     "Programming",
+     "Barre 57 holds 21% of all attendances and is taught by 11 different trainers.",
+     "Too many hands on one format flattens the standard and hides who is filling the room. The trainer list for each format belongs on the programming page."
+    ]
+   ],
+   "slug": "instructor-performance"
+  },
+  {
+   "id": "lapse",
+   "n": 4,
+   "title": "Memberships Lapsed and Churned",
+   "kpis": [
+    {
+     "label": "Churned in September",
+     "value": "134",
+     "detail": "\u20b98,21,679 closed out",
+     "tone": "neg"
+    },
+    {
+     "label": "Bought in September",
+     "value": "129",
+     "detail": "\u20b928,37,889 of new money",
+     "tone": "pos"
+    },
+    {
+     "label": "Memberships purchased in selected month",
+     "value": "245",
+     "detail": "195 people",
+     "tone": "neu"
+    },
+    {
+     "label": "Paid memberships",
+     "value": "129",
+     "detail": "\u20b928,37,889 of recorded money",
+     "tone": "neu"
+    },
+    {
+     "label": "Median life",
+     "value": "13 days",
+     "detail": "days, not months",
+     "tone": "neg"
+    },
+    {
+     "label": "Expiring next 30 days",
+     "value": "262",
+     "detail": "\u20b940,61,015 at risk",
+     "tone": "neg"
+    }
+   ],
+   "facts": [
+    "134 memberships churned during September 2026 (\u20b98,21,679 of paid money closed out), while 129 were bought for \u20b928,37,889.",
+    "0% of paid memberships survive thirty days and 0.0% survive a year.",
+    "245 memberships at this studio, 129 of them paid for, across \u20b928,37,889 of recorded money.",
+    "The median paid membership lasts 13 days; 33 produced no attendance at all.",
+    "139 classes sit unspent on the book, worth about \u20b926,00,125 of delivered value."
+   ],
+   "subtitle": "September 2026 first, then the whole book \u00b7 129 paid memberships, median life 13 days",
+   "recs_extra": [
+    [
+     "Write the unspent classes back as visits, with a date on them",
+     "Front Desk + Finance",
+     "8 memberships used a quarter or less of what they bought, leaving 139 classes undelivered worth about \u20b925,03,464.",
+     "Converting credit into booked attendance moves money the studio already holds onto the balance sheet and pulls the member back into a routine - the single cheapest retention action available."
+    ],
+    [
+     "Segment win-back by recency, not by lifetime value",
+     "CRM + Marketing",
+     "93 people were here in the last thirty days and still hold \u20b920,56,575; the largest group, 8 people, has not been inside a year.",
+     "Contact cost per recovered member falls by an order of magnitude between those two groups, and the studio currently sends the same message to both."
+    ],
+    [
+     "Freeze, do not lose: treat a pause request as a save",
+     "Front Desk",
+     "20 memberships were frozen at some point and 100.0% are still live, against 75.1% of those that were never frozen.",
+     "A member who asks to pause is planning to return. Offering the pause before they offer the cancellation converts a churn event into a deferred one."
+    ],
+    [
+     "Put every member on a plan at the halfway point of their membership",
+     "Studio Manager",
+     "82% of measurable memberships attended less in their second half than their first, and 65% attended at least half as often. The change is visible before the status moves.",
+     "A mid-membership review - attendance so far, what is left, one specific class to book - is the only intervention in this chapter that can act before the lapse rather than after it."
+    ]
+   ],
+   "depth": 98758,
+   "sections": [
+    {
+     "n": 1,
+     "id": "sec-lapse-1",
+     "title": "Start here",
+     "slug": "start-here"
+    },
+    {
+     "n": 2,
+     "id": "sec-lapse-2",
+     "title": "September 2026, dated",
+     "slug": "september-2026-dated"
+    },
+    {
+     "n": 3,
+     "id": "sec-lapse-3",
+     "title": "The month inside the ledger",
+     "slug": "the-month-inside-the-ledger"
+    },
+    {
+     "n": 4,
+     "id": "sec-lapse-4",
+     "title": "The shape of the churn book",
+     "slug": "the-shape-of-the-churn-book"
+    },
+    {
+     "n": 5,
+     "id": "sec-lapse-5",
+     "title": "The two ways to lose a member",
+     "slug": "the-two-ways-to-lose-a-member"
+    },
+    {
+     "n": 6,
+     "id": "sec-lapse-6",
+     "title": "Did they use what they paid for?",
+     "slug": "did-they-use-what-they-paid-for"
+    },
+    {
+     "n": 7,
+     "id": "sec-lapse-7",
+     "title": "The decline that comes first",
+     "slug": "the-decline-that-comes-first"
+    },
+    {
+     "n": 8,
+     "id": "sec-lapse-8",
+     "title": "Product by product",
+     "slug": "product-by-product"
+    },
+    {
+     "n": 9,
+     "id": "sec-lapse-9",
+     "title": "Who is winnable",
+     "slug": "who-is-winnable"
+    },
+    {
+     "n": 10,
+     "id": "sec-lapse-10",
+     "title": "What the lost book cost",
+     "slug": "what-the-lost-book-cost"
+    },
+    {
+     "n": 11,
+     "id": "sec-lapse-11",
+     "title": "What else could explain it",
+     "slug": "what-else-could-explain-it"
+    },
+    {
+     "n": 12,
+     "id": "sec-lapse-12",
+     "title": "The underlying tables",
+     "slug": "the-underlying-tables"
+    },
+    {
+     "n": 13,
+     "id": "sec-lapse-13",
+     "title": "Method and limitations",
+     "slug": "method-and-limitations"
+    }
+   ],
+   "summary": "245 memberships are in the Kwality House, Kemps Corner ledger, 129 of them paid. 0% of paid memberships survive thirty days and 0% survive six months. The median membership lasts 13 days and carries \u20b921,999 of recorded cash. Single Class keeps its members best at 73% still live or renewed.",
+   "narration": "Memberships Lapsed and Churned. Kwality House, Kemps Corner, September 2026. 134 memberships churned during September 2026 (8,21,679 of paid money closed out), while 129 were bought for 28,37,889. 0 per cent of paid memberships survive thirty days and 0.0 per cent survive a year. 245 memberships at this studio, 129 of them paid for, across 28,37,889 of recorded money. The median paid membership lasts 13 days; 33 produced no attendance at all. 139 classes sit unspent on the book, worth about 26,00,125 of delivered value. Members are not lost in a moment. They stop coming, and everything needed to see it is already recorded.",
+   "recs": [
+    [
+     "01",
+     "Write the unspent classes back as visits, with a date on them",
+     "Front Desk + Finance",
+     "8 memberships used a quarter or less of what they bought, leaving 139 classes undelivered worth about \u20b925,03,464.",
+     "Converting credit into booked attendance moves money the studio already holds onto the balance sheet and pulls the member back into a routine - the single cheapest retention action available."
+    ],
+    [
+     "02",
+     "Segment win-back by recency, not by lifetime value",
+     "CRM + Marketing",
+     "93 people were here in the last thirty days and still hold \u20b920,56,575; the largest group, 8 people, has not been inside a year.",
+     "Contact cost per recovered member falls by an order of magnitude between those two groups, and the studio currently sends the same message to both."
+    ],
+    [
+     "03",
+     "Freeze, do not lose: treat a pause request as a save",
+     "Front Desk",
+     "20 memberships were frozen at some point and 100.0% are still live, against 75.1% of those that were never frozen.",
+     "A member who asks to pause is planning to return. Offering the pause before they offer the cancellation converts a churn event into a deferred one."
+    ],
+    [
+     "04",
+     "Put every member on a plan at the halfway point of their membership",
+     "Studio Manager",
+     "82% of measurable memberships attended less in their second half than their first, and 65% attended at least half as often. The change is visible before the status moves.",
+     "A mid-membership review - attendance so far, what is left, one specific class to book - is the only intervention in this chapter that can act before the lapse rather than after it."
+    ],
+    [
+     "05",
+     "Run an activation sequence through the first fortnight",
+     "Front Desk + CRM",
+     "56% of paid memberships end within fourteen days and 100% within thirty.",
+     "The first two weeks decide the membership. A dated plan, a booked class and a call on day ten is the whole intervention."
+    ],
+    [
+     "06",
+     "Collect the unused classes",
+     "CRM + Front Desk",
+     "8 memberships used a quarter or less of what they bought, leaving 139 classes unspent.",
+     "Paid-for and undelivered is a liability and a warm reason to make contact."
+    ],
+    [
+     "07",
+     "Lead with the product that keeps its members",
+     "Sales + Marketing",
+     "Single Class is still live or renewed 73% of the time, the best rate in the range.",
+     "Renewal is a property of the product list before it is a property of the customer. What works should be sold first."
+    ],
+    [
+     "08",
+     "Put the churn number in the acquisition plan",
+     "Management + Finance",
+     "Median membership life is 13 days.",
+     "If most of the book has to be replaced each month, acquisition is a maintenance cost rather than a growth line, and it should be budgeted as one."
+    ],
+    [
+     "09",
+     "Make the mid-length products the default recommendation",
+     "Sales + Marketing",
+     "Memberships of 31 to 60 days carry \u20b916,836 of average cash against \u20b92,262 for a week-long product.",
+     "The short products are the ones that leave. What a member buys first predicts how long they stay far better than how much they liked the trial."
+    ],
+    [
+     "10",
+     "Convert the single-class buyers before the week is out",
+     "Front Desk + CRM",
+     "35 memberships lasted a week or less and used 1.00 classes each.",
+     "This is the largest, cheapest and most time-sensitive group in the ledger. A call on day three is worth more than any win-back offer in month three."
+    ],
+    [
+     "11",
+     "Work the not-activated and grace-period files monthly",
+     "CRM + Front Desk",
+     "23 memberships never activated and 132 sit inside the grace window.",
+     "Both are dated, small and contactable. A monthly standing list keeps this number from building up into a churn statistic."
+    ],
+    [
+     "12",
+     "Offer the unspent classes back as visits, not as credit",
+     "CRM",
+     "8 memberships used a quarter or less of what they paid for, leaving 139 classes unspent.",
+     "Undelivered classes are already paid for. Converting them into visits rebuilds the habit; converting them into credit only postpones the decision to leave."
+    ],
+    [
+     "13",
+     "Price a three-month product deliberately",
+     "Sales + Management",
+     "The median membership life is 13 days.",
+     "If the median life is inside the second month, a three-month product sets a different expectation and gives the studio two renewal conversations instead of one."
+    ],
+    [
+     "14",
+     "Read churn by joining month, not only by product",
+     "CRM",
+     "245 memberships sit in the ledger, 129 of them paid.",
+     "Members who joined in the same month behave similarly. Cohort lines show whether retention is improving or whether the mix is merely changing."
+    ]
+   ],
+   "slug": "memberships-lapsed-and-churned"
+  },
+  {
+   "id": "format",
+   "n": 5,
+   "title": "Format Comparisons",
+   "kpis": [
+    {
+     "label": "Formats",
+     "value": "16",
+     "detail": "328 classes",
+     "tone": "neu"
+    },
+    {
+     "label": "Fullest",
+     "value": "86%",
+     "detail": "Strength Lab",
+     "tone": "pos"
+    },
+    {
+     "label": "Emptiest",
+     "value": "15%",
+     "detail": "Recovery",
+     "tone": "neg"
+    },
+    {
+     "label": "Best per class",
+     "value": "\u20b910,360",
+     "detail": "Mat 57",
+     "tone": "neu"
+    }
+   ],
+   "facts": [
+    "16 formats ran 328 classes for \u20b919,01,973 in September 2026.",
+    "Strength Lab is the fullest at 86.0%; Recovery the emptiest at 15.0%.",
+    "Mat 57 earns the most per class at \u20b910,360."
+   ],
+   "subtitle": "16 formats, 86% to 15% fill",
+   "recs_extra": [
+    [
+     "Rebuild PowerCycle around what actually fills",
+     "Programming + Founder",
+     "PowerCycle holds 26% of the timetable and fills 48%. The best-filling format in the studio, Strength Lab, gets 11%.",
+     "Moving ten per cent of PowerCycle\u2019s classes into the hours and rooms that already fill is worth roughly 3,173 attendances a month at current prices."
+    ],
+    [
+     "Market the second format to the devoted, not to everyone",
+     "Marketing + Front Desk",
+     "139 members made three or more visits to one format this month and 46% of members touched more than one format. Frequency concentrates in the members who already come.",
+     "One named class offered to a member in their fourth week of a single format is the highest-yield cross-sell the studio has, and it costs nothing but the message."
+    ],
+    [
+     "Try the empty day, once, before calling it unfillable",
+     "Programming",
+     "59 format-and-day combinations had no class at all this month. The studio has never tested them.",
+     "One four-week trial per gap, with the same trainer and hour as the successful version, turns an assumption into a fact at the cost of one slot."
+    ]
+   ],
+   "depth": 86761,
+   "sections": [
+    {
+     "n": 1,
+     "id": "sec-format-1",
+     "title": "Start here",
+     "slug": "start-here"
+    },
+    {
+     "n": 2,
+     "id": "sec-format-2",
+     "title": "The league table",
+     "slug": "the-league-table"
+    },
+    {
+     "n": 3,
+     "id": "sec-format-3",
+     "title": "Reach against regularity",
+     "slug": "reach-against-regularity"
+    },
+    {
+     "n": 4,
+     "id": "sec-format-4",
+     "title": "The multi-format multiplier",
+     "slug": "the-multi-format-multiplier"
+    },
+    {
+     "n": 5,
+     "id": "sec-format-5",
+     "title": "What a devotee is worth",
+     "slug": "what-a-devotee-is-worth"
+    },
+    {
+     "n": 6,
+     "id": "sec-format-6",
+     "title": "When each format is used",
+     "slug": "when-each-format-is-used"
+    },
+    {
+     "n": 7,
+     "id": "sec-format-7",
+     "title": "Where the free seats sit",
+     "slug": "where-the-free-seats-sit"
+    },
+    {
+     "n": 8,
+     "id": "sec-format-8",
+     "title": "What else could explain it",
+     "slug": "what-else-could-explain-it"
+    },
+    {
+     "n": 9,
+     "id": "sec-format-9",
+     "title": "The underlying tables",
+     "slug": "the-underlying-tables"
+    },
+    {
+     "n": 10,
+     "id": "sec-format-10",
+     "title": "Method and limitations",
+     "slug": "method-and-limitations"
+    }
+   ],
+   "summary": "16 formats ran 328 classes in September 2026 for \u20b919,01,973. Strength Lab filled 86.0% of its seats against 15.0% for Recovery. Barre 57 reached the most members at 230.",
+   "narration": "Format Comparisons. Kwality House, Kemps Corner, September 2026. 16 formats ran 328 classes for 19,01,973 in September 2026. Strength Lab is the fullest at 86.0 per cent; Recovery the emptiest at 15.0 per cent. Mat 57 earns the most per class at 10,360. No format wins on every measure, so the studio\u2019s job is to decide what each one is for.",
+   "recs": [
+    [
+     "01",
+     "Rebuild PowerCycle around what actually fills",
+     "Programming + Founder",
+     "PowerCycle holds 26% of the timetable and fills 48%. The best-filling format in the studio, Strength Lab, gets 11%.",
+     "Moving ten per cent of PowerCycle\u2019s classes into the hours and rooms that already fill is worth roughly 3,173 attendances a month at current prices."
+    ],
+    [
+     "02",
+     "Market the second format to the devoted, not to everyone",
+     "Marketing + Front Desk",
+     "139 members made three or more visits to one format this month and 46% of members touched more than one format. Frequency concentrates in the members who already come.",
+     "One named class offered to a member in their fourth week of a single format is the highest-yield cross-sell the studio has, and it costs nothing but the message."
+    ],
+    [
+     "03",
+     "Try the empty day, once, before calling it unfillable",
+     "Programming",
+     "59 format-and-day combinations had no class at all this month. The studio has never tested them.",
+     "One four-week trial per gap, with the same trainer and hour as the successful version, turns an assumption into a fact at the cost of one slot."
+    ],
+    [
+     "04",
+     "Decide what each format is for",
+     "Programming + Studio Manager",
+     "Barre 57 carries 21% of the timetable at 37.1% utilisation, while Strength Lab fills 86.0%.",
+     "Revenue leadership and efficiency leadership sit in different formats. The timetable should be set by the second and defended by the first."
+    ],
+    [
+     "05",
+     "Give the fullest format more of the week",
+     "Programming",
+     "Strength Lab runs 37 classes and fills 86.0% of them.",
+     "Scaling what already fills is the least risky capacity decision available."
+    ],
+    [
+     "06",
+     "Sell the second format deliberately",
+     "Marketing + Front Desk",
+     "46% of members used more than one format this month and 139 made three or more visits to a single one.",
+     "A member with two formats and a routine is the member who is still here next year. Both halves of that can be designed for."
+    ],
+    [
+     "07",
+     "Stop judging formats on fewer than twelve sessions",
+     "Programming",
+     "The smallest formats ran only a handful of classes this month.",
+     "A format cannot be assessed on a handful of appearances. Either commit to a real trial or stop reporting on it."
+    ],
+    [
+     "08",
+     "Rebalance the block that carries most of the timetable",
+     "Programming + Studio Manager",
+     "Barre 57 holds 21% of all classes at 37.1% fill.",
+     "A single format holding a third of the week makes the studio\u2019s utilisation a property of that format rather than of the timetable."
+    ],
+    [
+     "09",
+     "Move express formats into the peak hours",
+     "Programming",
+     "Mat 57 earns the most per class at \u20b910,360 while the shortest formats run mostly off-peak.",
+     "The peak hour is the scarcest slot in the week and a short class is the cheapest way to use part of it."
+    ],
+    [
+     "10",
+     "Match the format to the room it is given",
+     "Studio Manager",
+     "Rooms fill from 39.6% to 59.4%, a gap driven by capacity rather than by demand.",
+     "Several formats can be run in more than one room. Moving the emptier ones into the smaller room raises utilisation without new members."
+    ],
+    [
+     "11",
+     "Retire or re-launch the formats under a real trial size",
+     "Programming",
+     "16 formats appear in the month, and the smallest ones ran only a handful of classes.",
+     "A format judged on five classes tells you nothing. Commit to a twelve-class trial or take it off the timetable and stop reporting it."
+    ],
+    [
+     "12",
+     "Watch the show rate of every format, not only the fill",
+     "Studio Manager",
+     "The month closed at 45.4% utilisation across 328 classes.",
+     "Formats that fill on paper but empty at the door behave differently from formats that convert bookings into attendance."
+    ]
+   ],
+   "slug": "format-comparisons"
+  },
+  {
+   "id": "cancels",
+   "n": 6,
+   "title": "Late Cancellations and Discounts",
+   "kpis": [
+    {
+     "label": "Seats released late",
+     "value": "234",
+     "detail": "10.1% of the book",
+     "tone": "neg"
+    },
+    {
+     "label": "Value at average",
+     "value": "\u20b92,12,948",
+     "detail": "opportunity cost, not a booked loss",
+     "tone": "neu"
+    },
+    {
+     "label": "Discount given",
+     "value": "\u20b93,40,365",
+     "detail": "9.6% depth",
+     "tone": "neu"
+    },
+    {
+     "label": "Year on year",
+     "value": "-17.0 pts",
+     "detail": "September 2025 was 27.0%",
+     "tone": "neu"
+    }
+   ],
+   "facts": [
+    "234 seats were released late in September 2026, 10.1% of everything booked.",
+    "At \u20b9910 of revenue per attendance those seats are worth about \u20b92,12,948.",
+    "340,365 rupees of discount went out on the same month, spread across 15% of transactions."
+   ],
+   "subtitle": "234 seats released late, 10.1% of the book",
+   "recs_extra": [
+    [
+     "Send the reminder four hours out, not twenty-four",
+     "Front Desk + Systems",
+     "Late releases peak at 19:00 with 44 seats in September 2026. The decision to skip is made on the day, not the day before.",
+     "A reminder placed inside the decision window is the only nudge that can still change the outcome, and a waitlist text sent at the same moment converts the release into an attendance."
+    ],
+    [
+     "Talk to the members who cancel repeatedly, one at a time",
+     "Studio Manager",
+     "28 members cancelled three or more times this month and the ten most frequent produced 22% of all late releases.",
+     "A short call costs nothing, and for a member cancelling around a scheduling conflict it fixes the pattern in a way no rule about credits would."
+    ],
+    [
+     "Charge for the seat that cannot be resold, and refund the one that can",
+     "Founder + Finance",
+     "234 seats came back late at 10.1% of the book, and the release rate differs more by hour than by trainer.",
+     "A rule anchored to resale feasibility is fair enough that staff will enforce it, and it stops the studio taxing an 18:30 class to solve a 07:00 problem."
+    ],
+    [
+     "Cap the depth of the largest code and publish the ceiling",
+     "Marketing + Finance",
+     "OTTWENTEE is 49% of all discounting in September 2026 at a mean depth of 19%.",
+     "One code at one depth is auditable. Four codes at four depths is a negotiation at the desk, and the desk always loses the argument it has to have twice a week."
+    ],
+    [
+     "Use the cancellation signal as an early warning, not a penalty",
+     "CRM + Studio Manager",
+     "Members with more than half their bookings cancelled are live 100% of the time against 74% for those who never cancel, on the selected-month membership-purchase cohort.",
+     "Reading a rising cancellation rate as an at-risk flag costs nothing and starts the retention conversation weeks before the lapse date."
+    ]
+   ],
+   "depth": 64028,
+   "sections": [
+    {
+     "n": 1,
+     "id": "sec-cancels-1",
+     "title": "Start here",
+     "slug": "start-here"
+    },
+    {
+     "n": 2,
+     "id": "sec-cancels-2",
+     "title": "What a released seat costs",
+     "slug": "what-a-released-seat-costs"
+    },
+    {
+     "n": 3,
+     "id": "sec-cancels-3",
+     "title": "Who cancels, and when",
+     "slug": "who-cancels-and-when"
+    },
+    {
+     "n": 4,
+     "id": "sec-cancels-4",
+     "title": "What cancelling actually predicts",
+     "slug": "what-cancelling-actually-predicts"
+    },
+    {
+     "n": 5,
+     "id": "sec-cancels-5",
+     "title": "The discount book",
+     "slug": "the-discount-book"
+    },
+    {
+     "n": 6,
+     "id": "sec-cancels-6",
+     "title": "Do discounts work?",
+     "slug": "do-discounts-work"
+    },
+    {
+     "n": 7,
+     "id": "sec-cancels-7",
+     "title": "Cancellations and the timetable",
+     "slug": "cancellations-and-the-timetable"
+    },
+    {
+     "n": 8,
+     "id": "sec-cancels-8",
+     "title": "What else could explain it",
+     "slug": "what-else-could-explain-it"
+    },
+    {
+     "n": 9,
+     "id": "sec-cancels-9",
+     "title": "The underlying tables",
+     "slug": "the-underlying-tables"
+    },
+    {
+     "n": 10,
+     "id": "sec-cancels-10",
+     "title": "Method and limitations",
+     "slug": "method-and-limitations"
+    }
+   ],
+   "summary": "234 seats were released late in September 2026, 10.1% of everything booked. That is down from 802 a year earlier. Attendance ran at 89.9% of the booked book, and the board is only 50.5% booked in the first place. Discount depth stands at 9.6% across 15% of sales.",
+   "narration": "Late Cancellations and Discounts. Kwality House, Kemps Corner, September 2026. 234 seats were released late in September 2026, 10.1 per cent of everything booked. At 910 of revenue per attendance those seats are worth about 2,12,948. 340,365 rupees of discount went out on the same month, spread across 15 per cent of transactions. A released seat is a member telling the studio, in the only way they can, that the time no longer works.",
+   "recs": [
+    [
+     "01",
+     "Send the reminder four hours out, not twenty-four",
+     "Front Desk + Systems",
+     "Late releases peak at 19:00 with 44 seats in September 2026. The decision to skip is made on the day, not the day before.",
+     "A reminder placed inside the decision window is the only nudge that can still change the outcome, and a waitlist text sent at the same moment converts the release into an attendance."
+    ],
+    [
+     "02",
+     "Talk to the members who cancel repeatedly, one at a time",
+     "Studio Manager",
+     "28 members cancelled three or more times this month and the ten most frequent produced 22% of all late releases.",
+     "A short call costs nothing, and for a member cancelling around a scheduling conflict it fixes the pattern in a way no rule about credits would."
+    ],
+    [
+     "03",
+     "Charge for the seat that cannot be resold, and refund the one that can",
+     "Founder + Finance",
+     "234 seats came back late at 10.1% of the book, and the release rate differs more by hour than by trainer.",
+     "A rule anchored to resale feasibility is fair enough that staff will enforce it, and it stops the studio taxing an 18:30 class to solve a 07:00 problem."
+    ],
+    [
+     "04",
+     "Cap the depth of the largest code and publish the ceiling",
+     "Marketing + Finance",
+     "OTTWENTEE is 49% of all discounting in September 2026 at a mean depth of 19%.",
+     "One code at one depth is auditable. Four codes at four depths is a negotiation at the desk, and the desk always loses the argument it has to have twice a week."
+    ],
+    [
+     "05",
+     "Use the cancellation signal as an early warning, not a penalty",
+     "CRM + Studio Manager",
+     "Members with more than half their bookings cancelled are live 100% of the time against 74% for those who never cancel, on the selected-month membership-purchase cohort.",
+     "Reading a rising cancellation rate as an at-risk flag costs nothing and starts the retention conversation weeks before the lapse date."
+    ],
+    [
+     "06",
+     "Give the released seat back to the waitlist automatically",
+     "CRM + Front Desk",
+     "234 seats were released late, at an average board occupancy of 50.5%.",
+     "A seat released hours before the class is worth little to the studio and a great deal to a member who could not book."
+    ],
+    [
+     "07",
+     "Contact the members who cancel repeatedly",
+     "CRM",
+     "28 members cancelled three or more times, and the ten heaviest made 22% of all cancellations.",
+     "Repeat cancelling is a schedule that no longer fits. A short conversation is cheaper than a discount and more likely to hold them."
+    ],
+    [
+     "08",
+     "Set a discount ceiling and publish the range",
+     "Finance + Management",
+     "Depth across recent years runs from 5.3% to 9.6%.",
+     "Publishing the range, without naming anyone, moves behaviour faster than a policy does."
+    ],
+    [
+     "09",
+     "Test whether discounts buy loyalty at all",
+     "Marketing",
+     "Pooled comparisons flatter discounting because the products that carry offers are the ones that renew anyway.",
+     "A controlled test measured on renewal, not on units sold, would settle a question the studio has been answering by assumption."
+    ],
+    [
+     "10",
+     "Ask the members who never cancel for something",
+     "CRM + Marketing",
+     "76 members cancelled nothing this year and hold 73.7 live classes each.",
+     "This is the most committed list in the database and it is currently used for nothing. Reviews, referrals and price tests all start here."
+    ],
+    [
+     "11",
+     "Handle the heaviest cancellers as a scheduling problem",
+     "Studio Manager + CRM",
+     "6 members cancelled more than half their bookings and late-cancel 1.3% of the time.",
+     "That pattern describes a week that no longer fits. A short conversation about times is cheaper than a discount and more likely to hold them."
+    ],
+    [
+     "12",
+     "Check the timetable on the days that release most seats",
+     "Programming",
+     "Thursday released 45 seats late, Friday released 23.",
+     "Late releases cluster on particular days and hours. That is a timetable signal, not a member behaviour problem."
+    ],
+    [
+     "13",
+     "Re-price the seat that was released",
+     "Finance",
+     "234 seats were released late out of 2,325 booked.",
+     "A seat released hours before the class is worth little to the studio and a great deal to the member on the waitlist. Automated backfill converts the loss into an attendance."
+    ],
+    [
+     "14",
+     "Discount the quiet hour, not the product",
+     "Marketing + Finance",
+     "234 late releases against an average board occupancy of 50.5%.",
+     "Fill is bought with terms, not with price. An off-peak pass protects the peak price while it lifts the hours that need it."
+    ]
+   ],
+   "slug": "late-cancellations-and-discounts"
+  },
+  {
+   "id": "overview",
+   "n": 7,
+   "title": "Studio Overview and Intelligence",
+   "kpis": [
+    {
+     "label": "Classes",
+     "value": "328",
+     "detail": "2,090 attendances",
+     "tone": "neu"
+    },
+    {
+     "label": "Utilisation",
+     "value": "45.4%",
+     "detail": "59% of cash delivered",
+     "tone": "neu"
+    },
+    {
+     "label": "Cash",
+     "value": "\u20b932,06,431",
+     "detail": "179 buyers",
+     "tone": "neu"
+    },
+    {
+     "label": "Visits per member",
+     "value": "4.41",
+     "detail": "474 members",
+     "tone": "neu"
+    }
+   ],
+   "facts": [
+    "328 classes, 45.4% utilisation and \u20b919,01,973 of delivered revenue in September 2026, against \u20b932,06,431 of cash taken.",
+    "474 people trained here at 4.41 visits each.",
+    "147 members came in both September 2025 and September 2026; they came 140 fewer times this year, worth about \u20b91,27,405 of delivered revenue.",
+    "24 leads sit open with a mean age of 10 days - unsold demand larger than the studio can serve in a year."
+   ],
+   "subtitle": "328 classes at 45.4%, \u20b932,06,431 banked",
+   "recs_extra": [
+    [
+     "Use the other 3 studios as the control group",
+     "Founder",
+     "This studio ranks 1 of 4 on utilisation in September 2026 (45.4% against a group median of 40.6%).",
+     "Any month where the studio moves with the group is a market month; any month where it moves alone is a decision. That distinction saves the studio from reacting to weather."
+    ],
+    [
+     "Publish these four numbers on one page, monthly",
+     "Studio Manager",
+     "Leads, trials, bookings against capacity and visits per member all move before the figures the studio currently watches. In September 2026 they read 189 new leads, 2,325 booked seats and 4.41 visits per member.",
+     "A leading indicator nobody publishes is a leading indicator nobody changes."
+    ]
+   ],
+   "depth": 27099,
+   "sections": [
+    {
+     "n": 1,
+     "id": "sec-overview-1",
+     "title": "Start here",
+     "slug": "start-here"
+    },
+    {
+     "n": 2,
+     "id": "sec-overview-2",
+     "title": "The year in numbers",
+     "slug": "the-year-in-numbers"
+    },
+    {
+     "n": 3,
+     "id": "sec-overview-3",
+     "title": "The member base",
+     "slug": "the-member-base"
+    },
+    {
+     "n": 4,
+     "id": "sec-overview-4",
+     "title": "The returning core",
+     "slug": "the-returning-core"
+    },
+    {
+     "n": 5,
+     "id": "sec-overview-5",
+     "title": "What the memberships look like",
+     "slug": "what-the-memberships-look-like"
+    },
+    {
+     "n": 6,
+     "id": "sec-overview-6",
+     "title": "The acquisition engine",
+     "slug": "the-acquisition-engine"
+    },
+    {
+     "n": 7,
+     "id": "sec-overview-7",
+     "title": "Who handles the leads",
+     "slug": "who-handles-the-leads"
+    },
+    {
+     "n": 8,
+     "id": "sec-overview-8",
+     "title": "Where the money comes from",
+     "slug": "where-the-money-comes-from"
+    },
+    {
+     "n": 9,
+     "id": "sec-overview-9",
+     "title": "The room",
+     "slug": "the-room"
+    },
+    {
+     "n": 10,
+     "id": "sec-overview-10",
+     "title": "The book that is already sold",
+     "slug": "the-book-that-is-already-sold"
+    },
+    {
+     "n": 11,
+     "id": "sec-overview-11",
+     "title": "What the data is telling the studio",
+     "slug": "what-the-data-is-telling-the-studio"
+    },
+    {
+     "n": 12,
+     "id": "sec-overview-12",
+     "title": "The underlying tables",
+     "slug": "the-underlying-tables"
+    },
+    {
+     "n": 13,
+     "id": "sec-overview-13",
+     "title": "Method and limitations",
+     "slug": "method-and-limitations"
+    }
+   ],
+   "summary": "Kwality House, Kemps Corner ran 328 classes at 45.4% utilisation in September 2026, earning \u20b919,01,973 from the room. \u20b932,06,431 was taken from 179 buyers. The 147 members who returned from the same month last year gave 140 fewer visits, about 7% of the month. 189 leads arrived and 9.0% of all leads in selected month have converted.",
+   "narration": "Studio Overview and Intelligence. Kwality House, Kemps Corner, September 2026. 328 classes, 45.4 per cent utilisation and 19,01,973 of delivered revenue in September 2026, against 32,06,431 of cash taken. 474 people trained here at 4.41 visits each. 147 members came in both September 2025 and September 2026; they came 140 fewer times this year, worth about 1,27,405 of delivered revenue. 24 leads sit open with a mean age of 10 days - unsold demand larger than the studio can serve in a year. Read together, these ledgers describe a business that earns well per class and loses its regulars slowly.",
+   "recs": [
+    [
+     "01",
+     "Use the other 3 studios as the control group",
+     "Founder",
+     "This studio ranks 1 of 4 on utilisation in September 2026 (45.4% against a group median of 40.6%).",
+     "Any month where the studio moves with the group is a market month; any month where it moves alone is a decision. That distinction saves the studio from reacting to weather."
+    ],
+    [
+     "02",
+     "Publish these four numbers on one page, monthly",
+     "Studio Manager",
+     "Leads, trials, bookings against capacity and visits per member all move before the figures the studio currently watches. In September 2026 they read 189 new leads, 2,325 booked seats and 4.41 visits per member.",
+     "A leading indicator nobody publishes is a leading indicator nobody changes."
+    ],
+    [
+     "03",
+     "Own the frequency number, not just the member count",
+     "Management",
+     "The returning core gave 140 fewer visits than the same members produced a year earlier \u2014 7% of the month.",
+     "Membership counts flatter a month whose attendance fell. The two numbers belong side by side on one page."
+    ],
+    [
+     "04",
+     "Report four leading indicators monthly and nothing else",
+     "Management",
+     "Leads, trials booked, bookings against capacity and visits per active member all move before revenue does.",
+     "Each can be read within a week of the month ending, and each predicts the others. One page would give the studio a month of warning."
+    ],
+    [
+     "05",
+     "Treat the live book as pipeline, not administration",
+     "CRM + Front Desk",
+     "129 paid memberships are on file and the warmest lapsed group is contactable today.",
+     "A dated, owned call list built from the studio\u2019s own ledger is the highest-yield piece of work available."
+    ],
+    [
+     "06",
+     "Keep the gains on the record",
+     "Studio Manager",
+     "Revenue per class is \u20b95,799 against \u20b94,605 a year earlier.",
+     "Naming what improved protects it. A studio that only reports problems tends to lose the things that were working."
+    ],
+    [
+     "07",
+     "Report visits per member as the studio\u2019s headline number",
+     "Management",
+     "474 members made 2,090 visits, 4.41 each, against 4.41 a year earlier.",
+     "It moves before revenue, before member counts and before payroll. Every other number on the page is downstream of it."
+    ],
+    [
+     "08",
+     "Put paying members and visiting members on the same page",
+     "Management + CRM",
+     "129 paid memberships are on the ledger and 474 members visited this month.",
+     "The gap between the two is the studio\u2019s contactable pipeline. It should be worked as a list rather than reported as a ratio."
+    ],
+    [
+     "09",
+     "Set next month\u2019s capacity plan from utilisation and not from last year\u2019s revenue",
+     "Studio Manager",
+     "Utilisation was 45.4% on 328 classes and 4,606 seats.",
+     "Seats and hours are what the studio actually sells. Revenue follows the rooms, and the rooms are set a month ahead."
+    ],
+    [
+     "10",
+     "Protect the hours that already work",
+     "Programming",
+     "Tuesday fills 49.3% and 10:00 fills 49.6%.",
+     "Growth decisions are easy when the strongest blocks are named. It also stops a good slot being traded away for a quiet one."
+    ],
+    [
+     "11",
+     "Give the team one page a month and four numbers on it",
+     "Management",
+     "Leads, trials, bookings against capacity and visits per member all move before revenue does.",
+     "Each can be read within a week of the month ending. A single page is more likely to be acted on than a full review."
+    ]
+   ],
+   "slug": "studio-overview-and-intelligence"
+  },
+  {
+   "id": "leads",
+   "n": 8,
+   "title": "Lead Performance and Insights",
+   "kpis": [
+    {
+     "label": "Leads in selected month",
+     "value": "189",
+     "detail": "189 in September 2026",
+     "tone": "neu"
+    },
+    {
+     "label": "Trialled",
+     "value": "46.0%",
+     "detail": "87 people",
+     "tone": "neu"
+    },
+    {
+     "label": "Won",
+     "value": "9.0%",
+     "detail": "17 memberships",
+     "tone": "neu"
+    },
+    {
+     "label": "Open file",
+     "value": "24",
+     "detail": "mean age 10 days",
+     "tone": "neg"
+    }
+   ],
+   "facts": [
+    "189 leads in selected month for this studio: 87 trialled, 17 won, 13 retained.",
+    "Trials convert at 18.4% against those without one.",
+    "76% of wins closed on the day of the enquiry; 24 leads sit open with a mean age of 10 days."
+   ],
+   "subtitle": "189 leads, 46.0% trialled, 9.0% won",
+   "recs_extra": [
+    [
+     "Make the trial the only acquisition target",
+     "Sales + Studio Manager",
+     "Leads who completed a trial convert at 18.4% and those who did not at 1.0%. On this file that is 87 leads sitting on the wrong side of a diary entry.",
+     "Every lead conversation ends with a time and a class, not a callback. At the studio\u2019s current trial-to-win rate, a hundred more trials is worth roughly 17 more members a year."
+    ],
+    [
+     "Answer on the day, because the win is decided the same day 2% of the time",
+     "Sales",
+     "The median first response in this file came after 2 days, and 59% of leads waited more than a day, while 76% of all wins closed on the day of the enquiry.",
+     "The lead is not waiting politely; they are calling the next studio on their list. A same-day response target with no exceptions is worth more than any change to the offer."
+    ],
+    [
+     "Move acquisition effort toward Website Form and Website",
+     "Marketing + Founder",
+     "Website Form converts at 20.0% with a mean LTV of \u20b91,919 on 20 leads; the largest source, Hosted Class, converts at 0.0% on 54.",
+     "Tripling the smaller, better source costs less than the studio currently spends to fill the larger one and delivers members who stay longer."
+    ],
+    [
+     "Publish conversion by associate, with book size beside it",
+     "Studio Manager",
+     "Conversion runs 5.4% to 17.4% across books of 39 to 56 leads.",
+     "Putting the two columns together on one page every month ends the argument about whose leads are worse and starts the one about what each person does with theirs."
+    ],
+    [
+     "Report leads weekly, on the stage they are stuck at",
+     "Founder + Sales",
+     "59 leads were contacted at most once, and the file shows follow-ups spanning a median of 4 days for decisions that usually take one.",
+     "A weekly thirty-minute review of the stuck stages is the only cadence that matches how quickly a lead goes cold."
+    ]
+   ],
+   "depth": 56715,
+   "sections": [
+    {
+     "n": 1,
+     "id": "sec-leads-1",
+     "title": "Start here",
+     "slug": "start-here"
+    },
+    {
+     "n": 2,
+     "id": "sec-leads-2",
+     "title": "The trial is the gate",
+     "slug": "the-trial-is-the-gate"
+    },
+    {
+     "n": 3,
+     "id": "sec-leads-3",
+     "title": "Speed decides it",
+     "slug": "speed-decides-it"
+    },
+    {
+     "n": 4,
+     "id": "sec-leads-4",
+     "title": "The follow-up book",
+     "slug": "the-follow-up-book"
+    },
+    {
+     "n": 5,
+     "id": "sec-leads-5",
+     "title": "Where the leads come from",
+     "slug": "where-the-leads-come-from"
+    },
+    {
+     "n": 6,
+     "id": "sec-leads-6",
+     "title": "What leads ask for",
+     "slug": "what-leads-ask-for"
+    },
+    {
+     "n": 7,
+     "id": "sec-leads-7",
+     "title": "Who handles the leads",
+     "slug": "who-handles-the-leads"
+    },
+    {
+     "n": 8,
+     "id": "sec-leads-8",
+     "title": "The file the studio is not working",
+     "slug": "the-file-the-studio-is-not-working"
+    },
+    {
+     "n": 9,
+     "id": "sec-leads-9",
+     "title": "What else could explain it",
+     "slug": "what-else-could-explain-it"
+    },
+    {
+     "n": 10,
+     "id": "sec-leads-10",
+     "title": "The underlying tables",
+     "slug": "the-underlying-tables"
+    },
+    {
+     "n": 11,
+     "id": "sec-leads-11",
+     "title": "Method and limitations",
+     "slug": "method-and-limitations"
+    }
+   ],
+   "summary": "189 leads are recorded for Kwality House, Kemps Corner: 87 completed a trial, 17 became members, 13 are still with the studio. Trial-takers convert at 18.4% against 0.98% without one. 76% of memberships are sold the same day the enquiry arrives. 24 leads are still marked open at a mean age of 10 days.",
+   "narration": "Lead Performance and Insights. Kwality House, Kemps Corner, September 2026. 189 leads in selected month for this studio: 87 trialled, 17 won, 13 retained. Trials convert at 18.4 per cent against those without one. 76 per cent of wins closed on the day of the enquiry; 24 leads sit open with a mean age of 10 days. The trial is the gate and the same day is the deadline. Everything else in this chapter is a consequence of those two.",
+   "recs": [
+    [
+     "01",
+     "Make the trial the only acquisition target",
+     "Sales + Studio Manager",
+     "Leads who completed a trial convert at 18.4% and those who did not at 1.0%. On this file that is 87 leads sitting on the wrong side of a diary entry.",
+     "Every lead conversation ends with a time and a class, not a callback. At the studio\u2019s current trial-to-win rate, a hundred more trials is worth roughly 17 more members a year."
+    ],
+    [
+     "02",
+     "Answer on the day, because the win is decided the same day 2% of the time",
+     "Sales",
+     "The median first response in this file came after 2 days, and 59% of leads waited more than a day, while 76% of all wins closed on the day of the enquiry.",
+     "The lead is not waiting politely; they are calling the next studio on their list. A same-day response target with no exceptions is worth more than any change to the offer."
+    ],
+    [
+     "03",
+     "Move acquisition effort toward Website Form and Website",
+     "Marketing + Founder",
+     "Website Form converts at 20.0% with a mean LTV of \u20b91,919 on 20 leads; the largest source, Hosted Class, converts at 0.0% on 54.",
+     "Tripling the smaller, better source costs less than the studio currently spends to fill the larger one and delivers members who stay longer."
+    ],
+    [
+     "04",
+     "Publish conversion by associate, with book size beside it",
+     "Studio Manager",
+     "Conversion runs 5.4% to 17.4% across books of 39 to 56 leads.",
+     "Putting the two columns together on one page every month ends the argument about whose leads are worse and starts the one about what each person does with theirs."
+    ],
+    [
+     "05",
+     "Report leads weekly, on the stage they are stuck at",
+     "Founder + Sales",
+     "59 leads were contacted at most once, and the file shows follow-ups spanning a median of 4 days for decisions that usually take one.",
+     "A weekly thirty-minute review of the stuck stages is the only cadence that matches how quickly a lead goes cold."
+    ],
+    [
+     "06",
+     "Answer every enquiry the same day",
+     "Front Desk + CRM",
+     "76% of memberships are sold on the day of the enquiry.",
+     "Response time is the conversion rate, delayed. It is also the one variable in lead handling the studio controls completely."
+    ],
+    [
+     "07",
+     "Move acquisition towards the channels that convert",
+     "Marketing",
+     "Referrals & Word-of-Mouth converts 40.0% of its leads; Direct & Walk-in \u25c9 Leads converts 0.0%.",
+     "The studio does not need more leads, it needs the leads that already know someone. A published phone number and a referral reward are the cheapest mix changes available."
+    ],
+    [
+     "08",
+     "Close the open file honestly",
+     "CRM",
+     "24 leads are open at a mean age of 10 days, 0 of them older than six months.",
+     "A single pass to contactable, interested or closed turns thousands of rows into a short real list and makes every conversion figure trustworthy."
+    ],
+    [
+     "09",
+     "Put a named owner on the largest source",
+     "Front Desk + CRM",
+     "Hosted Class supplies 54 leads and converts 0.0%, the weakest rate of any large channel.",
+     "The largest pool is not the best one. Improving the biggest channel by two points is worth more than opening a new one."
+    ],
+    [
+     "10",
+     "Score associates on trials booked, not on leads held",
+     "Studio Manager",
+     "Associate conversion runs from 5.4% to 17.4% on comparable lead volumes.",
+     "Trials are the step the studio controls. Leads are demand; trials are work."
+    ],
+    [
+     "11",
+     "Work the open file from the freshest stage backwards",
+     "CRM",
+     "4 leads sit at the pricing stage and 0 at first contact.",
+     "Pricing-stage leads have already shown interest and need a decision, not a reminder sequence. They are the highest-yield calls on the list."
+    ],
+    [
+     "12",
+     "Match the enquiry to the class the lead asked about",
+     "Front Desk",
+     "Barre 57 converts 9.0% against 9.0% for the next best group.",
+     "Where a lead names a class, the trial booking should be that class. It is the cheapest personalisation available and it needs no system."
+    ]
+   ],
+   "slug": "lead-performance-and-insights"
+  },
+  {
+   "id": "behaviour",
+   "n": 9,
+   "title": "Member Behaviour and Patterns",
+   "kpis": [
+    {
+     "label": "Members who came",
+     "value": "474",
+     "detail": "2,090 visits",
+     "tone": "neu"
+    },
+    {
+     "label": "Visits per member",
+     "value": "4.41",
+     "detail": "median gap 1 days",
+     "tone": "pos"
+    },
+    {
+     "label": "Came exactly once",
+     "value": "214",
+     "detail": "45% of the base",
+     "tone": "neg"
+    },
+    {
+     "label": "Top tenth of members",
+     "value": "39%",
+     "detail": "47 people",
+     "tone": "neg"
+    }
+   ],
+   "facts": [
+    "474 members made 2,090 visits in September 2026 at 4.41 each; 214 came exactly once.",
+    "The median gap between visits across the selected report-month cohort is 1 days and 94% of gaps are a week or less.",
+    "The tenth of the base that comes most produces 39% of all attendance.",
+    "Of 120 recorded first-timers, 3% reached a third visit - the point at which a 2-for-1 intro pack member is genuinely returning."
+   ],
+   "subtitle": "474 members, 4.41 visits each, 39% of attendance in the top tenth",
+   "recs_extra": [
+    [
+     "Give the 214 once-only members a dated plan, not a reminder",
+     "Front Desk + Studio Manager",
+     "214 of the 474 members who attended in September 2026 came exactly once, 45% of the base. They are not a churn statistic; they are the next month\u2019s frequency problem.",
+     "One booked class with a time attached, offered before the member leaves the building, converts a visit into a habit. On this month\u2019s numbers a tenth of that group attending twice more is 43 extra attendances."
+    ],
+    [
+     "Build the at-risk list from the member\u2019s own gap, not from the studio\u2019s",
+     "CRM",
+     "The studio-wide median gap between visits is 1 day, but the distribution runs from one day later to a tail beyond two months. A fixed thirty-day rule flags half the base and misses the members who always came weekly and have just stopped.",
+     "A gap that stretches past a member\u2019s own median is the earliest reliable warning the data contains, and it is computable from the ledger the studio already exports each day."
+    ],
+    [
+     "Sell the next purchase 0 days after the last",
+     "Front Desk + Finance",
+     "The median gap between purchases at this studio is 0 days and 100% of repeat purchases fall inside a month. Beyond that window the probability of a second purchase falls away.",
+     "A renewal conversation scheduled to the member\u2019s own purchase rhythm rather than the expiry date is the difference between a renewal and a re-acquisition."
+    ],
+    [
+     "Program the middle of the day on purpose, not by residue",
+     "Programming",
+     "52 members take midday as their habit against 290 morning and 132 evening, and the midday group comes 1.00 times a month against 5.03 at the peak.",
+     "One format scheduled specifically for the middle of the day, with an off-peak price attached, converts idle mid-morning capacity rather than competing for the evening."
+    ],
+    [
+     "Count the third visit, not the second, as the return",
+     "Marketing + Founder",
+     "4% of recorded first-timers came back once after their trial but only 3% reached a third visit. A 2-for-1 pack member is a returning client on their third visit, and every retention measure built on the second one is flattering the studio.",
+     "Fixing the definition changes what the team optimises for, and costs nothing but a column in the report."
+    ],
+    [
+     "Protect the frequent tenth as a named group",
+     "Studio Manager",
+     "47 members produced 39% of all attendance in September 2026. A fifth of them changing habit moves the month more than any acquisition campaign on file.",
+     "A monthly watch-list, one message when someone in it stops coming, and no discount, is the cheapest revenue protection the studio has."
+    ]
+   ],
+   "depth": 86024,
+   "sections": [
+    {
+     "n": 1,
+     "id": "sec-behaviour-1",
+     "title": "Start here",
+     "slug": "start-here"
+    },
+    {
+     "n": 2,
+     "id": "sec-behaviour-2",
+     "title": "When members come",
+     "slug": "when-members-come"
+    },
+    {
+     "n": 3,
+     "id": "sec-behaviour-3",
+     "title": "How often members come",
+     "slug": "how-often-members-come"
+    },
+    {
+     "n": 4,
+     "id": "sec-behaviour-4",
+     "title": "How often members buy",
+     "slug": "how-often-members-buy"
+    },
+    {
+     "n": 5,
+     "id": "sec-behaviour-5",
+     "title": "The rhythm of the month",
+     "slug": "the-rhythm-of-the-month"
+    },
+    {
+     "n": 6,
+     "id": "sec-behaviour-6",
+     "title": "The shape of the base",
+     "slug": "the-shape-of-the-base"
+    },
+    {
+     "n": 7,
+     "id": "sec-behaviour-7",
+     "title": "Routine and variety",
+     "slug": "routine-and-variety"
+    },
+    {
+     "n": 8,
+     "id": "sec-behaviour-8",
+     "title": "What the intro pack does to the numbers",
+     "slug": "what-the-intro-pack-does-to-the-numbers"
+    },
+    {
+     "n": 9,
+     "id": "sec-behaviour-9",
+     "title": "What else could explain it",
+     "slug": "what-else-could-explain-it"
+    },
+    {
+     "n": 10,
+     "id": "sec-behaviour-10",
+     "title": "The underlying tables",
+     "slug": "the-underlying-tables"
+    },
+    {
+     "n": 11,
+     "id": "sec-behaviour-11",
+     "title": "Method and limitations",
+     "slug": "method-and-limitations"
+    }
+   ],
+   "summary": "474 members trained 2,090 times in September 2026, 4.41 visits each. 45% came exactly once and the top tenth delivered 39% of attendance. 290 of 474 members do most of their training before noon. The median gap between visits is 1 day and between purchases 0 days.",
+   "narration": "Member Behaviour and Patterns. Kwality House, Kemps Corner, September 2026. 474 members made 2,090 visits in September 2026 at 4.41 each; 214 came exactly once. The median gap between visits across the selected report-month cohort is 1 days and 94 per cent of gaps are a week or less. The tenth of the base that comes most produces 39 per cent of all attendance. Of 120 recorded first-timers, 3 per cent reached a third visit - the point at which a 2-for-1 intro pack member is genuinely returning. Most of what looks like churn at this studio is one early step that nobody currently owns.",
+   "recs": [
+    [
+     "01",
+     "Give the 214 once-only members a dated plan, not a reminder",
+     "Front Desk + Studio Manager",
+     "214 of the 474 members who attended in September 2026 came exactly once, 45% of the base. They are not a churn statistic; they are the next month\u2019s frequency problem.",
+     "One booked class with a time attached, offered before the member leaves the building, converts a visit into a habit. On this month\u2019s numbers a tenth of that group attending twice more is 43 extra attendances."
+    ],
+    [
+     "02",
+     "Build the at-risk list from the member\u2019s own gap, not from the studio\u2019s",
+     "CRM",
+     "The studio-wide median gap between visits is 1 day, but the distribution runs from one day later to a tail beyond two months. A fixed thirty-day rule flags half the base and misses the members who always came weekly and have just stopped.",
+     "A gap that stretches past a member\u2019s own median is the earliest reliable warning the data contains, and it is computable from the ledger the studio already exports each day."
+    ],
+    [
+     "03",
+     "Sell the next purchase 0 days after the last",
+     "Front Desk + Finance",
+     "The median gap between purchases at this studio is 0 days and 100% of repeat purchases fall inside a month. Beyond that window the probability of a second purchase falls away.",
+     "A renewal conversation scheduled to the member\u2019s own purchase rhythm rather than the expiry date is the difference between a renewal and a re-acquisition."
+    ],
+    [
+     "04",
+     "Program the middle of the day on purpose, not by residue",
+     "Programming",
+     "52 members take midday as their habit against 290 morning and 132 evening, and the midday group comes 1.00 times a month against 5.03 at the peak.",
+     "One format scheduled specifically for the middle of the day, with an off-peak price attached, converts idle mid-morning capacity rather than competing for the evening."
+    ],
+    [
+     "05",
+     "Count the third visit, not the second, as the return",
+     "Marketing + Founder",
+     "4% of recorded first-timers came back once after their trial but only 3% reached a third visit. A 2-for-1 pack member is a returning client on their third visit, and every retention measure built on the second one is flattering the studio.",
+     "Fixing the definition changes what the team optimises for, and costs nothing but a column in the report."
+    ],
+    [
+     "06",
+     "Protect the frequent tenth as a named group",
+     "Studio Manager",
+     "47 members produced 39% of all attendance in September 2026. A fifth of them changing habit moves the month more than any acquisition campaign on file.",
+     "A monthly watch-list, one message when someone in it stops coming, and no discount, is the cheapest revenue protection the studio has."
+    ],
+    [
+     "07",
+     "Book the second visit before the member leaves the building",
+     "Front Desk + CRM",
+     "45% of this month\u2019s members came exactly once.",
+     "The second visit is the transition that decides the membership, and nobody is currently asking for it at the moment it can be booked."
+    ],
+    [
+     "08",
+     "Build the timetable around mornings",
+     "Programming + Studio Manager",
+     "290 of 474 members do most of their training before noon.",
+     "The evening block is not a lesser audience, it is simply a smaller one \u2014 and it is currently scheduled as though it were the largest."
+    ],
+    [
+     "09",
+     "Stop expecting members to come on a schedule",
+     "Studio Manager",
+     "The median gap between a member\u2019s visits is 1 day and 94% of all gaps are a week or less.",
+     "Members come in bursts. A rhythm-shaped plan measures them as inconsistent when they are behaving normally."
+    ],
+    [
+     "10",
+     "Sell the next purchase inside the first month",
+     "Front Desk + CRM",
+     "The median gap between purchases is 0 days and 100% of repeat purchases happen inside thirty days.",
+     "Buying here is monthly. A renewal conversation belongs in the first fortnight, not the final week."
+    ],
+    [
+     "11",
+     "Read frequency as the headline metric",
+     "Management",
+     "Visits per member in September 2026 were 4.41.",
+     "Attendance, revenue and member counts are all downstream of it, and it is the only one of them that moves first."
+    ],
+    [
+     "12",
+     "Treat bursts as normal and plan for gaps instead",
+     "Studio Manager + Programming",
+     "94% of the gaps between one visit and the next are a week or less and the median gap is 1 day.",
+     "Members train in bursts rather than on a fixed rhythm. Plans and nudges should be built around the return after a gap, not around a perfect week."
+    ],
+    [
+     "13",
+     "Recruit the top tenth as ambassadors",
+     "Marketing + Studio Manager",
+     "47 members produced 39% of this month\u2019s attendance.",
+     "The members who already behave the way the studio wants are the best source of referrals and the most credible voices in a testimonial."
+    ],
+    [
+     "14",
+     "Ask why the weakest day is weak before adding a class to it",
+     "Programming",
+     "Friday drew 202 visits against 404 on Tuesday.",
+     "A quiet day is sometimes a demand fact and sometimes a timetable fact. The answer decides whether the fix is a class or a campaign."
+    ]
+   ],
+   "slug": "member-behaviour-and-patterns"
+  }
+ ],
+ "sources": [
+  "Day End Report - Part 1 - New (9).csv",
+  "Day End Report - Part 1 - Payroll (4).csv",
+  "Day End Report - Part 3 - Sessions (19).csv",
+  "Day End Report - Part 4 - Checkins (12).csv",
+  "Lapsed New - Lapsed (20).csv",
+  "Sales - Raw - Sales (23).csv",
+  "\u2756 PM - Leads \u2756 - \u25c9 Leads (31).csv"
+ ],
+ "warnings": []
+}

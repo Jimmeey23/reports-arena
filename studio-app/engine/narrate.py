@@ -95,7 +95,18 @@ def summary(M, ch):
         s.append(f'{b.get("morning", 0)} of {pp.get("members", 0)} members do most of their training before noon')
         if 'gap_med' in b:
             s.append(f'The median gap between visits is {b["gap_med"]:.0f} day and between purchases {b.get("pgap_med", 0):.0f} days')
-    return '. '.join(x for x in s if x) + '.'
+    priorities = {
+        'sales': 'Read buyer volume, average spend and product concentration together before attributing the cash movement to stronger demand. The next decision is which products merit attention on both realised pricing and repeat purchase.',
+        'class': 'Separate changes in attendance from changes in offered capacity before adjusting the timetable. Review recurring low-attendance slots alongside format and hour, then test a targeted change rather than apply a studio-wide cut.',
+        'instructor': 'Use these rankings to identify comparable sessions for review, allowing for assigned hours, formats and sample sizes. The observed differences do not establish an instructor effect independently of the timetable.',
+        'lapse': 'These are memberships purchased in the selected month; export-state outcomes and month-end observation limits must be kept visible. Prioritise actionable expiry or attendance signals and distinguish them from confirmed churn events.',
+        'format': 'A format should be assessed on reach, utilisation and recorded revenue together, with its slot allocation visible. Test the intended role of each format before treating the highest single metric as the overall winner.',
+        'cancels': 'A released seat represents capacity at risk, not automatically unrecovered revenue. Review concentration by slot and measure actual backfill before changing the cancellation policy.',
+        'overview': 'The priority is to connect acquisition, delivered attendance and purchased access while retaining each source’s own denominator. Assign owners to a small set of measurable actions and use the detailed chapters to check competing explanations.',
+        'leads': 'This is the selected-month enquiry cohort, with trial, win and retention outcomes as recorded in the uploaded export. Review the trial gap, source mix and open stages together; observed purchase speed does not measure staff response time or prove the cause of conversion.',
+        'behaviour': 'The average should be read alongside visit frequency and concentration, because it can conceal very different member journeys. Use the underlying records to distinguish newcomers, occasional visitors and interrupted routines before planning outreach.',
+    }
+    return '. '.join(x for x in s if x) + '. ' + priorities.get(ch['id'], '')
 
 
 def narration(M, ch):

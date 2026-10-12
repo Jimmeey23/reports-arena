@@ -151,14 +151,16 @@ def scan_runs():
     for rid in sorted(on_disk, reverse=True):
         d = os.path.join(RUNS, rid)
         mf = os.path.join(d, 'manifest.json')
-        if rid in STATE['runs'] or not os.path.isfile(mf):
+        if not os.path.isfile(mf):
+            continue
+        if STATE['runs'].get(rid, {}).get('_manifest_mtime') == os.stat(mf).st_mtime_ns:
             continue
         try:
             m = json.loads(Path(mf).read_text())
         except Exception:
             continue
         STATE['runs'][rid] = dict(
-            id=rid, dir=d, label=m.get('label', ''), studio=m.get('studio', ''), built=m.get('built', ''),
+            _manifest_mtime=os.stat(mf).st_mtime_ns, id=rid, dir=d, label=m.get('label', ''), studio=m.get('studio', ''), built=m.get('built', ''),
             seconds=m.get('seconds'), sources=m.get('sources', []), warnings=m.get('warnings', []),
             chapters=[dict(id=c['id'], n=c.get('n'), title=c['title'], subtitle=c.get('subtitle'),
                            kpis=c.get('kpis'), summary=c.get('summary'), summary_ai=c.get('summary_ai', ''),

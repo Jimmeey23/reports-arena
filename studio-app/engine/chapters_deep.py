@@ -14,15 +14,16 @@ from .metrics import DAYS, MONTH_NAMES, rng
 from .deep import (Deep, sec, tab, frame_ev, statgrid, hyp, method, appendix, guide, kpi, money, pc, _n,
                    clean, dpc, share, ratio, concentration, extremes, rank_list, yoy_para)
 
-_C = {}
+from weakref import WeakKeyDictionary
+
+_C = WeakKeyDictionary()
 
 
 def deep(M):
     """One Deep per Metrics, built on first use."""
-    key = id(M)
-    if key not in _C:
-        _C[key] = Deep(M)
-    return _C[key]
+    if M not in _C:
+        _C[M] = Deep(M)
+    return _C[M]
 
 
 def run(secs):
@@ -30,8 +31,10 @@ def run(secs):
     for f in secs:
         try:
             h = f()
-        except Exception:
-            h = ''
+        except Exception as error:
+            import logging
+            logging.getLogger(__name__).warning("Report section %s unavailable: %s", f.__name__, error)
+            h = head(f.__name__.replace("_", " ").title(), "Analysis unavailable") + para("This analysis could not be completed from the supplied records. It has not been replaced with an estimate.")
         if h:
             out.append(h)
     return ''.join(out)

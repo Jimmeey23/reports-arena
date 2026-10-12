@@ -10,6 +10,7 @@ from .records import snapshot, embed
 from . import chapters_a as CA, chapters_b as CB
 from . import chapters_deep as CD1, chapters_deep2 as CD2, chapters_deep3 as CD3, chapters_deep4 as CD4
 from . import narrate as NR
+from .insights import executive
 
 # the deep builders write the report at full length; the short ones are the
 # fallback for a chapter whose sources are too thin for the deep version
@@ -92,6 +93,9 @@ def build(D, studio, year, month, outdir, log=print, use_llm=None,
         if cid in ('leads', 'lapse'):
             scope = ('Enquiries created' if cid == 'leads' else 'Memberships purchased') + f' in {M.label}. Status, trial, retention and lifetime fields reflect the uploaded export; historical month-end outcomes cannot be reconstructed from a current-state export.'
             ch['body'] = '<p class="p57-period-scope">' + scope + '</p>' + ch.get('body', '')
+        interpretation = executive(M, ch)
+        ch['body'] = ch.get('body', '') + interpretation
+        ch['narrative_version'] = 2
         ch['body'], ch['sections'] = _sections(cid, ch.get('body', ''))
         ch['summary'] = NR.summary(M, ch)
         ch['narration'] = NR.narration(M, ch)
@@ -123,7 +127,7 @@ def build(D, studio, year, month, outdir, log=print, use_llm=None,
         metrics_pack.dump(metrics_pack.from_metrics(M, out), os.path.join(outdir, 'metrics.json'))
     except Exception as e:
         log(f'  metrics pack skipped: {e}')
-    meta = dict(studio=studio, year=year, month=month, label=label, built=now_ist().strftime('%d %B %Y, %H:%M IST'),
+    meta = dict(scope_version=2, studio=studio, year=year, month=month, label=label, built=now_ist().strftime('%d %B %Y, %H:%M IST'),
                 seconds=round(time.time() - t0, 1), chapters=[{k: v for k, v in ch.items() if k not in ('html', 'body')} for ch in out],
                 sources=[s.name for s in D.sources], warnings=D.warnings)
     Path(outdir, 'manifest.json').write_text(json.dumps(meta, indent=1, default=str))

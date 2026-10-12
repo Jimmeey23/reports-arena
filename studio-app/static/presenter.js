@@ -27,15 +27,26 @@ const back=make('a','← Report library','p57-library-link');back.href='/';back.
 const headings=[...document.querySelectorAll('.wrap h2')];let current=headings[0]?.id||'overview';
 const nav=make('aside',null,'p57-navigation');nav.setAttribute('aria-label','Report navigation');const navHead=make('div',null,'p57-panel-head');navHead.append(make('strong','Contents'));button('Close',()=>setNav(false),navHead);nav.append(navHead);
 const navTrigger=make('button','','p57-nav-trigger');navTrigger.innerHTML='<span class="p57-menu-glyph" aria-hidden="true"><i></i><i></i><i></i></span><span>Contents</span>';navTrigger.setAttribute('aria-label','Toggle report navigation');navTrigger.setAttribute('aria-controls','p57-navigation');nav.id='p57-navigation';document.body.append(navTrigger,nav);
-let navTimer,navPinned=!!saved.preferences.navPinned;
+let navTimer,navPinned=saved.preferences.navPinned!==false;
 function setNav(open){nav.hidden=!open;root.classList.toggle('p57-left-open',open);navTrigger.setAttribute('aria-expanded',String(open));if(open)idleNav();}
-function idleNav(){clearTimeout(navTimer);if(!navPinned)navTimer=setTimeout(()=>setNav(false),5000);}
+function idleNav(){clearTimeout(navTimer);if(!navPinned&&!nav.hidden)navTimer=setTimeout(()=>{if(nav.matches(':hover')||nav.contains(document.activeElement))idleNav();else setNav(false);},60000);}
 navTrigger.onclick=()=>setNav(nav.hidden);
 const pin=button('Pin navigation',()=>{navPinned=!navPinned;pin.setAttribute('aria-pressed',String(navPinned));pin.textContent=navPinned?'Unpin navigation':'Pin navigation';change('preferences','navPinned',navPinned);idleNav();},nav);
 const navList=make('div',null,'p57-nav-list');nav.append(navList);
-headings.forEach((h,i)=>{const b=button(`${String(i+1).padStart(2,'0')}  ${h.textContent}`,()=>go(h.id),navList);b.dataset.section=h.id;});
+const chapterSections=[...document.querySelectorAll('.wrap > section')];
+function chapterGroup(title,target,topics,index){
+ const group=make('div',null,'p57-nav-chapter');
+ const main=button(`${String(index+1).padStart(2,'0')}  ${title.replace(/^Chapter\s+\d+\s*/i,'').trim()}`,()=>go(target.id),group);
+ main.classList.add('p57-nav-chapter-label');main.dataset.section=target.id;
+ const children=make('div',null,'p57-nav-children');children.setAttribute('role','group');children.setAttribute('aria-label',title+' subtopics');
+ topics.forEach(h=>{const child=button(h.textContent,()=>go(h.id),children);child.dataset.section=h.id;});
+ group.append(children);navList.append(group);
+}
+if(chapterSections.length){chapterSections.forEach((section,i)=>{const topics=[...section.querySelectorAll('h2')],main=topics.shift();if(main)chapterGroup(main.textContent,main,topics,i);});}
+else if(headings.length){const cover=document.querySelector('body > header');if(cover&&!cover.id)cover.id='p57-report-cover';const title=document.querySelector('body > header h1')?.textContent||document.title;chapterGroup(title,document.querySelector('body > header')||headings[0],headings,0);}
+
 function go(id){current=id;document.getElementById(id)?.scrollIntoView({block:'start',behavior:'instant'});renderNotes();markNav();publishSoon();}
-function markNav(){navList.querySelectorAll('button').forEach(b=>b.setAttribute('aria-current',b.dataset.section===current?'location':'false'));}
+function markNav(){navList.querySelectorAll('button').forEach(b=>b.setAttribute('aria-current',b.dataset.section===current?'location':'false'));navList.querySelectorAll('.p57-nav-chapter').forEach(group=>group.classList.toggle('p57-nav-chapter-active',!!group.querySelector('[aria-current=location]')));}
 setNav(true);for(const event of ['pointerdown','keydown','scroll'])window.addEventListener(event,idleNav,{passive:true});
 // Speaker drawer is private; hosted audiences receive only the report view and annotations.
 const drawer=make('aside',null,'p57-speaker');drawer.id='p57-speaker';drawer.hidden=true;drawer.setAttribute('aria-label','Speaker notes and teleprompter');document.body.append(drawer);
@@ -76,10 +87,8 @@ const closeDrawer=button('Close',()=>{drawer.hidden=true;root.classList.remove('
 closeDrawer.classList.add('p57-close-btn');
 
 actionsBar.prepend(noteBtn,annotBtn,settingsBtn);
-const headClose=button('Close',()=>{drawer.hidden=true;root.classList.remove('p57-right-open');stopPrompt();});
-headClose.classList.add('p57-head-close');
 dh.append(titleGroup,actionsBar);
-dh.prepend(headClose);
+
 drawer.append(dh);
 
 // Collapsible Panel: Private Speaker Notes
@@ -174,7 +183,7 @@ button('Reset',()=>{stopPrompt();prompt.scrollTop=0;},controls);
 function range(label,min,max,value,key,apply){const l=make('label',label),input=make('input');input.type='range';input.min=min;input.max=max;input.value=saved.preferences[key]||value;input.setAttribute('aria-label',label);input.oninput=()=>{apply(input.value);change('preferences',key,input.value);};l.append(input);settingsGrid.append(l);apply(input.value);return input;}
 const speed=range('Scroll speed',5,100,25,'promptSpeed',()=>{});
 range('Prompt text size',18,48,26,'promptFont',v=>prompt.style.fontSize=v+'px');
-range('Drawer width',300,640,420,'drawerWidth',v=>root.style.setProperty('--p57-panel-width',v+'px'));
+range('Drawer width',300,440,360,'drawerWidth',v=>root.style.setProperty('--p57-panel-width',Math.max(300,Math.min(440,Number(v)||360))+'px'));
 const mirror=button('Mirror',()=>{const on=prompt.classList.toggle('mirrored');mirror.setAttribute('aria-pressed',String(on));mirror.classList.toggle('active',on);change('preferences','promptMirror',on);},controls);
 
 const timerBox=make('div',null,'p57-timer-group');
@@ -223,7 +232,7 @@ function applyEdits(edits=saved.edits){editables.forEach(e=>{if(document.activeE
 let annotationSnapshot='';
 function renderAnnotations(values=saved.annotations){const snapshot=JSON.stringify(values||{});if(snapshot===annotationSnapshot)return;annotationSnapshot=snapshot;document.querySelectorAll('.p57-annotation-callout').forEach(e=>e.remove());for(const [id,text]of Object.entries(values||{})){if(!text)continue;const h=document.getElementById(id);if(h){const a=make('aside',text,'p57-annotation-callout');a.setAttribute('aria-label','Report annotation');h.after(a);}}}
 let restoringPreferences=false;
-function applyPreferences(){restoringPreferences=true;for(const s of bar.querySelectorAll('select')){const label=s.getAttribute('aria-label'),key={Theme:'theme',Colour:'accent',Layout:'layout',Density:'density',Text:'size',Speed:'speechSpeed'}[label];if(key&&saved.preferences[key]){s.value=saved.preferences[key];s.dispatchEvent(new Event('change'));}}if(saved.preferences.promptFont)prompt.style.fontSize=saved.preferences.promptFont+'px';if(saved.preferences.promptSpeed)speed.value=saved.preferences.promptSpeed;prompt.classList.toggle('mirrored',!!saved.preferences.promptMirror);navPinned=!!saved.preferences.navPinned;pin.textContent=navPinned?'Unpin navigation':'Pin navigation';pin.setAttribute('aria-pressed',String(navPinned));if(saved.preferences.drawerWidth)root.style.setProperty('--p57-panel-width',saved.preferences.drawerWidth+'px');idleNav();restoringPreferences=false;}
+function applyPreferences(){restoringPreferences=true;for(const s of bar.querySelectorAll('select')){const label=s.getAttribute('aria-label'),key={Theme:'theme',Colour:'accent',Layout:'layout',Density:'density',Text:'size',Speed:'speechSpeed'}[label];if(key&&saved.preferences[key]){s.value=saved.preferences[key];s.dispatchEvent(new Event('change'));}}if(saved.preferences.promptFont)prompt.style.fontSize=saved.preferences.promptFont+'px';if(saved.preferences.promptSpeed)speed.value=saved.preferences.promptSpeed;prompt.classList.toggle('mirrored',!!saved.preferences.promptMirror);navPinned=saved.preferences.navPinned!==false;pin.textContent=navPinned?'Unpin navigation':'Pin navigation';pin.setAttribute('aria-pressed',String(navPinned));if(saved.preferences.drawerWidth)root.style.setProperty('--p57-panel-width',Math.max(300,Math.min(440,Number(saved.preferences.drawerWidth)||360))+'px');idleNav();restoringPreferences=false;}
 const prefKeys={Theme:'theme',Colour:'accent',Layout:'layout',Density:'density',Text:'size',Speed:'speechSpeed'};
 bar.addEventListener('change',e=>{const key=prefKeys[e.target.getAttribute('aria-label')];if(key&&!restoringPreferences)change('preferences',key,e.target.value);});
 R.jump.addEventListener('change',()=>{if(R.jump.value){current=R.jump.value;renderNotes();markNav();publishSoon();}});

@@ -19,8 +19,10 @@ button('Edit report text').click();const paragraph=d.querySelector('.wrap p');as
 await new Promise(r=>setTimeout(r,450));assert.equal(stored.edits['text-1'],'Saved revision');assert.equal(stored.notes.overview,'Updated script');assert.equal(stored.annotations.overview,'Discuss this with attendees');
 await button('Host this report').onclick();await new Promise(r=>setTimeout(r,20));assert.match(d.querySelector('.p57-session-badge').textContent,/ABCD2345/);assert.match(d.querySelector('.p57-session p').textContent,/2 connected/);
 assert.equal(requests.some(r=>r.url==='/api/meetings'),true);
-// No focus inside navigation: it closes after five seconds of inactivity.
+// Navigation stays open by default, with section labels nested under the chapter.
 d.querySelector('.p57-nav-trigger').click();if(d.querySelector('.p57-navigation').hidden)d.querySelector('.p57-nav-trigger').click();
-await new Promise(r=>setTimeout(r,5200));assert.equal(d.querySelector('.p57-navigation').hidden,true);
-w.dispatchEvent(new w.Event('pagehide'));dom.window.close();console.log('Passed: collapsed floating toolkit, private speaker drawer, restored edits/theme, notes save, teleprompter start/pause/reset/mirror, annotation save, host controls, auto-collapse.');
+await new Promise(r=>setTimeout(r,5200));assert.equal(d.querySelector('.p57-navigation').hidden,false);
+assert.equal(d.querySelectorAll('.p57-nav-children button').length,2);
+assert.match(d.querySelector('.p57-nav-chapter-label').textContent,/Studio review/);
+w.dispatchEvent(new w.Event('pagehide'));dom.window.close();console.log('Passed: collapsed floating toolkit, private speaker drawer, restored edits/theme, notes save, teleprompter start/pause/reset/mirror, annotation save, host controls, persistent chapter navigation.');
 })().catch(e=>{console.error(e);process.exit(1);});

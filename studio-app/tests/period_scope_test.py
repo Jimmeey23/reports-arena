@@ -9,6 +9,22 @@ from engine.records import snapshot
 from ai.agent import component_html
 
 class PeriodScopeTest(unittest.TestCase):
+    def test_richer_narrative_supports_partial_sources(self):
+        from engine.insights import executive
+        m=SimpleNamespace(y=2026,label='September 2026',room={})
+        for cid in ('sales','class','instructor','lapse','format','cancels','overview','behaviour'):
+            text=executive(m,{'id':cid})
+            self.assertIn('Executive interpretation',text)
+            self.assertGreaterEqual(text.count('<p>'),3)
+
+    def test_analysis_cache_keeps_metric_objects_distinct(self):
+        from engine.chapters_deep import deep
+        a=Metrics(self.data(),'A',2026,9)
+        b=Metrics(self.data(),'B',2026,9)
+        self.assertIsNot(deep(a),deep(b))
+        self.assertEqual(len(deep(a).ld['d']),2)
+        self.assertEqual(len(deep(b).ld['d']),1)
+
     def test_ai_component_markup_is_inert(self):
         html=component_html('<div onclick="bad()">Safe<script>bad()</script><svg viewBox="0 0 100 100"><rect width="20"/></svg></div>')
         self.assertNotIn('onclick',html);self.assertNotIn('script',html);self.assertNotIn('bad()',html)
