@@ -108,4 +108,11 @@ class ServerTests(unittest.TestCase):
             configure.assert_called_once_with(key=None, model='test-model', base=None)
             self.assertEqual(config_put.call_args.args[0], 'ai')
 
+    def test_download_path_and_legacy_query(self):
+        for path in ('/api/download/saved', '/api/download?run=saved'):
+            status, html = self.request(path)
+            self.assertEqual(status, 200, html)
+            self.assertIn(b'Saved review', html)
+        self.assertEqual(self.request('/api/download/missing')[0], 404)
+
 if __name__=='__main__':unittest.main()

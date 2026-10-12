@@ -8,7 +8,7 @@
     { "source": "/api/report/:run/report", "destination": "/runs/:run/report.html" },
     { "source": "/api/report/:run/all", "destination": "/runs/:run/report.html" },
     { "source": "/api/report/:run/:chapter", "destination": "/runs/:run/:chapter.html" },
-    { "source": "/api/download", "destination": "/runs/:run/report.html" },
+    { "source": "/api/download/:run", "destination": "/runs/:run/report.html" },
     { "source": "/api/raw/:run/:path*", "destination": "/runs/:run/:path*" },
     { "source": "/static/:path*", "destination": "/static/:path*" }
   ],

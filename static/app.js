@@ -386,7 +386,7 @@ function wire(){
   $('#btnDownload').onclick = () => {
     if (RUN) {
       const a = document.createElement('a');
-      a.href = `/api/download?run=${RUN.id}`;
+      a.href = `/api/download/${encodeURIComponent(RUN.id)}`;
       a.download = `Performance_Review_${RUN.id}.html`;
       document.body.appendChild(a);
       a.click();

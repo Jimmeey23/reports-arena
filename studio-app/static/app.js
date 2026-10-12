@@ -426,7 +426,7 @@ function wire(){
   $('#btnSummary').onclick = () => $('#summary').classList.toggle('on');
   $('#btnPrint').onclick = () => { try{ $('#stage').contentWindow.print(); }catch(e){} };
   $('#btnFull').onclick = () => { if (RUN) window.open(`/api/report/${RUN.id}/full`, '_blank'); };
-  $('#btnDownload').onclick = () => { if (RUN) location.href = `/api/download?run=${RUN.id}`; };
+  $('#btnDownload').onclick = () => { if (RUN) location.href = `/api/download/${encodeURIComponent(RUN.id)}`; };
   view('upload');
   loadState();
 }

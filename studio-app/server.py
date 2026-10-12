@@ -333,8 +333,8 @@ class Handler(BaseHTTPRequestHandler):
                 parts = p.split('/')
                 rid, name = parts[3], parts[4] if len(parts) > 4 else ''
                 return self._file(os.path.join(RUNS, rid, os.path.basename(name)))
-            if p == '/api/download':
-                rid = q.get('run', [''])[0]
+            if p == '/api/download' or p.startswith('/api/download/'):
+                rid = os.path.basename(p[len('/api/download/'):]) if p.startswith('/api/download/') else q.get('run', [''])[0]
                 f = os.path.join(RUNS, rid, 'report.html')
                 if not os.path.isfile(f):
                     return self._send(404, dict(error='unknown run'))
