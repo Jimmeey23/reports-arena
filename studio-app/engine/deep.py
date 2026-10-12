@@ -594,12 +594,6 @@ class Deep:
                 a_, b_ = rng(self.y, self.m)
                 mth = d[(d['dt'] >= a_) & (d['dt'] < b_)]
                 tag = ''
-                if mth.empty:
-                    prior = d[d['dt'] < a_]
-                    if len(prior):
-                        last = prior['dt'].max()
-                        mth = d[d['dt'] == last]
-                        tag = f"{last:%B %Y} - the most recent payroll month on file"
                 self.prscore = mth
                 self.pr_label = tag
                 pp = d[(d['dt'] >= a_ - pd.DateOffset(years=1)) & (d['dt'] < b_ - pd.DateOffset(years=1))]
@@ -706,7 +700,7 @@ class Deep:
         from .data import dparse
         for c in ['Purchase Date', 'Start Date', 'End Date', 'Churned Date', 'Most Recent Visit Date', 'First Visit Date']:
             if c in d.columns:
-                d[c + '_x'] = dparse(d[c])
+                d[c + '_x'] = d[c + '_d'] if c + '_d' in d else dparse(d[c])
         if 'Membership Name' in d:
             comp = d['Membership Name'].astype(str).str.contains(
                 r'Staff|Complimentary|Open Barre|Copper \+ Cloves Credit|Referrer|Free', case=False, na=False)
@@ -821,9 +815,13 @@ class Deep:
         try:
             a0, a1 = rng(M.y, M.m)
             per = {}
+            events = M.source_D.lapsed[M.source_D.lapsed['_loc'] == M.studio].copy()
+            for field in ['Purchase Date', 'End Date', 'Churned Date', 'Most Recent Visit Date']:
+                if field in events:
+                    events[field + '_x'] = events[field + '_d'] if field + '_d' in events else dparse(events[field])
 
             def _win(col, start, end, frame=None):
-                f = frame if frame is not None else d
+                f = frame if frame is not None else events
                 if col not in f.columns:
                     return None
                 w = f[f[col].between(start, end, inclusive='left')]
@@ -952,7 +950,7 @@ class Deep:
         if 'Status' in d:
             op = d[d['Status'].astype(str).str.strip() == 'Open'].copy()
             if len(op) and '_dt' in op:
-                op['age'] = (pd.Timestamp.today().normalize() - op['_dt']).dt.days
+                op['age'] = (M.as_of - op['_dt']).dt.days
                 self.ld['open_bands'] = op.groupby(pd.cut(op['age'], [-1, 7, 30, 90, 180, 365, 100000],
                                                            labels=['a week or less', '8 to 30 days', '31 to 90 days',
                                                                    '91 to 180 days', '181 to 365 days',
@@ -1002,7 +1000,7 @@ class Deep:
             a, b = rng(self.y, self.m)
             mo = d[(d['_dt'] >= a) & (d['_dt'] < b)]
             a2, b2 = rng(self.y - 1, self.m)
-            pv = d[(d['_dt'] >= a2) & (d['_dt'] < b2)]
+            pv = M._sl(M.source_D.leads, self.y - 1)
             self.ld['month'] = dict(n=int(len(mo)), won=int(mo['won'].sum()) if len(mo) else 0,
                                     trial=int((mo['Trial Status'] == 'Trial Completed').sum()) if 'Trial Status' in mo else 0,
                                     prev_n=int(len(pv)), prev_won=int(pv['won'].sum()) if len(pv) else 0)
@@ -1018,7 +1016,7 @@ class Deep:
             return
         B = self.bh
         B['att'] = a
-        B['all'] = M.D.checkins[(M.D.checkins['_loc'] == M.studio) & (M.D.checkins['Checked In'] == True)].copy()
+        B['all'] = a.copy()
         B['all']['hr'] = B['all']['_dt'].dt.hour
         B['all']['dow'] = B['all']['_dt'].dt.day_name()
         # hour x day heat for the month
@@ -1063,7 +1061,7 @@ class Deep:
         # 2-for-1 intro pack: the third visit is the real return
         Nw = getattr(M.D, 'new', None)
         if Nw is not None:
-            d = Nw[Nw['_loc'] == M.studio]
+            d = M._sl(Nw, self.y)
             if 'Visits Post Trial' in d:
                 vv = num(d['Visits Post Trial']).fillna(0)
                 B['funnel'] = dict(post1=int((vv >= 1).sum()), post2=int((vv >= 2).sum()), post3=int((vv >= 3).sum()),

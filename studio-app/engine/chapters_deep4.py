@@ -148,7 +148,7 @@ def cancels(M):
                  ['w', 'n', 'f1', 'f1', 'p'], 'num'),
              bars([clean(v) for v in cb['b']], [('Still live %', [float(x) for x in cb['live']], A1)],
                   'Does cancelling predict a shorter membership?', h=300, as_pct=True, ymax=100,
-                  note='Memberships grouped by their own recorded cancellation rate. This is a correlation across the whole ledger, not an experiment.')]
+                  note='Memberships grouped by their own recorded cancellation rate. This is a correlation across the selected month, not an experiment.')]
         ns = X.lp.get('noshow')
         if ns is not None and len(ns):
             b.append(para('No-shows show the same gradient and more steeply: ' + ' · '.join(
@@ -179,7 +179,7 @@ def cancels(M):
                           'demand rather than driving a policy.'))
         dp = getattr(M, 'disc_prod', None)
         if dp is not None and len(dp):
-            b.append(frame_ev('Evidence &mdash; discount by product, whole year', dp.reset_index(),
+            b.append(frame_ev('Evidence &mdash; discount by product, selected month', dp.reset_index(),
                               ['Product', 'Lines', 'Given away', 'Gross', 'Spread %', 'Depth %'],
                               ['w', 'n', 'm', 'm', 'p', 'p'], maxrows=40,
                               blurb='Products with fewer than eight lines in the year are excluded so that depth is not set by one transaction.'))
@@ -344,7 +344,7 @@ def recs_cancels(M, X):
         if cb is not None and len(cb) > 2:
             out.append(('Use the cancellation signal as an early warning, not a penalty', 'CRM + Studio Manager',
                         f'Members with more than half their bookings cancelled are live {cb.iloc[-1]["live"]:.0f}% of the '
-                        f'time against {cb.iloc[0]["live"]:.0f}% for those who never cancel, on the whole membership ledger.',
+                        f'time against {cb.iloc[0]["live"]:.0f}% for those who never cancel, on the selected-month membership-purchase cohort.',
                         'Reading a rising cancellation rate as an at-risk flag costs nothing and starts the retention conversation weeks before the lapse date.'))
     except Exception:
         pass
@@ -460,7 +460,7 @@ def overview(M):
             b.append(tab(M.dur, ['Length of membership', 'Sold', 'Average paid', 'Classes completed'], ['w', 'n', 'm', 'f1'], 'num'))
             b.append(hbars([(_n(r['n']), float(r['n']), A1 if i == len(M.dur) - 1 else A2) for i, (_, r) in enumerate(M.dur.iterrows())],
                            'What length of membership people buy', unit='',
-                           note='Bands of the duration recorded on the membership row, across the whole ledger for this studio.'))
+                           note='Bands of the duration recorded on the membership row, across the selected report-month cohort for this studio.'))
         return sec('What the memberships look like', 'The book the studio is running', p, b)
 
     def engine():
@@ -469,15 +469,15 @@ def overview(M):
         lf = M.lead_fun
         ldm = X.ld
         mth = ldm.get('month', {}) or {}
-        p = [para(f'{M.lead_n:,} leads are on file for this studio: {lf["trial"]:,} completed a trial and {lf["won"]:,} became '
-                  f'customers, {lf["won_pct"]:.1f}% of the whole. In {lab} alone {mth["n"]} leads arrived, '
+        p = [para(f'{M.lead_n:,} leads were created in the selected month for this studio: {lf["trial"]:,} completed a trial and {lf["won"]:,} became '
+                  f'customers, {lf["won_pct"]:.1f}% of the whole. In the {lab} enquiry cohort {mth["n"]} leads arrived, '
                   f'{mth["trial"]} trialled and {mth["won"]} bought' +
                   (f', against {mth["prev_n"]} leads and {mth["prev_won"]} purchases in {yrp(M)}'
                    if mth.get('prev_n') else '') + '.'),
              para(f'Volume is not the constraint. {M.open_n:,} leads are still open with a mean age of '
                   f'{M.open_age:.0f} days. The studio has more unsold demand on file than it can serve in a year, and the '
                   f'chapter on leads shows the conversion is decided by whether a trial happens, and how soon.')]
-        b = [funnel([('Leads on file', lf['leads'], f'{M.lead_n:,} total'),
+        b = [funnel([('Leads in selected month', lf['leads'], f'{M.lead_n:,} total'),
                      ('Completed a trial', lf['trial'], f'{lf["trial_pct"]:.1f}% of leads'),
                      ('Became a customer', lf['won'], f'{lf["won_pct"]:.1f}% of leads'),
                      ('Still with the studio', lf['retained'], f'{lf["retained_pct"]:.1f}% of leads')],
@@ -577,7 +577,7 @@ def overview(M):
                           f'the point here is that the spread is real, it is measurable, and it is not visible in any '
                           f'number the studio currently reports to itself.'))
         if st is not None and len(st):
-            p.append(para('Where the file as a whole sits: ' + ' · '.join(f'{clean(i)} {_n(v)}' for i, v in st.head(7).items()) + '.'))
+            p.append(para('Where the selected-month cohort sits: ' + ' · '.join(f'{clean(i)} {_n(v)}' for i, v in st.head(7).items()) + '.'))
         b = []
         if a is not None and len(a):
             b.append(tab(a.reset_index(), ['Associate', 'Leads', 'Won', 'Conversion %', 'Trialled %', 'Mean LTV', 'Still open'],
@@ -761,8 +761,8 @@ def leads(M):
 
     def start():
         p = [para(f'{M.lead_n:,} leads are recorded against {M.studio}. {lf["trial"]:,} completed a trial, {lf["won"]:,} '
-                  f'became customers ({lf["won_pct"]:.1f}%) and {lf["retained"]:,} are still with the studio '
-                  f'({ld.get("retain_pct", 0):.0f}% of those who bought). In {lab} alone {mth["n"]} leads arrived, '
+                  f'became customers ({lf["won_pct"]:.1f}%) and {lf["retained"]:,} are marked retained in the export '
+                  f'({ld.get("retain_pct", 0):.0f}% of those who bought). In the {lab} enquiry cohort {mth["n"]} leads arrived, '
                   f'{mth["trial"]} trialled and {mth["won"]} bought.'),
              para(f'This is an acquisition file, not a marketing file: it says what the studio did with the demand it '
                   f'already had. {share(lf["won"], lf["leads"])} of everything the studio was asked for became a member, and '
@@ -779,11 +779,11 @@ def leads(M):
         claim = (f'Leads in the {_hl} group convert at {_hi:.1f}% against {_lo:.1f}% for {_ll} &mdash; a '
                  f'{ratio(_hi, _lo)}-fold difference. Nothing else in this chapter, not the source, not the associate, '
                  f'not the price, moves conversion as far.')
-        b = [funnel([('Enquiries on file', lf['leads'], f'{M.lead_n:,} leads'),
+        b = [funnel([('Enquiries in selected month', lf['leads'], f'{M.lead_n:,} leads'),
                      ('Completed a trial', lf['trial'], f'{lf["trial_pct"]:.1f}%'),
                      ('Became a customer', lf['won'], f'{lf["won_pct"]:.1f}%'),
                      ('Still with the studio', lf['retained'], f'{lf["retained_pct"]:.1f}% of all leads')],
-                    'The whole file, end to end', note='Every lead recorded for this studio across all years on file, not the month. A lead who is still open has not failed; they have not been decided.'),
+                    'The selected-month enquiry cohort, end to end', note='Every lead recorded for this studio created in the selected reporting month. A lead who is still open has not failed; they have not been decided.'),
               statgrid([('Leads', f'{M.lead_n:,}'), ('Trialled', f'{lf["trial_pct"]:.1f}%'),
                         ('Won', f'{lf["won_pct"]:.1f}%'), ('Retained', f'{lf["retained_pct"]:.1f}%')])]
         return head('Start here', 'What the studio does with the demand it already has', claim) + ''.join(p + b)
@@ -802,7 +802,7 @@ def leads(M):
         b = [tab(g.reset_index(), ['Trial status', 'Leads', 'Won', 'Conversion %', 'Mean LTV', 'Mean visits'],
                  ['w', 'n', 'n', 'p', 'm', 'f1']),
              hbars([(clean(i), float(v), A1) for i, v in g['rate'].items()], 'Conversion by trial status', unit='%',
-                   note=f'Whole file, {M.lead_n:,} leads. A lead who booked a trial and did not attend is counted here as not trialling.')]
+                   note=f'Selected month, {M.lead_n:,} leads. A lead who booked a trial and did not attend is counted here as not trialling.')]
         return sec('The trial is the gate', 'The one decision that decides the rest', p, b)
 
     def speed():
@@ -967,7 +967,7 @@ def leads(M):
 
     def causes():
         items = [('yes', 'The trial never got booked',
-                  f'{share(lf["leads"] - lf["trial"], lf["leads"])} of leads on file never completed a trial, and trial-takers '
+                  f'{share(lf["leads"] - lf["trial"], lf["leads"])} of leads in selected month never completed a trial, and trial-takers '
                   f'convert at {M.lead_fun["won_pct"] / max(1 - M.lead_fun["trial_pct"] / 100, .01):.0f} times the rate of '
                   f'those who did not.', 'The single largest lever in this chapter, and it needs no price change.'),
                  ('part', 'Cheap channels dilute the pool',
@@ -988,18 +988,18 @@ def leads(M):
             ('Won', 'Status = Won in the CRM. It is the studio’s own judgement, recorded at the moment the deal closed.'),
             ('Trialled', 'Trial Status = Trial Completed, as recorded on the lead. A trial that happened but was not marked is missing here.'),
             ('LTV', 'the lifetime value column the CRM carries on the lead, used as recorded and not recomputed from the sales ledger.'),
-            ('Conversion %', 'wins divided by leads in that group, on the whole file rather than the month, because a monthly cut of these groups is too thin to read.')]
+            ('Conversion %', 'wins divided by leads in that group, on the selected report-month enquiry cohort.')]
     caut = [('There is no spend figure in this file, so nothing here can say whether a channel was worth its cost. It says only what a channel delivered.'),
             ('A lead marked open for years is not a lead still being pursued; the CRM has no close-out date, so ageing is measured from the enquiry.'),
             ('Follow-up timestamps are whatever the associate entered, which is usually the day after. Cadence found here is a floor, not a measurement.'),
             ('LTV is attributed to whoever owned the lead, so a member who later buys through a different channel keeps their original attribution.')]
     body += appendix(M, X, 'leads')
     body += method(M, defs, caut)
-    kpis = [kpi('Leads on file', f'{M.lead_n:,}', f'{mth["n"]} in {lab}'),
+    kpis = [kpi('Leads in selected month', f'{M.lead_n:,}', f'{mth["n"]} in {lab}'),
             kpi('Trialled', f'{lf["trial_pct"]:.1f}%', f'{lf["trial"]:,} people'),
             kpi('Won', f'{lf["won_pct"]:.1f}%', f'{lf["won"]:,} memberships'),
             kpi('Open file', f'{getattr(M, "open_n", 0):,}', f'mean age {getattr(M, "open_age", 0):.0f} days', 'neg')]
-    facts = [f'{M.lead_n:,} leads on file for this studio: {lf["trial"]:,} trialled, {lf["won"]:,} won, {lf["retained"]:,} retained.',
+    facts = [f'{M.lead_n:,} leads in selected month for this studio: {lf["trial"]:,} trialled, {lf["won"]:,} won, {lf["retained"]:,} retained.',
              f'Trials convert at {float(ld["gate"]["rate"].max()) if ld.get("gate") is not None and len(ld["gate"]) else 0:.1f}% against those without one.',
              f'{ld.get("same_day", 0):.0f}% of wins closed on the day of the enquiry; {M.open_n:,} leads sit open with a mean age of {M.open_age:.0f} days.']
     ch = dict(id='leads', n=8, title='Lead Performance and Insights', body=body, kpis=kpis, facts=facts,
@@ -1100,7 +1100,7 @@ def behaviour(M):
                   f'That is the number that makes this chapter uncomfortable to read: the studio’s floor, its revenue and '
                   f'its atmosphere rest on a group small enough to fit in one class, and nothing in the current reporting '
                   f'notices when that group changes member by member.'),
-             para(f'The median gap between one visit and the next, measured across the whole ledger for this studio, is '
+             para(f'The median gap between one visit and the next, measured across the selected report-month cohort for this studio, is '
                   f'<strong>{M.beh["gap_med"]:.0f} days</strong>, and {M.beh["gap_week"]:.0f}% of all gaps are a week or '
                   f'less. The studio has a rhythm it can build around, and a tail it currently pretends is the same thing.')]
         claim = (f'Attendance is not driven by how many members the studio has. It is driven by the small group who come '
@@ -1171,7 +1171,7 @@ def behaviour(M):
         b = [tab(M.beh['pgap'].reset_index(), ['Gap between purchases', 'Occurrences'], ['w', 'n'], 'num'),
              bars([clean(i) for i in M.beh['pgap'].index], [('Repeat purchases', [float(x) for x in M.beh['pgap']], A1)],
                   'How often members buy', h=300,
-                  note='Measured across the whole ledger for this studio, not the month, so that a two-year pattern is visible.')]
+                  note='Measured across the selected report-month cohort for this studio, not the month, so that a two-year pattern is visible.')]
         return sec('How often members buy', 'The purchase rhythm, and where it stops', p, b)
 
     def rhythm():
@@ -1195,7 +1195,7 @@ def behaviour(M):
         if 'gap' not in M.beh:
             return ''
         g = M.beh['gap']
-        p = [para('Gaps between visits, measured over the whole ledger for this studio: ' + ' · '.join(
+        p = [para('Gaps between visits, measured over the selected report-month cohort for this studio: ' + ' · '.join(
             f'{clean(i)} {share(float(x), float(g.sum()))}' for i, x in g.items() if pd.notna(x)) + '.')]
         p.append(para(f'Two fifths of all visits follow another within the same day or the next; the tail beyond a month is '
                       f'small and it is where lapses come from. This is the studio’s best early-warning list, and it is not '
@@ -1293,7 +1293,7 @@ def behaviour(M):
     body = run([start, when, howoften, buy, rhythm, shape, trend, routine, intro, causes])
     defs = [('Visit', 'one attended check-in on the door ledger. A member who came twice in a day is two visits.'),
             ('Visits per member', 'attended visits in the month divided by distinct members who attended, for this studio only.'),
-            ('Gap', 'days between one attended visit and the member’s next, across the studio’s whole ledger rather than the month.'),
+            ('Gap', 'days between one attended visit and the member’s next, across the selected report-month cohort rather than the month.'),
             ('Morning / midday / evening', 'each member’s own most common hour falling before 12:00, between 12:00 and 17:00, or at 17:00 or later.'),
             ('Format used', 'the Cleaned Class value on the check-in row, counted as distinct formats per member in the month.')]
     caut = [('The check-in ledger counts arrivals, not intentions: a booked class nobody attended is invisible here, and appears instead in chapter 2 as a lost seat.'),
@@ -1308,7 +1308,7 @@ def behaviour(M):
             kpi('Came exactly once', f'{M.beh["once"]:,}', f'{M.beh["once_share"]:.0f}% of the base', 'neg'),
             kpi('Top tenth of members', f'{M.beh["top_share"]:.0f}%', f'{M.beh["top_n"]} people', 'neg')]
     facts = [f'{pn["members"]} members made {pn["visits"]:,} visits in {lab} at {pn["per"]:.2f} each; {M.beh["once"]:,} came exactly once.',
-             f'The median gap between visits across the studio’s whole ledger is {M.beh["gap_med"]:.0f} days and {M.beh["gap_week"]:.0f}% of gaps are a week or less.',
+             f'The median gap between visits across the selected report-month cohort is {M.beh["gap_med"]:.0f} days and {M.beh["gap_week"]:.0f}% of gaps are a week or less.',
              f'The tenth of the base that comes most produces {M.beh["top_share"]:.0f}% of all attendance.']
     if BH.get('funnel'):
         fn = BH['funnel']

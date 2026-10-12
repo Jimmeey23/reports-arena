@@ -30,8 +30,7 @@ reopens it. Pin navigation to keep it visible.
 The toolkit includes themes, accents, layouts, text size, density, section search,
 chart visibility, evidence expansion, table sorting/filtering, record details,
 CSV exports, speech playback, fullscreen and print/save as PDF.
-Narrative text can be edited with **Edit report text**. Computed table figures
-remain tied to their source data. **Download edited report** embeds personal
+Use **Edit components** (or **Edit report text**) to edit headings, narratives, metric cards, table cells, chapter heroes and charts. Click a component for its inline controls; **Edit** enables direct editing with Save/Cancel. **Design** opens HTML and appearance controls for alignment, typography, spacing, corners and colours. Changes to displayed figures are presentation overrides; computed source records remain unchanged. **Download edited report** embeds personal
 edits, annotations, speaker notes and appearance in a standalone HTML file.
 
 ## Speaker notes and teleprompter
@@ -192,3 +191,11 @@ labels this boundary and never substitutes newer uploads for historical evidence
 
 Additional interaction check:
 `NODE_PATH=/path/to/jsdom/node_modules node tests/chapter-explorer.cjs`.
+
+## Period scope and component authoring
+
+Leads use the selected month’s enquiry-creation cohort. Membership detail uses the selected month’s purchase cohort, while dated churn/expiry events use their own event dates within the report month. Visit and purchase gaps, discount breakdowns and newcomer funnels use the selected month. Payroll does not fall back to another month. Same-month prior-year comparisons remain explicitly labelled. Export-state status, usage and lifetime fields cannot reconstruct historical month-end outcomes and are labelled accordingly. Saved older reviews remain frozen; generate a new review to recalculate them.
+
+Manual component tools support paragraphs, callouts, metric cards, lists, tables and SVG charts. AI replace/add previews structured components for review before Apply. Shared structural and appearance changes save per report run. Failed saves retain a local pending copy; **Save all changes** retries them. Offline edited downloads embed structural edits and appearance.
+
+Additional checks: `python3 tests/period_scope_test.py` and `NODE_PATH=/path/to/jsdom/node_modules node tests/report-edit.cjs`.

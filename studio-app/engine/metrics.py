@@ -7,6 +7,7 @@ as absent rather than faked, and the chapter that needs them says so.
 """
 from __future__ import annotations
 import numpy as np, pandas as pd
+import copy
 
 MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
                'August', 'September', 'October', 'November', 'December']
@@ -20,7 +21,19 @@ def rng(y, m):
 
 class Metrics:
     def __init__(self, D, studio, year, month, log=lambda *a: None):
-        self.D, self.studio, self.y, self.m = D, studio, year, month
+        self.source_D = D
+        self.D, self.studio, self.y, self.m = copy.copy(D), studio, year, month
+        self.period_start, self.period_end = rng(year, month)
+        self.as_of = self.period_end - pd.Timedelta(seconds=1)
+        # Acquisition cohorts use enquiry/purchase dates, never the entire ledger.
+        for name, date in [('leads', '_dt'), ('lapsed', 'Purchase Date_d')]:
+            frame = getattr(D, name, None)
+            if frame is not None:
+                scoped = frame[(frame[date] >= self.period_start) & (frame[date] < self.period_end)].copy() if date in frame else frame.iloc[:0].copy()
+                if name == 'lapsed':
+                    scoped['_dt'] = scoped[date] if date in scoped else pd.NaT
+                setattr(self.D, name, scoped)
+        D = self.D
         self.prev = [year - 1, year - 2]
         self.label = f'{MONTH_NAMES[month - 1]} {year}'
         self.has = {}
@@ -281,14 +294,14 @@ class Metrics:
             d = d[d['ok']]
         self.disc_year = {}
         for y in [self.y] + self.prev + [self.y - 3, self.y - 4]:
-            s = d[d['_dt'].dt.year == y]
+            s = self._sl(d, y)
             if s.empty:
                 continue
             self.disc_year[y] = dict(lines=len(s), disc=float(s['disc'].sum()), gross=float(s['gross'].sum()),
                                      spread=float(s['has_disc'].mean() * 100))
             self.disc_year[y]['depth'] = (self.disc_year[y]['disc'] / self.disc_year[y]['gross'] * 100
                                           if self.disc_year[y]['gross'] else 0)
-        yr = d[d['_dt'].dt.year == self.y]
+        yr = self._sl(d, self.y)
         if not yr.empty:
             for key, col in [('disc_prod', 'Cleaned Product'), ('disc_seller', 'Sold By')]:
                 if col in yr.columns:
@@ -314,7 +327,7 @@ class Metrics:
         self.led['paid'] = len(pay); self.led['paid_members'] = int(pay['Member ID'].nunique()) if len(pay) else 0
         self.led['cash'] = float(pay['Amount Paid'].sum()) if 'Amount Paid' in pay else 0
         # Atlas ledger measures -------------------------------------------
-        today = pd.Timestamp.today().normalize()
+        today = self.as_of
         if 'Churned Date_d' in d.columns:
             churned = int(d['Churned Date_d'].notna().sum())
             self.led['churned'] = churned
@@ -359,9 +372,10 @@ class Metrics:
             p = pay[pay['Purchase Date_d'].notna()].copy()
             ends = [c for c in ['Churned Date_d', 'End Date_d'] if c in p.columns]
             p['ended'] = p[ends].min(axis=1) if ends else pd.NaT
+            p['ended'] = p['ended'].where(p['ended'] <= self.as_of)
             p['life'] = (p['ended'] - p['Purchase Date_d']).dt.days
             p['life'] = p['life'].where(p['life'] >= 0)
-            p['cens'] = (pd.Timestamp.today().normalize() - p['Purchase Date_d']).dt.days
+            p['cens'] = (self.as_of - p['Purchase Date_d']).dt.days
             p['obs'] = p['life'].fillna(p['cens'])
             pts = [7, 14, 30, 60, 90, 180, 365]
             self.surv = pd.DataFrame({'Point': [f'Day {k}' for k in pts[:-1]] + ['One year'],
@@ -434,7 +448,7 @@ class Metrics:
             self.lead_touches = float(d['_touches'].mean())
             if 'Status' in d.columns:
                 openm = ~d['Status'].astype(str).str.strip().isin(['Won', 'Lost'])
-                stale = (pd.Timestamp.today().normalize() - d['_dt']).dt.total_seconds() / 3600 > 48
+                stale = (self.as_of - d['_dt']).dt.total_seconds() / 3600 > 48
                 self.lead_untouched = int(((d['_touches'] == 0) & stale & openm).sum())
         if 'Status' in d.columns:
             self.lead_status = d['Status'].value_counts()
@@ -445,7 +459,8 @@ class Metrics:
             N = getattr(self.D, 'new', None)
             fp = None
             if N is not None and 'First Purchase Value' in N.columns:
-                nn = N[(N['_loc'] == self.studio) & (N['is_new'] == True)]
+                nn = self._sl(N, self.y)
+                nn = nn[nn['is_new'] == True]
                 nn = nn[nn['Conversion Status'].astype(str).str.strip().eq('Converted')] \
                     if 'Conversion Status' in nn.columns else nn
                 fp = float(nn['First Purchase Value'].mean()) if len(nn) else None
@@ -489,14 +504,14 @@ class Metrics:
         # the period the user asked for, inside the lead file
         if '_dt' in d.columns:
             self.lead_month = int(((d['_dt'] >= rng(self.y, self.m)[0]) & (d['_dt'] < rng(self.y, self.m)[1])).sum())
-            m = d[(d['_dt'] >= rng(self.y - 1, self.m)[0]) & (d['_dt'] < rng(self.y - 1, self.m)[1])]
+            m = self._sl(self.source_D.leads, self.y - 1)
             self.lead_month_prev = int(len(m))
             mo = d.groupby(d['_dt'].dt.to_period('M')).agg(leads=('won', 'size'), won=('won', 'sum'),
                                                            won_pct=('won', lambda x: x.mean() * 100))
             self.lead_trend = mo[mo.index >= pd.Period(f'{self.y-1}-01')]
             op = d[d['Status'].astype(str).str.strip() == 'Open']
             if len(op):
-                age = (pd.Timestamp.today().normalize() - op['_dt']).dt.days
+                age = (self.as_of - op['_dt']).dt.days
                 self.open_n = len(op)
                 self.open_age = float(age.mean())
                 self.open_fresh = int((age <= 30).sum())
@@ -530,7 +545,7 @@ class Metrics:
             self.beh[k + '_per'] = grp.groupby('Member ID').size().mean() if len(grp) else 0
         # gaps - the whole ledger, not just this month
         CK = self.D.checkins
-        al = CK[(CK['_loc'] == self.studio) & (CK['Checked In'] == True)].sort_values('_dt')
+        al = a.sort_values('_dt')
         g = al.groupby('Member ID')['_dt'].diff().dt.days.dropna()
         if len(g):
             GB = ['the same day', 'one day later', '2 to 3 days', '4 to 7 days', '8 to 14 days', '15 to 30 days',
@@ -541,7 +556,7 @@ class Metrics:
         # purchase gaps
         S = getattr(self.D, 'sales', None)
         if S is not None:
-            s = S[S['_loc'] == self.studio].sort_values('_dt')
+            s = self._sl(S, self.y).sort_values('_dt')
             at = pd.to_datetime(s['Created At'] if 'Created At' in s else s['_dt'], errors='coerce')
             pg = s.assign(_at=at).groupby('Member ID')['_at'].diff().dt.days.dropna()
             if len(pg):

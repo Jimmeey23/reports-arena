@@ -11,6 +11,8 @@ Token discipline:
 """
 from __future__ import annotations
 import hashlib, json, re
+from html import escape
+from html.parser import HTMLParser
 from . import llm, qa
 from .metrics_pack import token_estimate
 
@@ -165,64 +167,75 @@ def _strip_tags(html):
     return re.sub(r'<[^>]+>', '', html)
 
 
-def edit_element(instruction, current_html, pack):
-    """Rewrite an existing element. Returns dict(html|error, mode, tokens)."""
-    ins = (instruction or '').lower().strip()
-    text = _strip_tags(current_html or '')
-    for word, fn in _DETERMINISTIC_EDITS.items():
-        if ins in (word, 'make it ' + word, 'please ' + word):
-            return dict(html=fn(_strip_tags(current_html)), mode='deterministic', tokens=0)
+class ComponentHTML(HTMLParser):
+    allowed = set('div section p h1 h2 h3 h4 span strong em b i ul ol li blockquote table thead tbody tfoot tr th td caption figure figcaption br hr svg g path rect circle line polyline polygon text'.split())
+    attrs = set('class colspan rowspan scope viewbox width height x y x1 x2 y1 y2 cx cy r d points fill stroke stroke-width role aria-label'.split())
+    def __init__(self):
+        super().__init__(); self.out = []; self.blocked = 0
+    def handle_starttag(self, tag, attrs):
+        if tag in ('script','style','iframe','object'):
+            self.blocked += 1; return
+        if self.blocked or tag not in self.allowed: return
+        clean = []
+        for key, value in attrs:
+            if key in self.attrs and value is not None and not re.search(r'javascript:|url\s*\(|expression\s*\(', value, re.I):
+                clean.append(f' {"viewBox" if key == "viewbox" else key}="{escape(value, quote=True)}"')
+        self.out.append('<' + tag + ''.join(clean) + '>')
+    def handle_endtag(self, tag):
+        if tag in ('script','style','iframe','object'):
+            self.blocked = max(0,self.blocked-1); return
+        if not self.blocked and tag in self.allowed: self.out.append('</'+tag+'>')
+    def handle_data(self, value):
+        if not self.blocked: self.out.append(escape(value))
 
+
+def component_html(value):
+    value = re.sub(r'^```(?:html)?\s*|\s*```$', '', value.strip())
+    parser = ComponentHTML(); parser.feed(value)
+    return ''.join(parser.out)
+
+
+def edit_element(instruction, current_html, pack):
+    text = _strip_tags(current_html or '')
+    ins = (instruction or '').lower().strip()
+    for word, fn in _DETERMINISTIC_EDITS.items():
+        if ins in (word, 'make it '+word, 'please '+word):
+            return dict(html=escape(fn(text)),mode='deterministic',tokens=0)
     if not llm.status()['configured']:
-        if 'shorten' in ins:
-            return dict(html=_DETERMINISTIC_EDITS['shorten'](text), mode='deterministic', tokens=0)
-        return dict(error='Editing with AI needs a key. Set OPENAI_API_KEY (or AI settings) - '
-                          'manual editing works without one.')
-    sys_prompt = ('You rewrite ONE fragment of a studio report. Rules: keep every number exactly as '
-                  'given; add no new facts; output only the rewritten text, no markup, no preamble; '
-                  'under 140 words.')
+        if 'shorten' in ins: return dict(html=escape(_DETERMINISTIC_EDITS['shorten'](text)),mode='deterministic',tokens=0)
+        return dict(error='AI editing requires a connected model. Manual component editing is available.')
     try:
         out = llm.complete([
-            {'role': 'system', 'content': sys_prompt},
-            {'role': 'user', 'content': f'Instruction: {instruction[:220]}\n\nFragment: {text[:900]}'},
-        ], max_tokens=420)
-    except llm.AIUnavailable as e:
-        return dict(error=str(e))
-    nums_before = set(re.findall(r'[\d][\d,]*(?:\.\d+)?', text))
-    nums_after = set(re.findall(r'[\d][\d,]*(?:\.\d+)?', out['text']))
-    if nums_before and not (nums_before & nums_after) and len(nums_before) > 1:
-        return dict(error='The rewrite dropped the figures in that block, so it was discarded.')
-    return dict(html=out['text'].strip(), mode='ai',
-                tokens=out['prompt_tokens'] + out['completion_tokens'])
+            {'role':'system','content':'Edit ONE report component. Return only HTML for the inside of the supplied component, without Markdown fences. You may use headings, lists, callouts, metric cards, tables and SVG charts. No scripts, styles, links, event handlers or external resources. Preserve all existing figures. Never invent facts or numbers. Focus on the selected reporting period in METRICS.'},
+            {'role':'user','content':f'Instruction: {instruction[:400]}\nCOMPONENT:\n{current_html[:16000]}\nMETRICS:\n{_pack_text(pack)}'},
+        ],max_tokens=2600)
+    except llm.AIUnavailable as e: return dict(error=str(e))
+    html = component_html(out['text'])
+    before = set(re.findall(r'[\d][\d,]*(?:\.\d+)?',text))
+    after = set(re.findall(r'[\d][\d,]*(?:\.\d+)?',_strip_tags(html)))
+    if after-before:
+        ok, _ = _ground(_strip_tags(html),pack)
+        if not ok: return dict(error='The replacement introduced unsupported figures and was discarded.')
+    if before-after: return dict(error='The replacement dropped existing figures. Select a smaller component to rewrite.')
+    return dict(html=html,mode='ai',tokens=out['prompt_tokens']+out['completion_tokens'])
 
 
 def create_element(instruction, pack):
-    """Create a small new block grounded in the pack. Returns dict(html, mode)."""
-    det = qa.answer(instruction or '', pack)
+    det = qa.answer(instruction or '',pack)
     if not llm.status()['configured']:
-        if det.get('ok'):
-            return dict(html=f'<p>{det["answer"]}</p>', mode='deterministic', tokens=0)
-        return dict(error='Creating with AI needs a key. Set OPENAI_API_KEY - or use the manual tools '
-                          'to add and edit blocks yourself.')
+        if det.get('ok'): return dict(html=f'<p>{escape(det["answer"])}</p>',mode='deterministic',tokens=0)
+        return dict(error='AI component creation requires a connected model.')
     try:
         out = llm.complete([
-            {'role': 'system',
-             'content': 'You write ONE short paragraph (max 90 words) for a studio report using ONLY '
-                        'figures from the METRICS block. Plain text, no markup, no preamble.'},
-            {'role': 'user', 'content': f'Request: {instruction[:260]}\n\nMETRICS:\n{_pack_text(pack)}'},
-        ], max_tokens=340)
-    except llm.AIUnavailable as e:
-        return dict(error=str(e))
-    ok, _bad = _ground(out['text'], pack)
-    if not ok:
-        if det.get('ok'):
-            return dict(html=f'<p>{det["answer"]}</p>', mode='deterministic', tokens=0)
-        return dict(error='The generated text contained figures not in the computed metrics, so it '
-                          'was discarded.')
-    return dict(html=f'<p>{out["text"].strip()}</p>', mode='ai',
-                tokens=out['prompt_tokens'] + out['completion_tokens'])
+            {'role':'system','content':'Create ONE report component using ONLY facts and figures from METRICS for the selected period. Return HTML only, no Markdown fences. Follow the requested component type: paragraph, list, callout, metric cards, table or SVG chart. Use class="call" for callouts, class="kpis" and class="kpi" for metric cards, class="chart" for charts. No scripts, styles, links, event handlers or external resources. Label units and reporting period. Keep text under 200 words.'},
+            {'role':'user','content':f'Request: {instruction[:400]}\nMETRICS:\n{_pack_text(pack)}'},
+        ],max_tokens=2200)
+    except llm.AIUnavailable as e: return dict(error=str(e))
+    html = component_html(out['text'])
+    ok, _ = _ground(_strip_tags(html),pack)
+    if not ok: return dict(error='The component contained unsupported figures and was discarded.')
+    return dict(html=html,mode='ai',tokens=out['prompt_tokens']+out['completion_tokens'])
 
 
 def context_estimate(pack):
-    """Approximate tokens the pack costs when sent to a model."""
     return token_estimate(_pack_text(pack))

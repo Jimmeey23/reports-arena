@@ -47,7 +47,7 @@ def lapse(M):
                      if M.led.get('lapsed_cash') else '')),
              para(f'This chapter is written for <strong>{lab} at {clean(M.studio)}</strong>: the first sections date the '
                   f'churn to that month alone &mdash; what was bought, what closed, and what runs out next. The rest reads '
-                  f'the whole book the studio has ever sold here as a funnel: what a membership is worth when it is bought, '
+                  f'the selected-month membership-purchase cohort as a funnel: what a membership is worth when it is bought, '
                   f'how long it lasts, how much of it is used, and how it ends &mdash; the context the month\u2019s numbers '
                   f'need to be judged against.')]
         if hasattr(M, 'median_life'):
@@ -59,9 +59,9 @@ def lapse(M):
         claim = (f'{M.unused_left:,.0f} classes sit unspent on memberships the studio has already been paid for &mdash; '
                  f'about {R(LP.get("money_left", 0))} of value sitting in members\u2019 hands. The people who have used a '
                  f'quarter or less of what they bought are the most winnable names on the file and the least contacted.')
-        blocks = [statgrid([('Memberships on file', f'{M.led["rows"]:,}'), ('Paid', f'{M.led["paid"]:,}'),
+        blocks = [statgrid([('Memberships purchased in selected month', f'{M.led["rows"]:,}'), ('Paid', f'{M.led["paid"]:,}'),
                             ('Money recorded', R(M.led['cash'])), ('Median life', f'{getattr(M, "median_life", 0):.0f} days')])]
-        return head('Start here', 'Every membership sold at this studio, read from the day it was bought', claim) + ''.join(p + blocks)
+        return head('Start here', 'Memberships purchased in the reporting month', claim) + ''.join(p + blocks)
 
     def periodsec():
         per = LP.get('period') or {}
@@ -73,7 +73,7 @@ def lapse(M):
         xn = per.get('expiring_n', 0)
         if not (cn or bn or en or xn):
             return ''
-        p = [para(f'The ledger dates every membership, so {lab} can be read on its own before the whole book is read. '
+        p = [para(f'The ledger dates every membership, so {lab} can be read on its own with event dates scoped to the reporting month. '
                   f'During {lab}, <strong>{cn:,} memberships were recorded as churned</strong> at {clean(M.studio)}'
                   + (f' &mdash; {R(per.get("churned_cash", 0))} of paid money closing out' if per.get('churned_cash') else '')
                   + (f', and {per.get("churned_never", 0):,} of them had never produced a single attendance.'
@@ -81,7 +81,7 @@ def lapse(M):
         if bn:
             p.append(para(f'On the other side of the same month, {bn:,} paid memberships were bought for '
                           f'{R(per.get("bought_cash", 0))}. Those two numbers together are the net movement of the book in '
-                          f'{lab}. Every section that follows reads the all-time ledger behind them, and it is included '
+                          f'{lab}. The following sections describe the selected-month purchase cohort, '
                           f'because the month\u2019s churn can only be judged against what this studio usually loses.'))
         if xn:
             p.append(para(f'{xn:,} memberships ({per.get("expiring_members", xn):,} people) run out within thirty days after '
@@ -390,7 +390,7 @@ def lapse(M):
         return sec('What else could explain it', 'Causes the studio has not considered', [para('Churn is the chapter where the obvious explanation is usually wrong, so each candidate is stated with what would have to be true.')], [hyp(items)])
 
     body = run([start, periodsec, thismonth, shape, twoways, used, decline, prod, winnable, cost, causes])
-    defs = [('Membership', 'one row of the lapsed and new-members export, which lists every membership the studio has ever created for this location, whatever its current state.'),
+    defs = [('Membership', 'one row of the lapsed and new-members export, filtered to purchases in the selected reporting month. Status and usage attributes reflect the uploaded export.'),
             ('Paid', 'a membership whose amount paid is above zero and whose name is not a staff, complimentary, credit or referral product.'),
             ('Lapsed', 'the Derived Status column as the system computes it, cross-checked against the churn and end dates on the row.'),
             ('Lifetime', 'end date minus purchase date, or, for memberships still open, today minus purchase date. Open memberships are therefore treated as censored, not as survivors.'),
@@ -409,7 +409,7 @@ def lapse(M):
                         R(per.get('churned_cash', 0)) + ' closed out', 'neg'))
         kpis.append(kpi(f'Bought in {mon}', f'{per.get("bought_n", 0):,}',
                         R(per.get('bought_cash', 0)) + ' of new money', 'pos'))
-    kpis += [kpi('Memberships on file', f'{M.led["rows"]:,}', f'{M.led["members"]:,} people'),
+    kpis += [kpi('Memberships purchased in selected month', f'{M.led["rows"]:,}', f'{M.led["members"]:,} people'),
              kpi('Paid memberships', f'{M.led["paid"]:,}', R(M.led['cash']) + ' of recorded money'),
              kpi('Median life', f'{getattr(M, "median_life", 0):.0f} days', 'days, not months', 'neg')]
     if per.get('expiring_n'):

@@ -851,7 +851,7 @@ def instructor(M):
             ('First class', 'a member\’s first recorded visit at this studio in the member file, attributed to the trainer named against that visit.'),
             ('Payroll figures', 'the total paid for the cycle the file reports, with per-session and per-attendance rates derived from it.')]
     caut = [('A trainer\’s utilisation is a function of the slots they were given. Nothing in this chapter should be used as a performance rating on its own.'),
-            ('The payroll export is reported by cycle, not by calendar month; where it does not cover the review month the latest cycle on file is used and labelled as such.'),
+            ('The payroll export is reported by cycle, not by calendar month; where it does not cover the review month payroll metrics are omitted.'),
             ('Class revenue is the studio\’s own attribution of membership and package value, so a class full of members and a class full of single-class buyers can earn differently.'),
             ('Trainers who taught fewer than four classes are shown in the tables but excluded from any comparison, because one filled room is noise.')]
     body += appendix(M, X, 'instructor')

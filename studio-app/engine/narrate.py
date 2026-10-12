@@ -78,7 +78,7 @@ def summary(M, ch):
         if hasattr(M, 'core'):
             s.append(f'The {M.core["n"]} members who returned from the same month last year gave {abs(M.core["lost"]):,.0f} fewer visits, about {M.core["share_of_month"]:.0f}% of the month')
         if hasattr(M, 'lead_fun'):
-            s.append(f'{M.lead_month:,} leads arrived and {M.lead_fun["won_pct"]:.1f}% of all leads on file have converted')
+            s.append(f'{M.lead_month:,} leads arrived and {M.lead_fun["won_pct"]:.1f}% of all leads in selected month have converted')
     elif ch['id'] == 'leads':
         lf = M.lead_fun
         s.append(f'{lf["leads"]:,} leads are recorded for {M.studio}: {lf["trial"]:,} completed a trial, {lf["won"]:,} became members, {lf["retained"]:,} are still with the studio')

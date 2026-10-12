@@ -17,3 +17,15 @@ html.p57-layout-on .p57-block.p57-block-editing{outline:2px solid var(--a2)}
 .p57-block-inserted{animation:p57-block-in .35s ease}
 @keyframes p57-block-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @media print{.p57-block-tools,.p57-block-deleted,.p57-layout-banner{display:none!important}}
+html.p57-layout-on .p57-component{outline:1px dashed transparent;outline-offset:3px;cursor:text}
+html.p57-layout-on .p57-component:hover{outline-color:var(--a2);background-color:color-mix(in srgb,var(--a2) 6%,transparent)}
+html.p57-layout-on .p57-block-editing{outline:2px solid var(--a2);outline-offset:5px;min-height:24px}
+.p57-block-tools{position:fixed;right:auto;max-width:calc(100vw - 24px);flex-wrap:wrap;padding:6px;border-radius:12px;z-index:960;box-shadow:0 8px 30px #0b1a3330}
+.p57-block-tools button{font:600 12px system-ui;padding:8px 10px;min-height:34px}
+.p57-block-tools button:nth-last-child(-n+2){color:var(--a2);background:var(--soft)}
+.p57-edit-status{font:12px system-ui;color:var(--mut)}
+.p57-period-scope{padding:14px 18px;border-left:3px solid var(--a2);background:var(--soft);font:13px/1.65 system-ui;color:var(--mut)}
+html:not(.p57-layout-on) .p57-block-deleted{display:none}
+@media(max-width:600px){.p57-layout-banner{width:calc(100vw - 24px);bottom:12px;border-radius:14px}.p57-block-tools{left:12px!important}}
+@media(prefers-reduced-motion:reduce){.p57-block-inserted{animation:none}}
+.p57-component-inspector{display:grid;gap:16px;font:13px/1.6 system-ui}.p57-component-inspector>p{color:var(--mut);margin:0}.p57-component-inspector label{display:grid;gap:8px;font-weight:600}.p57-component-inspector textarea{font:12px/1.6 ui-monospace,monospace;min-height:210px}.p57-design-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.p57-component-inspector select{padding:10px;border:1px solid var(--line);background:var(--soft);color:var(--ink);border-radius:9px;min-height:40px}.p57-component-inspector>button{background:var(--a1);color:var(--paper);padding:12px;border:0;border-radius:10px}@media(max-width:600px){.p57-design-grid{grid-template-columns:1fr}}

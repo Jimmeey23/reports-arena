@@ -39,7 +39,7 @@ const panel = make('div', null, 'p57-ai-panel'); panel.hidden = true;
 const head = make('div', null, 'p57-ai-head');
 head.append(make('strong', 'Studio analyst'));
 const modeBadge = make('span', '…', 'p57-ai-mode');
-const gear = make('button', '⚙', 'AI settings'); gear.title = 'AI settings';
+const gear = make('button', '⚙', 'p57-ai-settings-trigger'); gear.setAttribute('aria-label','AI settings'); gear.title = 'AI settings';
 const close = make('button', '✕', 'Close');
 head.append(modeBadge, gear, close);
 const ctx = make('div', null, 'p57-ai-ctx'); ctx.hidden = true;
@@ -134,7 +134,7 @@ function clearCtxBanner(reset){
 }
 function preview(accepted){
   const wrap = make('div', null, 'p57-ai-preview');
-  const body = make('div', null, 'p57-ai-preview-body'); body.innerHTML = md(accepted);
+  const body = make('div', null, 'p57-ai-preview-body'); body.innerHTML = accepted;
   const acts = make('div', null, 'p57-ai-preview-actions');
   const ok = make('button', 'Apply', 'ok'), no = make('button', 'Discard', 'no');
   acts.append(ok, no); wrap.append(body, acts); log.append(wrap); log.scrollTop = log.scrollHeight;
@@ -153,22 +153,24 @@ async function runEdit(){
       data = await api('/api/ai/create', {run, instruction});
       wait.remove();
       if(data.error) throw Error(data.error);
-      const p = preview(data.html.replace(/^<p>|<\/p>$/g, ''));
+      const target = ctxEl;
+      const p = preview(data.html);
       p.ok.onclick = async () => {
-        if(window.P57Edit) await window.P57Edit.insertAfter(ctxEl, data.html);
+        if(window.P57Edit) await window.P57Edit.insertAfter(target, data.html);
         p.wrap.remove(); bubble('ai', 'Block added. Hover it in Layout mode to keep editing.');
         clearCtxBanner(true);
       };
       p.no.onclick = () => { p.wrap.remove(); };
     }else{
-      data = await api('/api/ai/edit', {run, instruction, html: ctxEl.textContent});
+      data = await api('/api/ai/edit', {run, instruction, html: ctxEl.innerHTML});
       wait.remove();
       if(data.error) throw Error(data.error);
+      const target = ctxEl;
       const p = preview(data.html);
       p.ok.onclick = async () => {
-        const el = ctxEl;
-        if(el.tagName === 'P' || el.tagName === 'H3' || el.tagName === 'H4' || el.classList.contains('sub')) el.textContent = data.html;
-        else el.innerHTML = '<p>' + data.html + '</p>';
+        const el = target;
+        el.innerHTML = data.html;
+        if(window.P57Edit) window.P57Edit.collect();
         if(window.P57Edit) await window.P57Edit.saveElement(el, el.innerHTML);
         p.wrap.remove(); bubble('ai', 'Applied. The block is saved for everyone viewing this run.');
         clearCtxBanner(true);
@@ -206,14 +208,14 @@ gear.onclick = () => {
     'Without a key the built-in analyst answers from the computed metrics at zero tokens. ' +
     'Keys are held by the server process only — never stored in your browser.'));
   const key = make('input'); key.type = 'password'; key.placeholder = 'API key (sk-…)'; key.setAttribute('aria-label', 'AI API key');
-  const model = make('input'); model.placeholder = 'Model, e.g. gpt-4o-mini'; model.setAttribute('aria-label', 'Model name');
+  const model = make('input'); fetch('/api/ai/status').then(r=>r.json()).then(s=>{model.value=s.llm?.model||'';key.placeholder=s.llm?.configured?'Connected · leave blank to keep existing key':'API key';}); model.placeholder = 'Model, e.g. gpt-4o-mini'; model.setAttribute('aria-label', 'Model name');
   const l1 = make('label', 'API key'); l1.append(key);
   const l2 = make('label', 'Model'); l2.append(model);
   wrapEl.append(l1, l2);
   const saveBtn = make('button', 'Save AI settings');
   saveBtn.onclick = async () => {
     try{
-      const st = await api('/api/ai/key', {key: key.value, model: model.value});
+      const st = await api('/api/ai/key', {...(key.value.trim()?{key:key.value.trim()}:{}), model: model.value});
       llmConfigured = st.configured; setMode();
       foot.textContent = st.configured ? 'Model ' + st.model + ' connected' : 'AI key removed — deterministic mode';
       R.dialog.close();

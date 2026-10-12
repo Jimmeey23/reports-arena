@@ -89,6 +89,9 @@ def build(D, studio, year, month, outdir, log=print, use_llm=None,
         if ch is None:
             log(f'  chapter {cid} skipped (missing source)')
             continue
+        if cid in ('leads', 'lapse'):
+            scope = ('Enquiries created' if cid == 'leads' else 'Memberships purchased') + f' in {M.label}. Status, trial, retention and lifetime fields reflect the uploaded export; historical month-end outcomes cannot be reconstructed from a current-state export.'
+            ch['body'] = '<p class="p57-period-scope">' + scope + '</p>' + ch.get('body', '')
         ch['body'], ch['sections'] = _sections(cid, ch.get('body', ''))
         ch['summary'] = NR.summary(M, ch)
         ch['narration'] = NR.narration(M, ch)

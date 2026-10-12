@@ -652,13 +652,12 @@ class Handler(BaseHTTPRequestHandler):
                 if u.path == '/api/edits':
                     el_id = str(req.get('el_id', ''))[:160]
                     op = str(req.get('op', ''))
-                    if not el_id or op not in ('set', 'delete', 'restore', 'insert'):
-                        return self._send(400, dict(error='provide el_id and op in set|delete|restore|insert'))
+                    if not el_id or op not in ('set', 'delete', 'restore', 'insert', 'style'):
+                        return self._send(400, dict(error='provide el_id and op in set|delete|restore|insert|style'))
                     if op == 'delete':
                         AI_STORE.upsert_edit(rid, el_id, 'delete')
                     elif op == 'restore':
                         AI_STORE.delete_edit(rid, el_id, 'delete')
-                        AI_STORE.delete_edit(rid, el_id, 'set')
                     else:
                         AI_STORE.upsert_edit(rid, el_id, op, str(req.get('html', ''))[:200_000],
                                              int(req.get('sort', 0)))

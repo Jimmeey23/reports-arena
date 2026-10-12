@@ -202,7 +202,7 @@ def leads(M):
         return None
     lf = M.lead_fun
     body, kpis = [], [
-        _k('Leads on file', f"{lf['leads']:,}", f"{M.lead_month:,} arrived in {M.label}", 'neu'),
+        _k('Leads in selected month', f"{lf['leads']:,}", f"{M.lead_month:,} arrived in {M.label}", 'neu'),
         _k('Trial completed', P(lf['trial_pct']), f"{lf['trial']:,} trials", 'neu'),
         _k('Became members', P(lf['won_pct']), f"{lf['won']:,} memberships sold", 'pos'),
         _k('Retained today', P(lf['retained_pct']), f"{lf['retained']:,} still with the studio", 'pos')]
@@ -292,7 +292,7 @@ Dispositioning this file honestly is a week of work and it makes every subsequen
         body.append(lines([str(i)[-5:] for i in t.index], [('Leads created', [int(v) for v in t['leads']], A1)],
                           'Leads created, month by month', h=300, as_pct=False, note='Counted at the month the enquiry arrived, so recent months are complete for volume.'))
 
-    facts = [f'{lf["leads"]:,} leads on file for {M.studio}: {lf["trial"]:,} trials, {lf["won"]:,} memberships, {lf["retained"]:,} retained.',
+    facts = [f'{lf["leads"]:,} leads in selected month for {M.studio}: {lf["trial"]:,} trials, {lf["won"]:,} memberships, {lf["retained"]:,} retained.',
              f'Trial-takers convert at {tg.loc["Trial Completed", "won_pct"]:.1f}% against {tg.loc["Not Tried", "won_pct"]:.2f}% without one.' if tg is not None else 'Trial completion is the gate.']
     if hasattr(M, 'lead_same'):
         facts.append(f'{M.lead_same:.0f}% of memberships are sold the same day the enquiry arrives.')
