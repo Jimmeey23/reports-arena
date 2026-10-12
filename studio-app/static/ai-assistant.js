@@ -150,7 +150,7 @@ async function runEdit(){
   try{
     let data;
     if(ctxMode === 'create'){
-      data = await api('/api/ai/create', {run, instruction});
+      data = await api('/api/ai/create', {run, instruction, context: ctxEl.textContent.slice(0, 4000)});
       wait.remove();
       if(data.error) throw Error(data.error);
       const target = ctxEl;

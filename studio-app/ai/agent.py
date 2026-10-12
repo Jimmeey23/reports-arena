@@ -13,7 +13,7 @@ from __future__ import annotations
 import hashlib, json, re
 from html import escape
 from html.parser import HTMLParser
-from . import llm, qa
+from . import llm, qa, evidence
 from .metrics_pack import token_estimate
 
 MAX_HISTORY_TURNS = 4  # pairs kept in the prompt
@@ -204,7 +204,10 @@ def component_html(value):
     return ''.join(parser.out)
 
 
-def edit_element(instruction, current_html, pack):
+def edit_element(instruction, current_html, pack, member_evidence=None, context=''):
+    table = evidence.member_table(instruction, current_html, member_evidence or {}, context)
+    if table is not None:
+        return table
     text = _strip_tags(current_html or '')
     ins = (instruction or '').lower().strip()
     for word, fn in _DETERMINISTIC_EDITS.items():
@@ -215,7 +218,7 @@ def edit_element(instruction, current_html, pack):
         return dict(error='AI editing requires a connected model. Manual component editing is available.')
     try:
         out = llm.complete([
-            {'role':'system','content':'Edit ONE report component. Return only HTML for the inside of the supplied component, without Markdown fences. You may use headings, lists, callouts, metric cards, tables and SVG charts. No scripts, styles, links, event handlers or external resources. Write simple, concise headlines and lightly witty catchphrases grounded in the evidence. Call payment totals sales revenue, never money taken or borrowed. Distinguish sales from delivered session revenue. Preserve all existing figures. Never invent facts or numbers. Focus on the selected reporting period in METRICS.\nMETRICS:\n'+_pack_text(pack)},
+            {'role':'system','content':'Edit ONE report component. Return only HTML for the inside of the supplied component, without Markdown fences. You may use headings, lists, callouts, metric cards, tables and SVG charts. No scripts, styles, links, event handlers or external resources. Write simple, concise headlines and lightly witty catchphrases grounded in the evidence. Call payment totals sales revenue, never money taken or borrowed. Distinguish sales from delivered session revenue. For rewrites preserve existing figures. For explicit replacements or conversions, include the figures relevant to the requested component; unrelated old figures may be omitted. Never invent facts or numbers. Focus on the selected reporting period in METRICS.\nMETRICS:\n'+_pack_text(pack)},
             {'role':'user','content':f'Instruction: {instruction[:400]}\nCOMPONENT:\n{current_html[:16000]}'},
         ],max_tokens=2600)
     except llm.AIUnavailable as e: return dict(error=str(e))
@@ -223,17 +226,20 @@ def edit_element(instruction, current_html, pack):
     before = set(re.findall(r'[\d][\d,]*(?:\.\d+)?',text))
     after = set(re.findall(r'[\d][\d,]*(?:\.\d+)?',_strip_tags(html)))
     if after-before:
-        ok, _ = _ground(_strip_tags(html),pack)
+        ok, _ = _ground(_strip_tags(html),dict(metrics=pack, existing_component=text))
         if not ok:
             llm.discard(out)
             return dict(error='The replacement introduced unsupported figures and was discarded.')
-    if before-after:
+    if before-after and not re.search(r'\breplace\b|\bconvert\b|\bturn\b.*\binto\b', ins):
         llm.discard(out)
         return dict(error='The replacement dropped existing figures. Select a smaller component to rewrite.')
     return dict(html=html,mode='ai',tokens=out['prompt_tokens']+out['completion_tokens'],cached=out.get('cached',False))
 
 
-def create_element(instruction, pack):
+def create_element(instruction, pack, member_evidence=None, context=''):
+    table = evidence.member_table(instruction, '', member_evidence or {}, context)
+    if table is not None:
+        return table
     det = qa.answer(instruction or '',pack)
     if not llm.status()['configured']:
         if det.get('ok'): return dict(html=f'<p>{escape(det["answer"])}</p>',mode='deterministic',tokens=0)

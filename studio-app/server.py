@@ -679,10 +679,16 @@ class Handler(BaseHTTPRequestHandler):
                                                       extra_context=str(req.get('context', '')),
                                                       run_id=rid))
                 if u.path == '/api/ai/edit':
+                    from ai.evidence import load as load_member_evidence
                     return self._send(200, agent.edit_element(str(req.get('instruction', ''))[:400],
-                                                              str(req.get('html', '')), pack))
+                                                              str(req.get('html', '')), pack,
+                                                              load_member_evidence(RUNS, rid, pack),
+                                                              str(req.get('context', ''))[:4000]))
                 if u.path == '/api/ai/create':
-                    return self._send(200, agent.create_element(str(req.get('instruction', ''))[:400], pack))
+                    from ai.evidence import load as load_member_evidence
+                    return self._send(200, agent.create_element(str(req.get('instruction', ''))[:400], pack,
+                                                              load_member_evidence(RUNS, rid, pack),
+                                                              str(req.get('context', ''))[:4000]))
                 if u.path == '/api/edits':
                     el_id = str(req.get('el_id', ''))[:160]
                     op = str(req.get('op', ''))

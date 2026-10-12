@@ -7,6 +7,30 @@ import pandas as pd
 # explorer on demand, so the page stays loadable without losing any rows.
 LIMIT = 5000
 
+def member_tables(M):
+    """Freeze member-level attendance, including the exact returning cohort."""
+    def aggregate(frame):
+        result = {}
+        if frame is None or 'Member ID' not in frame:
+            return result
+        for row in frame.to_dict('records'):
+            mid = row.get('Member ID')
+            if pd.isna(mid):
+                continue
+            key = str(mid)
+            name = ' '.join(str(row.get(c)) for c in ('First Name', 'Last Name')
+                            if pd.notna(row.get(c)) and str(row.get(c)).strip())
+            item = result.setdefault(key, dict(member_id=key, name=name or 'Name unavailable', visits=0))
+            item['visits'] += 1
+        return result
+    current = aggregate(M._ck(M.y))
+    previous = aggregate(M._ck(M.y - 1))
+    core = [dict(current[k], previous_visits=previous[k]['visits'])
+            for k in current.keys() & previous.keys()]
+    order = lambda rows: sorted(rows, key=lambda r: (-r['visits'], r['name'], r['member_id']))
+    return dict(all=order(list(current.values())), returning_core=order(core),
+                previous_year=M.y - 1, year=M.y, period=M.label)
+
 def snapshot(M, limit=LIMIT):
     datasets = {}
     for key, attribute in [('sessions','sessions'),('sales','sales'),('checkins','checkins'),('lapsed','lapsed'),('leads','leads'),('new','new'),('membership_churn','lapsed')]:
@@ -40,7 +64,8 @@ def snapshot(M, limit=LIMIT):
                        'complete':limit is None,
                        'scope':'Studio-wide ledger snapshot' if ledger else 'Selected studio and report month',
                        'source':next((s.name for s in M.D.sources if s.kind==('newmembers' if key=='new' else 'lapsed' if key=='membership_churn' else key)),key)}
-    return {'studio':M.studio,'period':M.label,'datasets':datasets}
+    return {'studio':M.studio,'period':M.label,'datasets':datasets,
+            'member_tables':member_tables(M)}
 
 def embed(value):
     return '<script type="application/json" id="p57-source-records">'+json.dumps(value,ensure_ascii=False,allow_nan=False).replace('<','\\u003c')+'</script>'
