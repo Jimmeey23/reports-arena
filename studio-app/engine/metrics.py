@@ -33,6 +33,11 @@ class Metrics:
                 if name == 'lapsed':
                     scoped['_dt'] = scoped[date] if date in scoped else pd.NaT
                 setattr(self.D, name, scoped)
+        # Historical context must not leak events after the selected month.
+        for name in ('sessions','sales','checkins','new'):
+            frame = getattr(self.D, name, None)
+            if frame is not None and '_dt' in frame:
+                setattr(self.D, name, frame[frame['_dt'] < self.period_end].copy())
         D = self.D
         self.prev = [year - 1, year - 2]
         self.label = f'{MONTH_NAMES[month - 1]} {year}'
@@ -378,9 +383,14 @@ class Metrics:
             p['cens'] = (self.as_of - p['Purchase Date_d']).dt.days
             p['obs'] = p['life'].fillna(p['cens'])
             pts = [7, 14, 30, 60, 90, 180, 365]
+            # Compare only purchases old enough to reach each checkpoint.
+            # A censored recent purchase is not an ended membership.
+            eligible = [(p['cens'] >= k) for k in pts]
+            still = [float((p.loc[mask, 'life'].isna() | (p.loc[mask, 'life'] > k)).mean() * 100)
+                     if mask.any() else np.nan for k, mask in zip(pts, eligible)]
             self.surv = pd.DataFrame({'Point': [f'Day {k}' for k in pts[:-1]] + ['One year'],
-                                      'still': [(p['obs'] > k).mean() * 100 for k in pts]})
-            self.surv['ended'] = 100 - self.surv['still']
+                                      'still': still, 'ended': [100-v for v in still],
+                                      'eligible': [int(mask.sum()) for mask in eligible]})
             self.surv_n = len(p)
             self.median_life = float(p['obs'].median())
         if 'Membership Duration (Days)' in pay.columns and len(pay):
@@ -556,9 +566,12 @@ class Metrics:
         # purchase gaps
         S = getattr(self.D, 'sales', None)
         if S is not None:
-            s = self._sl(S, self.y).sort_values('_dt')
-            at = pd.to_datetime(s['Created At'] if 'Created At' in s else s['_dt'], errors='coerce')
-            pg = s.assign(_at=at).groupby('Member ID')['_at'].diff().dt.days.dropna()
+            s = self._sl(S, self.y)
+            s = s[s['ok']] if 'ok' in s else s
+            if 'Sale ID' in s:
+                s = s.groupby(['Member ID','Sale ID'],as_index=False)['_dt'].min()
+            s = s.sort_values('_dt')
+            pg = s.groupby('Member ID')['_dt'].diff().dt.days.dropna()
             if len(pg):
                 PB = ['30 days or less', '31 to 60 days', '61 to 90 days', '91 to 180 days', '181 to 365 days', 'over a year']
                 self.beh['pgap'] = pd.cut(pg, [-1, 30, 60, 90, 180, 365, 100000], labels=PB).value_counts().reindex(PB)

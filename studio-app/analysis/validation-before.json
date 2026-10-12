@@ -1,0 +1,984 @@
+{
+  "20261011-232828-eb72": {
+    "studio": "Supreme HQ, Bandra",
+    "expected": {
+      "cash": 1529410.18,
+      "transactions": 196,
+      "buyers": 139,
+      "aov": 7803.113163265306,
+      "ticket": 11002.950935251798,
+      "discount_rate": 8.67115183034507,
+      "sessions": 259,
+      "seats": 3293.0,
+      "attendances": 1404.0,
+      "fill": 42.63589432128758,
+      "show_up": 87.53117206982543,
+      "late_cancel_rate": 12.40648379052369,
+      "no_show_rate": 0.06234413965087282,
+      "avg_class_size": 5.420849420849421,
+      "rev_per_session": 5044.214247104247,
+      "rev_per_attendee": 930.5210042735042,
+      "revenue_class": 1306451.49,
+      "memberships": 325,
+      "leads": 189,
+      "lead_win": 6.349206349206349,
+      "newcomers": 143,
+      "newcomer_conversion": 8.391608391608392,
+      "checkin_revenue": 1306451.49,
+      "active_members": 394,
+      "visits": 1404,
+      "visits_per_member": 3.563451776649746
+    },
+    "checks": [
+      {
+        "check": "Session and attended check-in counts reconcile",
+        "passed": true,
+        "detail": "1404 check-ins; 1404 session attendances"
+      },
+      {
+        "check": "Delivered revenue reconciles with attended Paid amounts",
+        "passed": true,
+        "detail": "1306451.49 versus 1306451.49"
+      },
+      {
+        "check": "Unique session occurrences",
+        "passed": true,
+        "detail": "259 selected sessions"
+      },
+      {
+        "check": "Unique attended member/session rows",
+        "passed": true,
+        "detail": "1404 rows"
+      },
+      {
+        "check": "Unique payment/item pairs",
+        "passed": true,
+        "detail": "213 successful sales item rows"
+      },
+      {
+        "check": "No-show count is valid",
+        "passed": true,
+        "detail": "1 no-shows"
+      },
+      {
+        "check": "Membership status values are export-state",
+        "passed": true,
+        "detail": "Membership outcomes are not reconstructed month-end states"
+      },
+      {
+        "check": "Lead snapshot is scoped and unique",
+        "passed": true,
+        "detail": "189 frozen lead rows; original lead CSV unavailable"
+      },
+      {
+        "check": "sessions matches original frozen population",
+        "passed": true,
+        "detail": "259 raw rows; 259 frozen rows"
+      },
+      {
+        "check": "sales matches original frozen population",
+        "passed": true,
+        "detail": "213 raw rows; 213 frozen rows"
+      },
+      {
+        "check": "checkins matches original frozen population",
+        "passed": true,
+        "detail": "1404 raw rows; 1404 frozen rows"
+      },
+      {
+        "check": "new matches original frozen population",
+        "passed": true,
+        "detail": "143 raw rows; 143 frozen rows"
+      },
+      {
+        "check": "lapsed matches original frozen population",
+        "passed": true,
+        "detail": "325 raw rows; 325 frozen rows"
+      },
+      {
+        "check": "No missing session Capacity",
+        "passed": true,
+        "detail": "259 selected rows checked"
+      },
+      {
+        "check": "No missing session Booked",
+        "passed": true,
+        "detail": "259 selected rows checked"
+      },
+      {
+        "check": "No missing session CheckedIn",
+        "passed": true,
+        "detail": "259 selected rows checked"
+      },
+      {
+        "check": "No missing session LateCancelled",
+        "passed": true,
+        "detail": "259 selected rows checked"
+      },
+      {
+        "check": "No missing session Revenue",
+        "passed": true,
+        "detail": "259 selected rows checked"
+      },
+      {
+        "check": "No missing successful Payment Value",
+        "passed": true,
+        "detail": "213 selected rows checked"
+      },
+      {
+        "check": "Saved metric cash",
+        "passed": true,
+        "detail": "1529410.0 saved; 1529410.18 independently recomputed"
+      },
+      {
+        "check": "Saved metric transactions",
+        "passed": true,
+        "detail": "196 saved; 196 independently recomputed"
+      },
+      {
+        "check": "Saved metric buyers",
+        "passed": true,
+        "detail": "139 saved; 139 independently recomputed"
+      },
+      {
+        "check": "Saved metric aov",
+        "passed": true,
+        "detail": "7803.0 saved; 7803.113163265306 independently recomputed"
+      },
+      {
+        "check": "Saved metric ticket",
+        "passed": true,
+        "detail": "11003.0 saved; 11002.950935251798 independently recomputed"
+      },
+      {
+        "check": "Saved metric discount_rate",
+        "passed": true,
+        "detail": "8.7 saved; 8.67115183034507 independently recomputed"
+      },
+      {
+        "check": "Saved metric sessions",
+        "passed": true,
+        "detail": "259 saved; 259 independently recomputed"
+      },
+      {
+        "check": "Saved metric seats",
+        "passed": true,
+        "detail": "3293.0 saved; 3293.0 independently recomputed"
+      },
+      {
+        "check": "Saved metric attendances",
+        "passed": true,
+        "detail": "1404.0 saved; 1404.0 independently recomputed"
+      },
+      {
+        "check": "Saved metric fill",
+        "passed": true,
+        "detail": "42.6 saved; 42.63589432128758 independently recomputed"
+      },
+      {
+        "check": "Saved metric show_up",
+        "passed": true,
+        "detail": "87.5 saved; 87.53117206982543 independently recomputed"
+      },
+      {
+        "check": "Saved metric late_cancel_rate",
+        "passed": true,
+        "detail": "12.4 saved; 12.40648379052369 independently recomputed"
+      },
+      {
+        "check": "Saved metric no_show_rate",
+        "passed": true,
+        "detail": "0.1 saved; 0.06234413965087282 independently recomputed"
+      },
+      {
+        "check": "Saved metric avg_class_size",
+        "passed": true,
+        "detail": "5.4 saved; 5.420849420849421 independently recomputed"
+      },
+      {
+        "check": "Saved metric rev_per_session",
+        "passed": true,
+        "detail": "5044.0 saved; 5044.214247104247 independently recomputed"
+      },
+      {
+        "check": "Saved metric rev_per_attendee",
+        "passed": true,
+        "detail": "931.0 saved; 930.5210042735042 independently recomputed"
+      },
+      {
+        "check": "Saved metric revenue_class",
+        "passed": true,
+        "detail": "1306451.0 saved; 1306451.49 independently recomputed"
+      },
+      {
+        "check": "Saved metric memberships",
+        "passed": true,
+        "detail": "325 saved; 325 independently recomputed"
+      },
+      {
+        "check": "Saved metric leads",
+        "passed": true,
+        "detail": "189 saved; 189 independently recomputed"
+      },
+      {
+        "check": "Saved metric lead_win",
+        "passed": true,
+        "detail": "6.3 saved; 6.349206349206349 independently recomputed"
+      },
+      {
+        "check": "Saved metric checkin_revenue",
+        "passed": true,
+        "detail": "1306451.49 saved; 1306451.49 independently recomputed"
+      },
+      {
+        "check": "Saved metric active_members",
+        "passed": true,
+        "detail": "394 saved; 394 independently recomputed"
+      },
+      {
+        "check": "Saved metric visits_per_member",
+        "passed": true,
+        "detail": "3.563451776649746 saved; 3.563451776649746 independently recomputed"
+      },
+      {
+        "check": "Saved metric newcomers",
+        "passed": true,
+        "detail": "143 saved; 143 independently recomputed"
+      },
+      {
+        "check": "Saved metric newcomer_conversion",
+        "passed": true,
+        "detail": "8.391608391608392 saved; 8.391608391608392 independently recomputed"
+      }
+    ],
+    "limitations": [
+      "Original lead CSV unavailable: lead arithmetic checked against the report\u2019s complete frozen lead population.",
+      "Membership status, lifetime value and usage fields reflect the uploaded export; later outcomes cannot be treated as September month-end outcomes.",
+      "Date-formatted duration values cannot be validated as minutes; teaching-hour claims are unavailable."
+    ]
+  },
+  "20261012-180820-period": {
+    "studio": "Kwality House, Kemps Corner",
+    "expected": {
+      "cash": 3206430.87,
+      "transactions": 233,
+      "buyers": 179,
+      "aov": 13761.505879828326,
+      "ticket": 17913.021620111733,
+      "discount_rate": 9.59640792634621,
+      "sessions": 328,
+      "seats": 4606.0,
+      "attendances": 2090.0,
+      "fill": 45.37559704732957,
+      "show_up": 89.89247311827957,
+      "late_cancel_rate": 10.064516129032258,
+      "no_show_rate": 0.043010752688172046,
+      "avg_class_size": 6.371951219512195,
+      "rev_per_session": 5798.698018292683,
+      "rev_per_attendee": 910.0349043062201,
+      "revenue_class": 1901972.95,
+      "memberships": 245,
+      "leads": 189,
+      "lead_win": 8.994708994708995,
+      "newcomers": 118,
+      "newcomer_conversion": 11.864406779661017,
+      "checkin_revenue": 1901972.95,
+      "active_members": 474,
+      "visits": 2090,
+      "visits_per_member": 4.409282700421941
+    },
+    "checks": [
+      {
+        "check": "Session and attended check-in counts reconcile",
+        "passed": true,
+        "detail": "2090 check-ins; 2090 session attendances"
+      },
+      {
+        "check": "Delivered revenue reconciles with attended Paid amounts",
+        "passed": true,
+        "detail": "1901972.95 versus 1901972.95"
+      },
+      {
+        "check": "Unique session occurrences",
+        "passed": true,
+        "detail": "328 selected sessions"
+      },
+      {
+        "check": "Unique attended member/session rows",
+        "passed": true,
+        "detail": "2090 rows"
+      },
+      {
+        "check": "Unique payment/item pairs",
+        "passed": true,
+        "detail": "272 successful sales item rows"
+      },
+      {
+        "check": "No-show count is valid",
+        "passed": true,
+        "detail": "1 no-shows"
+      },
+      {
+        "check": "Membership status values are export-state",
+        "passed": true,
+        "detail": "Membership outcomes are not reconstructed month-end states"
+      },
+      {
+        "check": "Lead snapshot is scoped and unique",
+        "passed": true,
+        "detail": "189 frozen lead rows; original lead CSV unavailable"
+      },
+      {
+        "check": "sessions matches original frozen population",
+        "passed": true,
+        "detail": "328 raw rows; 328 frozen rows"
+      },
+      {
+        "check": "sales matches original frozen population",
+        "passed": true,
+        "detail": "272 raw rows; 272 frozen rows"
+      },
+      {
+        "check": "checkins matches original frozen population",
+        "passed": true,
+        "detail": "2090 raw rows; 2090 frozen rows"
+      },
+      {
+        "check": "new matches original frozen population",
+        "passed": true,
+        "detail": "120 raw rows; 120 frozen rows"
+      },
+      {
+        "check": "lapsed matches original frozen population",
+        "passed": true,
+        "detail": "245 raw rows; 245 frozen rows"
+      },
+      {
+        "check": "No missing session Capacity",
+        "passed": true,
+        "detail": "328 selected rows checked"
+      },
+      {
+        "check": "No missing session Booked",
+        "passed": true,
+        "detail": "328 selected rows checked"
+      },
+      {
+        "check": "No missing session CheckedIn",
+        "passed": true,
+        "detail": "328 selected rows checked"
+      },
+      {
+        "check": "No missing session LateCancelled",
+        "passed": true,
+        "detail": "328 selected rows checked"
+      },
+      {
+        "check": "No missing session Revenue",
+        "passed": true,
+        "detail": "328 selected rows checked"
+      },
+      {
+        "check": "No missing successful Payment Value",
+        "passed": true,
+        "detail": "272 selected rows checked"
+      },
+      {
+        "check": "Saved metric cash",
+        "passed": true,
+        "detail": "3206431.0 saved; 3206430.87 independently recomputed"
+      },
+      {
+        "check": "Saved metric transactions",
+        "passed": true,
+        "detail": "233 saved; 233 independently recomputed"
+      },
+      {
+        "check": "Saved metric buyers",
+        "passed": true,
+        "detail": "179 saved; 179 independently recomputed"
+      },
+      {
+        "check": "Saved metric aov",
+        "passed": true,
+        "detail": "13762.0 saved; 13761.505879828326 independently recomputed"
+      },
+      {
+        "check": "Saved metric ticket",
+        "passed": true,
+        "detail": "17913.0 saved; 17913.021620111733 independently recomputed"
+      },
+      {
+        "check": "Saved metric discount_rate",
+        "passed": true,
+        "detail": "9.6 saved; 9.59640792634621 independently recomputed"
+      },
+      {
+        "check": "Saved metric sessions",
+        "passed": true,
+        "detail": "328 saved; 328 independently recomputed"
+      },
+      {
+        "check": "Saved metric seats",
+        "passed": true,
+        "detail": "4606.0 saved; 4606.0 independently recomputed"
+      },
+      {
+        "check": "Saved metric attendances",
+        "passed": true,
+        "detail": "2090.0 saved; 2090.0 independently recomputed"
+      },
+      {
+        "check": "Saved metric fill",
+        "passed": true,
+        "detail": "45.4 saved; 45.37559704732957 independently recomputed"
+      },
+      {
+        "check": "Saved metric show_up",
+        "passed": true,
+        "detail": "89.9 saved; 89.89247311827957 independently recomputed"
+      },
+      {
+        "check": "Saved metric late_cancel_rate",
+        "passed": true,
+        "detail": "10.1 saved; 10.064516129032258 independently recomputed"
+      },
+      {
+        "check": "Saved metric no_show_rate",
+        "passed": true,
+        "detail": "0.0 saved; 0.043010752688172046 independently recomputed"
+      },
+      {
+        "check": "Saved metric avg_class_size",
+        "passed": true,
+        "detail": "6.4 saved; 6.371951219512195 independently recomputed"
+      },
+      {
+        "check": "Saved metric rev_per_session",
+        "passed": true,
+        "detail": "5799.0 saved; 5798.698018292683 independently recomputed"
+      },
+      {
+        "check": "Saved metric rev_per_attendee",
+        "passed": true,
+        "detail": "910.0 saved; 910.0349043062201 independently recomputed"
+      },
+      {
+        "check": "Saved metric revenue_class",
+        "passed": true,
+        "detail": "1901973.0 saved; 1901972.95 independently recomputed"
+      },
+      {
+        "check": "Saved metric memberships",
+        "passed": true,
+        "detail": "245 saved; 245 independently recomputed"
+      },
+      {
+        "check": "Saved metric leads",
+        "passed": true,
+        "detail": "189 saved; 189 independently recomputed"
+      },
+      {
+        "check": "Saved metric lead_win",
+        "passed": true,
+        "detail": "9.0 saved; 8.994708994708995 independently recomputed"
+      },
+      {
+        "check": "Saved metric checkin_revenue",
+        "passed": true,
+        "detail": "1901972.95 saved; 1901972.95 independently recomputed"
+      },
+      {
+        "check": "Saved metric active_members",
+        "passed": true,
+        "detail": "474 saved; 474 independently recomputed"
+      },
+      {
+        "check": "Saved metric visits_per_member",
+        "passed": true,
+        "detail": "4.409282700421941 saved; 4.409282700421941 independently recomputed"
+      },
+      {
+        "check": "Saved metric newcomers",
+        "passed": true,
+        "detail": "118 saved; 118 independently recomputed"
+      },
+      {
+        "check": "Saved metric newcomer_conversion",
+        "passed": true,
+        "detail": "11.864406779661017 saved; 11.864406779661017 independently recomputed"
+      }
+    ],
+    "limitations": [
+      "Original lead CSV unavailable: lead arithmetic checked against the report\u2019s complete frozen lead population.",
+      "Membership status, lifetime value and usage fields reflect the uploaded export; later outcomes cannot be treated as September month-end outcomes.",
+      "Date-formatted duration values cannot be validated as minutes; teaching-hour claims are unavailable."
+    ]
+  },
+  "20261011-173500-demo": {
+    "studio": "Supreme HQ, Bandra",
+    "expected": {
+      "cash": 1529410.18,
+      "transactions": 196,
+      "buyers": 139,
+      "aov": 7803.113163265306,
+      "ticket": 11002.950935251798,
+      "discount_rate": 8.67115183034507,
+      "sessions": 259,
+      "seats": 3293.0,
+      "attendances": 1404.0,
+      "fill": 42.63589432128758,
+      "show_up": 87.53117206982543,
+      "late_cancel_rate": 12.40648379052369,
+      "no_show_rate": 0.06234413965087282,
+      "avg_class_size": 5.420849420849421,
+      "rev_per_session": 5044.214247104247,
+      "rev_per_attendee": 930.5210042735042,
+      "revenue_class": 1306451.49,
+      "memberships": 325,
+      "leads": 189,
+      "lead_win": 6.349206349206349,
+      "newcomers": 143,
+      "newcomer_conversion": 8.391608391608392,
+      "checkin_revenue": 1306451.49,
+      "active_members": 394,
+      "visits": 1404,
+      "visits_per_member": 3.563451776649746
+    },
+    "checks": [
+      {
+        "check": "Session and attended check-in counts reconcile",
+        "passed": true,
+        "detail": "1404 check-ins; 1404 session attendances"
+      },
+      {
+        "check": "Delivered revenue reconciles with attended Paid amounts",
+        "passed": true,
+        "detail": "1306451.49 versus 1306451.49"
+      },
+      {
+        "check": "Unique session occurrences",
+        "passed": true,
+        "detail": "259 selected sessions"
+      },
+      {
+        "check": "Unique attended member/session rows",
+        "passed": true,
+        "detail": "1404 rows"
+      },
+      {
+        "check": "Unique payment/item pairs",
+        "passed": true,
+        "detail": "213 successful sales item rows"
+      },
+      {
+        "check": "No-show count is valid",
+        "passed": true,
+        "detail": "1 no-shows"
+      },
+      {
+        "check": "Membership status values are export-state",
+        "passed": true,
+        "detail": "Membership outcomes are not reconstructed month-end states"
+      },
+      {
+        "check": "Lead snapshot is scoped and unique",
+        "passed": true,
+        "detail": "189 frozen lead rows; original lead CSV unavailable"
+      },
+      {
+        "check": "sessions matches original frozen population",
+        "passed": true,
+        "detail": "259 raw rows; 259 frozen rows"
+      },
+      {
+        "check": "sales matches original frozen population",
+        "passed": true,
+        "detail": "213 raw rows; 213 frozen rows"
+      },
+      {
+        "check": "checkins matches original frozen population",
+        "passed": true,
+        "detail": "1404 raw rows; 1404 frozen rows"
+      },
+      {
+        "check": "new matches original frozen population",
+        "passed": true,
+        "detail": "143 raw rows; 143 frozen rows"
+      },
+      {
+        "check": "lapsed matches original frozen population",
+        "passed": true,
+        "detail": "325 raw rows; 325 frozen rows"
+      },
+      {
+        "check": "No missing session Capacity",
+        "passed": true,
+        "detail": "259 selected rows checked"
+      },
+      {
+        "check": "No missing session Booked",
+        "passed": true,
+        "detail": "259 selected rows checked"
+      },
+      {
+        "check": "No missing session CheckedIn",
+        "passed": true,
+        "detail": "259 selected rows checked"
+      },
+      {
+        "check": "No missing session LateCancelled",
+        "passed": true,
+        "detail": "259 selected rows checked"
+      },
+      {
+        "check": "No missing session Revenue",
+        "passed": true,
+        "detail": "259 selected rows checked"
+      },
+      {
+        "check": "No missing successful Payment Value",
+        "passed": true,
+        "detail": "213 selected rows checked"
+      },
+      {
+        "check": "Saved metric cash",
+        "passed": true,
+        "detail": "1529410.0 saved; 1529410.18 independently recomputed"
+      },
+      {
+        "check": "Saved metric transactions",
+        "passed": true,
+        "detail": "196 saved; 196 independently recomputed"
+      },
+      {
+        "check": "Saved metric buyers",
+        "passed": true,
+        "detail": "139 saved; 139 independently recomputed"
+      },
+      {
+        "check": "Saved metric aov",
+        "passed": true,
+        "detail": "7803.0 saved; 7803.113163265306 independently recomputed"
+      },
+      {
+        "check": "Saved metric ticket",
+        "passed": true,
+        "detail": "11003.0 saved; 11002.950935251798 independently recomputed"
+      },
+      {
+        "check": "Saved metric discount_rate",
+        "passed": true,
+        "detail": "8.7 saved; 8.67115183034507 independently recomputed"
+      },
+      {
+        "check": "Saved metric sessions",
+        "passed": true,
+        "detail": "259 saved; 259 independently recomputed"
+      },
+      {
+        "check": "Saved metric seats",
+        "passed": true,
+        "detail": "3293.0 saved; 3293.0 independently recomputed"
+      },
+      {
+        "check": "Saved metric attendances",
+        "passed": true,
+        "detail": "1404.0 saved; 1404.0 independently recomputed"
+      },
+      {
+        "check": "Saved metric fill",
+        "passed": true,
+        "detail": "42.6 saved; 42.63589432128758 independently recomputed"
+      },
+      {
+        "check": "Saved metric show_up",
+        "passed": true,
+        "detail": "87.5 saved; 87.53117206982543 independently recomputed"
+      },
+      {
+        "check": "Saved metric late_cancel_rate",
+        "passed": true,
+        "detail": "12.4 saved; 12.40648379052369 independently recomputed"
+      },
+      {
+        "check": "Saved metric no_show_rate",
+        "passed": true,
+        "detail": "0.1 saved; 0.06234413965087282 independently recomputed"
+      },
+      {
+        "check": "Saved metric avg_class_size",
+        "passed": true,
+        "detail": "5.4 saved; 5.420849420849421 independently recomputed"
+      },
+      {
+        "check": "Saved metric rev_per_session",
+        "passed": true,
+        "detail": "5044.0 saved; 5044.214247104247 independently recomputed"
+      },
+      {
+        "check": "Saved metric rev_per_attendee",
+        "passed": true,
+        "detail": "931.0 saved; 930.5210042735042 independently recomputed"
+      },
+      {
+        "check": "Saved metric revenue_class",
+        "passed": true,
+        "detail": "1306451.0 saved; 1306451.49 independently recomputed"
+      },
+      {
+        "check": "Saved metric memberships",
+        "passed": true,
+        "detail": "325 saved; 325 independently recomputed"
+      },
+      {
+        "check": "Saved metric leads",
+        "passed": true,
+        "detail": "189 saved; 189 independently recomputed"
+      },
+      {
+        "check": "Saved metric lead_win",
+        "passed": true,
+        "detail": "6.3 saved; 6.349206349206349 independently recomputed"
+      }
+    ],
+    "limitations": [
+      "Original lead CSV unavailable: lead arithmetic checked against the report\u2019s complete frozen lead population.",
+      "Membership status, lifetime value and usage fields reflect the uploaded export; later outcomes cannot be treated as September month-end outcomes.",
+      "Date-formatted duration values cannot be validated as minutes; teaching-hour claims are unavailable."
+    ]
+  },
+  "20261012-081545-b391": {
+    "studio": "Kwality House, Kemps Corner",
+    "expected": {
+      "cash": 3206430.87,
+      "transactions": 233,
+      "buyers": 179,
+      "aov": 13761.505879828326,
+      "ticket": 17913.021620111733,
+      "discount_rate": 9.59640792634621,
+      "sessions": 328,
+      "seats": 4606.0,
+      "attendances": 2090.0,
+      "fill": 45.37559704732957,
+      "show_up": 89.89247311827957,
+      "late_cancel_rate": 10.064516129032258,
+      "no_show_rate": 0.043010752688172046,
+      "avg_class_size": 6.371951219512195,
+      "rev_per_session": 5798.698018292683,
+      "rev_per_attendee": 910.0349043062201,
+      "revenue_class": 1901972.95,
+      "memberships": 245,
+      "leads": 189,
+      "lead_win": 8.994708994708995,
+      "newcomers": 118,
+      "newcomer_conversion": 11.864406779661017,
+      "checkin_revenue": 1901972.95,
+      "active_members": 474,
+      "visits": 2090,
+      "visits_per_member": 4.409282700421941
+    },
+    "checks": [
+      {
+        "check": "Session and attended check-in counts reconcile",
+        "passed": true,
+        "detail": "2090 check-ins; 2090 session attendances"
+      },
+      {
+        "check": "Delivered revenue reconciles with attended Paid amounts",
+        "passed": true,
+        "detail": "1901972.95 versus 1901972.95"
+      },
+      {
+        "check": "Unique session occurrences",
+        "passed": true,
+        "detail": "328 selected sessions"
+      },
+      {
+        "check": "Unique attended member/session rows",
+        "passed": true,
+        "detail": "2090 rows"
+      },
+      {
+        "check": "Unique payment/item pairs",
+        "passed": true,
+        "detail": "272 successful sales item rows"
+      },
+      {
+        "check": "No-show count is valid",
+        "passed": true,
+        "detail": "1 no-shows"
+      },
+      {
+        "check": "Membership status values are export-state",
+        "passed": true,
+        "detail": "Membership outcomes are not reconstructed month-end states"
+      },
+      {
+        "check": "Lead snapshot is scoped and unique",
+        "passed": true,
+        "detail": "189 frozen lead rows; original lead CSV unavailable"
+      },
+      {
+        "check": "sessions matches original frozen population",
+        "passed": true,
+        "detail": "328 raw rows; 328 frozen rows"
+      },
+      {
+        "check": "sales matches original frozen population",
+        "passed": true,
+        "detail": "272 raw rows; 272 frozen rows"
+      },
+      {
+        "check": "checkins matches original frozen population",
+        "passed": true,
+        "detail": "2090 raw rows; 2090 frozen rows"
+      },
+      {
+        "check": "new matches original frozen population",
+        "passed": true,
+        "detail": "120 raw rows; 120 frozen rows"
+      },
+      {
+        "check": "lapsed matches original frozen population",
+        "passed": true,
+        "detail": "245 raw rows; 245 frozen rows"
+      },
+      {
+        "check": "No missing session Capacity",
+        "passed": true,
+        "detail": "328 selected rows checked"
+      },
+      {
+        "check": "No missing session Booked",
+        "passed": true,
+        "detail": "328 selected rows checked"
+      },
+      {
+        "check": "No missing session CheckedIn",
+        "passed": true,
+        "detail": "328 selected rows checked"
+      },
+      {
+        "check": "No missing session LateCancelled",
+        "passed": true,
+        "detail": "328 selected rows checked"
+      },
+      {
+        "check": "No missing session Revenue",
+        "passed": true,
+        "detail": "328 selected rows checked"
+      },
+      {
+        "check": "No missing successful Payment Value",
+        "passed": true,
+        "detail": "272 selected rows checked"
+      },
+      {
+        "check": "Saved metric cash",
+        "passed": true,
+        "detail": "3206431.0 saved; 3206430.87 independently recomputed"
+      },
+      {
+        "check": "Saved metric transactions",
+        "passed": true,
+        "detail": "233 saved; 233 independently recomputed"
+      },
+      {
+        "check": "Saved metric buyers",
+        "passed": true,
+        "detail": "179 saved; 179 independently recomputed"
+      },
+      {
+        "check": "Saved metric aov",
+        "passed": true,
+        "detail": "13762.0 saved; 13761.505879828326 independently recomputed"
+      },
+      {
+        "check": "Saved metric ticket",
+        "passed": true,
+        "detail": "17913.0 saved; 17913.021620111733 independently recomputed"
+      },
+      {
+        "check": "Saved metric discount_rate",
+        "passed": true,
+        "detail": "9.6 saved; 9.59640792634621 independently recomputed"
+      },
+      {
+        "check": "Saved metric sessions",
+        "passed": true,
+        "detail": "328 saved; 328 independently recomputed"
+      },
+      {
+        "check": "Saved metric seats",
+        "passed": true,
+        "detail": "4606.0 saved; 4606.0 independently recomputed"
+      },
+      {
+        "check": "Saved metric attendances",
+        "passed": true,
+        "detail": "2090.0 saved; 2090.0 independently recomputed"
+      },
+      {
+        "check": "Saved metric fill",
+        "passed": true,
+        "detail": "45.4 saved; 45.37559704732957 independently recomputed"
+      },
+      {
+        "check": "Saved metric show_up",
+        "passed": true,
+        "detail": "89.9 saved; 89.89247311827957 independently recomputed"
+      },
+      {
+        "check": "Saved metric late_cancel_rate",
+        "passed": true,
+        "detail": "10.1 saved; 10.064516129032258 independently recomputed"
+      },
+      {
+        "check": "Saved metric no_show_rate",
+        "passed": true,
+        "detail": "0.0 saved; 0.043010752688172046 independently recomputed"
+      },
+      {
+        "check": "Saved metric avg_class_size",
+        "passed": true,
+        "detail": "6.4 saved; 6.371951219512195 independently recomputed"
+      },
+      {
+        "check": "Saved metric rev_per_session",
+        "passed": true,
+        "detail": "5799.0 saved; 5798.698018292683 independently recomputed"
+      },
+      {
+        "check": "Saved metric rev_per_attendee",
+        "passed": true,
+        "detail": "910.0 saved; 910.0349043062201 independently recomputed"
+      },
+      {
+        "check": "Saved metric revenue_class",
+        "passed": true,
+        "detail": "1901973.0 saved; 1901972.95 independently recomputed"
+      },
+      {
+        "check": "Saved metric memberships",
+        "passed": true,
+        "detail": "245 saved; 245 independently recomputed"
+      },
+      {
+        "check": "Saved metric leads",
+        "passed": true,
+        "detail": "189 saved; 189 independently recomputed"
+      },
+      {
+        "check": "Saved metric lead_win",
+        "passed": true,
+        "detail": "9.0 saved; 8.994708994708995 independently recomputed"
+      }
+    ],
+    "limitations": [
+      "Original lead CSV unavailable: lead arithmetic checked against the report\u2019s complete frozen lead population.",
+      "Membership status, lifetime value and usage fields reflect the uploaded export; later outcomes cannot be treated as September month-end outcomes.",
+      "Date-formatted duration values cannot be validated as minutes; teaching-hour claims are unavailable."
+    ]
+  }
+}

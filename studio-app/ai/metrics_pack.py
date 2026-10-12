@@ -29,7 +29,7 @@ DEFINITIONS = {
     'second_visit': 'Newcomers with at least one visit after their first.',
     'retention': 'Retained members / selected-month membership-purchase cohort. Status reflects the uploaded export.',
     'churn': 'Rows carrying a churned date / selected-month membership-purchase cohort. Status reflects the uploaded export.',
-    'median_life': 'Median days from purchase to the earlier of churn or end date (open memberships survive to snapshot).',
+    'median_life': 'Median observed days through reporting month-end; open purchases are right-censored. This is not median completed lifetime.',
     'teaching_hours': 'Sum of session durations, counted once per valid attended session.',
     'lead_win': 'Leads with status Won / all leads.',
 }
@@ -106,7 +106,7 @@ def from_metrics(M, chapters):
     if led:
         add('memberships', led.get('rows'), f"{led.get('paid')} paid", 'count', 'lapse')
     if getattr(M, 'median_life', None) is not None:
-        add('median_life', _f(M.median_life), '', 'days', 'lapse')
+        add('median_life', _f(M.median_life), 'Median observed days through month-end, not completed lifetime', 'days', 'lapse')
     lf = getattr(M, 'lead_fun', None)
     if lf:
         won = lf.get('won'); leads = lf.get('leads')

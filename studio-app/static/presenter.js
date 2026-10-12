@@ -211,12 +211,14 @@ function speakerPoints(h){
   }
   return items.slice(0,4);
 }
-R.speakerPoints=speakerPoints;
+let generatedNotes={};try{generatedNotes=JSON.parse(document.getElementById('p57-generated-speaker-notes')?.textContent||'{}');}catch{}
+const sourceSpeakerPoints=speakerPoints;
+R.speakerPoints=h=>generatedNotes[h?.id]||sourceSpeakerPoints(h);
 function updatePrompt(){const h=document.getElementById(current);let text=note.value.trim();if(!text){text=h?.textContent||document.title;for(let e=h?.closest('.p57-chapter-hero')?.nextElementSibling||h?.nextElementSibling;e&&e.tagName!=='H2';e=e.nextElementSibling)if(e.matches('p,.sub,.call'))text+='\n\n'+e.textContent;}prompt.replaceChildren(...text.split(/\n\s*\n|\n(?=[•-])/).filter(Boolean).map(t=>make('p',t,'p57-prompt-point')));}
 function renderNotes(){
   const h=document.getElementById(current);
   sectionLabel.textContent=h?.textContent||'Overview';
-  note.value=Object.hasOwn(saved.notes,current)?saved.notes[current]:(meeting&&!meeting.is_host?'':speakerPoints(h).map(t=>'• '+t).join('\n\n'));
+  note.value=Object.hasOwn(saved.notes,current)?saved.notes[current]:(meeting&&!meeting.is_host?'':R.speakerPoints(h).map(t=>'• '+t).join('\n\n'));
   annotation.value=saved.annotations[current]||'';
   noteDot.hidden=!note.value.trim();
   annotDot.hidden=!annotation.value.trim();

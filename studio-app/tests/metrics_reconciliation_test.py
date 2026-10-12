@@ -116,9 +116,10 @@ def main():
           bool(((serial >= 0) & (serial < 5_000_000)).all()), True)
     check('lapsed amounts include the serial-recovered range (thousands of rupees)',
           bool((serial > 100000).any()), True)
-    check('churn rate is churned over the whole ledger',
+    cohort = L[(L['_loc'] == 'Supreme HQ, Bandra') & (L['Purchase Date_d'] >= SEP_A) & (L['Purchase Date_d'] < SEP_B)]
+    check('churn rate uses the September purchase cohort',
           round(M.led['churn_rate'], 1),
-          round(L[L['_loc'] == 'Supreme HQ, Bandra']['Churned Date_d'].notna().mean() * 100, 1), tol=0.1)
+          round(cohort['Churned Date_d'].notna().mean() * 100, 1), tol=0.1)
 
     # newcomer cohort measures exist and are proportions
     nc = M.newcohort()

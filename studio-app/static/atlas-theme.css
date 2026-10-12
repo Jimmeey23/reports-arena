@@ -639,3 +639,20 @@ text.p57-legend-off{text-decoration:line-through}
 .p57-cue-metric .p57-cue-content>span{font-size:22px;line-height:1.4;font-weight:650;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 .p57-speaker[data-view=notes]:not(.p57-annotations-expanded) .p57-annot-panel{display:none!important}
 .p57-shared-toggle{padding:8px 12px;margin-top:22px;color:var(--mut)!important}
+/* Reviewed monthly reports: quieter chapter pages and readable evidence. */
+.p57-executive-summary{padding:28px 0 32px!important;border-bottom:1px solid var(--line);margin-bottom:24px}
+.p57-executive-summary h2{font:650 23px/1.3 var(--font-display);margin:0 0 18px}
+.p57-executive-summary ul{display:grid;gap:12px;list-style:none;padding:0;margin:0}
+.p57-executive-summary li{font:16px/1.7 var(--font-ui);padding-left:16px;border-left:2px solid var(--accent-line)}
+.p57-executive-summary strong{color:var(--accent)}
+.p57-chapter-hero{min-height:0!important;padding-top:32px!important;border-radius:16px!important}
+.p57-chapter-hero .sub{font-size:21px!important;line-height:1.4!important;color:inherit!important;max-width:48ch}
+.p57-chapter-hero .p57-hero-description{max-width:75ch;line-height:1.75;font-size:15px}
+.p57-marquee{display:none!important}
+.p57-section-takeaway{font-size:16px!important;line-height:1.8!important;max-width:80ch}
+.p57-section-decision{padding-left:16px;border-left:2px solid var(--accent-line);color:var(--ink)}
+.p57-section-caveat{font:12px/1.7 var(--font-ui)!important;color:var(--mut)!important;max-width:95ch}
+.p57-validation-summary{margin:40px 0;padding:24px;border:1px solid var(--line);border-radius:12px;background:var(--paper)}
+.p57-validation-summary summary{font:600 16px var(--font-ui);cursor:pointer}
+.p57-validation-summary p{font-size:13px!important;line-height:1.7}
+.p57-validation-summary table{margin-top:16px}

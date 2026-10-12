@@ -354,16 +354,20 @@ class Deep:
             t['cls'] = num(t['Sec. Membership Total Classes'])
             t = t[(t['cls'] > 0) & (t['val'] > 0)]
             if len(t):
-                q = t.groupby('Cleaned Product').agg(n=('val', 'size'), cls=('cls', 'mean'),
-                                                      pay=('val', 'sum'))
-                q['per_class'] = q['pay'] / q['cls'].replace(0, np.nan)
-                q['per_class'] = q['per_class'].replace([np.inf, -np.inf], np.nan)
-                q = q[q['cls'] >= 3]
+                # One purchased item can have several payment rows. Count its
+                # associated session credits once, then divide total receipts
+                # by total credits; never divide all receipts by mean credits.
+                item_key = 'Sale Item ID' if 'Sale Item ID' in t else 'Sale ID'
+                items = t.groupby(['Cleaned Product',item_key],dropna=False).agg(
+                    cls=('cls','max'), pay=('val','sum')).reset_index()
+                q = items.groupby('Cleaned Product').agg(n=('pay','size'), cls=('cls','sum'), pay=('pay','sum'))
+                q['per_class'] = q['pay'] / q['cls'].replace(0,np.nan)
                 self.sales['ppc'] = q[q['n'] >= 5].sort_values('per_class')
         # transaction bands
         BINS = [0, 2000, 5000, 10000, 20000, 50000, 10 ** 9]
         LABS = ['under 2k', '2 to 5k', '5 to 10k', '10 to 20k', '20 to 50k', '50k and above']
-        b = cur.assign(band=pd.cut(cur['val'], BINS, labels=LABS)).groupby('band', observed=True) \
+        orders = cur.groupby('Sale ID',as_index=False).agg(val=('val','sum'), **{'Member ID':('Member ID','first')}) if 'Sale ID' in cur else cur
+        b = orders.assign(band=pd.cut(orders['val'], BINS, labels=LABS,right=False,include_lowest=True)).groupby('band', observed=True) \
             .agg(n=('val', 'size'), rev=('val', 'sum'), buyers=('Member ID', 'nunique')).reindex(LABS).fillna(0)
         self.sales['bands'] = b
         # who sold it
@@ -400,11 +404,11 @@ class Deep:
             self.sales['line_freq'] = r.to_frame('buyers').assign(
                 cash=lambda x: [float(g[g['lines'] == i]['cash'].sum()) for i in x.index])
             self.sales['deciles'] = (g.sort_values('cash', ascending=False)['cash']
-                                     .groupby(np.arange(len(g)) // max(int(len(g) / 10), 1)).agg(['size', 'sum']))
+                                     .groupby(np.floor(np.arange(len(g))*min(10,len(g))/len(g)).astype(int)).agg(['size', 'sum']))
         # year to date against the same span last year
         for key, yr in [('ytd', self.y), ('ytd_prev', self.y - 1)]:
             try:
-                d = S[(S['_loc'] == M.studio) & (S['_dt'] >= f'{yr}-01-01') & (S['_dt'] < f'{yr}-{self.m:02d}-01')]
+                d = S[(S['_loc'] == M.studio) & (S['_dt'] >= f'{yr}-01-01') & (S['_dt'] < rng(yr,self.m)[1])]
                 d = okrows(d)
                 self.sales[key] = dict(cash=float(d['val'].sum()),
                                        lines=int(d['Sale ID'].nunique()) if 'Sale ID' in d.columns else len(d),
@@ -613,7 +617,8 @@ class Deep:
         # Acquisition measures run on the explicit newcomer population only;
         # imports and existing-member first-visit rows would dilute LTV,
         # conversion and visit averages (atlas reconciliation).
-        d = allrows[allrows['is_new'] == True].copy() if 'is_new' in allrows.columns else allrows.copy()
+        d = M._sl(allrows, self.y)
+        d = d[d['is_new'] == True].copy() if 'is_new' in d.columns else d.iloc[:0].copy()
         if d.empty:
             return
         self.nw['d'] = d
@@ -1036,7 +1041,7 @@ class Deep:
             B['top']['spend'] = num(a['Paid']).groupby(a['Member ID']).sum()
         # preferred hour stability: how many of a member's visits land in their own peak 3-hour block
         h = a.assign(h=a['_dt'].dt.hour).groupby('Member ID')['h'].agg(lambda s: s.mode().iloc[0])
-        hh = a.assign(h=a['_dt'].dt.hour).groupby('Member ID')['h'].apply(lambda s: ((s - h.reindex(s.index).iloc[0]).abs() <= 1).mean() * 100) \
+        hh = a.assign(h=a['_dt'].dt.hour).groupby('Member ID')['h'].apply(lambda s: ((s - h.loc[s.name]).abs() <= 1).mean() * 100) \
             if len(a) else None
         B['sticky'] = float(hh.mean()) if hh is not None and len(hh) else np.nan
         # morning / midday / evening with value attached

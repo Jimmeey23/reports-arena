@@ -60,7 +60,7 @@ def lapse(M):
                  f'about {R(LP.get("money_left", 0))} of value sitting in members\u2019 hands. The people who have used a '
                  f'quarter or less of what they bought are the most winnable names on the file and the least contacted.')
         blocks = [statgrid([('Memberships purchased in selected month', f'{M.led["rows"]:,}'), ('Paid', f'{M.led["paid"]:,}'),
-                            ('Money recorded', R(M.led['cash'])), ('Median life', f'{getattr(M, "median_life", 0):.0f} days')])]
+                            ('Money recorded', R(M.led['cash'])), ('Median observed days', f'{getattr(M, "median_life", 0):.0f} days')])]
         return head('Start here', 'Memberships purchased in the reporting month', claim) + ''.join(p + blocks)
 
     def periodsec():
@@ -131,7 +131,7 @@ def lapse(M):
             b.append(lines([str(i) for i in surv['Point']], [('Still running %', [float(v) for v in surv['still']], A1)],
                            f'What proportion of paid memberships is still alive, {M.studio}', h=300, as_pct=True, ymax=105,
                            note='Measured from the purchase date recorded in the ledger, with open memberships treated as censored rather than as survivors.'))
-            b.append(tab(surv, ['Point', 'Still running', 'Ended'], ['w', 'p', 'p']))
+            b.append(tab(surv, ['Checkpoint', 'Still open %', 'Ended %', 'Eligible purchases'], ['w', 'p', 'p', 'n']))
         if st is not None and len(st):
             b.append(hbars([(clean(i), float(v), A1 if i in ('Active', 'Renewed') else B2) for i, v in st.items()],
                            'The book, by status', unit='', note='Derived Status as the system computes it.'))
@@ -309,7 +309,7 @@ def lapse(M):
         dl = LP.get('disc')
         b = [statgrid([('Money on finished memberships', R(M.led.get('lapsed_cash', 0))),
                        ('Average ticket', R(getattr(M, 'ticket', 0))),
-                       ('Median life', f'{getattr(M, "median_life", 0):.0f} days'),
+                       ('Median observed days', f'{getattr(M, "median_life", 0):.0f} days'),
                        ('Warm members, 60 days', f'{LP.get("warm", 0):,}')])]
         if dl is not None and len(dl):
             b.append(tab(dl.reset_index(), ['Discount taken at purchase', 'Memberships', 'Average paid', 'Median days', 'Still live %'],
@@ -411,7 +411,7 @@ def lapse(M):
                         R(per.get('bought_cash', 0)) + ' of new money', 'pos'))
     kpis += [kpi('Memberships purchased in selected month', f'{M.led["rows"]:,}', f'{M.led["members"]:,} people'),
              kpi('Paid memberships', f'{M.led["paid"]:,}', R(M.led['cash']) + ' of recorded money'),
-             kpi('Median life', f'{getattr(M, "median_life", 0):.0f} days', 'days, not months', 'neg')]
+             kpi('Median observed days', f'{getattr(M, "median_life", 0):.0f} days', 'through month-end; not completed lifetime', 'neg')]
     if per.get('expiring_n'):
         kpis.append(kpi('Expiring next 30 days', f'{per["expiring_n"]:,}',
                         R(per.get('expiring_cash', 0)) + ' at risk', 'neg'))

@@ -199,13 +199,12 @@ class Dataset:
             c_loc = col(CK, 'location')
             CK['_dt'] = dparse(CK[c_date])
             CK['_loc'] = CK[c_loc].astype(str).str.strip()
-            for c in ['Checked In', 'Is Late Cancelled', 'Complementary', 'Paid']:
+            for c in ['Checked In', 'Is Late Cancelled', 'Complementary']:
                 if c in CK.columns:
                     CK[c] = CK[c].astype(str).str.strip().str.lower().isin(['true', '1', 'yes'])
-            # Attributed check-in revenue uses the Paid flag, and only rows
-            # that actually checked in count (atlas: attended rows in both
-            # numerator and denominator).
-            CK['Paid Amount'] = 1.0 * CK['Paid'] if 'Paid' in CK.columns else 0.0
+            # Paid is a monetary amount, not an attendance/payment flag.
+            CK['Paid'] = num(CK['Paid']) if 'Paid' in CK.columns else np.nan
+            CK['Paid Amount'] = CK['Paid']
             # Recorded teaching hours: durations arrive as Sheets serials or
             # plain minutes; implausible values are excluded rather than read.
             if 'Duration (Minutes)' in CK.columns:

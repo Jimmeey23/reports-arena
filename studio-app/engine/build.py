@@ -51,7 +51,7 @@ def _sections(cid, body):
 
 
 def build(D, studio, year, month, outdir, log=print, use_llm=None,
-          chapters=None, period_label=None):
+          chapters=None, period_label=None, editorial=None):
     """Returns {'chapters': [...], 'dir': outdir, 'html': combined_path}."""
     os.makedirs(outdir, exist_ok=True)
     t0 = time.time()
@@ -100,6 +100,8 @@ def build(D, studio, year, month, outdir, log=print, use_llm=None,
         ch['summary'] = NR.summary(M, ch)
         ch['narration'] = NR.narration(M, ch)
         ch['recs'] = NR.recommendations(M, cid, ch.get('recs_extra'))
+        if editorial:
+            editorial(M, ch)
         ch['slug'] = _slug(ch['title'])
         ch['html'] = enhance_report(_chapter_page(M, ch, label).replace('</head>',embed(frozen_records)+'</head>',1))
         ch['kpis'] = [k for k in ch.get('kpis', []) if k.get('value') not in (None, '', 'nan')]
@@ -178,5 +180,13 @@ def _combined(M, chapters, label):
             f"Snapshot {now_ist():%d %B %Y}")
     lede = (f'Every chapter of the {label} review for {M.studio}, generated from the exports on file. '
             f'Each chapter opens with a summary, presents the evidence, and closes with the actions the numbers support.')
+    S = M.sales.get(M.y, {}); F = M.room.get(M.y, {}); C = getattr(M,'core',{})
+    executive = ''
+    if S and F:
+        executive = '<div class="p57-executive-summary" aria-label="Executive summary"><h2 id="executive-summary">This month, at a glance</h2><ul>'
+        executive += f'<li><strong>{R(S["cash"])}</strong> in sales revenue from {S["txn"]} distinct sales and {S["buyers"]} buyers.</li>'
+        executive += f'<li><strong>{F["fill"]:.1f}% utilisation</strong>: {F["att"]:,.0f} attendances across {F["sessions"]} sessions. Delivered session revenue was {R(F["rev"])}.</li>'
+        if C: executive += f'<li>The same <strong>{C["n"]} returning members</strong> made {abs(C["lost"]):,.0f} {"fewer" if C["lost"]>=0 else "more"} visits than {MONTH_NAMES[M.m-1]} {M.y-1} ({abs(C["drop_pct"]):.1f}%).</li>'
+        executive += '</ul></div>'
     return page(f'{M.studio} \u2014 {label} Performance Review', f'{M.studio} &nbsp; {label}',
-                'Performance Review', lede, meta, toc + ''.join(parts))
+                'Performance Review', lede, meta, executive + toc + ''.join(parts))

@@ -151,7 +151,7 @@ def _ticks(mx, pt, ih, pl, iw, as_pct, fmt=None):
         if fmt:
             vl = fmt(val)
         elif as_pct:
-            vl = f'{val:.0f}%' if mx > 1.5 else f'{val*100:.0f}%'
+            vl = f'{val:.1f}%'
         else:
             vl = f'{val:,.0f}' if val >= 1 else f'{val:.1f}'
         o.append(f'<text x="{pl-9}" y="{y+4:.1f}" text-anchor="end" font-size="10" fill="{MUT}">{vl}</text>')
@@ -178,7 +178,7 @@ def bars(labels, series, title, w=1000, h=300, ymax=None, as_pct=False, note='',
             bh = max(ih*v/mx, 1.5); x = x0+slot*0.17+si*bw+(slot*0.66-ns*bw)/2; y = pt+ih-bh
             o.append(f'<rect x="{x:.1f}" y="{y:.1f}" width="{bw:.1f}" height="{bh:.1f}" fill="{col}" rx="2"/>')
             if ng <= 20:
-                vl = (f'{v:.0f}%' if v > 1.5 else f'{v*100:.0f}%') if as_pct else f'{v:,.0f}'
+                vl = f'{v:.1f}%' if as_pct else f'{v:,.0f}'
                 o.append(f'<text x="{x+bw/2:.1f}" y="{y-5:.1f}" text-anchor="middle" font-size="9" fill="{MUT}">{vl}</text>')
         anch = 'end' if rotate else 'middle'
         tr = f' transform="rotate(-38 {x0+slot/2:.1f} {pt+ih+16:.1f})"' if rotate else ''
@@ -211,7 +211,7 @@ def lines(labels, series, title, w=1000, h=320, as_pct=True, ymax=None, note='',
     pl, pr, pt, pb = 62, 26, 26, 74
     iw, ih = w-pl-pr, h-pt-pb
     allv = [v for _, vs, _ in series for v in vs if v is not None and not (isinstance(v, float) and np.isnan(v))]
-    mx = ymax or max(allv)*1.22
+    mx = ymax or (max(allv)*1.22 if allv and max(allv)>0 else 1)
     o = [f'<svg viewBox="0 0 {w} {h}" width="100%" style="height:auto;{_FONT}">']
     o += _ticks(mx, pt, ih, pl, iw, as_pct)
     step = iw/max(len(labels)-1, 1)
@@ -223,7 +223,7 @@ def lines(labels, series, title, w=1000, h=320, as_pct=True, ymax=None, note='',
             o.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="3" fill="#fff" stroke="{col}" stroke-width="1.8"/>')
         if label_last and pts:
             x, y = pts[-1]; last = [v for v in vs if v is not None and not (isinstance(v, float) and np.isnan(v))][-1]
-            last_txt = (f"{last:.1f}%" if last > 1.5 else f"{last*100:.1f}%") if as_pct else f"{last:,.0f}"
+            last_txt = f"{last:.1f}%" if as_pct else f"{last:,.0f}"
             o.append(f'<text x="{x+7:.1f}" y="{y+4:.1f}" font-size="11" font-weight="600" fill="{col}">'
                      f'{last_txt}</text>')
     for i, lab in enumerate(labels):
@@ -243,7 +243,7 @@ def hbars(items, title, w=1000, unit='\u20b9', as_pct=False, maxv=None, note='',
         o.append(f'<rect x="{pl}" y="{y+4:.1f}" width="{bl:.1f}" height="{row_h-13}" fill="{col}" rx="2"/>')
         o.append(f'<text x="{pl-10}" y="{y+row_h/2+4:.1f}" text-anchor="end" font-size="11.5" fill="{INK}">{lab}</text>')
         if as_pct:
-            vl = f'{v:.1f}%' if abs(v) > 1.5 else f'{v*100:.1f}%'
+            vl = f'{v:.1f}%'
         else:
             vl = f'{unit}{v:,.0f}' if abs(v) >= 1 else f'{v:.2f}'
         o.append(f'<text x="{pl+bl+8:.1f}" y="{y+row_h/2+4:.1f}" font-size="11" fill="{MUT}">{vl}</text>')
@@ -440,7 +440,9 @@ def _toc(body):
         plain = _re.sub(r'<[^>]+>', '', txt).strip()
         if not plain:
             return m.group(0)
-        i = slug(plain)
+        existing = _re.search(r'\bid=[\"\']([^\"\']+)', attr)
+        i = existing.group(1) if existing else slug(plain)
+        attr = _re.sub(r'\s+id=[\"\'][^\"\']*[\"\']', '', attr)
         items.append((i, plain))
         return f'<h2 id="{i}"{attr}>{txt}</h2>'
 
@@ -453,8 +455,8 @@ def _toc(body):
 
 
 def page(title, kick, h1, lede, meta, body, foot=None):
-    foot = foot or ('Supreme HQ, Bandra &middot; September 2026 &middot; prepared 18 October 2026<br/>'
-                    'Revenue figures are gross value as recorded at snapshot, not contribution margin.')
+    foot = foot or ('Sales revenue is recorded payments; delivered session revenue is attributed to sessions. '
+                    'These measures are not profit and are not a reconciliation of purchase usage.')
     body, toc = _toc(body)
     return f'''<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>

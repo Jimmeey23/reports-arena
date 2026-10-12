@@ -16,3 +16,6 @@ studio-app/data/batches/
 # Uploaded exports hold member and lead data; never commit them.
 uploads/
 studio-app/data/uploaded/
+
+# Local review backups include frozen member data.
+studio-app/backups/
