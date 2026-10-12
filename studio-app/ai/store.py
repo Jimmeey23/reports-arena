@@ -114,6 +114,13 @@ class SupabaseStore:
                             meta=meta),
                   prefer='resolution=merge-duplicates,return=minimal')
 
+    def delete_report(self, run_id):
+        query = urllib.parse.urlencode(dict(run_id=f'eq.{run_id}'))
+        session_filter = 'like.' + run_id.replace('_', r'\_') + ':*'
+        self._req('chat_messages', 'DELETE', query=urllib.parse.urlencode(dict(session_id=session_filter)))
+        self._req('report_edits', 'DELETE', query=query)
+        self._req('reports', 'DELETE', query=query)
+
     def report(self, run_id):
         rows = self._req('reports', query=urllib.parse.urlencode(dict(run_id=f'eq.{run_id}')))
         return rows[0] if rows else None
@@ -211,6 +218,13 @@ class SqliteStore:
                        'built_at=excluded.built_at, meta=excluded.meta',
                        (run_id, meta.get('studio', ''), meta.get('label', ''), meta.get('built', ''),
                         json.dumps(meta), _now()))
+
+    def delete_report(self, run_id):
+        with self.lock, self._conn() as db:
+            prefix = run_id + ':'
+            db.execute('DELETE FROM chat_messages WHERE substr(session_id,1,?)=?', (len(prefix),prefix))
+            db.execute('DELETE FROM report_edits WHERE run_id=?', (run_id,))
+            db.execute('DELETE FROM reports WHERE run_id=?', (run_id,))
 
     def report(self, run_id):
         with self._conn() as db:
@@ -323,6 +337,12 @@ class Store:
                 self.supa.save_report(run_id, meta)
             except Exception:
                 pass
+
+    def delete_report(self, run_id):
+        # Fail visibly if the configured remote database cannot be cleaned up.
+        if self.supa:
+            self.supa.delete_report(run_id)
+        self.local.delete_report(run_id)
 
     def report(self, run_id):
         return self._try(lambda s: s.report(run_id))

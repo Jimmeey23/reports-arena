@@ -134,16 +134,19 @@ def sales(M):
             return ''
         pn, pp, p2 = M.people[y], M.people.get(y - 1, {}), M.people.get(y - 2, {})
         ch = [(f'{mon} {z}', M.people.get(z, {}).get('members', 0)) for z in [y - 2, y - 1, y] if M.people.get(z, {}).get('members')]
-        p = [para(f'The number of people who paid to train at this studio in {lab} was <strong>{pn["members"]}</strong>'
-                  + (f', against {pp["members"]} in {yrp(M)}' if pp.get('members') else '')
-                  + (f' and {p2["members"]} in {MONTH_NAMES[M.m - 1]} {y - 2}' if p2.get('members') else '')
-                  + ('. The base is widening.' if (not pp.get('members')) or pn['members'] >= pp['members'] else
-                     '. The base is narrowing.'))]
-        if pp.get('members') and p2.get('members'):
-            p.append(para(f'Breadth and depth have moved in opposite directions for two years. The studio reaches '
-                          f'{(pn["members"] - p2["members"]) / p2["members"] * 100:+.0f}% more people than it did two Septembers ago, '
-                          f'while serving them {(pn["per"] - p2["per"]) / p2["per"] * 100:.0f}% less often. A club that is '
-                          f'gaining members and losing frequency is not growing; it is churning more slowly than it is recruiting.'))
+        p = [para(f'{pn["members"]:,} community members attended studio sessions in {lab}'
+                  + (f', compared with {pp["members"]:,} in {yrp(M)}' if pp.get('members') else '')
+                  + (f' and {p2["members"]:,} in {MONTH_NAMES[M.m - 1]} {y - 2}' if p2.get('members') else '') + '.')]
+        if pp.get('members') and p2.get('members') and p2.get('per'):
+            reach_change = (pn['members'] - p2['members']) / p2['members'] * 100
+            frequency_change = (pn['per'] - p2['per']) / p2['per'] * 100
+            reach = (f'{abs(reach_change):.0f}% {"more" if reach_change > 0 else "fewer"} community members attended'
+                     if reach_change else 'The same number of community members attended')
+            frequency = (f'average visits per member were {abs(frequency_change):.0f}% {"higher" if frequency_change > 0 else "lower"}'
+                         if frequency_change else 'average visits per member were unchanged')
+            p.append(para(f'Compared with {MONTH_NAMES[M.m - 1]} {y - 2}, {reach}, while {frequency}. '
+                          'Member count and visit frequency measure different aspects of attendance. '
+                          'These figures alone do not establish churn or recruitment rates.'))
         b = [bars([c[0] for c in ch], [('Members who trained', [c[1] for c in ch], A1),
                                         ('Visits per member, ×100', [M.people.get(z, {}).get('per', 0) * 100 for z in [y - 2, y - 1, y]], B1)],
                   f'How many people trained here, and how often, in {mon} of each year', h=300,
@@ -156,8 +159,8 @@ def sales(M):
                            f'Visits per active member, by month &mdash; {M.studio}', h=290, as_pct=False,
                            ymax=float(np.nanmax(mo['per']) * 1.35),
                            note='Check-in ledger, attended visits only. This is the line that leads every other number in the review.'))
-        return sec('The base is widening' if (not pp.get('members')) or pn['members'] >= pp['members'] else 'The base is narrowing',
-                    'More or fewer people, and what they do once they are here', p, b)
+        return sec('Member count and visit frequency',
+                    'How many members attended, and how often', p, b)
 
     def core():
         c = getattr(M, 'core', None)

@@ -609,3 +609,33 @@ text.p57-legend-off{text-decoration:line-through}
 .p57-speaker #p57-speaker-notes{min-height:260px!important;font:14px/1.8 var(--font-ui)!important;padding:16px!important}
 .p57-prompt-point{margin:0 0 1.3em;padding-bottom:1em;border-bottom:1px solid var(--line);font:inherit;color:inherit}
 @media(max-width:600px){.p57-reader-header .p57-hgroup button .p57-hl{display:none}.p57-reader-header .p57-hgroup button{width:38px!important;padding:0!important;justify-content:center}}
+/* Speaker cues: a clear sequence, large type, and a quiet reading surface. */
+.p57-talk-guide{font:12px/1.6 var(--font-ui);color:var(--mut);margin:0 0 20px}
+.p57-talk-list,.p57-private-cues{counter-reset:none;list-style:none;padding:0;margin:0;display:grid;gap:14px}
+.p57-talk-list li,.p57-private-cues li{display:flex;align-items:flex-start;gap:14px;padding:18px!important;background:var(--paper);border:1px solid var(--line);border-radius:12px;color:var(--ink);font:16px/1.65 var(--font-ui)!important}
+.p57-cue-number{display:grid!important;place-items:center;flex:none;width:28px;height:28px;background:var(--accent-soft);color:var(--accent);border-radius:8px;font:600 11px var(--font-ui);margin-top:2px;font-variant-numeric:tabular-nums}
+.p57-cue-content{min-width:0;overflow-wrap:anywhere}
+.p57-cue-content strong{display:block;margin:0 0 6px!important;font:600 11px/1.4 var(--font-ui)!important;letter-spacing:.07em;text-transform:uppercase;color:var(--mut)!important}
+.p57-cue-content>span{display:block}
+.p57-talk-list li:has(strong:first-child) .p57-cue-content{flex:1}
+.p57-talk h3{font-size:22px;line-height:1.3;margin-bottom:10px}
+.p57-speaker[data-view=notes] .p57-notes-panel{flex:1;overflow:auto;padding:20px!important}
+.p57-edit-notes{padding:8px 12px;margin:10px 0 18px}
+.p57-private-cues[hidden],.p57-speaker textarea[hidden]{display:none!important}
+.p57-speaker[data-view=notes] .p57-annot-panel{border-top:1px solid var(--line);max-height:190px;overflow:auto;flex:none}
+/* Library deletion lives beside, rather than inside, the open-report action. */
+.saved-report-row{display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line);padding:6px 0}
+.saved-report-row .saved-review{flex:1;min-width:0;border-bottom:0}
+.report-delete{flex:none;background:transparent;border:1px solid var(--line);border-radius:8px;padding:8px 12px;color:var(--mut);font:500 12px var(--font-ui)}
+.report-delete:hover{color:#b42318;background:#fff1ef;border-color:#f3c3bd}
+.report-delete-dialog{width:min(460px,calc(100vw - 40px));box-sizing:border-box;border:1px solid var(--line);border-radius:16px;padding:26px;background:var(--paper);color:var(--ink);font:14px/1.6 var(--font-ui);box-shadow:var(--shadow-pop)}
+.report-delete-dialog::backdrop{background:#102c4655;backdrop-filter:blur(3px)}
+.report-delete-dialog h2{font:650 22px var(--font-display);margin:0 0 12px}
+.report-delete-name{font-weight:600}.report-delete-error{color:#b42318}
+.report-delete-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:24px}
+.report-delete-confirm{background:#b42318;border-color:#b42318;color:#fff}
+.report-delete-actions button:disabled{opacity:.6;cursor:wait}
+.p57-private-title{font:650 20px/1.35 var(--font-display);margin:12px 0 0;color:var(--ink)}
+.p57-cue-metric .p57-cue-content>span{font-size:22px;line-height:1.4;font-weight:650;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.p57-speaker[data-view=notes]:not(.p57-annotations-expanded) .p57-annot-panel{display:none!important}
+.p57-shared-toggle{padding:8px 12px;margin-top:22px;color:var(--mut)!important}

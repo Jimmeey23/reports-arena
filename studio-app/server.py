@@ -6,7 +6,7 @@ Run:  python3 server.py [--port 8000]
 Nothing outside the standard library is required.
 """
 from __future__ import annotations
-import os, sys, json, time, uuid, threading, mimetypes, traceback, sqlite3, shutil, hmac, hashlib, html
+import os, sys, json, time, uuid, threading, mimetypes, traceback, sqlite3, shutil, hmac, hashlib, html, re
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from http.cookies import SimpleCookie
 from urllib.parse import urlparse, parse_qs, quote
@@ -80,16 +80,17 @@ input{border:1px solid #ccc;margin-bottom:12px}button{border:0;background:#1d1d1
 <input type="password" name="code" placeholder="Access code" aria-label="Access code" autocomplete="current-password" autofocus required>
 <button type="submit">Sign in</button></form></body></html>'''
 
+WORKSPACE = Workspace(os.environ.get('P57_WORKSPACE_DB', os.path.join(DATA, 'workspace.sqlite3')))
+
 # Preserve the bundled report library when starting on a fresh volume.
 bundled_runs = os.path.join(HERE, 'runs')
 if os.path.abspath(RUNS) != os.path.abspath(bundled_runs) and os.path.isdir(bundled_runs):
     for rid in os.listdir(bundled_runs):
         source = os.path.join(bundled_runs, rid)
         target = os.path.join(RUNS, rid)
-        if os.path.isfile(os.path.join(source, 'manifest.json')) and not os.path.exists(target):
+        if os.path.isfile(os.path.join(source, 'manifest.json')) and not os.path.exists(target) and rid not in WORKSPACE.deleted_reports():
             shutil.copytree(source, target)
 
-WORKSPACE = Workspace(os.environ.get('P57_WORKSPACE_DB', os.path.join(DATA, 'workspace.sqlite3')))
 AI_STORE = Store(os.path.join(DATA, 'ai.sqlite3'))
 LOCK = threading.Lock()
 STATE = dict(dataset=None, files=[], sig='', studios={}, warnings=[], logs=[], jobs={}, runs={})
@@ -145,7 +146,7 @@ def load(force=False, log=lambda *a: None):
 def scan_runs():
     """Register every review already written to runs/ and drop the ones
     whose folder has been removed."""
-    on_disk = set(os.listdir(RUNS))
+    on_disk = {r for r in os.listdir(RUNS) if not r.startswith('.')} - WORKSPACE.deleted_reports()
     for gone in [r for r in STATE['runs'] if r not in on_disk]:
         STATE['runs'].pop(gone, None)
     for rid in sorted(on_disk, reverse=True):
@@ -535,6 +536,36 @@ class Handler(BaseHTTPRequestHandler):
         try:
             if u.path == '/api/login':
                 return self._login()
+            if u.path == '/api/reports/delete':
+                origin = self.headers.get('Origin')
+                if origin and urlparse(origin).netloc != self.headers.get('Host'):
+                    return self._send(403, dict(error='Delete reports from this app only'))
+                n = int(self.headers.get('Content-Length', 0))
+                if n > 4096:
+                    return self._send(413, dict(error='Request too large'))
+                req = json.loads(self.rfile.read(n) or b'{}')
+                rid = req.get('run', '')
+                if not isinstance(rid, str) or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,120}', rid):
+                    return self._send(400, dict(error='Invalid report ID'))
+                if req.get('confirmation') != rid:
+                    return self._send(400, dict(error='Confirm which report to delete'))
+                with LOCK:
+                    if rid not in scan_runs():
+                        return self._send(404, dict(error='Report was not found'))
+                    directory = Path(RUNS) / rid
+                    if directory.is_symlink():
+                        return self._send(400, dict(error='Invalid report directory'))
+                    staged = Path(RUNS) / ('.deleting-' + rid)
+                    directory.rename(staged)
+                    try:
+                        AI_STORE.delete_report(rid)
+                        WORKSPACE.delete_report(rid)
+                    except Exception:
+                        staged.rename(directory)
+                        raise
+                    STATE['runs'].pop(rid, None)
+                    shutil.rmtree(staged)
+                return self._send(200, dict(deleted=rid))
             if u.path == '/api/logout':
                 return self._send(200, dict(ok=True), extra={'Set-Cookie': self._cookie_header('', 0)})
             if u.path in ('/api/workspace','/api/meetings') or u.path.startswith('/api/meetings/'):

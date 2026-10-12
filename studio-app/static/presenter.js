@@ -237,7 +237,7 @@ if(oldNotes){oldNotes.textContent='Speaker notes / annotations';oldNotes.onclick
 button('Teleprompter',()=>openSpeaker(false));
 // Hooks for the floating report-interface controls (speaker notes launcher,
 // AI assistant, layout editor).
-window.P57Speaker={open:openSpeaker,notes:()=>openSpeaker(true),drawer,bar,notice};
+window.P57Speaker={section:()=>current,open:openSpeaker,notes:()=>openSpeaker(true),drawer,bar,notice};
 // Only narrative fields are editable; computed table values retain their source definitions.
 const editables=[...document.querySelectorAll('.wrap p,.wrap h3,.wrap h4,.wrap .sub,body>header h1,body>header .lede')].filter(e=>!e.closest('table,svg,.rt-table-tools'));
 const originalText=new Map(editables.map(e=>[e,e.textContent]));

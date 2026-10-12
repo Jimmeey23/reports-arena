@@ -12,6 +12,7 @@ class Workspace:
         Path(path).parent.mkdir(parents=True, exist_ok=True)
         with self.connect() as db:
             db.executescript('''
+            CREATE TABLE IF NOT EXISTS deleted_reports(run_id TEXT PRIMARY KEY, deleted REAL);
             CREATE TABLE IF NOT EXISTS documents(user TEXT, report TEXT, value TEXT, updated REAL,
                 PRIMARY KEY(user,report));
             CREATE TABLE IF NOT EXISTS meetings(code TEXT PRIMARY KEY, owner TEXT, report TEXT,
@@ -23,6 +24,16 @@ class Workspace:
         db = sqlite3.connect(self.path, timeout=10)
         db.row_factory = sqlite3.Row
         return db
+    def deleted_reports(self):
+        with self.connect() as db:
+            return {r[0] for r in db.execute('SELECT run_id FROM deleted_reports')}
+    def delete_report(self, run_id):
+        with self.connect() as db:
+            prefix = run_id + '/'
+            db.execute('DELETE FROM participants WHERE code IN (SELECT code FROM meetings WHERE substr(report,1,?)=?)', (len(prefix),prefix))
+            db.execute('DELETE FROM meetings WHERE substr(report,1,?)=?', (len(prefix),prefix))
+            db.execute('DELETE FROM documents WHERE substr(report,1,?)=?', (len(prefix),prefix))
+            db.execute('INSERT OR REPLACE INTO deleted_reports VALUES(?,?)', (run_id,time.time()))
     def identity(self, user):
         if not re.fullmatch(r'[a-f0-9]{32,64}', user or ''):
             raise WorkspaceError(400, 'Browser identity is missing or invalid')
@@ -37,6 +48,8 @@ class Workspace:
             raise WorkspaceError(400, 'Invalid report changes')
         with self.connect() as db:
             db.execute('BEGIN IMMEDIATE')
+            if db.execute('SELECT 1 FROM deleted_reports WHERE run_id=?',(report.split('/')[0],)).fetchone():
+                raise WorkspaceError(404, 'This report has been deleted')
             row = db.execute('SELECT value FROM documents WHERE user=? AND report=?',(user,report)).fetchone()
             value = json.loads(row['value']) if row else {}
             for key in ('preferences','notes','edits','annotations'):

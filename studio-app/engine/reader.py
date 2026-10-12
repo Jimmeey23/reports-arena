@@ -10,7 +10,24 @@ def enhance_report(html):
         text = text.replace('Cash taken', 'Sales revenue').replace('cash taken', 'sales revenue')
         text = re.sub(r'(₹[\d,]+(?:\.\d+)?) was taken', r'Sales revenue reached \1', text)
         text = re.sub(r'(₹[\d,]+(?:\.\d+)?) taken', r'\1 in sales revenue', text)
-        replacements = {'The till, and what sits behind it': 'Sales at a glance',
+        def attendance_copy(m):
+            reach, frequency = float(m[1]), float(m[2])
+            reach_text = (f'{abs(reach):g}% {"more" if reach > 0 else "fewer"} community members attended'
+                          if reach else 'The same number of community members attended')
+            # Legacy source used a signed change followed by "less often".
+            freq_text = (f'average visits per member were {abs(frequency):g}% {"higher" if frequency > 0 else "lower"}'
+                         if frequency else 'average visits per member were unchanged')
+            return (f'Compared with September two years earlier, {reach_text}, while {freq_text}. '
+                    'Member count and visit frequency measure different aspects of attendance. '
+                    'These figures alone do not establish churn or recruitment rates.')
+        text = re.sub(r'Breadth and depth have moved in opposite directions for two years\. The studio reaches '
+                      r'([+-]?\d+(?:\.\d+)?)% more people than it did two Septembers ago, while serving them '
+                      r'([+-]?\d+(?:\.\d+)?)% less often\. A club that is gaining members and losing frequency '
+                      r'is not growing; it is churning more slowly than it is recruiting\.', attendance_copy, text)
+        text = re.sub(r'^\s*\.\s*The base is (?:narrowing|widening)\.\s*$', '', text)
+        replacements = {'The base is narrowing': 'Member count and visit frequency',
+                        'The base is widening': 'Member count and visit frequency',
+                        'The till, and what sits behind it': 'Sales at a glance',
                         'The commitment-length problem': 'Short packages, shorter runway',
                         'Pricing and the product ladder': 'Price points that pull their weight',
                         'Trading pattern through the month': 'When sales picked up',

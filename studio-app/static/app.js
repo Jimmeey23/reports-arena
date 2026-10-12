@@ -473,5 +473,29 @@ function renderLibrary(){
   STATE.runs.forEach(run=>{const b=document.createElement('button');b.className='saved-review';
     const title=document.createElement('strong');title.textContent=run.label+' · '+run.studio;
     const detail=document.createElement('span');detail.textContent=run.chapters.length+' chapters · '+(run.built||'Saved review');
-    b.append(title,detail);b.onclick=()=>openRun(run);el.append(b);});
+    b.append(title,detail);b.onclick=()=>openRun(run);
+    const row=document.createElement('div');row.className='saved-report-row';
+    const remove=document.createElement('button');remove.type='button';remove.className='report-delete';remove.textContent='Delete';remove.setAttribute('aria-label','Delete '+run.label+' · '+run.studio);remove.onclick=()=>confirmReportDelete(run);
+    row.append(b,remove);el.append(row);});
+}
+
+function confirmReportDelete(run){
+ const modal=document.createElement('dialog');modal.className='report-delete-dialog';
+ const title=document.createElement('h2');title.textContent='Delete this report?';title.id='delete-report-title';modal.setAttribute('aria-labelledby',title.id);
+ const name=document.createElement('p');name.className='report-delete-name';name.textContent=run.label+' · '+run.studio;
+ const hint=document.createElement('p');hint.textContent='This permanently removes the generated report, saved edits, speaker notes and linked presentation sessions. Uploaded source files are kept.';
+ const error=document.createElement('p');error.className='report-delete-error';error.setAttribute('role','alert');
+ const actions=document.createElement('div');actions.className='report-delete-actions';
+ const cancel=document.createElement('button');cancel.type='button';cancel.className='btn ghost';cancel.textContent='Cancel';cancel.onclick=()=>modal.close();
+ const remove=document.createElement('button');remove.type='button';remove.className='btn report-delete-confirm';remove.textContent='Delete report';
+ remove.onclick=async()=>{remove.disabled=true;cancel.disabled=true;remove.textContent='Deleting…';error.textContent='';try{
+  const response=await apiFetch('/api/reports/delete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({run:run.id,confirmation:run.id})});const result=await response.json();if(!response.ok)throw Error(result.error||'Could not delete the report');
+  const wasActive=RUN?.id===run.id;
+  for(let i=STUDIO_WORKSPACE.length-1;i>=0;i--)if(STUDIO_WORKSPACE[i].run.id===run.id){const [entry]=STUDIO_WORKSPACE.splice(i,1);if(!STUDIO_WORKSPACE.length){entry.frame.removeAttribute('src');entry.frame.id='stage';entry.frame.hidden=true;}else entry.frame.remove();}
+  STATE.runs=STATE.runs.filter(r=>r.id!==run.id);
+  if(wasActive){stopNarration();RUN=null;const next=STUDIO_WORKSPACE[0]?.run||STATE.runs[0];if(next)openRun(next);else{home();$('#tabRead').disabled=true;}}
+  try{for(let i=localStorage.length-1;i>=0;i--){const key=localStorage.key(i);if(key.startsWith('p57-workspace:'+run.id+'/')||key.startsWith('p57-host:'+run.id+'/')||key==='p57-layout-edits:'+run.id||key==='p57-layout-edits:'+run.id+':pending'||key.startsWith('p57-sticky:/api/report/'+run.id+'/'))localStorage.removeItem(key);}}catch{}
+  saveWorkspace();renderRuns();renderLibrary();renderWorkspace();modal.close();
+ }catch(e){error.textContent=e.message;remove.disabled=false;cancel.disabled=false;remove.textContent='Delete report';}};
+ modal.addEventListener('cancel',e=>{if(remove.disabled)e.preventDefault();});modal.addEventListener('close',()=>modal.remove(),{once:true});actions.append(cancel,remove);modal.append(title,name,hint,error,actions);document.body.append(modal);modal.showModal();cancel.focus();
 }

@@ -6,4 +6,5 @@ for(const file of ['report-tools.js','presenter.js','talking-points.js'])w.eval(
 w.P57Speaker.notes();
 const note=d.querySelector('#p57-speaker-notes');assert.match(note.value,/Sales revenue: ₹32,06,431/);assert.match(note.value,/Sales grew 27.4%/);assert.ok(w.P57Reader.speakerPoints(d.querySelector('h2')).length<=4);assert.ok(d.querySelector('.p57-talk-list strong'));
 note.value='My private cue';note.dispatchEvent(new w.Event('input'));w.P57Speaker.notes();assert.equal(note.value,'My private cue');
+d.querySelector('[data-view=notes]').click();assert.equal(note.hidden,true);assert.match(d.querySelector('.p57-private-cues').textContent,/My private cue/);d.querySelector('.p57-edit-notes').click();assert.equal(note.hidden,false);d.querySelector('.p57-edit-notes').click();assert.equal(note.hidden,true);assert.equal(d.querySelector('.p57-cue-number').textContent,'01');
 w.dispatchEvent(new w.Event('pagehide'));w.close();console.log('Passed: source-backed speaker defaults, scannable points, four-cue limit, custom note preservation.');
