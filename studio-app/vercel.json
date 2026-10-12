@@ -4,11 +4,11 @@
   "rewrites": [
     { "source": "/", "destination": "/index.html" },
     { "source": "/api/state", "destination": "/api/state.json" },
-    { "source": "/api/report/:run/full", "destination": "/runs/:run/report.html" },
-    { "source": "/api/report/:run/report", "destination": "/runs/:run/report.html" },
-    { "source": "/api/report/:run/all", "destination": "/runs/:run/report.html" },
-    { "source": "/api/report/:run/:chapter", "destination": "/runs/:run/:chapter.html" },
-    { "source": "/api/download/:run", "destination": "/runs/:run/report.html" },
+    { "source": "/api/report/:run/full", "destination": "/runs/:run/report" },
+    { "source": "/api/report/:run/report", "destination": "/runs/:run/report" },
+    { "source": "/api/report/:run/all", "destination": "/runs/:run/report" },
+    { "source": "/api/report/:run/:chapter", "destination": "/runs/:run/:chapter" },
+    { "source": "/api/download/:run", "destination": "/runs/:run/report" },
     { "source": "/api/raw/:run/:path*", "destination": "/runs/:run/:path*" },
     { "source": "/static/:path*", "destination": "/static/:path*" }
   ],
