@@ -18,6 +18,8 @@ from engine.build import build
 from engine.reader import enhance_report
 from engine.workspace import Workspace, WorkspaceError
 from engine.metrics import MONTH_NAMES
+from ai import agent, llm, metrics_pack
+from ai.store import Store, _now as _now_iso
 
 DATA = os.path.join(HERE, 'data')
 UPLOADS = os.path.join(DATA, 'uploaded')
@@ -28,6 +30,7 @@ for d in (DATA, UPLOADS, RUNS):
     os.makedirs(d, exist_ok=True)
 
 WORKSPACE = Workspace(os.environ.get('P57_WORKSPACE_DB', os.path.join(DATA, 'workspace.sqlite3')))
+AI_STORE = Store(os.path.join(DATA, 'ai.sqlite3'))
 LOCK = threading.Lock()
 STATE = dict(dataset=None, files=[], sig='', studios={}, warnings=[], logs=[], jobs={}, runs={})
 
@@ -100,6 +103,7 @@ def scan_runs():
             chapters=[dict(id=c['id'], n=c.get('n'), title=c['title'], subtitle=c.get('subtitle'),
                            kpis=c.get('kpis'), summary=c.get('summary'), summary_ai=c.get('summary_ai', ''),
                            facts=c.get('facts', []), narration=c.get('narration'),
+                           sections=c.get('sections', []),
                            recs=len(c.get('recs', []))) for c in m.get('chapters', [])])
     return STATE['runs']
 
@@ -129,9 +133,28 @@ def bake_first_review(D=None):
                               chapters=[dict(id=c['id'], n=c['n'], title=c['title'], subtitle=c.get('subtitle'),
                                              kpis=c.get('kpis'), summary=c.get('summary'),
                                              summary_ai=c.get('summary_ai', ''), facts=c.get('facts', []),
-                                             narration=c.get('narration'), recs=len(c.get('recs', [])))
+                                             narration=c.get('narration'), sections=c.get('sections', []),
+                                             recs=len(c.get('recs', [])))
                                         for c in res['chapters']],
                               metrics=res['metrics'])
+    try:
+        AI_STORE.save_report(rid, dict(
+            run_id=rid, studio=mf['studio'], label=mf['label'], built=mf['built'],
+            seconds=mf['seconds'], sources=mf['sources'],
+            chapters=[dict(id=c['id'], title=c['title'],
+                           kpis=[dict(label=k.get('label'), value=k.get('value'), detail=k.get('detail', ''))
+                                 for k in (c.get('kpis') or [])[:6]],
+                           facts=(c.get('facts') or [])[:3]) for c in res['chapters']]))
+    except Exception:
+        pass
+
+
+def run_pack(rid):
+    """Load the AI metrics pack for a run (file snapshot, manifest fallback)."""
+    rid = os.path.basename(rid or '')
+    if rid not in scan_runs():
+        return None
+    return metrics_pack.load_pack(RUNS, rid)
 
 
 def state_payload(batch=None):
@@ -192,8 +215,22 @@ def do_generate(job, studio, year, month, chapters, llm, D):
         chapters=[dict(id=c['id'], n=c['n'], title=c['title'], subtitle=c.get('subtitle'),
                        kpis=c.get('kpis'), summary=c.get('summary'), summary_ai=c.get('summary_ai', ''),
                        facts=c.get('facts', []), narration=c.get('narration'),
+                       sections=c.get('sections', []),
                        recs=len(c.get('recs', []))) for c in res['chapters']],
         metrics=res['metrics'])
+    # Persist the review itself (Supabase when configured, local SQLite otherwise)
+    # with a compact metric digest, so reports survive and earlier periods of the
+    # same studio can be handed to the AI as comparison context.
+    try:
+        AI_STORE.save_report(rid, dict(
+            run_id=rid, studio=m['studio'], label=m['label'], built=m['built'],
+            seconds=m['seconds'], sources=m['sources'],
+            chapters=[dict(id=c['id'], title=c['title'],
+                           kpis=[dict(label=k.get('label'), value=k.get('value'), detail=k.get('detail', ''))
+                                 for k in (c.get('kpis') or [])[:6]],
+                           facts=(c.get('facts') or [])[:3]) for c in res['chapters']]))
+    except Exception as e:
+        job['log'].append(f'report persistence skipped: {e}')
     job['run'] = rid
     job['pct'] = 99
 
@@ -277,7 +314,21 @@ class Handler(BaseHTTPRequestHandler):
                 if name not in ['full','all','report'] + [c['id'] for c in run['chapters']]:
                     return self._send(404, dict(error='unknown chapter'))
                 f = os.path.join(RUNS, rid, ('report' if name in ('full', 'all') else name) + '.html')
-                return self._file(f, 'text/html; charset=utf-8')
+                # Re-enhance on serve so asset (toolbar/editor/explorer) updates
+                # reach existing runs without a rebuild; the enhancer dedupes.
+                try:
+                    data = enhance_report(Path(f).read_text()).encode('utf-8')
+                except Exception:
+                    return self._file(f, 'text/html; charset=utf-8')
+                self.send_response(200)
+                self.send_header('Content-Type', 'text/html; charset=utf-8')
+                self.send_header('Content-Length', str(len(data)))
+                self.end_headers()
+                try:
+                    self.wfile.write(data)
+                except BrokenPipeError:
+                    pass
+                return
             if p.startswith('/api/raw/'):
                 parts = p.split('/')
                 rid, name = parts[3], parts[4] if len(parts) > 4 else ''
@@ -299,6 +350,26 @@ class Handler(BaseHTTPRequestHandler):
                 except BrokenPipeError:
                     pass
                 return
+            if p == '/api/config':
+                return self._send(200, dict(backend=AI_STORE.backend, config=AI_STORE.config_all()))
+            if p == '/api/reports/history':
+                studio = q.get('studio', [None])[0]
+                rows = AI_STORE.list_reports(studio=studio, limit=int(q.get('limit', ['24'])[0]))
+                return self._send(200, dict(backend=AI_STORE.backend, reports=rows))
+            if p == '/api/ai/status':
+                pack = run_pack(q.get('run', [''])[0]) if q.get('run') else None
+                return self._send(200, dict(llm=llm.status(), backend=AI_STORE.backend,
+                                            context_tokens=agent.context_estimate(pack) if pack else None))
+            if p == '/api/ai/context':
+                pack = run_pack(q.get('run', [''])[0])
+                if not pack:
+                    return self._send(404, dict(error='unknown run'))
+                return self._send(200, pack)
+            if p == '/api/edits':
+                rid = os.path.basename(q.get('run', [''])[0])
+                if rid not in scan_runs():
+                    return self._send(404, dict(error='unknown run'))
+                return self._send(200, dict(run=rid, edits=AI_STORE.edits(rid)))
             return self._send(404, dict(error='no route', path=p))
         except WorkspaceError as e:
             return self._send(e.status, dict(error=e.message))
@@ -401,12 +472,93 @@ class Handler(BaseHTTPRequestHandler):
                 scan_runs()
                 return self._send(200, dict(state=state_payload(self.headers.get('X-Upload-Batch'))))
 
+            if u.path == '/api/config':
+                n = int(self.headers.get('Content-Length', 0))
+                if n > 200_000:
+                    return self._send(413, dict(error='Request too large'))
+                req = json.loads(self.rfile.read(n) or b'{}')
+                key = str(req.get('key', ''))[:80]
+                if not key:
+                    return self._send(400, dict(error='provide a key'))
+                AI_STORE.config_put(key, req.get('value'))
+                return self._send(200, dict(ok=True, key=key, backend=AI_STORE.backend))
+
+            if u.path in ('/api/ai/chat', '/api/ai/edit', '/api/ai/create', '/api/ai/key', '/api/edits'):
+                n = int(self.headers.get('Content-Length', 0))
+                if n > 2_100_000:
+                    return self._send(413, dict(error='Request too large'))
+                req = json.loads(self.rfile.read(n) or b'{}')
+                if u.path == '/api/ai/key':
+                    llm.configure(key=req.get('key'), model=req.get('model'), base=req.get('base'))
+                    st = llm.status()
+                    # Persist the non-secret configuration so it survives restarts.
+                    # The key itself is never stored; it stays in the environment.
+                    try:
+                        AI_STORE.config_put('ai', dict(model=st['model'], base=st.get('base', ''),
+                                                       configured=st['configured'],
+                                                       updated=_now_iso()))
+                    except Exception:
+                        pass
+                    return self._send(200, dict(ok=True, configured=st['configured'], model=st['model']))
+                rid = os.path.basename(str(req.get('run', '')))
+                pack = run_pack(rid)
+                if not pack:
+                    return self._send(404, dict(error='unknown run'))
+                session = str(req.get('session') or 'anon')
+                if u.path == '/api/ai/chat':
+                    return self._send(200, agent.chat(str(req.get('question', ''))[:1200], pack,
+                                                      AI_STORE, f'{rid}:{session}',
+                                                      extra_context=str(req.get('context', '')),
+                                                      run_id=rid))
+                if u.path == '/api/ai/edit':
+                    return self._send(200, agent.edit_element(str(req.get('instruction', ''))[:400],
+                                                              str(req.get('html', '')), pack))
+                if u.path == '/api/ai/create':
+                    return self._send(200, agent.create_element(str(req.get('instruction', ''))[:400], pack))
+                if u.path == '/api/edits':
+                    el_id = str(req.get('el_id', ''))[:160]
+                    op = str(req.get('op', ''))
+                    if not el_id or op not in ('set', 'delete', 'restore', 'insert'):
+                        return self._send(400, dict(error='provide el_id and op in set|delete|restore|insert'))
+                    if op == 'delete':
+                        AI_STORE.upsert_edit(rid, el_id, 'delete')
+                    elif op == 'restore':
+                        AI_STORE.delete_edit(rid, el_id, 'delete')
+                        AI_STORE.delete_edit(rid, el_id, 'set')
+                    else:
+                        AI_STORE.upsert_edit(rid, el_id, op, str(req.get('html', ''))[:200_000],
+                                             int(req.get('sort', 0)))
+                    return self._send(200, dict(run=rid, edits=AI_STORE.edits(rid)))
+
             return self._send(404, dict(error='no route', path=u.path))
         except WorkspaceError as e:
             return self._send(e.status, dict(error=e.message))
         except Exception as e:
             traceback.print_exc()
             return self._send(500, dict(error=str(e)))
+
+
+def hydrate_report_store():
+    """Persist every review already on disk into the report store (Supabase when
+    configured, SQLite otherwise) so saved reports and the AI's cross-period
+    context survive across environments. Runs already persisted are skipped."""
+    for rid, run in STATE['runs'].items():
+        try:
+            if AI_STORE.report(rid):
+                continue
+            m = json.loads(Path(os.path.join(run['dir'], 'manifest.json')).read_text())
+            AI_STORE.save_report(rid, dict(
+                run_id=rid, studio=m.get('studio', ''), label=m.get('label', ''),
+                built=m.get('built', ''), seconds=m.get('seconds'),
+                sources=m.get('sources', []),
+                chapters=[dict(id=c['id'], title=c.get('title', ''),
+                               kpis=[dict(label=k.get('label'), value=k.get('value'),
+                                          detail=k.get('detail', ''))
+                                     for k in (c.get('kpis') or [])[:6]],
+                               facts=(c.get('facts') or [])[:3])
+                          for c in m.get('chapters', [])]))
+        except Exception:
+            continue
 
 
 def main():
@@ -418,6 +570,7 @@ def main():
         print(f'  watching {d}')
     print(f'  uploads  {UPLOADS}')
     scan_runs()  # Saved reviews persist; startup never imports or generates data.
+    hydrate_report_store()  # Push on-disk reviews into the persistent report store.
     srv = ThreadingHTTPServer(('0.0.0.0', port), Handler)
     print(f'  listening on http://0.0.0.0:{port}')
     srv.serve_forever()

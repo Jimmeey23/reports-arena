@@ -3,7 +3,7 @@ from __future__ import annotations
 import os, re, json, time
 from pathlib import Path
 import pandas as pd
-from .design import page, rec_html, T, ev, R, P, A1, B1
+from .design import page, rec_html, T, ev, R, P, A1, B1, now_ist
 from .metrics import Metrics, MONTH_NAMES
 from .reader import enhance_report
 from .records import snapshot, embed
@@ -30,6 +30,25 @@ def _slug(s):
     return re.sub(r'[^a-z0-9]+', '-', s.lower()).strip('-')[:60]
 
 
+def _sections(cid, body):
+    """Give every <h2> inside a chapter a stable anchor id and return the list of
+    sections so the sidebar can show the chapter's sub-topics as sub-headers."""
+    if not body:
+        return body, []
+    pattern = re.compile(r'<h2>(.*?)</h2>', re.S)
+    sections = []
+
+    def _rep(m):
+        idx = len(sections) + 1
+        title = re.sub(r'<[^>]+>', '', m.group(1)).strip()
+        anchor = f'sec-{cid}-{idx}'
+        sections.append({'n': idx, 'id': anchor, 'title': title, 'slug': _slug(title)})
+        return f'<h2 id="{anchor}">{m.group(1)}</h2>'
+
+    new_body = pattern.sub(_rep, body)
+    return new_body, sections
+
+
 def build(D, studio, year, month, outdir, log=print, use_llm=None,
           chapters=None, period_label=None):
     """Returns {'chapters': [...], 'dir': outdir, 'html': combined_path}."""
@@ -38,6 +57,14 @@ def build(D, studio, year, month, outdir, log=print, use_llm=None,
     M = Metrics(D, studio, year, month, log=log)
     label = period_label or M.label
     frozen_records = snapshot(M)
+    # The complete, uncapped population for every source. The report pages embed
+    # only a capped preview (they must stay loadable); the drill-down explorer
+    # fetches this file on demand so no row past the preview cap is ever hidden.
+    try:
+        full_records = snapshot(M, limit=None)
+        Path(outdir, 'records.json').write_text(json.dumps(full_records, ensure_ascii=False, allow_nan=False))
+    except Exception as e:
+        log(f'  full records skipped: {e}')
     out = []
     for cid, fn in BUILDERS.items():
         if chapters and cid not in chapters:
@@ -62,6 +89,7 @@ def build(D, studio, year, month, outdir, log=print, use_llm=None,
         if ch is None:
             log(f'  chapter {cid} skipped (missing source)')
             continue
+        ch['body'], ch['sections'] = _sections(cid, ch.get('body', ''))
         ch['summary'] = NR.summary(M, ch)
         ch['narration'] = NR.narration(M, ch)
         ch['recs'] = NR.recommendations(M, cid, ch.get('recs_extra'))
@@ -85,7 +113,14 @@ def build(D, studio, year, month, outdir, log=print, use_llm=None,
     Path(cpath).write_text(enhance_report(combined))
     for ch in out:
         Path(outdir, ch['id'] + '.html').write_text(ch['html'])
-    meta = dict(studio=studio, year=year, month=month, label=label, built=time.strftime('%d %B %Y, %H:%M'),
+    # Compact metric snapshot powering the in-report AI assistant: every
+    # headline figure plus definitions, grounded in the Metrics object.
+    try:
+        from ai import metrics_pack
+        metrics_pack.dump(metrics_pack.from_metrics(M, out), os.path.join(outdir, 'metrics.json'))
+    except Exception as e:
+        log(f'  metrics pack skipped: {e}')
+    meta = dict(studio=studio, year=year, month=month, label=label, built=now_ist().strftime('%d %B %Y, %H:%M IST'),
                 seconds=round(time.time() - t0, 1), chapters=[{k: v for k, v in ch.items() if k not in ('html', 'body')} for ch in out],
                 sources=[s.name for s in D.sources], warnings=D.warnings)
     Path(outdir, 'manifest.json').write_text(json.dumps(meta, indent=1, default=str))
@@ -109,7 +144,7 @@ def _chapter_page(M, ch, label):
                           + rec_html(recs))
     body = kpi_html + sum_html + ch['body'] + rec_html_block
     meta = (f"{M.studio} &middot; {label} &middot; chapter {ch.get('n', 0)} of 9<br/>"
-            f"Snapshot {pd.Timestamp.today():%d %B %Y} &middot; generated from {len(M.D.sources)} uploaded exports")
+            f"Snapshot {now_ist():%d %B %Y} &middot; generated from {len(M.D.sources)} uploaded exports")
     return page(f'{M.studio} \u2014 {ch["title"]}', f'Chapter {ch.get("n", 0):02d} &nbsp; {label}',
                 ch['title'], ch.get('subtitle') or '', meta, body)
 
@@ -132,8 +167,8 @@ def _combined(M, chapters, label):
 {c['body']}
 <h2>Recommendations</h2><div class="sub">{len(c.get('recs', []))} actions for this chapter</div>{recs}
 </section>''')
-    meta = (f"{M.studio} &middot; {label}<br/>{len(chapters)} chapters &middot; generated {pd.Timestamp.today():%d %B %Y}<br/>"
-            f"Snapshot {pd.Timestamp.today():%d %B %Y}")
+    meta = (f"{M.studio} &middot; {label}<br/>{len(chapters)} chapters &middot; generated {now_ist():%d %B %Y}<br/>"
+            f"Snapshot {now_ist():%d %B %Y}")
     lede = (f'Every chapter of the {label} review for {M.studio}, generated from the exports on file. '
             f'Each chapter opens with a summary, presents the evidence, and closes with the actions the numbers support.')
     return page(f'{M.studio} \u2014 {label} Performance Review', f'{M.studio} &nbsp; {label}',

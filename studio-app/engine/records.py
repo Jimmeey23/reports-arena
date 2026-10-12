@@ -2,9 +2,12 @@
 import json
 import pandas as pd
 
+# Rows embedded directly into each report page. The complete, uncapped file is
+# written next to the report (records.json) and fetched by the drill-down
+# explorer on demand, so the page stays loadable without losing any rows.
 LIMIT = 5000
 
-def snapshot(M):
+def snapshot(M, limit=LIMIT):
     datasets = {}
     for key, attribute in [('sessions','sessions'),('sales','sales'),('checkins','checkins'),('lapsed','lapsed'),('leads','leads'),('new','new')]:
         frame = getattr(M.D, attribute, None)
@@ -26,8 +29,10 @@ def snapshot(M):
         # Identifiers support distinct-member calculations, while contact details
         # and raw transport fields are excluded from the saved explorer.
         columns=[c for c in frame if not any(t in str(c).lower() for t in ('email','phone','token','uniqueid'))]
-        rows=json.loads(frame[columns].head(LIMIT).to_json(orient='records',date_format='iso'))
-        datasets[key]={'rows':rows,'total':len(frame),'truncated':len(frame)>LIMIT,
+        view = frame[columns] if limit is None else frame[columns].head(limit)
+        rows=json.loads(view.to_json(orient='records',date_format='iso'))
+        datasets[key]={'rows':rows,'total':len(frame),'truncated':limit is not None and len(frame)>limit,
+                       'complete':limit is None,
                        'scope':'Studio-wide ledger snapshot' if ledger else 'Selected studio and report month',
                        'source':next((s.name for s in M.D.sources if s.kind==('newmembers' if key=='new' else key)),key)}
     return {'studio':M.studio,'period':M.label,'datasets':datasets}

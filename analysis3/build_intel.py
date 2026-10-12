@@ -12,7 +12,7 @@ def sx(y, m=9):
     a = pd.Timestamp(f'{y}-{m:02d}-01')
     return X[(X['dt'] >= a) & (X['dt'] < a + pd.offsets.MonthBegin(1))]
 x24, x25, x26 = sx(2024), sx(2025), sx(2026)
-SB = D.SB.copy(); SB['disc'] = E.num(SB['Discount Value In Currency']).fillna(0)
+SB = D.SB.copy()   # item-level disc arrives from d1_data
 
 # ---------------------------------------------------------------- the year
 YR = {}
@@ -44,7 +44,7 @@ VOLS = ', '.join([f'{i} {int(r["Sold"]):,} units at {r["Live_pct"]:.0f}% live' f
 VOL_SHARE = TOP4['Sold'].sum() / PRODB['Sold'].sum() * 100
 
 # ---------------------------------------------------------------- the member base
-CK = pd.read_csv('/home/user/google_drive/Day End Report - Part 4', low_memory=False,
+CK = pd.read_csv('/home/user/reports-arena/google_drive/Day End Report - Part 4', low_memory=False,
     usecols=['Member ID', 'Location', 'Date (IST)', 'Checked In', 'Cleaned Class', 'Class No'])
 CK = CK[CK['Location'] == E.B].copy()
 CK['dt'] = pd.to_datetime(CK['Date (IST)'], errors='coerce')
@@ -138,10 +138,10 @@ MBS['share'] = (MBS['n'] / MBS['n'].sum() * 100).round(1)
 # ---------------------------------------------------------------- charts
 CH_LEADM = lines(MONTHS, [(str(y), [int(MON[y].get(i, 0)) for i in range(1, 13)], c) for y, c in [(2025, N1), (2026, A1)]],
     'Leads created each month, 2025 and 2026', h=310, as_pct=False, ymax=380,
-    note='The second half of 2026 is tracking below the same months of 2025, and below the studio\u2019s own first quarter.')
+    note='The second half of 2026 is tracking below the same months of 2025, and below the studio’s own first quarter.')
 
 CH_CHAN = bars(list(CH['lbl']), [('Leads', CH['leads'].tolist(), A1),
-                                 ('Share won, % (scaled \u00d710)', [v*10 for v in CH['won']], B1)],
+                                 ('Share won, % (scaled ×10)', [v*10 for v in CH['won']], B1)],
     'Where the leads come from, and how many of them convert', h=340, ymax=3900, rotate=True,
     note='The two largest channels by volume convert at a third of the rate of the two smallest. The second series is drawn at ten times its true value.')
 
@@ -150,8 +150,8 @@ CH_CHANL = hbars([(r['lbl'], r['ltv'], A1 if r['ltv'] >= CH['ltv'].median() else
     note='Measured on every lead the studio has ever recorded for Bandra, whether or not it converted.')
 
 CH_SRC = hbars([(i[:30], r['won'], A1 if r['won'] >= 15 else B1) for i, r in SRC.iterrows()],
-    'Conversion by source \u2014 the named channel behind each lead', as_pct=True, maxv=30,
-    note='Sources with forty or more leads. The studio\u2019s largest named source is its weakest by a wide margin.')
+    'Conversion by source — the named channel behind each lead', as_pct=True, maxv=30,
+    note='Sources with forty or more leads. The studio’s largest named source is its weakest by a wide margin.')
 
 CH_FUN = funnel([('Leads created', int(len(LBc)), 'every enquiry the studio has ever recorded for Bandra'),
                  ('Trial completed', int((LBc['Trial Status'] == 'Trial Completed').sum()), f'{(LBc["Trial Status"]=="Trial Completed").mean()*100:.1f}% of leads'),
@@ -164,7 +164,7 @@ CH_ASSOC = hbars([(i, r['won'], A1 if r['won'] >= 15 else (A2 if r['won'] >= 11 
     note='Associates with thirty or more recorded leads. All of them work the same product list at the same prices.')
 
 CH_RESP = bars(list(RC.index), [('Leads', RC['leads'].tolist(), A1),
-                                ('Share won, % (scaled \u00d75)', [v*5 for v in RC['won']], B1)],
+                                ('Share won, % (scaled ×5)', [v*5 for v in RC['won']], B1)],
     'How fast the first response was, against whether the lead converted', h=300, ymax=2000,
     note='Response time here is days between the enquiry and the first logged follow-up; roughly a fifth of records carry a date that precedes the enquiry and are excluded.')
 
@@ -184,13 +184,13 @@ CH_DAY = bars([d[:3] for d in DAYS], [('Seats offered', DW['seats'].tolist(), N2
     note=f'Tuesday runs the most sessions and the most attendance; Wednesday runs {int(WED["sessions"])} sessions at {WED["fill"]:.0f}% and earns {R(WED["rev"])}.')
 
 CH_CONC = bars(['the top 10','11 to 25','26 to 50','51 to 100','101 to 500', f'all {len(per)-500:,} others'],
-    [('Share of the last twelve months\u2019 sales', [CUM[10], CUM[25]-CUM[10], CUM[50]-CUM[25], CUM[100]-CUM[50],
+    [('Share of the last twelve months’ sales', [CUM[10], CUM[25]-CUM[10], CUM[50]-CUM[25], CUM[100]-CUM[50],
         CUM[500]-CUM[100], 1-CUM[500]], A1)],
     'Where a year of sales actually comes from', h=310, as_pct=True, ymax=0.32,
     note=f'{len(per):,} people bought something in the year to 30 September. The ten largest account for {CUM[10]*100:.1f}% of the cash; the bottom half for {BOT:.1f}%.')
 
 CH_CT = bars(list(CT.index), [('Leads', CT['leads'].tolist(), A1),
-                              ('Share won, % (scaled \u00d710)', [v*10 for v in CT['won']], B1)],
+                              ('Share won, % (scaled ×10)', [v*10 for v in CT['won']], B1)],
     'Which class a lead asks about, and whether it converts', h=300, ymax=6000, rotate=True,
     note='Class preference is recorded on almost every lead, which makes it one of the most complete demand signals the studio holds.')
 
@@ -200,7 +200,7 @@ CH_PROD = hbars([(i, r['Sold'], A1) for i, r in PRODB.head(9).iterrows()],
 
 CH_BASE = bars(['Sept 2024', 'Sept 2025', 'Sept 2026'],
     [('Members who trained at least once', [BASE[y]['members'] for y in (2024, 2025, 2026)], A1),
-     ('Visits each, scaled \u00d7100', [round(BASE[y]['per'] * 100) for y in (2024, 2025, 2026)], B1)],
+     ('Visits each, scaled ×100', [round(BASE[y]['per'] * 100) for y in (2024, 2025, 2026)], B1)],
     'A wider base, coming less often', h=300, ymax=520,
     note='The amber series is average visits per member, drawn at a hundred times its true value so the two measures share an axis.')
 
@@ -212,7 +212,7 @@ CH_CORE = bars(['September 2025', 'September 2026'],
 # ---------------------------------------------------------------- recommendations
 RECS = [
  ('01','Rebalance acquisition away from the website and toward the phone','Marketing + CRM',
-  f'<strong>Website and online sources produced {CH.loc["Website & Online Sources","leads"]:,} leads \u2014 {CH.loc["Website & Online Sources","leads"]/len(LBc)*100:.0f}% of everything the studio attracts \u2014 and converted {CH.loc["Website & Online Sources","won"]:.1f}% of them at a lifetime value of {R(CH.loc["Website & Online Sources","ltv"])}.</strong> '
+  f'<strong>Website and online sources produced {CH.loc["Website & Online Sources","leads"]:,} leads — {CH.loc["Website & Online Sources","leads"]/len(LBc)*100:.0f}% of everything the studio attracts — and converted {CH.loc["Website & Online Sources","won"]:.1f}% of them at a lifetime value of {R(CH.loc["Website & Online Sources","ltv"])}.</strong> '
   f'Calls and messages produced {CH.loc["Calls, Messages & Automated Enquiries","leads"]:,} at {CH.loc["Calls, Messages & Automated Enquiries","won"]:.1f}% and {R(CH.loc["Calls, Messages & Automated Enquiries","ltv"])}; referrals produced '
   f'{CH.loc["Referrals & Word-of-Mouth","leads"]:,} at {CH.loc["Referrals & Word-of-Mouth","won"]:.1f}% and {R(CH.loc["Referrals & Word-of-Mouth","ltv"])}.',
   f'One referral is worth more than two website leads, and one inbound call worth more than two and a half. The studio is not short of leads; it is short of the '
@@ -240,8 +240,8 @@ RECS = [
  ('06','Work the renewal grace list as a live pipeline','CRM + Front Desk',
   f'<strong>{int(LIVE_BY["n"].get("Renewal Grace Period",0))} memberships worth {R(GRACE)} are in a renewal grace period right now</strong>, and a further '
   f'{int(LIVE_BY["n"].get("Active",0))} are active. Between them they carry {R(LIVE["Amount Paid"].sum())} of recorded cash.',
-  'Grace period is a decision window, not a status. These members have not said no \u2014 they have stopped being asked. A named call on each one, with the '
-  'member\u2019s own attendance and favourite format on the screen, converts the list from administration into pipeline.'),
+  'Grace period is a decision window, not a status. These members have not said no — they have stopped being asked. A named call on each one, with the '
+  'member’s own attendance and favourite format on the screen, converts the list from administration into pipeline.'),
  ('07','Call the quiet members before they lapse','CRM',
   f'<strong>{QUIET_M} members holding {R(QUIET)} of recorded cash have not trained in fifteen days or more</strong>, and {int(LREC["members"].reindex(RECB[3:]).sum())} of them have not been in for over a month. '
   f'Lapsed memberships in this book are worth only {R(LP[LP["Derived Status"]=="Lapsed"]["Amount Paid"].mean())} on average against {R(LIVE_BY["cash"].sum()/LIVE_BY["n"].sum())} for live ones.',
@@ -259,10 +259,10 @@ RECS = [
   f'The second visit is the transition that decides everything else, and the data says it happens inside a week or not at all. Booking visits two and three before '
   f'the member leaves the building converts an intention into a diary entry, and a diary entry is the only thing that has ever predicted a fourth visit.'),
  ('10','Make the unpaid seat visible in the fill rate','Finance + Studio Manager',
-  f'September gave away {YR[2026]["comp"]:,} complimentary attendances \u2014 {YR[2026]["comp"]/YR[2026]["att"]*100:.1f}% of everything delivered \u2014 worth {R(YR[2026]["comp"]*YR[2026]["rev_head"])} '
-  f'at the month\u2019s own revenue per head. Comps are excluded from no denominator in the studio\u2019s reporting.',
+  f'September gave away {YR[2026]["comp"]:,} complimentary attendances — {YR[2026]["comp"]/YR[2026]["att"]*100:.1f}% of everything delivered — worth {R(YR[2026]["comp"]*YR[2026]["rev_head"])} '
+  f'at the month’s own revenue per head. Comps are excluded from no denominator in the studio’s reporting.',
   f'Reporting utilisation alongside a paid-utilisation figure would show the studio what its promotions actually cost it in seats. No rule change is needed to '
-  f'start with the number \u2014 only a second column.'),
+  f'start with the number — only a second column.'),
  ('11','Track the four leading indicators monthly, and nothing else','Management',
   f'The studio currently reports attendance, revenue and member counts, all of which describe a month that has already finished. The four numbers that move '
   f'first are leads created ({int(MON[2026].get(9, 0))} in September), leads converted ({LBc[(LBc["Created At_d"]>="2026-09-01") & (LBc["Created At_d"]<"2026-10-01")]["won"].mean()*100:.1f}%), '
@@ -293,9 +293,9 @@ META = (f'CRM lead master &middot; {len(LBc):,} Bandra leads<br/>'
         f'Membership ledger &middot; {len(LP):,} paid memberships &middot; {len(LIVE_BY)} live instances<br/>'
         f'Room ledger &middot; {YR[2026]["sessions"]} classes in September &middot; {YR[2026]["seats"]:,} seats offered<br/>Snapshot 18 October 2026')
 
-HTML = page('Supreme HQ, Bandra \u2014 Studio Overview and Intelligence',
+HTML = page('Supreme HQ, Bandra — Studio Overview and Intelligence',
     'Studio Overview and Business Intelligence &nbsp;&middot;&nbsp; September 2026',
-    'Supreme HQ, Bandra \u2014 the studio in one page',
+    'Supreme HQ, Bandra — the studio in one page',
     f'September held {R(SALES[2026]["cash"])} of cash from {SALES[2026]["buyers"]} buyers, delivered {YR[2026]["att"]:,} attendances across '
     f'{YR[2026]["sessions"]} classes, and converted {(LBc["won"].mean())*100:.1f}% of every lead the studio has ever recorded. This report joins the lead file, '
     f'the membership ledger, the room ledger and the sales ledger to answer one question: where does the next member come from, and what is stopping them?',
@@ -329,7 +329,7 @@ are about to stop, and how to reach them before they do &mdash; and every one of
 <h2>The year in numbers</h2>
 <div class="sub">Three Septembers, four ledgers, one comparison.</div>
 
-{ev('Evidence \u2014 the three ledgers, September 2024, 2025 and 2026',
+{ev('Evidence — the three ledgers, September 2024, 2025 and 2026',
     T(['September', 'Classes', 'Seats offered', 'Attended', 'Utilisation', 'Late cancellations', 'Complimentary',
        'Class revenue', 'Revenue / class', 'Revenue / attendee', 'Buyers', 'Cash', 'Cash / buyer'],
       [[str(y), YR[y]['sessions'], f"{YR[y]['seats']:,}", f"{YR[y]['att']:,}", P(YR[y]['fill']),
@@ -353,7 +353,7 @@ frequency, and the two are managed in completely different ways.</p>
 {SINGLE/len(VPD[2026])*100:.0f}% of the base &mdash; and the members who came ten times or more, {int((VPD[2026]>=10).sum())} people,
 delivered {int(VPD[2026][VPD[2026]>=10].sum())} attendances between them &mdash; {VPD[2026][VPD[2026]>=10].sum()/YR[2026]['att']*100:.0f}% of the month.</p>
 
-{ev('Evidence \u2014 how many times each member came in September 2026',
+{ev('Evidence — how many times each member came in September 2026',
     T(['Visits in the month', 'Members', 'Share of members', 'Visits delivered'],
       [[r['Visits in September'], int(r['Members']), P(r['Share']), int(r['Visits'])] for _, r in FREQD.iterrows()], 'num'))}
 
@@ -400,7 +400,7 @@ its customers. It is a property of its product list, and the list is the easiest
 <p>Across the whole product book the pattern is consistent: what predicts whether a member stays is how long the product was designed to last, not how much it cost.
 The products with the longest commitment renew best and the products sold as a quantity of classes renew worst, at every price point in the range.</p>
 
-{ev('Evidence \u2014 every product sold fifteen times or more at Bandra',
+{ev('Evidence — every product sold fifteen times or more at Bandra',
     T(['Product', 'Sold', 'Members', 'Cash taken', 'Mean ticket', 'Mean classes used', 'Mean days', 'Live or renewed'],
       [[i, int(r['Sold']), int(r['Members']), R(r['Cash']), R(r['Mean_ticket']), f"{r['Mean_classes']:.1f}",
         f"{r['Mean_days']:.0f}", P(r['Live_pct'])] for i, r in PRODB.iterrows()], 'num'))}
@@ -444,7 +444,7 @@ the number that have ever been won &mdash; against {int((LBc["Status"]=="Won").s
 
 {CH_FUN}
 
-{ev('Evidence \u2014 stage, trial and retention status across the Bandra lead file',
+{ev('Evidence — stage, trial and retention status across the Bandra lead file',
     T(['Lead status', 'Leads', 'Share'], [[k, int(v), P(v/len(LBc)*100)] for k, v in LBc['Status'].value_counts().items()], 'num') +
     '<p style="font-size:13.5px;color:#6B7280;margin-top:16px"><strong>Stage the record currently sits at</strong></p>' +
     T(['Stage', 'Leads'], [[k, int(v)] for k, v in LBc['Stage Name'].value_counts().head(10).items()], 'num'))}
@@ -458,7 +458,7 @@ sits between {int(ASSOC["resp"].min())} and {int(ASSOC["resp"].max())} days acro
 
 {CH_ASSOC}
 
-{ev('Evidence \u2014 every associate with thirty or more Bandra leads',
+{ev('Evidence — every associate with thirty or more Bandra leads',
     T(['Associate', 'Leads', 'Trial completed', 'Won', 'Mean lifetime value', 'Median response, days'],
       [[i, int(r['leads']), P(r['trial']), P(r['won']), R(r['ltv']), f"{r['resp']:.0f}"] for i, r in ASSOC.iterrows()], 'num'))}
 
@@ -480,7 +480,7 @@ worth {R(LP[LP["Derived Status"]=="Lapsed"]["Amount Paid"].mean())} on average; 
 
 {CH_LIVE}
 
-{ev('Evidence \u2014 the live book by status and by recency',
+{ev('Evidence — the live book by status and by recency',
     T(['Status', 'Memberships', 'Members', 'Recorded cash'],
       [[k, int(r['n']), int(r['members']), R(r['cash'])] for k, r in LIVE_BY.iterrows()], 'num') +
     '<p style="font-size:13.5px;color:#6B7280;margin-top:16px"><strong>By how long since the member last trained</strong></p>' +
@@ -499,7 +499,7 @@ worth {R(LP[LP["Derived Status"]=="Lapsed"]["Amount Paid"].mean())} on average; 
 {R(SALES[2026]["ticket"])} each. The month&rsquo;s cash was spread across {len(CATS)} product categories, led by
 {', '.join(f'<strong>{k}</strong> at {R(v["sum"])}' for k, v in CATS.head(4).iterrows())}.</p>
 
-{ev('Evidence \u2014 September cash by product category',
+{ev('Evidence — September cash by product category',
     T(['Category', 'Sales', 'Cash'], [[k, int(r['size']), R(r['sum'])] for k, r in CATS.iterrows()], 'num'))}
 
 <h2>The room</h2>
@@ -548,7 +548,7 @@ late cancellations down {abs(YR[2026]["lc"]/YR[2025]["lc"]-1)*100:.0f}%, cash pe
 {REC_HTML}
 {SRCBOX}
 ''')
-open('/home/user/Bandra_September_2026_7_Studio_Overview.html', 'w').write(HTML)
+open('/home/user/reports-arena/Bandra_September_2026_7_Studio_Overview.html', 'w').write(HTML)
 print(f'Report 7 written: {len(HTML)} bytes')
 print('leads', len(LBc), '| won pct', round(LBc['won'].mean()*100, 1))
 print('channel:', CH[['leads','won','ltv']].to_dict('index'))

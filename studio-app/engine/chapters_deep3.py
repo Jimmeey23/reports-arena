@@ -2,7 +2,7 @@
 from __future__ import annotations
 import numpy as np, pandas as pd
 from .design import (R, Rs, P, N, T, ev, note, bars, lines, hbars, diverging, stacked,
-                     funnel, dumbbell, A1, A2, A3, B1, B2, N1, N2)
+                     funnel, dumbbell, A1, A2, A3, B1, B2, N1, N2, fd, fdt)
 from .metrics import DAYS, MONTH_NAMES, rng
 from .deep import (sec, tab, frame_ev, statgrid, hyp, method, appendix, guide, kpi, money, pc, _n,
                    clean, dpc, share, ratio, concentration, extremes, rank_list)
@@ -45,9 +45,11 @@ def lapse(M):
                   f'{M.led["paid"]:,} of them were paid for, carrying {R(M.led["cash"])} of recorded money. '
                   + (f'{share(M.led["lapsed_cash"], M.led["cash"])} of that money belongs to memberships now marked lapsed.'
                      if M.led.get('lapsed_cash') else '')),
-             para('This is not a report about people who left last month. It is the whole book the studio has ever sold here, '
-                  'read as a funnel: what a membership is worth when it is bought, how long it lasts, how much of it is used, '
-                  'and how it ends. The month matters only because the month is where the studio can still act.')]
+             para(f'This chapter is written for <strong>{lab} at {clean(M.studio)}</strong>: the first sections date the '
+                  f'churn to that month alone &mdash; what was bought, what closed, and what runs out next. The rest reads '
+                  f'the whole book the studio has ever sold here as a funnel: what a membership is worth when it is bought, '
+                  f'how long it lasts, how much of it is used, and how it ends &mdash; the context the month\u2019s numbers '
+                  f'need to be judged against.')]
         if hasattr(M, 'median_life'):
             p.append(para(f'The median paid membership at this studio lasts <strong>{M.median_life:.0f} days</strong>. Not '
                           f'months. And the way it ends is not a single story: {LP.get("never", 0):,} memberships recorded no '
@@ -60,6 +62,54 @@ def lapse(M):
         blocks = [statgrid([('Memberships on file', f'{M.led["rows"]:,}'), ('Paid', f'{M.led["paid"]:,}'),
                             ('Money recorded', R(M.led['cash'])), ('Median life', f'{getattr(M, "median_life", 0):.0f} days')])]
         return head('Start here', 'Every membership sold at this studio, read from the day it was bought', claim) + ''.join(p + blocks)
+
+    def periodsec():
+        per = LP.get('period') or {}
+        if not per:
+            return ''
+        cn = per.get('churned_n', 0)
+        bn = per.get('bought_n', 0)
+        en = per.get('ended_n', 0)
+        xn = per.get('expiring_n', 0)
+        if not (cn or bn or en or xn):
+            return ''
+        p = [para(f'The ledger dates every membership, so {lab} can be read on its own before the whole book is read. '
+                  f'During {lab}, <strong>{cn:,} memberships were recorded as churned</strong> at {clean(M.studio)}'
+                  + (f' &mdash; {R(per.get("churned_cash", 0))} of paid money closing out' if per.get('churned_cash') else '')
+                  + (f', and {per.get("churned_never", 0):,} of them had never produced a single attendance.'
+                     if per.get('churned_never') else '.'))]
+        if bn:
+            p.append(para(f'On the other side of the same month, {bn:,} paid memberships were bought for '
+                          f'{R(per.get("bought_cash", 0))}. Those two numbers together are the net movement of the book in '
+                          f'{lab}. Every section that follows reads the all-time ledger behind them, and it is included '
+                          f'because the month\u2019s churn can only be judged against what this studio usually loses.'))
+        if xn:
+            p.append(para(f'{xn:,} memberships ({per.get("expiring_members", xn):,} people) run out within thirty days after '
+                          f'{lab}, carrying {R(per.get("expiring_cash", 0))} of paid value. That is next month\u2019s churn '
+                          f'list, already known and already contactable.'))
+        used = per.get('churned_used')
+        grid = [('Churned in ' + mon, f'{cn:,}'),
+                ('Cash closed out', R(per.get('churned_cash', 0))),
+                ('Bought in ' + mon, f'{bn:,}'),
+                ('Ending within 30 days after', f'{xn:,}')]
+        blocks = [statgrid(grid)]
+        cm = per.get('churned_df')
+        if cm is not None and len(cm):
+            keep = [c for c in ['Member ID', 'Membership Name', 'Amount Paid', 'Purchase Date_x',
+                                'Churned Date_x', 'Sessions Used %', 'Derived Status'] if c in cm.columns]
+            heads = {'Member ID': 'Member', 'Membership Name': 'Product', 'Amount Paid': 'Paid',
+                     'Purchase Date_x': 'Bought', 'Churned Date_x': 'Churned', 'Sessions Used %': 'Used %',
+                     'Derived Status': 'Status'}
+            fmts = {'Member ID': 'w', 'Membership Name': 'w', 'Amount Paid': 'm', 'Purchase Date_x': 'd',
+                    'Churned Date_x': 'd', 'Sessions Used %': 'p', 'Derived Status': 'w'}
+            view = cm[keep].sort_values('Amount Paid', ascending=False) if 'Amount Paid' in keep else cm[keep]
+            blocks.append(frame_ev(f'Evidence &mdash; the memberships churned during {lab}, largest first',
+                                   view.head(60), [heads[c] for c in keep], [fmts[c] for c in keep],
+                                   blurb='Dates shown in IST as the ledger records them. Only the selected month is listed.'))
+            if used is not None and used == used:
+                p.append(para(f'The churn of {lab} was not mostly burnt-out loyalists: those closed memberships had used '
+                              f'{used:.0f}% of their classes on average, and the table below shows the largest of them.'))
+        return sec(f'{lab}, dated', 'Churn that actually happened in the selected month', p, blocks)
 
     def shape():
         st = getattr(M, 'status_mix', None)
@@ -318,8 +368,8 @@ def lapse(M):
                                                      'Membership Duration (Days)', 'Total Sessions Completed', 'Sessions Used %',
                                                      'Remaining Sessions', 'Derived Status']].head(70),
                               ['Member ID', 'Product', 'Paid', 'Start', 'End', 'Days', 'Sessions', 'Used %', 'Left', 'Status'],
-                              ['w', 'w', 'm', 'w', 'w', 'n', 'n', 'p', 'n', 'w'],
-                              blurb='Rows as the ledger holds them. Dates shown as recorded.'))
+                              ['w', 'w', 'm', 'd', 'd', 'n', 'n', 'p', 'n', 'w'],
+                              blurb='Rows as the ledger holds them. Dates shown in IST.'))
         return sec(f'The month inside the ledger', 'What was sold, and what it is already worth', p, b)
 
     def causes():
@@ -339,7 +389,7 @@ def lapse(M):
                   'Ask directly, on the day the status changes, and record the answer in the same file.')]
         return sec('What else could explain it', 'Causes the studio has not considered', [para('Churn is the chapter where the obvious explanation is usually wrong, so each candidate is stated with what would have to be true.')], [hyp(items)])
 
-    body = run([start, shape, twoways, used, decline, prod, thismonth, winnable, cost, causes])
+    body = run([start, periodsec, thismonth, shape, twoways, used, decline, prod, winnable, cost, causes])
     defs = [('Membership', 'one row of the lapsed and new-members export, which lists every membership the studio has ever created for this location, whatever its current state.'),
             ('Paid', 'a membership whose amount paid is above zero and whose name is not a staff, complimentary, credit or referral product.'),
             ('Lapsed', 'the Derived Status column as the system computes it, cross-checked against the churn and end dates on the row.'),
@@ -352,17 +402,32 @@ def lapse(M):
     body += appendix(M, X, 'lapse')
     body += method(M, defs, caut)
     st = getattr(M, 'status_mix', pd.Series(dtype=float))
-    kpis = [kpi('Memberships on file', f'{M.led["rows"]:,}', f'{M.led["members"]:,} people'),
-            kpi('Paid memberships', f'{M.led["paid"]:,}', R(M.led['cash']) + ' of recorded money'),
-            kpi('Median life', f'{getattr(M, "median_life", 0):.0f} days', 'days, not months', 'neg'),
-            kpi('Never attended', f'{LP.get("never", 0):,}', share(LP.get('never', 0), M.led['rows']) + ' of the ledger', 'neg')]
-    facts = [f'{M.led["rows"]:,} memberships at this studio, {M.led["paid"]:,} of them paid for, across {R(M.led["cash"])} of recorded money.',
-             f'The median paid membership lasts {getattr(M, "median_life", 0):.0f} days; {LP.get("never", 0):,} produced no attendance at all.',
-             f'{LP.get("money_left", 0):,.0f} classes sit unspent on the book, worth about {R(LP.get("money_left", 0))} of delivered value.']
+    per = LP.get('period') or {}
+    kpis = []
+    if per.get('churned_n') or per.get('bought_n'):
+        kpis.append(kpi(f'Churned in {mon}', f'{per.get("churned_n", 0):,}',
+                        R(per.get('churned_cash', 0)) + ' closed out', 'neg'))
+        kpis.append(kpi(f'Bought in {mon}', f'{per.get("bought_n", 0):,}',
+                        R(per.get('bought_cash', 0)) + ' of new money', 'pos'))
+    kpis += [kpi('Memberships on file', f'{M.led["rows"]:,}', f'{M.led["members"]:,} people'),
+             kpi('Paid memberships', f'{M.led["paid"]:,}', R(M.led['cash']) + ' of recorded money'),
+             kpi('Median life', f'{getattr(M, "median_life", 0):.0f} days', 'days, not months', 'neg')]
+    if per.get('expiring_n'):
+        kpis.append(kpi('Expiring next 30 days', f'{per["expiring_n"]:,}',
+                        R(per.get('expiring_cash', 0)) + ' at risk', 'neg'))
+    else:
+        kpis.append(kpi('Never attended', f'{LP.get("never", 0):,}', share(LP.get('never', 0), M.led['rows']) + ' of the ledger', 'neg'))
+    facts = []
+    if per.get('churned_n') or per.get('bought_n'):
+        facts.append(f'{per.get("churned_n", 0):,} memberships churned during {lab} ({R(per.get("churned_cash", 0))} of paid '
+                     f'money closed out), while {per.get("bought_n", 0):,} were bought for {R(per.get("bought_cash", 0))}.')
+    facts += [f'{M.led["rows"]:,} memberships at this studio, {M.led["paid"]:,} of them paid for, across {R(M.led["cash"])} of recorded money.',
+              f'The median paid membership lasts {getattr(M, "median_life", 0):.0f} days; {LP.get("never", 0):,} produced no attendance at all.',
+              f'{LP.get("classes_left", 0):,.0f} classes sit unspent on the book, worth about {R(LP.get("money_left", 0))} of delivered value.']
     if surv is not None and len(surv):
         facts.insert(1, f'{surv.iloc[2]["still"]:.0f}% of paid memberships survive thirty days and {surv.iloc[-1]["still"]:.1f}% survive a year.')
     ch = dict(id='lapse', n=4, title='Memberships Lapsed and Churned', body=body, kpis=kpis, facts=facts,
-              subtitle=f'{M.led["paid"]:,} paid memberships, median life {getattr(M, "median_life", 0):.0f} days')
+              subtitle=f'{lab} first, then the whole book · {M.led["paid"]:,} paid memberships, median life {getattr(M, "median_life", 0):.0f} days')
     ch['recs_extra'] = recs_lapse(M, X)
     return ch
 

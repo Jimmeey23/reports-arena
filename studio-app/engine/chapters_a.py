@@ -17,13 +17,13 @@ def sales(M):
     F, P1 = M.sales[M.y], M.sales.get(M.y - 1)
     L = M.room.get(M.y, {})
     body = []
-    kpis = [_k('Cash taken', R(F['cash']), f"{F['lines']} transactions from {F['buyers']} buyers", 'pos'),
+    kpis = [_k('Cash taken', R(F['cash']), f"{F['txn']} transactions from {F['buyers']} buyers", 'pos'),
             _k('Average buyer', R(F['ticket']), (f"{F['ticket']/P1['ticket']*100-100:+.0f}% on {M.y-1}" if P1 else ''), 'pos'),
             _k('Class revenue', R(L.get('rev', 0)), 'attributed to attended classes', 'pos'),
             _k('Revenue per class', R(L.get('rpc', 0)), f"against {R(M.room[M.y-1]['rpc'])} a year earlier" if (M.y-1) in M.room else '', 'pos')]
 
     body.append(f'''<h2>Start here</h2>
-<p>{F['buyers']} people bought something at {M.studio} in {M.label}, for <strong>{R(F['cash'])}</strong> across {F['lines']} transactions.
+<p>{F['buyers']} people bought something at {M.studio} in {M.label}, for <strong>{R(F['cash'])}</strong> across {F['txn']} transactions.
 That is an average of {R(F['ticket'])} a buyer{f", against {R(P1['ticket'])} in {MONTH_NAMES[M.m-1]} {M.y-1}" if P1 else ""}.</p>
 <p>The month's class revenue of {R(L.get('rev', 0))} was earned on {L.get('sessions', 0)} classes, at
 <strong>{R(L.get('rpc', 0))} a class and {R(L.get('rph', 0))} for every seat filled</strong>. Revenue per class is the number worth watching: it rises when the
@@ -43,7 +43,7 @@ studio fills better, prices better, or sells better products, and it is the only
         body.append(f'''<h2>The year in context</h2>
 <p>Against {MONTH_NAMES[M.m-1]} {M.y-1}, cash is {'up' if d >= 0 else 'down'} {R(abs(d))} and the average buyer is
 {'worth more' if F['ticket'] >= P1['ticket'] else 'worth less'}. The counts moved differently from the value:
-{F['lines']} transactions against {P1['lines']}, from {F['buyers']} buyers against {P1['buyers']}.</p>
+{F['txn']} transactions against {P1['txn']}, from {F['buyers']} buyers against {P1['buyers']}.</p>
 <p>Discounted sales account for {F['spread']:.0f}% of the month{f", against {P1['spread']:.0f}% a year earlier" if P1 else ""}, at an average depth of
 {F['depth']:.1f}%{f" against {P1['depth']:.1f}%" if P1 else ""}.</p>''')
         body.append(bars([f'{MONTH_NAMES[M.m-1][:3]} {y}' for y in sorted(M.sales)],
@@ -59,7 +59,7 @@ studio fills better, prices better, or sells better products, and it is the only
                          'The hour of the day the studio takes its money', h=290,
                          note=f'The busiest trading hour of the month was {best:02d}:00.'))
 
-    facts = [f'{M.label}: {R(F["cash"])} taken from {F["buyers"]} buyers across {F["lines"]} transactions.',
+    facts = [f'{M.label}: {R(F["cash"])} taken from {F["buyers"]} buyers across {F["txn"]} transactions.',
              f'Average buyer value {R(F["ticket"])}' + (f', against {R(P1["ticket"])} a year earlier.' if P1 else '.'),
              f'Class revenue {R(L.get("rev", 0))} at {R(L.get("rpc", 0))} a class and {R(L.get("rph", 0))} per seat filled.']
     return dict(id='sales', n=1, title='Sales Performance', lede=body[0].split('</h2>')[1][:400],

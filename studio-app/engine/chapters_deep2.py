@@ -295,8 +295,9 @@ def classperf(M):
         w = C.get('weeks')
         if w is None or not len(w):
             return ''
+        trend = 'The fade is in the last week' if w['fill'].iloc[-1] < w['fill'].iloc[0] else 'The month strengthened as it went'
         p = [para(f'Split into weeks, the month ran ' + ' → '.join(f'week {int(i)} {r["fill"]:.0f}%' for i, r in w.iterrows())
-                  + f'. {'The fade is in the last week' if w['fill'].iloc[-1] < w['fill'].iloc[0] else 'The month strengthened as it went'}: '
+                  + f'. {trend}: '
                   f'week {int(w.index[0])} filled {w["fill"].iloc[0]:.0f}% and week {int(w.index[-1])} filled {w["fill"].iloc[-1]:.0f}%, '
                   f'on {int(w["classes"].iloc[-1])} classes against {int(w["classes"].iloc[0])}.'),
              para('A single-month review that ignores this shape will attribute a calendar effect to management. Weeks are '

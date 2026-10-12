@@ -9,7 +9,7 @@ def blk(t, f):
     except Exception as e:
         import traceback; print('FAILED', type(e).__name__, e); traceback.print_exc(limit=2)
 
-CK = pd.read_csv('/home/user/google_drive/Day End Report - Part 4', low_memory=False, usecols=[
+CK = pd.read_csv('/home/user/reports-arena/google_drive/Day End Report - Part 4', low_memory=False, usecols=[
     'Member ID','Location','Date (IST)','Checked In','Cleaned Class','Teacher Name','Time','Day of Week','Is New'])
 CK = CK[(CK['Location'] == B)].copy(); CK['dt'] = pd.to_datetime(CK['Date (IST)'], errors='coerce')
 CK = CK[CK['dt'].notna() & (CK['Checked In'] == True)].copy()
@@ -73,7 +73,7 @@ blk('19. WHO LEFT AFTER SEPT-25', f19)
 # ---------------------------------------------------------------- 20
 def f20():
     """Days to second visit + conversion speed from the member file."""
-    M = pd.read_csv('/home/user/uploads/Day End Report - Part 1 - New (9).csv', low_memory=False)
+    M = pd.read_csv('/home/user/reports-arena/uploads/Day End Report - Part 1 - New (9).csv', low_memory=False)
     Mb = M[M['First Visit Location'] == B].copy()
     for c in ['Days To Second Visit','Ltv','No of Visits','Ltv Post Trial','Conversion Span (Days)','Visits Per Month']:
         Mb[c] = pd.to_numeric(Mb[c].astype(str).str.replace(r'[,\s₹]','',regex=True), errors='coerce')
@@ -111,7 +111,7 @@ def f21():
             if len(a) < 20: continue
             rows.append(dict(mon=f'{y}-{m:02d}', members=a['Member ID'].nunique(), seats=len(a)))
     t = pd.DataFrame(rows)
-    X = pd.read_csv('/home/user/uploads/Day End Report - Part 3 - Sessions (19).csv', low_memory=False)
+    X = pd.read_csv('/home/user/reports-arena/uploads/Day End Report - Part 3 - Sessions (19).csv', low_memory=False)
     X = X[X['Location'] == B].copy(); X['dt'] = pd.to_datetime(X['Date'], errors='coerce')
     X['Revenue'] = pd.to_numeric(X['Revenue'].astype(str).str.replace(',',''), errors='coerce').fillna(0)
     r = X.groupby(X['dt'].dt.to_period('M'))['Revenue'].sum().reset_index()

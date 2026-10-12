@@ -36,22 +36,22 @@ def _grp(n):
     return ('-' if n < 0 else '') + out
 
 def R(x, plus=False):
-    if x is None or (isinstance(x, float) and np.isnan(x)): return '\u2014'
-    if x < 0: return f'\u2212\u20b9{_grp(x)}'
-    return f'{("+" if plus else "")}\u20b9{_grp(x)}'
+    if x is None or (isinstance(x, float) and np.isnan(x)): return '—'
+    if x < 0: return f'−₹{_grp(x)}'
+    return f'{("+" if plus else "")}₹{_grp(x)}'
 def Rs(x):
-    if x is None or (isinstance(x, float) and np.isnan(x)): return '\u2014'
-    return ('+' if x >= 0 else '\u2212') + '\u20b9' + _grp(x)
+    if x is None or (isinstance(x, float) and np.isnan(x)): return '—'
+    return ('+' if x >= 0 else '−') + '₹' + _grp(x)
 def P(x, d=1):
-    if x is None or (isinstance(x, float) and np.isnan(x)): return '\u2014'
+    if x is None or (isinstance(x, float) and np.isnan(x)): return '—'
     return f'{x:.{d}f}%'
 def N(x, d=0):
-    if x is None or (isinstance(x, float) and np.isnan(x)): return '\u2014'
+    if x is None or (isinstance(x, float) and np.isnan(x)): return '—'
     return f'{x:,.{d}f}'
 def UP(v, good=None):
     """arrow + coloured change string"""
     if v is None or (isinstance(v, float) and np.isnan(v)): return '<span class="t-neu">flat</span>'
-    ar = '\u25b2' if v > 0 else ('\u25bc' if v < 0 else '\u2014')
+    ar = '▲' if v > 0 else ('▼' if v < 0 else '—')
     cls = 't-neu'
     if v != 0:
         good = (v > 0) if good is None else good
@@ -173,7 +173,7 @@ def lines(labels, series, title, w=1000, h=320, as_pct=True, ymax=None, note='',
     o.append('</svg>')
     return _fig(title, ''.join(o), note)
 
-def hbars(items, title, w=1000, unit='\u20b9', as_pct=False, maxv=None, note='', pl=210):
+def hbars(items, title, w=1000, unit='₹', as_pct=False, maxv=None, note='', pl=210):
     row_h = 29; pr, pt, pb = 92, 24, 30
     h = pt+pb+row_h*len(items); iw = w-pl-pr
     mx = maxv or max([abs(v) for _, v, _ in items] or [1])
@@ -205,7 +205,7 @@ def diverging(items, title, w=1000, maxv=None, note=''):
         else:
             o.append(f'<rect x="{mid-bl:.1f}" y="{y+4:.1f}" width="{bl:.1f}" height="{row_h-12}" fill="{B1}" rx="2"/>'); tx = mid-bl-8
         o.append(f'<text x="{pl-10}" y="{y+row_h/2+4:.1f}" text-anchor="end" font-size="11.5" fill="{INK}">{lab}</text>')
-        lbl = ('+' if v >= 0 else '\u2212')+f'\u20b9{_grp(v)}'
+        lbl = ('+' if v >= 0 else '−')+f'₹{_grp(v)}'
         o.append(f'<text x="{tx:.1f}" y="{y+row_h/2+4:.1f}" text-anchor="{"start" if v >= 0 else "end"}" font-size="11" fill="{MUT}">{lbl}</text>')
     o.append('</svg>')
     return _fig(title, ''.join(o), note)
@@ -243,7 +243,7 @@ def dumbbell(items, title, w=1000, unit='%', note='', lo_lab='before', hi_lab='a
         o.append(f'<circle cx="{xb:.1f}" cy="{y+10:.1f}" r="5" fill="{A1}"/>')
         o.append(f'<text x="{pl-10}" y="{y+14:.1f}" text-anchor="end" font-size="11.5" fill="{INK}">{lab}</text>')
         o.append(f'<text x="{max(xa,xb)+11:.1f}" y="{y+14:.1f}" font-size="11" fill="{MUT}">'
-                 f'{a:.1f}{unit} \u2192 {b:.1f}{unit}</text>')
+                 f'{a:.1f}{unit} → {b:.1f}{unit}</text>')
     o.append('</svg>')
     return _fig(title, ''.join(o), note)
 

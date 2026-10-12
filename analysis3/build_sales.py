@@ -33,7 +33,7 @@ CH_MIX = bars([str(y) for y in [2024, 2025, 2026]],
 _mv = MOVERS.head(10)
 CH_MOVERS = diverging([(i, r['d']) for i, r in _mv.iterrows()],
     'Product-level change against September 2025', maxv=300000,
-    note='Two long memberships account for almost the whole of the year-on-year movement. Studio 1 Month Unlimited fell by \u20b92,54,968 on 15 fewer sales, and Studio 3 Month Unlimited by \u20b91,54,204 on 3 fewer. Against that, two new longer products landed in September for the first time.')
+    note='Two long memberships account for almost the whole of the year-on-year movement. Studio 1 Month Unlimited fell by ₹2,54,968 on 15 fewer sales, and Studio 3 Month Unlimited by ₹1,54,204 on 3 fewer. Against that, two new longer products landed in September for the first time.')
 
 _dur = D.SB[(D.SB['dt'] >= '2025-01-01') & (D.SB['dt'] < '2026-10-01')]
 _dmm = _dur[_dur['Cleaned Category'] == 'Memberships'].copy()
@@ -55,11 +55,11 @@ _ladder = PPC.sort_values('per_class')
 CH_LADDER = hbars([(r['product'].replace('Studio ', ''), r['per_class'], BLU if r['per_class'] > 1600 else GOLD)
                    for _, r in _ladder.iterrows()],
     'What a class actually costs the member, by package — September 2026', maxv=2100,
-    note='The 12-class package is the cheapest per class at \u20b91,444; the 2-for-1 intro pack halves that again to \u20b9971. Yet the 10-class package sells at \u20b91,735 a class and nearly matches the 12-class on volume. There is room to nudge buyers up a tier.')
+    note='The 12-class package is the cheapest per class at ₹1,444; the 2-for-1 intro pack halves that again to ₹971. Yet the 10-class package sells at ₹1,735 a class and nearly matches the 12-class on volume. There is room to nudge buyers up a tier.')
 
 CH_BANDS = bars(list(BANDS.index), [('Transactions', BANDS['n'].tolist(), GREY), ('Revenue (scaled)', [v/30000 for v in BANDS['rev']], TER)],
     'Transaction size — where 213 sales actually sit', h=310, as_pct=False, ymax=200,
-    note=f'{BANDS.loc[LABS[0],"n"]:.0f} transactions were under \u20b92,000 — {BANDS.loc[LABS[0],"n"]/213*100:.0f}% of all sales — but they produced only {BANDS.loc[LABS[0],"pct"]:.0f}% of revenue. Revenue is scaled down by 30,000 to share the axis.')
+    note=f'{BANDS.loc[LABS[0],"n"]:.0f} transactions were under ₹2,000 — {BANDS.loc[LABS[0],"n"]/213*100:.0f}% of all sales — but they produced only {BANDS.loc[LABS[0],"pct"]:.0f}% of revenue. Revenue is scaled down by 30,000 to share the axis.')
 
 CH_SOLD = hbars([(i, r['rev_26'], BLU if r['rev_26'] > 200000 else GOLD) for i, r in SOLD.iterrows()],
     'Who wrote the sales — September 2026', maxv=440000,
@@ -82,10 +82,10 @@ band_rows = [[i, f"{int(r['n'])}", f"{r['n']/len(s26)*100:.0f}%", R(r['rev']), P
 BAND_T = T(['Transaction size', 'Sales', 'Share of sales', 'Revenue', 'Share of revenue'], band_rows, 'mono')
 
 sold_rows = [[i if i != '-' else 'Not attributed', f"{int(r['n_26'])}", R(r['rev_26']),
-              R(r['avg_26']) if pd.notna(r['avg_26']) else '\u2014',
-              R(r['per_month']) if pd.notna(r.get('per_month')) else '\u2014',
+              R(r['avg_26']) if pd.notna(r['avg_26']) else '—',
+              R(r['per_month']) if pd.notna(r.get('per_month')) else '—',
               P(r['rev_26']/cash26*100)] for i, r in SOLD.iterrows()]
-SOLD_T = T(['Salesperson', 'Sales', 'Revenue', 'Average sale', 'Jan\u2013Sep monthly average', 'Share of Sept-26'], sold_rows, 'mono')
+SOLD_T = T(['Salesperson', 'Sales', 'Revenue', 'Average sale', 'Jan–Sep monthly average', 'Share of Sept-26'], sold_rows, 'mono')
 
 disc_rows = [[i, f"{int(r['n'])}", R(r['discount']), R(r['rev']), P(r['avg_depth'])] for i, r in
              s26[s26['disc'] > 0].assign(list=lambda d: d['val']+d['disc'], depth=lambda d: d['disc']/(d['val']+d['disc'])*100).groupby('Cleaned Product').agg(n=('Sale ID', 'size'), discount=('disc', 'sum'), rev=('val', 'sum'), avg_depth=('depth', 'mean')).sort_values('discount', ascending=False).iterrows()]
@@ -100,7 +100,7 @@ yc = pd.concat([ytd25.groupby(ytd25['dt'].dt.month)['val'].sum().rename('m25'),
 yc.index = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep']
 YTD_T = T(['Month', '2025', '2026', 'Change'],
           [[m, R(r['m25']), R(r['m26']), Rs(r['m26']-r['m25'])] for m, r in yc.iterrows()] +
-          [['<strong>Jan\u2013Sep</strong>', f"<strong>{R(ytd25['val'].sum())}</strong>", f"<strong>{R(ytd26['val'].sum())}</strong>", f"<strong>{Rs(ytd26['val'].sum()-ytd25['val'].sum())}</strong>"]], 'mono')
+          [['<strong>Jan–Sep</strong>', f"<strong>{R(ytd25['val'].sum())}</strong>", f"<strong>{R(ytd26['val'].sum())}</strong>", f"<strong>{Rs(ytd26['val'].sum()-ytd25['val'].sum())}</strong>"]], 'mono')
 CH_YTD = lines(list(yc.index), [('2025', yc['m25'].tolist(), GREY), ('2026', yc['m26'].tolist(), TER)],
     'Monthly cash received, January to September', as_pct=False, ymax=2200000, note=f'Two months carry the year: April was up {R(yc.loc["Apr","m26"]-yc.loc["Apr","m25"])} and August up {R(yc.loc["Aug","m26"]-yc.loc["Aug","m25"])}. September is the third-weakest month of 2026, and the whole year is within {abs(ytd_yoy):.1f}% of 2025.')
 
@@ -112,11 +112,11 @@ PM_T = T(['Payment method', 'Transactions', 'Revenue', 'Share'], pm_rows, 'mono'
 
 # ------------------------------------------------------------------ recommendations
 # ------------------------------------------------------------ round-5 additions: what the first purchase predicts
-N9 = pd.read_csv('/home/user/uploads/Day End Report - Part 1 - New (9).csv', low_memory=False)
+N9 = pd.read_csv('/home/user/reports-arena/uploads/Day End Report - Part 1 - New (9).csv', low_memory=False)
 N9 = N9[N9['First Visit Location'] == 'Supreme HQ, Bandra'].copy()
 for _c in ['Ltv', 'No of Visits', 'Days To Second Visit', 'Visits Per Month']:
     N9[_c] = X.num(N9[_c]) if hasattr(X, 'num') else pd.to_numeric(
-        N9[_c].astype(str).str.replace(r'[,\\s\u20b9]', '', regex=True), errors='coerce')
+        N9[_c].astype(str).str.replace(r'[,\\s₹]', '', regex=True), errors='coerce')
 FP = N9[N9['First Purchase Post Trial'].notna()].groupby('First Purchase Post Trial').agg(
     people=('Member Id', 'size'), ltv=('Ltv', 'mean'), visits=('No of Visits', 'mean'), vpm=('Visits Per Month', 'mean'))
 FP = FP[FP['people'] >= 25].sort_values('ltv', ascending=False)
@@ -135,53 +135,53 @@ CH_FPLTV = hbars([(i, float(r['ltv']), TER if r['ltv'] >= FPN['ltv'].median() el
          'anything except how fast they came back a second time.')
 
 CH_SPEED = bars([str(i) for i in SP.index],
-                [('Mean lifetime value, \u20b9 hundreds', [float(r['ltv']) / 100 for _, r in SP.iterrows()], TER),
-                 ('Mean visits (\u00d78, on the same axis)', [float(r['visits']) * 8 for _, r in SP.iterrows()], GREY)],
+                [('Mean lifetime value, ₹ hundreds', [float(r['ltv']) / 100 for _, r in SP.iterrows()], TER),
+                 ('Mean visits (×8, on the same axis)', [float(r['visits']) * 8 for _, r in SP.iterrows()], GREY)],
     'How fast the second visit came, against what the member went on to be worth', h=320, ymax=430,
     note='The second visit is decided within days and predicts almost everything after it. Members who returned within a week are worth about three times '
          'those who took a month, or never came back.')
 
 RECS = [
  ('01','Re-weight the product ladder toward 12-class packages','Sales + Studio Manager',
-  f'The 12-class package sells at {R(PPC.set_index("product").loc["Studio 12 Class Package","per_class"])} a class \u2014 the best value the studio offers \u2014 and it grew {Rs(MOVERS.loc["Studio 12 Class Package","d"])} on four more sales. The 10-class package costs the member {R(PPC.set_index("product").loc["Studio 10 Class Package","per_class"])} a class and sold 13 units at almost exactly the same average ticket. Both price at roughly \u20b917,300. A member choosing the 10-class package over the 12 is paying the same money for two fewer classes.',
-  f'Moving 6 of September\u2019s 13 ten-class sales up to the twelve-class tier adds {6*2} class credits to the studio\u2019s delivered base at no revenue cost, and is the cleanest available improvement to the entry offer. On September volume that is worth about \u20b91.1 lakh of delivered capacity a year.'),
+  f'The 12-class package sells at {R(PPC.set_index("product").loc["Studio 12 Class Package","per_class"])} a class — the best value the studio offers — and it grew {Rs(MOVERS.loc["Studio 12 Class Package","d"])} on four more sales. The 10-class package costs the member {R(PPC.set_index("product").loc["Studio 10 Class Package","per_class"])} a class and sold 13 units at almost exactly the same average ticket. Both price at roughly ₹17,300. A member choosing the 10-class package over the 12 is paying the same money for two fewer classes.',
+  f'Moving 6 of September’s 13 ten-class sales up to the twelve-class tier adds {6*2} class credits to the studio’s delivered base at no revenue cost, and is the cleanest available improvement to the entry offer. On September volume that is worth about ₹1.1 lakh of delivered capacity a year.'),
  ('02','Put a named owner on every repeat sale','Studio Manager',
-  f'41 of September\u2019s 139 paying members bought more than once \u2014 and they produced {P(s26[s26["Member ID"].isin(s26.groupby("Member ID").size().pipe(lambda c: c[c>=2]).index)]["val"].sum()/cash26*100)} of the month\u2019s {R(cash26)}. Meanwhile {R(SOLD.loc["-","rev_26"])} of September sales \u2014 {SOLD.loc["-","rev_26"]/cash26*100:.0f}% \u2014 have no salesperson recorded, the largest single block in the ledger.',
-  f'Named attribution on the unattributed block would make the repeat-purchase cycle visible and manageable for the first time. Selling one additional package to each of the 98 single-purchase members at September\u2019s median ticket of {R(DN["s_med"][2026])} is worth roughly \u20b91.9 lakh a month.'),
+  f'41 of September’s 139 paying members bought more than once — and they produced {P(s26[s26["Member ID"].isin(s26.groupby("Member ID").size().pipe(lambda c: c[c>=2]).index)]["val"].sum()/cash26*100)} of the month’s {R(cash26)}. Meanwhile {R(SOLD.loc["-","rev_26"])} of September sales — {SOLD.loc["-","rev_26"]/cash26*100:.0f}% — have no salesperson recorded, the largest single block in the ledger.',
+  f'Named attribution on the unattributed block would make the repeat-purchase cycle visible and manageable for the first time. Selling one additional package to each of the 103 single-purchase members at September’s median ticket of {R(DN["s_med"][2026])} is worth roughly ₹1.9 lakh a month.'),
  ('03','Fix the three-month membership before it disappears','Sales + Finance',
-  f'Three-month memberships ran at 18 units in April 2025 and <strong>2 units in September 2026</strong>. Over the same period one-month units fell from 29 to 15. Long-duration commitments \u2014 the product that produces the studio\u2019s cash cushion \u2014 are being sold less often in every length except the new annual tier.',
-  f'Recovering even 8 three-month units a month at the historic average ticket of about \u20b924,900 returns roughly \u20b924 lakh a year of higher-commitment revenue, and materially improves the deferred-revenue position.'),
+  f'Three-month memberships ran at 18 units in April 2025 and <strong>2 units in September 2026</strong>. Over the same period one-month units fell from 29 to 15. Long-duration commitments — the product that produces the studio’s cash cushion — are being sold less often in every length except the new annual tier.',
+  f'Recovering even 8 three-month units a month at the historic average ticket of about ₹24,900 returns roughly ₹24 lakh a year of higher-commitment revenue, and materially improves the deferred-revenue position.'),
  ('04','Standardise discount depth at 15% and stop it leaking past it','Finance + Front Desk',
-  f'36 September transactions carried a discount worth {R(s26["disc"].sum())} in total \u2014 {P(s26["disc"].sum()/(s26["val"].sum()+s26["disc"].sum())*100)} of list value. Depth averages {P(s26[s26["disc"]>0].assign(d=lambda x: x["disc"]/(x["val"]+x["disc"])*100)["d"].mean())}, but the annual membership was discounted 19.2% and the 20-class pack 19.2%, against 14.4% on the standard packages.',
-  f'Holding every discount to the 15% standard while keeping the same volume saves roughly \u20b91.1 lakh a year on September\u2019s pattern alone. Depth discipline is also the single easiest lever to audit.'),
+  f'{int(s26[s26["disc"]>0]["Sale ID"].nunique())} September sales carried a discount worth {R(s26["disc"].sum())} in total — {P(s26["disc"].sum()/(s26["val"].sum()+s26["disc"].sum())*100)} of list value. Depth averages {P(s26[s26["disc"]>0].assign(d=lambda x: x["disc"]/(x["val"]+x["disc"])*100)["d"].mean())}, but the annual membership was discounted 19.2% and the 20-class pack 19.2%, against 14.4% on the standard packages.',
+  f'Holding every discount to the 15% standard while keeping the same volume saves roughly ₹1.1 lakh a year on September’s pattern alone. Depth discipline is also the single easiest lever to audit.'),
  ('05','Treat the single-class price as a deliberate tier, not a default','Sales',
   f'Single classes at {R(PPC.set_index("product").loc["Studio Single Class","avg_price"])} each are now the second-largest unit line at 38 sales, up {Rs(PRODS.loc["Studio Single Class","d"])} year on year. They are profitable per head but they never build a habit, and {R(PPC.set_index("product").loc["Studio Single Class","per_class"])} a class is the worst value the member can pick.',
-  f'Converting a third of September\u2019s 38 single-class buyers into a four-class package at the point of purchase adds about \u20b956,000 of committed revenue from the same people, and gives them a reason to return.'),
+  f'Converting a third of September’s 38 single-class buyers into a four-class package at the point of purchase adds about ₹56,000 of committed revenue from the same people, and gives them a reason to return.'),
  ('06','Protect the new long-duration products','Sales + Finance',
-  f'September produced the studio\u2019s first {R(PRODS.loc["Studio Annual Unlimited","rev_26"])} annual membership and a {R(PRODS.loc["Studio 6 Month Unlimited","rev_26"])} six-month sale \u2014 together {R(PRODS.loc["Studio Annual Unlimited","rev_26"]+PRODS.loc["Studio 6 Month Unlimited","rev_26"])}, or {P((PRODS.loc["Studio Annual Unlimited","rev_26"]+PRODS.loc["Studio 6 Month Unlimited","rev_26"])/cash26*100)} of the month, from two transactions. Both are new propositions and neither existed in September 2025.',
-  f'An annual and a six-month sale replace roughly 15 one-month renewals. If these two products can be sold four times a month rather than once, they add about \u20b911 lakh a year while lengthening the average commitment.'),
+  f'September produced the studio’s first {R(PRODS.loc["Studio Annual Unlimited","rev_26"])} annual membership and a {R(PRODS.loc["Studio 6 Month Unlimited","rev_26"])} six-month sale — together {R(PRODS.loc["Studio Annual Unlimited","rev_26"]+PRODS.loc["Studio 6 Month Unlimited","rev_26"])}, or {P((PRODS.loc["Studio Annual Unlimited","rev_26"]+PRODS.loc["Studio 6 Month Unlimited","rev_26"])/cash26*100)} of the month, from two transactions. Both are new propositions and neither existed in September 2025.',
+  f'An annual and a six-month sale replace roughly 15 one-month renewals. If these two products can be sold four times a month rather than once, they add about ₹11 lakh a year while lengthening the average commitment.'),
  ('07','Make the 213 sales count for retention, not just cash','CRM',
-  f'139 members paid the studio in September, against 143 new clients acquired. The two numbers are close, which means the month\u2019s acquisition effort is not yet compounding into the paying base \u2014 and the existing base contributed {P(D.EXREV/cash26*100)} of the {R(cash26)}.',
+  f'139 members paid the studio in September, against 143 new clients acquired. The two numbers are close, which means the month’s acquisition effort is not yet compounding into the paying base — and the existing base contributed {P(D.EXREV/cash26*100)} of the {R(cash26)}.',
   f'Every September buyer who is not booked into a class within 14 days is a renewal risk. A checkout prompt to book the next class is the cheapest retention intervention available and costs nothing to build.'),
- ('08','Attack frequency, not price \u2014 the money is in the fourth visit','Studio Manager + CRM',
-  f'The check-in ledger shows the base widening to {X.s26["Member ID"].nunique()} members while visits per member fell to {X.s26.groupby("Member ID").size().mean():.2f} from {X.s25.groupby("Member ID").size().mean():.2f}. In the same ledger, members who trained in both Septembers cut their own frequency {abs(X.core_now.mean()/X.core_then.mean()*100-100):.0f}%, costing {X.CORE_LOST} visits \u2014 {X.CORE_LOST/1404*100:.0f}% of everything filled this month. Cash per member actually rose, from {R(981453/X.s25["Member ID"].nunique())} to {R(1306451/X.s26["Member ID"].nunique())}.',
-  f'This is the only lever in the report that does not require new customers. Lifting the {s26.groupby("Member ID").size().eq(1).sum()} members who came exactly once this month to two visits would add about {s26.groupby("Member ID").size().eq(1).sum()} attendances \u2014 roughly {R(s26.groupby("Member ID").size().eq(1).sum()*931)} \u2014 without a single rupee of acquisition spend.'),
+ ('08','Attack frequency, not price — the money is in the fourth visit','Studio Manager + CRM',
+  f'The check-in ledger shows the base widening to {X.s26["Member ID"].nunique()} members while visits per member fell to {X.s26.groupby("Member ID").size().mean():.2f} from {X.s25.groupby("Member ID").size().mean():.2f}. In the same ledger, members who trained in both Septembers cut their own frequency {abs(X.core_now.mean()/X.core_then.mean()*100-100):.0f}%, costing {X.CORE_LOST} visits — {X.CORE_LOST/1404*100:.0f}% of everything filled this month. Cash per member actually rose, from {R(981453/X.s25["Member ID"].nunique())} to {R(1306451/X.s26["Member ID"].nunique())}.',
+  f'This is the only lever in the report that does not require new customers. Lifting the {s26.groupby("Member ID").size().eq(1).sum()} members who came exactly once this month to two visits would add about {s26.groupby("Member ID").size().eq(1).sum()} attendances — roughly {R(s26.groupby("Member ID").size().eq(1).sum()*931)} — without a single rupee of acquisition spend.'),
  ('09','Make the online checkout the default for every membership','Sales + Finance',
   f'Stripe sales averaged {R(X.PM.loc["stripe","sum"]/X.PM.loc["stripe","size"])} a transaction against {R(X.PM.loc["cash","sum"]/X.PM.loc["cash","size"])} for cash, and split-payment sales averaged {R(X.PM.loc["multiple-payment-methods","sum"]/X.PM.loc["multiple-payment-methods","size"])}. Stripe transactions fell from {int(X.sale25.groupby("Payment Method")["val"].size().get("stripe",0))} to {int(X.PM.loc["stripe","size"])} year on year while counter sales rose. The high-value products are migrating off the channel that handles them best.',
   'Routing every membership and multi-class pack through a card-on-file or link-based checkout removes the desk as a bottleneck for the products that need a considered decision, and makes the second purchase a one-tap action rather than a visit.'),
  ('10','Put all discount codes under one owner','Finance',
-  f'Two codes \u2014 NC-2026-SHQ and ZAP10 \u2014 account for {R(X.sale26[X.sale26["Discount Code"].isin(["NC-2026-SHQ","ZAP10"])]["disc"].sum())} of the {R(X.sale26["disc"].sum())} given away in September, on {int(X.sale26[X.sale26["Discount Code"].isin(["NC-2026-SHQ","ZAP10"])].shape[0])} of the month\u2019s 213 sales. A further single use of 20OFFSHQ cost {R(41800)}. Meanwhile the unattributed salesperson block carried the deepest average discount of any channel at 14.8%, against 5.6% for Imran Shaikh.',
+  f'Two codes — NC-2026-SHQ and ZAP10 — account for {R(X.sale26[X.sale26["Discount Code"].isin(["NC-2026-SHQ","ZAP10"])]["disc"].sum())} of the {R(X.sale26["disc"].sum())} given away in September, on {int(X.sale26[X.sale26["Discount Code"].isin(["NC-2026-SHQ","ZAP10"])].shape[0])} of the month’s 213 sales. A further single use of 20OFFSHQ cost {R(41800)}. Meanwhile the unattributed salesperson block carried the deepest average discount of any seller at 16.3%, against 12.8% for Imran Shaikh.',
   'Codes are created by whoever needs one, and nobody compares them. One owner, one register, one monthly review of depth by code makes the discount line controllable for the first time and would have caught the 20OFFSHQ depth before it was granted.'),
  ('11','Sell the second category','Studio Manager',
-  f'{X.SINGLE_CAT:.0f}% of September buyers bought from a single product category and only {int((X.cx>=2).sum())} of {len(X.cx)} shopped across two. The top ten buyers produced {X.TOP10:.0f}% of the month\u2019s cash while the bottom half produced {X.BOT50:.1f}%. A boutique studio lives on the second and third purchase, not the first.',
-  f'A single bundle \u2014 one Barre class, one Cycle class, priced to be obviously better than either alone \u2014 is the cheapest way to move members out of a single format. Members who train in two formats are the studio\u2019s most durable customers, and on this month\u2019s data almost nobody is being asked to become one.')
+  f'{X.SINGLE_CAT:.0f}% of September buyers bought from a single product category and only {int((X.cx>=2).sum())} of {len(X.cx)} shopped across two. The top ten buyers produced {X.TOP10:.0f}% of the month’s cash while the bottom half produced {X.BOT50:.1f}%. A boutique studio lives on the second and third purchase, not the first.',
+  f'A single bundle — one Barre class, one Cycle class, priced to be obviously better than either alone — is the cheapest way to move members out of a single format. Members who train in two formats are the studio’s most durable customers, and on this month’s data almost nobody is being asked to become one.')
 ,
  ('12','Lead with the membership, not the single class','Sales + Front Desk',
   f'A first-time buyer who starts on a <strong>{TOP_STARTER} goes on to be worth {R(FPN["ltv"].max())}</strong>; one who starts on a '
   f'<strong>{LOW_STARTER} is worth {R(FPN["ltv"].min())}</strong>. There are {int(FPN.loc[LOW_STARTER,"people"])} people in that bottom group and '
   f'{int(FPN.loc[TOP_STARTER,"people"])} in the top one.',
-  f'Both are sold at the same desk. Presenting the commitment first \u2014 and treating the trial entry as a route into it rather than as a purchase in its own '
-  f'right \u2014 changes the mix without touching the price list.'),
+  f'Both are sold at the same desk. Presenting the commitment first — and treating the trial entry as a route into it rather than as a purchase in its own '
+  f'right — changes the mix without touching the price list.'),
  ('13','Book the second class before the first one ends','Front Desk + Sales + CRM',
   f'Members who took their second class inside a week are worth <strong>{R(SP7)}</strong>; those who waited a month or never returned are worth '
   f'<strong>{R(SPLAST)}</strong>. There are {SPLAST_N} people in that last group alone.',
@@ -191,8 +191,10 @@ RECS = [
 REC_HTML = rec_html(RECS)
 
 # ------------------------------------------------------------------ source note
+_NW_PAY = len(D.S); _B_LINES = len(D.SB); _B_PAY = D.SB['Sale ID'].nunique()
+_N_SESS = len(D.X); _N_NEW = len(D.M)
 SRC = f'''<h4>Sources and method</h4>
-<p>Three exports at a snapshot of 11 October 2026. <strong>Sales &ndash; Raw</strong> (25,044 succeeded payments network-wide, 6,547 at Bandra) provides cash received, product, discount, salesperson and payment method. <strong>Day End Report &ndash; Part 3 &ndash; Sessions</strong> (25,675 class occurrences) provides revenue attributed to attended classes. <strong>Day End Report &ndash; Part 1 &ndash; New</strong> (21,171 member records) identifies which September revenue came from clients acquired that month.</p>
+<p>Three exports at a snapshot of 11 October 2026. <strong>Sales &ndash; Raw</strong> ({_NW_PAY:,} succeeded, non-voided payments network-wide, {_B_LINES:,} sale lines from {_B_PAY:,} payments at Bandra) provides cash received, product, discount, salesperson and payment method. <strong>Day End Report &ndash; Part 3 &ndash; Sessions</strong> ({_N_SESS:,} class occurrences) provides revenue attributed to attended classes. <strong>Day End Report &ndash; Part 1 &ndash; New</strong> ({_N_NEW:,} member records) identifies which September revenue came from clients acquired that month.</p>
 <h4>What the two revenue measures mean, and why both are shown</h4>
 <p>Cash is money actually received on a payment date; it is what the studio banked. Class-attributed revenue is what the platform allocates to each attended class; it is what the studio delivered. They are different numbers on purpose, and the gap between them is the most informative thing in this report &mdash; it measures how much of what members paid for has not yet been consumed. A widening gap means members are holding unused credits; a narrowing gap means the studio is selling closer to what it delivers.</p>
 <h4>Known limitations</h4>
@@ -204,23 +206,24 @@ SRC = f'''<h4>Sources and method</h4>
 </ul>'''
 
 # ------------------------------------------------------------------ body
+ARROW = '▼' if yoy < 0 else '▲'
 BODY = f'''
 <div class="kpis">
- <div class="kpi"><div class="l">Cash received</div><div class="v">{R(cash26)}</div><div class="d neu">{'\u25bc' if yoy<0 else '\u25b2'} {abs(yoy):.1f}% against September 2025 &mdash; the till held</div></div>
- <div class="kpi"><div class="l">Transactions</div><div class="v">{len(s26)}</div><div class="d">from {DN['s_mem'][2026]} paying members &mdash; {DN['s_mem'][2026]/DN['s_mem'][2025]*100:.0f}% of last September's paying base</div></div>
- <div class="kpi"><div class="l">Average sale</div><div class="v">{R(DN['s_avg'][2026])}</div><div class="d pos">\u25b2 {R(DN['s_avg'][2026]-DN['s_avg'][2025])} against last year \u2014 essentially flat</div></div>
- <div class="kpi"><div class="l">Median sale</div><div class="v">{R(DN['s_med'][2026])}</div><div class="d pos">\u25b2 from {R(DN['s_med'][2025])} \u2014 the typical sale got bigger</div></div>
+ <div class="kpi"><div class="l">Cash received</div><div class="v">{R(cash26)}</div><div class="d neu">{ARROW} {abs(yoy):.1f}% against September 2025 &mdash; the till held</div></div>
+ <div class="kpi"><div class="l">Transactions</div><div class="v">{DN['s_txn'][2026]}</div><div class="d">from {DN['s_mem'][2026]} paying members &mdash; {DN['s_mem'][2026]/DN['s_mem'][2025]*100:.0f}% of last September's paying base</div></div>
+ <div class="kpi"><div class="l">Average sale</div><div class="v">{R(DN['s_avg'][2026])}</div><div class="d pos">▲ {R(DN['s_avg'][2026]-DN['s_avg'][2025])} against last year — essentially flat</div></div>
+ <div class="kpi"><div class="l">Median sale</div><div class="v">{R(DN['s_med'][2026])}</div><div class="d pos">▲ from {R(DN['s_med'][2025])} — the typical sale got bigger</div></div>
 </div>
 <div class="kpis" style="margin-top:16px">
- <div class="kpi"><div class="l">Memberships</div><div class="v">{P(CATS.loc['Memberships','rev_26']/cash26*100)}</div><div class="d">of cash \u2014 still the largest line, but the mix inside it has shortened</div></div>
+ <div class="kpi"><div class="l">Memberships</div><div class="v">{P(CATS.loc['Memberships','rev_26']/cash26*100)}</div><div class="d">of cash — still the largest line, but the mix inside it has shortened</div></div>
  <div class="kpi"><div class="l">Class packages</div><div class="v">{P(CATS.loc['Class Packages','rev_26']/cash26*100)}</div><div class="d pos">▲ {Rs(CATS.loc['Class Packages','rev_26']-CATS.loc['Class Packages','rev_25'])} on the year</div></div>
- <div class="kpi"><div class="l">Discount given</div><div class="v">{R(s26['disc'].sum())}</div><div class="d neu">{P(s26['disc'].sum()/(s26['val'].sum()+s26['disc'].sum())*100)} of list value, on {int((s26['disc']>0).sum())} of {len(s26)} sales</div></div>
+ <div class="kpi"><div class="l">Discount given</div><div class="v">{R(s26['disc'].sum())}</div><div class="d neu">{P(s26['disc'].sum()/(s26['val'].sum()+s26['disc'].sum())*100)} of list value, on {int(s26[s26['disc']>0]['Sale ID'].nunique())} of {DN['s_txn'][2026]} sales</div></div>
  <div class="kpi"><div class="l">From new clients</div><div class="v">{P(D.NEWREV/cash26*100)}</div><div class="d neu">only {R(D.NEWREV)} came from members making their first-ever Bandra purchase</div></div>
 </div>
 
 <h2>Start here</h2>
 <div class="sub">The till held. What sat behind it did not.</div>
-<p>September 2026 banked <strong>{R(cash26)}</strong> across {len(s26)} transactions &mdash; a fall of just <strong>{abs(yoy):.1f}%</strong> on September 2025 and, read on its own, an unremarkable month. The average sale actually rose, from {R(DN['s_avg'][2025])} to <strong>{R(DN['s_avg'][2026])}</strong>, and the median sale rose from {R(DN['s_med'][2025])} to {R(DN['s_med'][2026])}. On the headline numbers this is a steady month.</p>
+<p>September 2026 banked <strong>{R(cash26)}</strong> across {DN['s_txn'][2026]} transactions &mdash; a fall of just <strong>{abs(yoy):.1f}%</strong> on September 2025 and, read on its own, an unremarkable month. The average sale actually rose, from {R(DN['s_avg'][2025])} to <strong>{R(DN['s_avg'][2026])}</strong>, and the median sale rose from {R(DN['s_med'][2025])} to {R(DN['s_med'][2026])}. On the headline numbers this is a steady month.</p>
 <p>Three things underneath it are not steady, and they are what this report is about.</p>
 <p style="padding:16px 18px;background:#F7F7F6;border-radius:3px;font-size:14.5px;margin-bottom:22px">
 <strong>The one-line version, if you read nothing else.</strong> The studio served <strong>{X.s26['Member ID'].nunique()} members this September against {X.s25['Member ID'].nunique()} last September</strong> &mdash;
@@ -235,7 +238,7 @@ movement in the cash line, and it is the difference between a studio running at 
 <div class="call blu">
 <h3>The same flat top line means something completely different in 2026 than it did in 2024</h3>
 <p>Two years ago a large share of the cash the studio took was never drawn down as classes. Members bought packages and long memberships, attended less than they paid for, and the studio kept the difference. That unused capacity was quiet, real revenue &mdash; and it was also a symptom of disengagement.</p>
-<p>By September 2026 that cushion has largely gone: <strong>{CL[2026]['rev']/cash26*100:.0f} of every \u20b9100 banked is now delivered as an attended class</strong>, against {CL[2024]['rev']/cash24*100:.0f} two years earlier. The studio is selling shorter, cheaper, more-consumable products to members who use them. The revenue is more honest. It is also more fragile, because the same flat cash figure now has to be earned every month rather than partly collected in advance.</p>
+<p>By September 2026 that cushion has largely gone: <strong>{CL[2026]['rev']/cash26*100:.0f} of every ₹100 banked is now delivered as an attended class</strong>, against {CL[2024]['rev']/cash24*100:.0f} two years earlier. The studio is selling shorter, cheaper, more-consumable products to members who use them. The revenue is more honest. It is also more fragile, because the same flat cash figure now has to be earned every month rather than partly collected in advance.</p>
 </div>
 <p>This is the single most useful reframe in the report. Bandra&rsquo;s September problem is not that revenue collapsed &mdash; it did not. It is that <strong>the business model quietly shifted from selling commitment to selling consumption</strong>, while the cash total stayed flat and therefore hid the change. Everything the studio needs to fix about retention now has a shorter runway than it did, because there is far less prepaid, unused membership to absorb a bad month.</p>
 
@@ -251,7 +254,7 @@ movement in the cash line, and it is the difference between a studio running at 
 {MOV_T}
 <p>The product-level detail is unusually concentrated. <strong>Studio 1 Month Unlimited alone accounts for {Rs(MOVERS.loc['Studio 1 Month Unlimited','d'])}, and Studio 3 Month Unlimited for {Rs(MOVERS.loc['Studio 3 Month Unlimited','d'])}.</strong> Those two lines explain essentially the entire year-on-year movement in the month. Against them, September produced two products that did not exist a year earlier &mdash; a {R(PRODS.loc['Studio Annual Unlimited','rev_26'])} annual membership and a {R(PRODS.loc['Studio 6 Month Unlimited','rev_26'])} six-month sale &mdash; worth {R(PRODS.loc['Studio Annual Unlimited','rev_26']+PRODS.loc['Studio 6 Month Unlimited','rev_26'])} between them from just two transactions.</p>
 <p>That is the most encouraging line in this report. The studio has found a way to sell long commitments at a high ticket. The task is to sell more than two of them.</p>
-{ev('View every product sold in September, against September 2025', MOV_T + '<p style="font-size:13.5px;color:#7A7267;margin-top:14px">Products with less than \u20b910,000 of movement in either year are excluded above; the full ledger is in the workbook. "Session" is a combined line covering session-type purchases recorded outside the standard package list, averaging \u20b93,002 per sale.</p>')}
+{ev('View every product sold in September, against September 2025', MOV_T + '<p style="font-size:13.5px;color:#7A7267;margin-top:14px">Products with less than ₹10,000 of movement in either year are excluded above; the full ledger is in the workbook. "Session" is a combined line covering session-type purchases recorded outside the standard package list, averaging ₹3,002 per sale.</p>')}
 
 <h2>The commitment-length problem</h2>
 <div class="sub">The studio&rsquo;s forward revenue cushion is thinning</div>
@@ -275,16 +278,16 @@ movement in the cash line, and it is the difference between a studio running at 
 <div class="sub">September in the context of 2026</div>
 {CH_YTD}
 {YTD_T}
-<p>Year to date the studio is within <strong>{abs(ytd_yoy):.1f}%</strong> of 2025 on cash &mdash; {R(ytd26['val'].sum())} against {R(ytd25['val'].sum())} &mdash; while selling {len(ytd25)-len(ytd26)} fewer transactions to {ytd25['Member ID'].nunique()-ytd26['Member ID'].nunique()} fewer paying members. The average sale rose from {R(ytd25['val'].mean())} to {R(ytd26['val'].mean())}. September is not an outlier on cash; it is a normal month in a flat year. The outlier is in what the month delivered, not what it collected.</p>
+<p>Year to date the studio is within <strong>{abs(ytd_yoy):.1f}%</strong> of 2025 on cash &mdash; {R(ytd26['val'].sum())} against {R(ytd25['val'].sum())} &mdash; while selling {ytd25['Sale ID'].nunique()-ytd26['Sale ID'].nunique()} fewer transactions to {ytd25['Member ID'].nunique()-ytd26['Member ID'].nunique()} fewer paying members. The average sale rose from {R(ytd25['val'].sum()/max(ytd25['Sale ID'].nunique(),1))} to {R(ytd26['val'].sum()/max(ytd26['Sale ID'].nunique(),1))}. September is not an outlier on cash; it is a normal month in a flat year. The outlier is in what the month delivered, not what it collected.</p>
 
 <h2>How September was paid for</h2>
 <div class="sub">Transaction size, repeat buyers and payment method</div>
 {CH_BANDS}
 {BAND_T}
-<p>The distribution is thin at the bottom and very fat at the top. <strong>{int(BANDS.loc[LABS[0],'n'])} of the month&rsquo;s 213 sales were under \u20b92,000</strong> and produced {P(BANDS.loc[LABS[0],'pct'])} of revenue, while <strong>{int(BANDS.loc[LABS[5],'n'])} sales above \u20b950,000 produced {P(BANDS.loc[LABS[5],'pct'])}</strong>. The 10&ndash;20k band &mdash; the standard package tier &mdash; carried {P(BANDS.loc[LABS[3],'pct'])} on its own.</p>
+<p>The distribution is thin at the bottom and very fat at the top. <strong>{int(BANDS.loc[LABS[0],'n'])} of the month&rsquo;s {DN['s_lines'][2026]} sale lines were under ₹2,000</strong> and produced {P(BANDS.loc[LABS[0],'pct'])} of revenue, while <strong>{int(BANDS.loc[LABS[5],'n'])} sales above ₹50,000 produced {P(BANDS.loc[LABS[5],'pct'])}</strong>. The 10&ndash;20k band &mdash; the standard package tier &mdash; carried {P(BANDS.loc[LABS[3],'pct'])} on its own.</p>
 <p>That shape is the signature of a business whose revenue depends on a small number of large commitments. It is efficient, and it is concentrated. The three largest sales of the month were {R(175560)}, {R(102344)} and {R(50242)}; the single annual membership is {P(175560/cash26*100)} of September on its own.</p>
 {PM_T}
-<p>Repeat purchasing is doing more work than it appears. <strong>41 of the 139 paying members bought more than once in September, and they produced {P(s26[s26['Member ID'].isin(s26.groupby('Member ID').size().pipe(lambda c: c[c>=2]).index)]['val'].sum()/cash26*100)} of the month&rsquo;s cash.</strong> One member bought thirteen times. The distribution of repeat behaviour, not the acquisition funnel, is what made September look normal.</p>
+<p>Repeat purchasing is doing more work than it appears. <strong>36 of the 139 paying members bought more than once in September, and they produced {P(s26[s26['Member ID'].isin(s26.groupby('Member ID').size().pipe(lambda c: c[c>=2]).index)]['val'].sum()/cash26*100)} of the month&rsquo;s cash.</strong> One member bought eleven times. The distribution of repeat behaviour, not the acquisition funnel, is what made September look normal.</p>
 
 <h2>Who sold it</h2>
 <div class="sub">Salesperson performance, and the largest block in the ledger</div>
@@ -299,7 +302,7 @@ movement in the cash line, and it is the difference between a studio running at 
 <h2>Discounting</h2>
 <div class="sub">{R(s26['disc'].sum())} given away, concentrated at the top of the ladder</div>
 {DISC_T}
-<p>Discounting is disciplined in volume and loose in depth. Only <strong>{int((s26['disc']>0).sum())} of {len(s26)} sales carried a discount</strong>, but the depth averaged {P(s26[s26['disc']>0].assign(d=lambda x: x['disc']/(x['val']+x['disc'])*100)['d'].mean())} and reached <strong>19.2% on the annual membership and the 20-class pack</strong>, against 14.4% on the standard monthly and three-month products. The deeper discounts sit on the highest-value products &mdash; which is where each percentage point costs the most. The annual membership&rsquo;s discount alone was {R(41800)}.</p>
+<p>Discounting is disciplined in volume and loose in depth. Only <strong>{int(s26[s26['disc']>0]['Sale ID'].nunique())} of {DN['s_txn'][2026]} sales carried a discount</strong>, but the depth averaged {P(s26[s26['disc']>0].assign(d=lambda x: x['disc']/(x['val']+x['disc'])*100)['d'].mean())} and reached <strong>19.2% on the annual membership and the 20-class pack</strong>, against 14.4% on the standard monthly and three-month products. The deeper discounts sit on the highest-value products &mdash; which is where each percentage point costs the most. The annual membership&rsquo;s discount alone was {R(41800)}.</p>
 
 {SALES_B}
 
@@ -345,13 +348,13 @@ took a month, or never came back at all, are worth <strong>{R(SPLAST)}</strong>.
 <div class="sub">How to read these numbers, and what they cannot show</div>
 {SRC}'''
 
-HTML = page('Supreme HQ, Bandra \u2014 Sales Performance, September 2026',
+HTML = page('Supreme HQ, Bandra — Sales Performance, September 2026',
             'Sales Performance Review &nbsp;&middot;&nbsp; September 2026',
             'Supreme HQ, Bandra',
             f'September banked {R(cash26)} &mdash; within {abs(yoy):.1f}% of last year, and indistinguishable from a normal month on the top line. Underneath it, the studio sold the same money in shorter commitments, to more people, and consumed {CL[2026]["rev"]/cash26*100:.0f}% of it as delivered classes against {CL[2024]["rev"]/cash24*100:.0f}% two years ago. '
             f'Two findings stand out. The {len(X.core_ix)} members who trained here in both Septembers gave the studio {abs(X.CORE_LOST)} fewer visits this year, worth about {R(abs(X.CORE_LOST)*(1306451/len(s26)))} of class revenue. And the product a first-time buyer starts on predicts their lifetime value more than anything except how fast they come back: {R(FPN["ltv"].max())} from a {TOP_STARTER.lower()}, {R(FPN["ltv"].min())} from a {LOW_STARTER.lower()}.',
-            f'<span>{len(s26)} transactions</span><span>{DN["s_mem"][2026]} paying members</span><span>Sales ledger, Sessions ledger and member file</span><span>Snapshot 18 October 2026</span>',
+            f'<span>{DN["s_txn"][2026]} transactions</span><span>{DN["s_mem"][2026]} paying members</span><span>Sales ledger, Sessions ledger and member file</span><span>Snapshot 18 October 2026</span>',
             BODY)
-open('/home/user/Bandra_September_2026_1_Sales_Performance.html','w').write(HTML)
+open('/home/user/reports-arena/Bandra_September_2026_1_Sales_Performance.html','w').write(HTML)
 print('Report 1 written:', len(HTML), 'bytes')
 print('cash', round(cash26), '| yoy', round(yoy,1), '| ytd yoy', round(ytd_yoy,1))

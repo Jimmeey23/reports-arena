@@ -15,7 +15,7 @@ and the chapter simply says less, rather than guessing.
 from __future__ import annotations
 import numpy as np, pandas as pd
 from .design import (R, Rs, P, N, T, ev, note, bars, lines, hbars, diverging, stacked,
-                     funnel, dumbbell, A1, A2, A3, B1, B2, N1, N2)
+                     funnel, dumbbell, A1, A2, A3, B1, B2, N1, N2, fd, fdt)
 from .metrics import DAYS, MONTH_NAMES, rng
 from .data import num
 
@@ -109,6 +109,10 @@ def fmt_cell(v, k):
         return pc(v, 0)
     if k == 'w':
         return str(v)
+    if k == 'd':
+        return fd(v)
+    if k == 'dt':
+        return fdt(v)
     return str(v)
 
 
@@ -291,37 +295,54 @@ class Deep:
         self.sales = {}
         if S is None:
             return
-        cur = self.s(S, self.y)
+        def okrows(d):
+            return d[d['ok']] if len(d) and 'ok' in d.columns else d
+        cur = okrows(self.s(S, self.y))
         if cur.empty:
             return
         self.sales['cur'] = cur
-        self.sales['prev'] = self.s(S, self.y - 1)
-        self.sales['y2'] = self.s(S, self.y - 2)
+        self.sales['prev'] = okrows(self.s(S, self.y - 1))
+        self.sales['y2'] = okrows(self.s(S, self.y - 2))
 
         def agg(d):
             if d.empty:
                 return None
-            g = d.groupby('Member ID').agg(cash=('val', 'sum'), lines=('val', 'size'),
-                                           disc=('disc', 'sum'), gross=('gross', 'sum'))
+            if 'Sale ID' in d.columns:
+                g = d.groupby('Member ID').agg(cash=('val', 'sum'), lines=('val', 'size'),
+                                               sales=('Sale ID', 'nunique'),
+                                               disc=('disc', 'sum'), gross=('gross', 'sum'))
+            else:
+                g = d.groupby('Member ID').agg(cash=('val', 'sum'), lines=('val', 'size'),
+                                               disc=('disc', 'sum'), gross=('gross', 'sum'))
+                g['sales'] = g['lines']
             return g
         g, gp = agg(cur), agg(self.sales['prev'])
         self.sales['by_member'] = g
         self.sales['by_member_prev'] = gp
-        # categories, this year and last, with the delta
+        # categories, this year and last, with the delta; 'sold' counts
+        # distinct sales, not item rows
+        sid = 'Sale ID' if 'Sale ID' in cur.columns else None
         if 'Cleaned Category' in cur.columns:
-            c = cur.groupby('Cleaned Category').agg(n=('val', 'size'), rev=('val', 'sum'),
+            c = cur.groupby('Cleaned Category').agg(n=(sid or 'val', 'nunique' if sid else 'size'),
+                                                    rev=('val', 'sum'),
                                                     buyers=('Member ID', 'nunique'), disc=('disc', 'sum'))
             if gp is not None and not self.sales['prev'].empty:
-                p = self.sales['prev'].groupby('Cleaned Category').agg(n2=('val', 'size'), rev2=('val', 'sum'))
+                pv = self.sales['prev']
+                sidp = 'Sale ID' if 'Sale ID' in pv.columns else None
+                p = pv.groupby('Cleaned Category').agg(n2=(sidp or 'val', 'nunique' if sidp else 'size'),
+                                                       rev2=('val', 'sum'))
                 c = c.join(p, how='outer')
             self.sales['cats'] = c.fillna(0).sort_values('rev', ascending=False)
         # products
         if 'Cleaned Product' in cur.columns:
-            p = cur.groupby('Cleaned Product').agg(n=('val', 'size'), rev=('val', 'sum'),
+            p = cur.groupby('Cleaned Product').agg(n=(sid or 'val', 'nunique' if sid else 'size'),
+                                                    rev=('val', 'sum'),
                                                     buyers=('Member ID', 'nunique'), ticket=('val', 'mean'))
             pv = self.sales['prev']
             if len(pv):
-                q = pv.groupby('Cleaned Product').agg(n2=('val', 'size'), rev2=('val', 'sum'))
+                sidp = 'Sale ID' if 'Sale ID' in pv.columns else None
+                q = pv.groupby('Cleaned Product').agg(n2=(sidp or 'val', 'nunique' if sidp else 'size'),
+                                                      rev2=('val', 'sum'))
                 p = p.join(q, how='outer').fillna(0)
                 p['d'] = p['rev'] - p['rev2']
             self.sales['prods'] = p.sort_values('rev', ascending=False)
@@ -367,11 +388,12 @@ class Deep:
                     buyers=('Member ID', 'nunique'))
                 g3['depth'] = g3['given'] / (g3['cash'] + g3['given']) * 100
                 self.sales['codes'] = g3.sort_values('given', ascending=False)
-        # repeat buyers
+        # repeat buyers: a repeat is two or more distinct sales, not two item
+        # lines on one invoice
         if g is not None:
-            self.sales['repeat'] = dict(buyers=int(len(g)), multi=int((g['lines'] > 1).sum()),
-                                        multi_share=float((g['lines'] > 1).mean() * 100),
-                                        multi_cash=float(g[g['lines'] > 1]['cash'].sum()),
+            self.sales['repeat'] = dict(buyers=int(len(g)), multi=int((g['sales'] > 1).sum()),
+                                        multi_share=float((g['sales'] > 1).mean() * 100),
+                                        multi_cash=float(g[g['sales'] > 1]['cash'].sum()),
                                         cash=float(g['cash'].sum()))
             self.sales['repeat']['multi_cash_share'] = self.sales['repeat']['multi_cash'] / max(self.sales['repeat']['cash'], 1) * 100
             r = g['lines'].value_counts().sort_index()
@@ -383,7 +405,9 @@ class Deep:
         for key, yr in [('ytd', self.y), ('ytd_prev', self.y - 1)]:
             try:
                 d = S[(S['_loc'] == M.studio) & (S['_dt'] >= f'{yr}-01-01') & (S['_dt'] < f'{yr}-{self.m:02d}-01')]
-                self.sales[key] = dict(cash=float(d['val'].sum()), lines=len(d),
+                d = okrows(d)
+                self.sales[key] = dict(cash=float(d['val'].sum()),
+                                       lines=int(d['Sale ID'].nunique()) if 'Sale ID' in d.columns else len(d),
                                        buyers=int(d['Member ID'].nunique()))
             except Exception:
                 pass
@@ -588,10 +612,17 @@ class Deep:
         self.nw = {}
         if Nw is None:
             return
-        d = Nw[Nw['_loc'] == M.studio].copy()
+        allrows = Nw[Nw['_loc'] == M.studio].copy()
+        if allrows.empty:
+            return
+        self.nw['all'] = allrows
+        # Acquisition measures run on the explicit newcomer population only;
+        # imports and existing-member first-visit rows would dilute LTV,
+        # conversion and visit averages (atlas reconciliation).
+        d = allrows[allrows['is_new'] == True].copy() if 'is_new' in allrows.columns else allrows.copy()
         if d.empty:
             return
-        self.nw['all'] = d
+        self.nw['d'] = d
         for c, t in [('Ltv', 'ltv'), ('No of Visits', 'visits'), ('Days To Second Visit', 'd2'),
                      ('Conversion Span (Days)', 'cspan'), ('Late Cancel Rate Post Trial', 'lcr'),
                      ('First Purchase Value', 'fpv'), ('Visits Per Month', 'vpm'),
@@ -781,6 +812,53 @@ class Deep:
                      days=('Membership Duration (Days)', 'median'),
                      live=('Derived Status', lambda x: x.isin(['Renewed', 'Active', 'Renewal Grace Period']).mean() * 100)
                      if 'Derived Status' in d else ('Amount Paid', 'mean'))
+        # ------------------------------------------------- the selected period
+        # The rest of this analysis reads the whole ledger. This block scopes
+        # churn to the month the report was generated for: a membership is
+        # attributed to the month its event date (churned / purchased / ended /
+        # last seen) falls in, so the chapter can lead with the period itself
+        # instead of only the all-time book.
+        try:
+            a0, a1 = rng(M.y, M.m)
+            per = {}
+
+            def _win(col, start, end, frame=None):
+                f = frame if frame is not None else d
+                if col not in f.columns:
+                    return None
+                w = f[f[col].between(start, end, inclusive='left')]
+                return w
+
+            cm = _win('Churned Date_x', a0, a1)
+            if cm is not None:
+                per['churned_n'] = int(len(cm))
+                per['churned_members'] = int(cm['Member ID'].nunique()) if 'Member ID' in cm else int(len(cm))
+                per['churned_cash'] = float(cm['Amount Paid'].sum()) if 'Amount Paid' in cm else 0.0
+                per['churned_used'] = float(cm['Sessions Used %'].mean()) if 'Sessions Used %' in cm and len(cm) else np.nan
+                per['churned_never'] = int((cm['Total Sessions Completed'].fillna(0) == 0).sum()) if 'Total Sessions Completed' in cm else 0
+                per['churned_df'] = cm
+            pm = _win('Purchase Date_x', a0, a1, frame=paid)
+            if pm is not None:
+                per['bought_n'] = int(len(pm))
+                per['bought_cash'] = float(pm['Amount Paid'].sum()) if 'Amount Paid' in pm else 0.0
+                per['bought_df'] = pm
+            em = _win('End Date_x', a0, a1)
+            if em is not None:
+                per['ended_n'] = int(len(em))
+            nx = _win('End Date_x', a1, a1 + pd.Timedelta(days=30))
+            if nx is not None:
+                per['expiring_n'] = int(len(nx))
+                per['expiring_members'] = int(nx['Member ID'].nunique()) if 'Member ID' in nx else int(len(nx))
+                per['expiring_cash'] = float(nx['Amount Paid'].sum()) if 'Amount Paid' in nx else 0.0
+            vm = _win('Most Recent Visit Date_x', a0, a1)
+            if vm is not None:
+                per['lastvisit_n'] = int(len(vm))
+                per['lastvisit_members'] = int(vm['Member ID'].nunique()) if 'Member ID' in vm else int(len(vm))
+                if 'Derived Status' in vm:
+                    per['lastvisit_gone_n'] = int(vm['Derived Status'].isin(['Lapsed', 'Churned', 'Expired']).sum())
+            self.lp['period'] = per
+        except Exception:
+            self.lp['period'] = {}
 
     # ------------------------------------------------------------------- leads
     def _leads(self):
@@ -806,8 +884,12 @@ class Deep:
             if '_dt' in d:
                 first = F.apply(lambda r: r.dropna().min(), axis=1)
                 last = F.apply(lambda r: r.dropna().max(), axis=1)
-                d['resp'] = (first - d['_dt']).dt.days
-                self.ld['resp'] = d.dropna(subset=['resp'])['resp'].clip(lower=0)
+                # Follow-ups that predate the enquiry are recording errors;
+                # they are excluded, not clamped to zero (atlas rule).
+                resp = ((first - d['_dt']).dt.total_seconds() / 86400).dropna()
+                resp = resp[resp >= 0]
+                self.ld['resp'] = resp
+                self.ld['resp_hours'] = resp * 24
                 self.ld['fu_span'] = (last - first).dt.days.dropna()
                 cc2 = next((c for c in ['Converted To Customer At_d', 'Converted To Customer At'] if c in d.columns), None)
                 if cc2:
@@ -996,14 +1078,17 @@ class Deep:
             B['method'] = a.groupby(a['Payment Method Name'].astype(str).str.strip()).agg(
                 visits=('Member ID', 'size'), members=('Member ID', 'nunique'), spend=('Paid', lambda s: num(s).sum())).sort_values(
                 'visits', ascending=False)
-        if 'Duration (Minutes)' in a:
-            # the export stores a duration as an Excel time, which lands here as a
-            # 1900 date; the day count from the epoch is the length in minutes
-            du = pd.to_datetime(a['Duration (Minutes)'].astype(str), errors='coerce')
-            mins = (du - pd.Timestamp('1899-12-30')).dt.days
-            mins = mins.where((mins > 5) & (mins < 240))
-            B['dur'] = a.assign(len=mins).dropna(subset=['len']).groupby('len').agg(
-                visits=('Member ID', 'size'), members=('Member ID', 'nunique')).sort_values('visits', ascending=False)
+        if 'Duration Minutes' in a:
+            # data.py already recovered the serial-encoded durations and dropped
+            # implausible values; a session's length still repeats on every
+            # attendee row, so unique sessions carry the hours.
+            dd = a[a['Duration Minutes'].notna()]
+            if len(dd):
+                B['dur'] = dd.assign(len=dd['Duration Minutes']).groupby('len').agg(
+                    visits=('Member ID', 'size'), members=('Member ID', 'nunique')).sort_values('visits', ascending=False)
+                if 'Class No' in dd.columns:
+                    uniq = dd.dropna(subset=['Class No']).drop_duplicates(subset=['Class No'])
+                    B['teaching_hours'] = float(uniq['Duration Minutes'].sum()) / 60
         if 'Cleaned Product' in a:
             g = a.groupby(a['Cleaned Product'].astype(str).str.strip().replace({'nan': 'Unspecified'})).agg(
                 visits=('Member ID', 'size'), members=('Member ID', 'nunique'))

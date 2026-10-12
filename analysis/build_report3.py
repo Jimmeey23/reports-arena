@@ -7,7 +7,7 @@ from prep import load
 # ---------------------------------------------------------------- data
 df = load()
 SNAP = pd.Timestamp('2026-10-11'); BANDRA = 'Supreme HQ, Bandra'
-nn = df[~df['is_import']].copy()
+nn = df[~df['is_import'] & df['is_new']].copy()
 for _d in (nn,):
     _d['obs'] = (SNAP - _d['fvd']).dt.days
 b = nn[nn['First Visit Location'] == BANDRA].copy()
@@ -76,7 +76,7 @@ K['shortfall'] = proj_ltv
 K['ev_conv_gap_val'] = ev_conv_gap * LTV_CONV
 
 # ---------------------------------------------------------------- ROUND 3
-import sys as _sys; _sys.path.insert(0, '/home/user/analysis')
+import sys as _sys; _sys.path.insert(0, '/home/user/reports-arena/analysis')
 from r3 import BLOCKS as R3, CH as R3CH, TB as R3TB, RECS3, SHEETS as R3SHEETS, K3
 import r3 as _r3
 _lvm = _r3.MB.assign(ltv_n=_r3._num(_r3.MB['Ltv'])).groupby('Trainer Name')['ltv_n'].mean()
@@ -721,12 +721,12 @@ HTML = f'''<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/>
 Revenue figures are gross lifetime value as recorded at snapshot, not contribution margin.</footer>
 </div></body></html>'''
 
-open('/home/user/Bandra_September_2026_Performance_Review.html', 'w').write(HTML)
-open('/home/user/Bandra_September_2026_Review_v3.html', 'w').write(HTML)
+open('/home/user/reports-arena/Bandra_September_2026_Performance_Review.html', 'w').write(HTML)
+open('/home/user/reports-arena/Bandra_September_2026_Review_v3.html', 'w').write(HTML)
 
 # ---------------------------------------------------------------- Excel
 def rt(s): return s.replace('₹', '\u20b9')
-with pd.ExcelWriter('/home/user/Bandra_September_2026_Data.xlsx', engine='openpyxl') as xw:
+with pd.ExcelWriter('/home/user/reports-arena/Bandra_September_2026_Data.xlsx', engine='openpyxl') as xw:
     pd.DataFrame([{'Window': k, 'New clients': v['clients'], '30-day conversion %': round(v['conv30'], 1),
                    '30-day 2nd-visit %': round(v['second30'], 1), 'Revenue per new client (90-day)': round(v['rev90'])}
                   for k, v in TTM.items()]).to_excel(xw, sheet_name='1. Twelve-month view', index=False)

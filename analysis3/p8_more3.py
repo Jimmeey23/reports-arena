@@ -2,7 +2,7 @@
 import pandas as pd, numpy as np
 import d1_data as D
 pd.set_option('display.width', 215); pd.set_option('display.max_columns', 70)
-U = '/home/user/uploads/'; B = D.BANDRA
+U = '/home/user/reports-arena/uploads/'; B = D.BANDRA
 def num(s): return pd.to_numeric(pd.Series(s).astype(str).str.replace(r'[,\s₹]', '', regex=True), errors='coerce')
 def hdr(t): print('\n' + '=' * 104 + f'\n{t}\n' + '=' * 104)
 def blk(t, f):
@@ -98,7 +98,7 @@ blk('15. FIRST-PRODUCT RETENTION COHORT', f15)
 # ---------------------------------------------------------------- 16
 def f16():
     """First-visit slot quality: which day/hour/source brings in people who come back."""
-    CK = pd.read_csv('/home/user/google_drive/Day End Report - Part 4', low_memory=False, usecols=[
+    CK = pd.read_csv('/home/user/reports-arena/google_drive/Day End Report - Part 4', low_memory=False, usecols=[
         'Member ID','Location','Date (IST)','Checked In','Cleaned Class','Teacher Name','Time','Day of Week',
         'Is New','First Name'])
     CK = CK[CK['Location'] == B].copy(); CK['dt'] = pd.to_datetime(CK['Date (IST)'], errors='coerce')

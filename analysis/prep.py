@@ -1,6 +1,6 @@
 import pandas as pd, numpy as np
 
-SRC = '/home/user/uploads/Day End Report - Part 1 - New (9).csv'
+SRC = '/home/user/reports-arena/uploads/Day End Report - Part 1 - New (9).csv'
 
 def load():
     df = pd.read_csv(SRC, low_memory=False)
@@ -31,6 +31,9 @@ def load():
     df['fpd'] = pd.to_datetime(df['First Purchase Date'], errors='coerce')
 
     df['is_import']   = df['First Visit Entity Name'].eq('Import Visits')
+    # Explicit newcomer label: rows without a "New - ..." entry type are
+    # existing members' other first-visit records, not acquisitions (atlas).
+    df['is_new']      = df['Is New'].astype(str).str.startswith('New - ')
     df['bandra_home'] = df['Home Location'].eq('Supreme HQ, Bandra')
     df['bandra_fv']   = df['First Visit Location'].eq('Supreme HQ, Bandra')
     df['converted']   = df['Conversion Status'].eq('Converted')

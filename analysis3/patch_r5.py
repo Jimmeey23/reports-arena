@@ -3,7 +3,7 @@ import io, re
 
 NEW_CLASS = '''
 # ------------------------------------------------------------ round-5 additions: the returning core
-_CK = pd.read_csv('/home/user/google_drive/Day End Report - Part 4', low_memory=False,
+_CK = pd.read_csv('/home/user/reports-arena/google_drive/Day End Report - Part 4', low_memory=False,
                   usecols=['Member ID','Location','Date (IST)','Checked In','Cleaned Class','Teacher Name'])
 _CK = _CK[_CK['Location'] == 'Supreme HQ, Bandra'].copy()
 _CK['dt'] = pd.to_datetime(_CK['Date (IST)'], errors='coerce')
@@ -138,7 +138,7 @@ RECS_CLASS = [
 NEW_SALES_SRC = '''
 # ------------------------------------------------------------ round-5 additions
 N9 = pd.read_csv('/home/user/analysis3/e1_data.py'.replace('e1_data.py', 'e1_data.py') and
-                 '/home/user/uploads/Day End Report - Part 1 - New (9).csv', low_memory=False)
+                 '/home/user/reports-arena/uploads/Day End Report - Part 1 - New (9).csv', low_memory=False)
 N9 = N9[N9['First Visit Location'] == 'Supreme HQ, Bandra'].copy()
 from e1_data import num as _num
 for _c in ['Ltv','No of Visits','Days To Second Visit','Visits Per Month','First Purchase Value']:
@@ -236,7 +236,7 @@ CH_CTRL = hbars([(f"{r['slot'].split(' | ')[0].replace('Studio ','')} \\u2014 {r
          f'Only {CS_BIG} of {CS_N} slots show a gap wider than four people.')
 
 # pay per session by discipline, against fill
-_PY = pd.read_csv('/home/user/uploads/Day End Report - Part 1 - Payroll (4).csv', low_memory=False)
+_PY = pd.read_csv('/home/user/reports-arena/uploads/Day End Report - Part 1 - Payroll (4).csv', low_memory=False)
 _PY = _PY[_PY['Location'] == 'Supreme HQ, Bandra'].copy()
 from e1_data import num as _num2
 for _c in ['Cycle Sessions','Cycle Paid','Strength Sessions','Strength Paid','Barre Sessions','Barre Paid']:

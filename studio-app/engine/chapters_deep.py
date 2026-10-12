@@ -97,10 +97,10 @@ def sales(M):
         d = ((F['cash'] - P1['cash']) / P1['cash'] * 100) if P1.get('cash') else None
         delivered = L.get('rev', 0)
         paras = [para(
-            f'{lab} banked <strong>{R(F["cash"])}</strong> across {F["lines"]} transactions from {F["buyers"]} people'
+            f'{lab} banked <strong>{R(F["cash"])}</strong> across {F["txn"]} transactions from {F["buyers"]} people'
             + (f' &mdash; a movement of {abs(d):.1f}% against {yrp(M)}, and on the headline alone an unremarkable month'
                if d is not None else '')
-            + f'. The average transaction was {R(F["cash"] / max(F["lines"], 1))} and the average buyer {R(F["ticket"])}'
+            + f'. The average transaction was {R(F["aov"])} and the average buyer {R(F["ticket"])}'
             + (f', against {R(P1["ticket"])} a year earlier' if P1.get('ticket') else '') + '.')]
         paras.append(para(
             f'Cash is the least interesting number in this chapter. The month delivered {R(delivered)} of attended-class '
@@ -112,7 +112,7 @@ def sales(M):
             claim = (f'{pn["members"]} people trained here in {mon} against {pp.get("members", 0)} in {yrp(M)}, and each of them '
                      f'cost the studio nothing extra to serve. Visits per member moved from {pp.get("per", 0):.2f} to '
                      f'{pn["per"]:.2f}; that single change is worth more than the whole year-on-year movement in the cash line.')
-        blocks = [statgrid([(f'Cash {lab}', R(F['cash'])), ('Transactions', _n(F['lines'])),
+        blocks = [statgrid([(f'Cash {lab}', R(F['cash'])), ('Transactions', _n(F['txn'])),
                             ('Buyers', _n(F['buyers'])), ('Average buyer', R(F['ticket']))]),
                   statgrid([('Attended class revenue', R(delivered)), ('Revenue per class', R(L.get('rpc', 0))),
                             ('Revenue per attendance', R(L.get('rph', 0))),
@@ -280,7 +280,8 @@ def sales(M):
         w = S.get('weeks')
         if w is None or not len(w):
             return ''
-        p = [para(f'The month was not even. Week by week, cash ran {' / '.join(R(v) for v in w["cash"])} &mdash; '
+        wk = " / ".join(R(v) for v in w["cash"])
+        p = [para(f'The month was not even. Week by week, cash ran {wk} &mdash; '
                   f'the strongest week took {share(w["cash"].max(), w["cash"].sum())} of the month and the weakest '
                   f'{share(w["cash"].min(), w["cash"].sum())}.'),
              para(f'{_n(S["dom"]["n"].max())} transactions fell on the single busiest day of the month '
@@ -481,7 +482,7 @@ def sales(M):
                    f'the month has no salesperson attached.',
                    'A rule, not a reminder: every sale needs a name before it can be paid out.'),
                   ('part', 'Festival and calendar effects',
-                   f'Cash concentrated in week {' / '.join(str(int(i)) for i in S["weeks"].index)} shows the month trading to '
+                   f'Cash concentrated in week {" / ".join(str(int(i)) for i in S["weeks"].index)} shows the month trading to '
                    'the payroll calendar. Public holidays and festival weeks move the same way every year and are frequently '
                    'mistaken for performance.',
                    'Compare the same week-of-month pattern for three years before drawing a conclusion.')]
@@ -491,11 +492,13 @@ def sales(M):
                    [hyp(items)])
 
     body = run([start, base, core, mix, commit, ladder, trading, paidfor, soldby, disc, arrived, who, retail, starter, causes])
-    defs = [('Cash taken', 'the Payment Value column of the sales export, summed on Payment Date, filtered to this studio. Refunds and voids are left in as they arrive.'),
+    defs = [('Cash taken', 'the Payment Value column of the sales export, dated on Payment Date, filtered to this studio. Only successful, non-voided payments count.'),
+            ('Net of VAT', 'cash taken minus the Payment VAT recorded on the same lines.'),
             ('Delivered class revenue', 'the Revenue column of the sessions export, on classes actually taught, with at least one attendance.'),
             ('Buyer', 'a distinct Member ID with at least one payment in the month. A household paying twice counts once.'),
+            ('Transaction', 'a distinct Sale ID. One invoice with several items counts once.'),
             ('Repeat buyer', 'a Member ID with two or more distinct sales in the month, not two payments on one invoice.'),
-            ('Discount depth', 'discount as a share of gross value; spread is the share of lines carrying any discount at all.')]
+            ('Discount given', 'item-level discount (unit discount × quantity), which is the only form that can be summed across lines. Depth is the discount as a share of discount plus collected revenue; spread is the share of lines carrying any discount at all.')]
     caut = [('The sales export carries no row for a class bought at another studio and paid here, so cross-studio spend is invisible in this chapter.'),
             ('Cash is not revenue. A twelve-class package sold today is twelve classes of liability; only the sessions ledger shows what has been delivered.'),
             (f'{mon} {y} is read against the same month last year rather than a rolling twelve, because attendance and pricing at this studio both move with the calendar.'),
@@ -503,10 +506,10 @@ def sales(M):
     body += appendix(M, X, 'sales')
     body += method(M, defs, caut)
     kpis = [kpi('Cash taken', R(F['cash']), (f'{(F["cash"] - P1["cash"]) / P1["cash"] * 100:+.1f}% on {yrp(M)}' if P1.get('cash') else ''), 'pos' if P1.get('cash') and F['cash'] >= P1['cash'] else 'neg'),
-            kpi('Transactions', _n(F['lines']), f'{F["buyers"]} buyers'),
+            kpi('Transactions', _n(F['txn']), f'{F["buyers"]} buyers'),
             kpi('Average buyer', R(F['ticket']), (f'{(F["ticket"] - P1["ticket"]) / P1["ticket"] * 100:+.1f}% on the year' if P1.get('ticket') else ''), 'pos' if P1.get('ticket') and F['ticket'] >= P1['ticket'] else 'neg'),
             kpi('Discount given', R(F['disc']), share(F['disc'], F['gross']) + ' of gross')]
-    facts = [f'{R(F["cash"])} of cash from {F["lines"]} transactions and {F["buyers"]} buyers in {lab}, at an average of {R(F["ticket"])} each.',
+    facts = [f'{R(F["cash"])} of cash from {F["txn"]} transactions and {F["buyers"]} buyers in {lab}, at an average of {R(F["ticket"])} each.',
              f'{share(L.get("rev", 0), F["cash"])} of that cash has already been delivered as attended classes ({R(L.get("rev", 0))}).',
              f'{rep.get("multi", 0)} buyers ({rep.get("multi_share", 0):.0f}%) bought more than once and produced {share(rep.get("multi_cash", 0), rep.get("cash", 0))} of the month.']
     if 'Not recorded' in S.get('sold_by', pd.DataFrame()).index:

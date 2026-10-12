@@ -1,9 +1,9 @@
 import pandas as pd, numpy as np
 pd.set_option('display.width', 250); pd.set_option('display.max_columns', 60)
 
-P = pd.read_csv('/home/user/uploads/Day End Report - Part 1 - Payroll (4).csv', low_memory=False)
-R = pd.read_csv('/home/user/uploads/Day End Report - Part 3 - Teacher Recurring (7).csv', low_memory=False)
-X = pd.read_csv('/home/user/uploads/Day End Report - Part 3 - Sessions (19).csv', low_memory=False)
+P = pd.read_csv('/home/user/reports-arena/uploads/Day End Report - Part 1 - Payroll (4).csv', low_memory=False)
+R = pd.read_csv('/home/user/reports-arena/uploads/Day End Report - Part 3 - Teacher Recurring (7).csv', low_memory=False)
+X = pd.read_csv('/home/user/reports-arena/uploads/Day End Report - Part 3 - Sessions (19).csv', low_memory=False)
 
 print('=' * 110); print('PAYROLL'); print('=' * 110)
 P['dt'] = pd.to_datetime(P['Month Year'], format='%b-%Y', errors='coerce')
@@ -64,7 +64,7 @@ print(XB[(XB['dt'] >= '2026-09-01') & (XB['dt'] < '2026-10-01')].head(10)[
 
 print()
 print('=' * 110); print('ARE Sessions(19) and the earlier Part 3 export the same?'); print('=' * 110)
-old = pd.read_csv('/home/user/google_drive/Day End Report - Part 3', low_memory=False)
+old = pd.read_csv('/home/user/reports-arena/google_drive/Day End Report - Part 3', low_memory=False)
 print('old rows', len(old), '| new rows', len(X))
 print('old cols', [c for c in old.columns if c not in X.columns])
 print('new-only cols', [c for c in X.columns if c not in old.columns])

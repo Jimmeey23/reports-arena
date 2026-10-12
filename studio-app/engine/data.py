@@ -11,12 +11,52 @@ import os, io, glob, json, re
 import pandas as pd, numpy as np
 
 # --------------------------------------------------------------------- helpers
+# Google Sheets exports store some numeric cells as dates: a value like
+# 1417.5 arrives as "1903-11-17, 12:00:00", the number of days (and fraction
+# of a day) since the Sheets epoch of 1899-12-30. The recovery below matches
+# the atlas normaliser so amounts such as Amount Paid and Total Sessions
+# Completed read as money and counts instead of dropping out as NaN.
+_SERIAL = r'^(1[89]\d\d|190\d)-(\d\d)-(\d\d), (\d\d):(\d\d):(\d\d)$'
+_SHEETS_EPOCH = pd.Timestamp('1899-12-30')
+
+
 def num(s):
     if s is None:
         return pd.Series(dtype='float64')
-    if isinstance(s, pd.Series):
-        return pd.to_numeric(s.astype(str).str.replace(r'[^0-9.\-]', '', regex=True), errors='coerce')
-    return pd.to_numeric(pd.Series([str(s)]).str.replace(r'[^0-9.\-]', '', regex=True), errors='coerce').iloc[0]
+    scalar = not isinstance(s, pd.Series)
+    sr = pd.Series([s]) if scalar else s
+    st = sr.astype(str).str.strip()
+    serial = st.str.match(_SERIAL, na=False)
+    cleaned = st.str.replace(r'[₹,\s]', '', regex=True).replace({'nan': None, '-': '', '': None})
+    out = pd.to_numeric(cleaned, errors='coerce')
+    if serial.any():
+        ts = pd.to_datetime(st[serial].str.replace(',', '', regex=False), errors='coerce')
+        out = out.copy()
+        out.loc[serial] = ((ts - _SHEETS_EPOCH).dt.total_seconds() / 86400).round(2)
+    return out.iloc[0] if scalar else out
+
+
+def is_new_label(v):
+    """Atlas rule for the New file's Is New column: any label containing the
+    word 'new' is a trial newcomer ('Not New' excluded first); labels naming a
+    known non-trial visit are false; anything unrecognised stays None."""
+    if v is None:
+        return None
+    t = str(v).strip()
+    if not t or t.lower() in ('nan', '-', 'none'):
+        return None
+    if re.match(r'^not\b', t, re.I):
+        return False
+    if re.search(r'\bnew\b', t, re.I):
+        return True
+    if re.match(r'^(existing|returning|repeat|staff|family)', t, re.I):
+        return False
+    low = t.lower()
+    if low in ('true', 'yes', '1'):
+        return True
+    if low in ('false', 'no', '0'):
+        return False
+    return None
 
 def dparse(s, dayfirst=False):
     """Two-pass date parse. These exports mix two conventions in one column -
@@ -162,6 +202,17 @@ class Dataset:
             for c in ['Checked In', 'Is Late Cancelled', 'Complementary', 'Paid']:
                 if c in CK.columns:
                     CK[c] = CK[c].astype(str).str.strip().str.lower().isin(['true', '1', 'yes'])
+            # Attributed check-in revenue uses the Paid flag, and only rows
+            # that actually checked in count (atlas: attended rows in both
+            # numerator and denominator).
+            CK['Paid Amount'] = 1.0 * CK['Paid'] if 'Paid' in CK.columns else 0.0
+            # Recorded teaching hours: durations arrive as Sheets serials or
+            # plain minutes; implausible values are excluded rather than read.
+            if 'Duration (Minutes)' in CK.columns:
+                du = num(CK['Duration (Minutes)'])
+                CK['Duration Minutes'] = du.where((du > 0) & (du <= 240))
+            else:
+                CK['Duration Minutes'] = np.nan
             CK['Class No'] = num(CK['Class No']) if 'Class No' in CK.columns else np.nan
             self.checkins = CK
 
@@ -169,17 +220,40 @@ class Dataset:
         S = self.get('sales')
         if S is not None:
             S = S.copy()
-            c_date = col(S, 'created at', 'date')
+            # Cash belongs to payment dates (atlas: sales are dated on
+            # Payment Date, with Created At only as a fallback).
+            c_date = col(S, 'payment date', 'created at', 'date')
             c_loc = col(S, 'calculated location', 'location')
             S['_dt'] = dparse(S[c_date], dayfirst=True)
             S['_loc'] = S[c_loc].astype(str).str.strip()
-            c_val = col(S, 'payment value', 'value', 'sale value', 'amount', 'price excluding vat in currency',
-                        'sale item unit price including vat')
-            c_disc = col(S, 'discount value in currency', 'discount value')
+            c_val = col(S, 'payment value', 'value', 'sale value', 'amount')
             S['val'] = num(S[c_val]).fillna(0) if c_val else 0.0
-            S['disc'] = num(S[c_disc]).fillna(0) if c_disc else 0.0
+            # VAT and net: collected net is payment value minus payment VAT on
+            # the same lines. The Price Excluding VAT column is repeated at
+            # sale grain and is never summed directly.
+            c_vat = col(S, 'payment vat', 'vat')
+            S['vat'] = num(S[c_vat]).fillna(0) if c_vat else 0.0
+            S['net'] = S['val'] - S['vat']
+            # Discounts: sale-level discount values repeat on every item row,
+            # so the item-level figure (unit discount x quantity) is the one
+            # that can be summed. Falls back to zero where the item columns
+            # are absent.
+            c_udisc = col(S, 'sale item unit discount value')
+            c_qty = col(S, 'sale item quantity')
+            if c_udisc and c_qty:
+                ud = num(S[c_udisc]); qt = num(S[c_qty])
+                S['disc'] = (ud * qt).where(ud.notna() & qt.notna(), 0.0).fillna(0.0)
+            else:
+                S['disc'] = 0.0
+            S['units'] = num(S[c_qty]).fillna(0) if c_qty else 1.0
             S['gross'] = S['val'] + S['disc']
             S['has_disc'] = S['disc'] > 0
+            # Cash collection counts successful, non-voided payments only.
+            status = S[col(S, 'payment status', 'status')].astype(str).str.strip().str.lower() \
+                if col(S, 'payment status', 'status') else pd.Series('succeeded', index=S.index)
+            c_void = col(S, 'sec. is voided')
+            voided = S[c_void].astype(str).str.strip().str.lower().isin(['true', '1', 'yes']) if c_void else False
+            S['ok'] = status.isin(['succeeded', 'success', 'paid']) & ~voided
             self.sales = S
 
         # ---- new members ---------------------------------------------
@@ -189,9 +263,17 @@ class Dataset:
             c_date = col(N, 'first visit date')
             N['_dt'] = dparse(N[c_date])
             N['_loc'] = N[col(N, 'first visit location')].astype(str).str.strip()
-            for c in ['Ltv', 'No of Visits', 'Days To Second Visit', 'Visits Per Month']:
+            for c in ['Ltv', 'No of Visits', 'Days To Second Visit', 'Visits Per Month',
+                      'Visits Post Trial', 'First Purchase Value', 'Conversion Span (Days)',
+                      'Total Purchases All Time', 'Days Since Last Visit', 'Days Active']:
                 if c in N.columns:
                     N[c] = num(N[c])
+            # Explicit newcomer flag: acquisition metrics must run on the
+            # newcomer population only, not on every first-visit record.
+            if 'Is New' in N.columns:
+                N['is_new'] = N['Is New'].map(is_new_label)
+            else:
+                N['is_new'] = None
             self.new = N
 
         # ---- lapsed ---------------------------------------------------
@@ -205,9 +287,10 @@ class Dataset:
                     L[dst] = dparse(L[c], dayfirst=True)
             c_loc = col(L, 'primary location')
             L['_loc'] = L[c_loc].astype(str).str.strip()
-            for c in ['Amount Paid', 'Total Sessions Completed', 'Remaining Sessions', 'Late Cancellations',
+            for c in ['Amount Paid', 'Original Amount (Before Discount)', 'Discount Value',
+                      'Sessions Limit', 'Total Sessions Completed', 'Remaining Sessions', 'Late Cancellations',
                       'No Shows', 'Days Since Last Visit', 'Cancellation Rate %', 'Sessions Used %',
-                      'Membership Duration (Days)']:
+                      'Attendance Rate %', 'Membership Duration (Days)']:
                 if c in L.columns:
                     L[c] = num(L[c])
             self.lapsed = L

@@ -1,7 +1,7 @@
 """Splice the round-5 additions into the three round-4 report builders."""
 import io, os, re
 
-A = '/home/user/analysis3/'
+A = '/home/user/reports-arena/analysis3/'
 IMPORTS = {
     'build_class.py': 'import d2_extra as X',
     'build_sales.py': 'import d2_extra as X',

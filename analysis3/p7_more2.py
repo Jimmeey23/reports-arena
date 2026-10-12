@@ -2,7 +2,7 @@
 import pandas as pd, numpy as np
 import d1_data as D
 pd.set_option('display.width', 215); pd.set_option('display.max_columns', 70)
-U = '/home/user/uploads/'; B = 'Supreme HQ, Bandra'
+U = '/home/user/reports-arena/uploads/'; B = 'Supreme HQ, Bandra'
 def hdr(t): print('\n' + '=' * 104 + f'\n{t}\n' + '=' * 104)
 def blk(t, f):
     hdr(t)

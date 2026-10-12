@@ -9,7 +9,7 @@ TODAY = pd.Timestamp('2026-10-18')
 L, LP, LB = E.L, E.LP, E.LB
 
 # ------------- check-in ledger
-CK = pd.read_csv('/home/user/google_drive/Day End Report - Part 4', low_memory=False,
+CK = pd.read_csv('/home/user/reports-arena/google_drive/Day End Report - Part 4', low_memory=False,
     usecols=['Member ID','Location','Date (IST)','Checked In','Is Late Cancelled','Cleaned Class','Teacher Name',
              'Complementary','Paid','Class No','Day of Week','Time','Order At'])
 CK = CK[CK['Location'] == E.B].copy(); CK['dt'] = pd.to_datetime(CK['Date (IST)'], errors='coerce')
@@ -79,7 +79,7 @@ steps = [base] + [recent[recent['cn'] >= k]['Member ID'].nunique() for k in (2, 
 FUN = ['Attended once','Reached a 2nd class','Reached a 3rd class','Reached a 5th','Reached a 10th','Reached a 21st']
 
 # ------------- money concentration
-SB = D.SB.copy(); SB['disc'] = E.num(SB['Discount Value In Currency']).fillna(0)
+SB = D.SB.copy()   # item-level disc arrives from d1_data
 R12 = SB[SB['dt'] >= '2025-10-01']; R26 = SB[(SB['dt'] >= '2026-09-01') & (SB['dt'] < '2026-10-01')]
 per = R12.groupby('Member ID')['val'].sum().sort_values(ascending=False)
 P10 = per.head(10).sum()/per.sum()*100; P25 = per.head(25).sum()/per.sum()*100
@@ -107,8 +107,8 @@ CH_BASE = bars(['September 2024','September 2025','September 2026'],
     'A wider base, coming less often', h=320, ymax=520,
     note='Bars three and four are on the same axis but a different unit. Read the first bar for reach and the second for frequency.')
 
-CH_FREQ = bars(['1','2','3','4','5','6','7','8','9\u201312','13+'],
-    [('Share of September\u2019s members', [(v26 == k).mean() for k in range(1, 9)] +
+CH_FREQ = bars(['1','2','3','4','5','6','7','8','9–12','13+'],
+    [('Share of September’s members', [(v26 == k).mean() for k in range(1, 9)] +
       [((v26 >= 9) & (v26 <= 12)).mean(), (v26 >= 13).mean()], A1)],
     'How many times each member trained in September 2026', h=300, as_pct=True, ymax=0.25,
     note=f'{len(v26)} members trained at least once. {(v26==1).mean()*100:.0f}% came exactly once and '
@@ -121,17 +121,17 @@ CH_CORE = dumbbell([(m, float(v25.get(m, 0)), float(v26.get(m, 0))) for m in
          'Every one of them attended less in September 2026 than in September 2025.')
 
 CH_SRCF = hbars([(k, v, A1 if v >= 25 else (A2 if v >= 15 else B1)) for k, v in SR['conv'].items()],
-    'Share of each source\u2019s intake that converted to a paying member', as_pct=True,
+    'Share of each source’s intake that converted to a paying member', as_pct=True,
     note='First visits between September 2025 and August 2026, by the source the studio recorded. '
          'Sources with twenty or more first visits.')
 
 CH_SRCV = bars([k for k in SR.index],
     [('People acquired', SR['intake'].tolist(), A1),
-     ('Lifetime value, \u20b9 hundreds', [v/100 for v in SR['ltv']], B1)],
+     ('Lifetime value, ₹ hundreds', [v/100 for v in SR['ltv']], B1)],
     'Volume against value, by source', h=330, ymax=390,
     note='The two largest channels by volume are among the least valuable by outcome.')
 
-CH_SPEED = bars(['within 3 days','4\u20137 days','8\u201314 days','15\u201330 days','31+ days','never returned'],
+CH_SPEED = bars(['within 3 days','4–7 days','8–14 days','15–30 days','31+ days','never returned'],
     [('Share of intake', [PCT3/100, (PCT7-PCT3)/100,
                           ((N2ND > 7) & (N2ND <= 14)).mean(),
                           ((N2ND > 14) & (N2ND <= 30)).mean(),
@@ -141,7 +141,7 @@ CH_SPEED = bars(['within 3 days','4\u20137 days','8\u201314 days','15\u201330 da
 
 CH_FUN = funnel([(FUN[i], int(steps[i]), f'{steps[i]/base*100:.1f}% of those who came at least once')
                  for i in range(len(FUN))],
-    'What happens after the first visit \u2014 every Bandra member since January 2025')
+    'What happens after the first visit — every Bandra member since January 2025')
 
 _ps = per.cumsum()/per.sum()*100
 _CUM = {k: per.head(k).sum()/per.sum() for k in (10, 25, 50, 100, 200, 500)}
@@ -151,19 +151,19 @@ MONEY_BANDS = [('the top 10 buyers', _CUM[10]),
                ('buyers ranked 51 to 100', _CUM[100]-_CUM[50]),
                ('buyers ranked 101 to 500', _CUM[500]-_CUM[100]),
                (f'all {len(per)-500:,} others', 1-_CUM[500])]
-CH_MONEY = bars([b for b, _ in MONEY_BANDS], [('Share of the last 12 months\u2019 sales', [v for _, v in MONEY_BANDS], A1)],
+CH_MONEY = bars([b for b, _ in MONEY_BANDS], [('Share of the last 12 months’ sales', [v for _, v in MONEY_BANDS], A1)],
     'Where the last twelve months of sales came from', h=310, as_pct=True, ymax=0.32,
     note=f'{len(per):,} people bought something at Bandra in the last twelve months. The ten largest buyers alone account for {_CUM[10]*100:.1f}% of the money, '
          f'and the last {len(per)-500:,} account for {(1-_CUM[500])*100:.1f}% between them.')
 
 CH_CAT = hbars([(k.replace('Package','pack').replace('Studio ',''), v, A1 if i < 4 else N1)
                 for i, (k, v) in enumerate(CAT['sum'].items())],
-    'What September\u2019s money was spent on', unit='\u20b9',
+    'What September’s money was spent on', unit='₹',
     note='Cleaned category of each sales line in the month.')
 
 CH_OPD = bars([d[:3] for d in OPD.index], [('Attendances', OPD.tolist(), A1)],
     'Attendance by day of week, September 2026', h=290, ymax=320,
-    note='Monday is the studio\u2019s strongest day and Sunday its weakest, a pattern that repeats every month on file.')
+    note='Monday is the studio’s strongest day and Sunday its weakest, a pattern that repeats every month on file.')
 
 # ------------- September-phases and multi-format
 mm = a26.groupby('Member ID')['Cleaned Class'].nunique()
@@ -194,12 +194,12 @@ RECS = [
  ('02','Rebalance acquisition away from hosted classes','Marketing + Management',
   f'<strong>The {BIG_CH.lower()} brought in {BIG_N} first-timers &mdash; the largest single source &mdash; and converted {BIG_CONV:.1f}% of them</strong>, at a '
   f'lifetime value of {R(BIG_LTV)}. The {BEST_CH.lower()} brought {BEST_N} at {BEST_CONV:.1f}% conversion and {R(BEST_LTV)} of value.',
-  'Hosted classes are the studio\u2019s largest marketing line and its least productive one. The format is not the problem \u2014 a hosted class is a room full of people '
+  'Hosted classes are the studio’s largest marketing line and its least productive one. The format is not the problem — a hosted class is a room full of people '
   'who have never been to the studio. The follow-up is the problem. Either change what happens in the 72 hours after the class, or move the budget.'),
  ('03','Treat the returning core as the studio&rsquo;s primary asset','Studio Manager + CRM',
   f'The {len(RET)} members who trained at Bandra in both September 2025 and September 2026 did <strong>{SEP25_RET/len(RET):.2f} visits each last September '
   f'and {SEATS_RET/len(RET):.2f} this September</strong> &mdash; {SEP25_RET-SEATS_RET:.0f} fewer visits from the same people, which is '
-  f'{(SEP25_RET-SEATS_RET)/SEP[2026]["att"]*100:.0f}% of the whole month\u2019s attendance.',
+  f'{(SEP25_RET-SEATS_RET)/SEP[2026]["att"]*100:.0f}% of the whole month’s attendance.',
   'The studio did not lose these members; it lost their frequency. That is a different and much cheaper problem than churn, and it is invisible in every '
   'report that measures member counts rather than visits. A monthly frequency watch-list on the top 100 attendees would have caught it in July.'),
  ('04','Sell the third visit, not the first','Marketing + Programming',
@@ -220,7 +220,7 @@ RECS = [
   'The studio owns its rooms and pays its people by the session. Re-cutting a weak day and a weak hour into the slots that are already selling out is a '
   'capacity increase with no capital cost, and it is reversible after one month.'),
  ('07','Give every member a second format and a second trainer','Programming + Front Desk',
-  f'<strong>{SING:.0f}% of September\u2019s members trained in exactly one format</strong>, and {100-MT:.0f}% saw only one trainer. Members who have used four formats have '
+  f'<strong>{SING:.0f}% of September’s members trained in exactly one format</strong>, and {100-MT:.0f}% saw only one trainer. Members who have used four formats have '
   f'paid {R(TICK4)} across their history against {R(TICK1)} for those who have used one.',
   'A member with one format and one trainer has one diary entry and one relationship. Adding either doubles the reasons to come and halves the chance that '
   'a single timetable change or a single departure takes the member with it.'),
@@ -257,7 +257,7 @@ REC_HTML = rec_html(RECS)
 CH_OPH = bars([f'{int(h)}:00' if h < 12 else f'{int(h)}pm' for h in OPH.index if 6 <= h <= 21],
               [('Attendances in September', [OPH.get(h, 0) for h in range(6, 22)], A1)],
     'Attendance by hour of day, September 2026', h=290, ymax=260,
-    note='The studio\u2019s day has two peaks and a dead middle. The 1pm to 4pm window is the least-used capacity it owns.')
+    note='The studio’s day has two peaks and a dead middle. The 1pm to 4pm window is the least-used capacity it owns.')
 
 SRC = f'''<h4>Sources and method</h4>
 <p style="font-size:13.5px;color:#6B7280;line-height:1.7">
@@ -272,11 +272,11 @@ least six weeks to convert.</p>'''
 META = (f'Check-in ledger &middot; {len(CK):,} rows &middot; {A["Member ID"].nunique():,} members<br/>'
         f'Six sources joined &middot; September 2024 to October 2026<br/>Snapshot 18 October 2026')
 
-HTML = page('Supreme HQ, Bandra \u2014 Studio Overview and Intelligence',
+HTML = page('Supreme HQ, Bandra — Studio Overview and Intelligence',
     'Report seven of seven &middot; The month in full',
     'Studio overview and intelligence',
-    f'September 2026 was the month Bandra reached more people than ever and saw less of them. {len(s26)} distinct members trained \u2014 '
-    f'{len(s26)/len(s25)*100-100:.0f}% more than a year earlier \u2014 and between them they made {SEP[2025]["att"]-SEP[2026]["att"]} fewer visits. '
+    f'September 2026 was the month Bandra reached more people than ever and saw less of them. {len(s26)} distinct members trained — '
+    f'{len(s26)/len(s25)*100-100:.0f}% more than a year earlier — and between them they made {SEP[2025]["att"]-SEP[2026]["att"]} fewer visits. '
     'This report joins six sources to explain why, and what it would take to reverse it.',
     META, f'''
 <h2>Start here</h2>
@@ -314,7 +314,7 @@ class revenue rose from {R(SEP[2025]["rev"])} to <strong>{R(SEP[2026]["rev"])}</
 against {SEP[2025]["board"]:.1f}% a year ago, and the share of booked seats actually honoured rose to {x26['CheckedIn'].sum()/max(x26['Booked'].sum(),1)*100:.1f}% from
 {x25['CheckedIn'].sum()/max(x25['Booked'].sum(),1)*100:.1f}%. The studio is filling less of its timetable, and earning more from every seat it fills.</p>
 
-{ev('Evidence \u2014 September 2024, 2025 and 2026 set side by side',
+{ev('Evidence — September 2024, 2025 and 2026 set side by side',
     T(['September','Classes','Seats on the board','Attendances','Fill rate','Board booked','Revenue','Per attendance','Unique members','Visits per member'],
       [[str(y), SEP[y]['sessions'], f"{SEP[y]['seats']:,}", f"{SEP[y]['att']:,}", P(SEP[y]['fill']), P(SEP[y]['board']),
         R(SEP[y]['rev']), R(SEP[y]['rev_head']), f"{[len(s24),len(s25),len(s26)][i]:,}",
@@ -360,12 +360,12 @@ one-time visitors who never became members in the first place, which is the funn
 
 {CH_CORE}
 
-{ev('Evidence \u2014 the returning core against the leavers and the new intake',
+{ev('Evidence — the returning core against the leavers and the new intake',
     T(['Group','Members','Visits this September','Mean visits','Median visits'],
       [['Trained in both Septembers', len(RET), f"{SEATS_RET:.0f}", f"{SEATS_RET/len(RET):.2f}", f"{v26.reindex(list(RET)).median():.0f}"],
-       ['Here in Sept 2025, not this year', len(GONE), '\u2014', f"{v25.reindex(list(GONE)).mean():.2f} (last year)", f"{v25.reindex(list(GONE)).median():.0f} (last year)"],
+       ['Here in Sept 2025, not this year', len(GONE), '—', f"{v25.reindex(list(GONE)).mean():.2f} (last year)", f"{v25.reindex(list(GONE)).median():.0f} (last year)"],
        ['New this September', len(NEWB), f"{SEATS_NEW:.0f}", f"{SEATS_NEW/len(NEWB):.2f}", f"{v26.reindex(list(NEWB)).median():.0f}"],
-       ['Trained in all three Septembers', len(s24 & s25 & s26), '\u2014', '\u2014', '\u2014']], 'num'))}
+       ['Trained in all three Septembers', len(s24 & s25 & s26), '—', '—', '—']], 'num'))}
 
 <h2>The acquisition engine</h2>
 <div class="sub">The studio brings people in well. What happens next is where the value is lost.</div>
@@ -395,9 +395,9 @@ None of them is large. All of them are worth several times what the biggest chan
 {CH_SRCV}
 {CH_SRCF}
 
-{ev('Evidence \u2014 every acquisition source with twenty or more first visits',
+{ev('Evidence — every acquisition source with twenty or more first visits',
     T(['Source','First visits','Conversion rate','Median days to 2nd visit','Mean lifetime value','Mean visits'],
-      [[k, int(r['intake']), P(r['conv']), f"{r['second']:.0f}" if r['second'] == r['second'] else '\u2014',
+      [[k, int(r['intake']), P(r['conv']), f"{r['second']:.0f}" if r['second'] == r['second'] else '—',
         R(r['ltv']), f"{r['visits']:.1f}"] for k, r in SR.iterrows()], 'num'))}
 
 <h2>What the memberships look like</h2>
@@ -408,7 +408,7 @@ formats have paid an average of <strong>{R(TICK4)}</strong> across their history
 {TICK4/max(TICK1,1):.1f}-fold difference. Even allowing for the obvious fact that longer-staying members accumulate more formats, the gap is too large to ignore:
 the studio&rsquo;s most valuable members are the ones who use the whole building.</p>
 
-{ev('Evidence \u2014 formats used, against what the member has paid',
+{ev('Evidence — formats used, against what the member has paid',
     T(['Formats used','Members','Mean amount paid','Mean classes completed'],
       [[int(k), int(v), R(FMT_TICKET.get(k, float('nan'))), f"{FMT_CLS.get(k, float('nan')):.1f}"]
        for k, v in NF.value_counts().sort_index().items() if k >= 1], 'num'))}
@@ -434,7 +434,7 @@ largest selling days; Sunday is the smallest.</p>
 {REC_HTML}
 {SRC}
 ''')
-open('/home/user/Bandra_September_2026_7_Studio_Overview.html', 'w').write(HTML)
+open('/home/user/reports-arena/Bandra_September_2026_7_Studio_Overview.html', 'w').write(HTML)
 print(f'Report 7 written: {len(HTML)} bytes')
 print(f'members {len(s24)}/{len(s25)}/{len(s26)} | visits per member {a24.groupby("Member ID").size().mean():.2f}/{a25.groupby("Member ID").size().mean():.2f}/{v26.mean():.2f}')
 print(f'ret {len(RET)} seats {SEP25_RET:.0f}->{SEATS_RET:.0f} | gone {len(GONE)} | new {len(NEWB)} seats {SEATS_NEW:.0f}')

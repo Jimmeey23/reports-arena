@@ -3,6 +3,7 @@
 Design language: white ground, one deep-teal accent and one muted clay accent,
 nothing else. Everything else is ink, grey and hairline.
 """
+import re
 import pandas as pd, numpy as np
 
 # ---------------------------------------------------------------- palette
@@ -33,6 +34,65 @@ def _grp(n):
         if head: parts.insert(0, head)
         out = ','.join(parts) + ',' + tail
     return ('-' if n < 0 else '') + out
+
+# ---------------------------------------------------------------- dates (IST)
+# The studio runs on Indian Standard Time and the exports carry IST wall-clock
+# values without a zone. Every date that is *shown* to the reader goes through
+# these two helpers so chapters render one consistent, correctly-zoned format.
+from datetime import datetime as _dt, timezone as _tz, timedelta as _td
+
+IST = _tz(_td(hours=5, minutes=30), 'IST')
+
+
+def _as_dt(x):
+    try:
+        import pandas as pd
+        if x is None:
+            return None
+        if isinstance(x, str):
+            x = x.strip()
+            if not x or x.lower() in ('nan', 'nat', 'none', '·', '—'):
+                return None
+        if isinstance(x, str):
+            iso = bool(re.match(r'^\d{4}-\d{2}-\d{2}', x))
+            t = pd.to_datetime(x.replace(',', ''), errors='coerce', dayfirst=not iso)
+        else:
+            t = pd.to_datetime(x, errors='coerce')
+        if t is None or pd.isna(t):
+            return None
+        return t
+    except Exception:
+        return None
+
+
+def fd(x):
+    """Format a date for display in IST: '17 Nov 2023'."""
+    t = _as_dt(x)
+    if t is None:
+        return '—'
+    if t.tzinfo is None:
+        t = t.tz_localize(IST)
+    else:
+        t = t.tz_convert(IST)
+    return t.strftime('%d %b %Y')
+
+
+def fdt(x):
+    """Format a date+time for display in IST: '17 Nov 2023, 14:05 IST'."""
+    t = _as_dt(x)
+    if t is None:
+        return '—'
+    if t.tzinfo is None:
+        t = t.tz_localize(IST)
+    else:
+        t = t.tz_convert(IST)
+    return t.strftime('%d %b %Y, %H:%M IST')
+
+
+def now_ist():
+    """Current time in IST."""
+    return _dt.now(IST)
+
 
 def R(x, plus=False):
     if x is None or (isinstance(x, float) and np.isnan(x)): return '\u2014'

@@ -52,7 +52,7 @@ F['name'] = [SHORT[c] for c in F.index]
 TOT_SESS = int(F26['sessions'].sum()); TOT_REV = F26['rev'].sum(); TOT_ATT = int(F26['att'].sum())
 
 # --------------------------------------------------- member-level
-CK = pd.read_csv('/home/user/google_drive/Day End Report - Part 4', low_memory=False,
+CK = pd.read_csv('/home/user/reports-arena/google_drive/Day End Report - Part 4', low_memory=False,
     usecols=['Member ID','Location','Date (IST)','Checked In','Is Late Cancelled','Cleaned Class'])
 CK = CK[CK['Location'] == E.B].copy(); CK['dt'] = pd.to_datetime(CK['Date (IST)'], errors='coerce')
 A = CK[CK['Checked In'] == True].copy()
@@ -126,7 +126,7 @@ CH_SHARE = bars([r['name'] for _, r in F.iterrows()],
 
 CH_ECO = diverging([(r['name'], r['rev_head']) for _, r in F.sort_values('rev_head', ascending=False).iterrows()],
     'What one attendance is worth, by format', note='Revenue attributed to attended classes, divided by attendance. '
-    'The spread is narrow \u2014 about 40% from top to bottom \u2014 which matters for what it tells us about pricing.')
+    'The spread is narrow — about 40% from top to bottom — which matters for what it tells us about pricing.')
 
 CH_MEM = bars([r['name'] for _, r in F.iterrows()],
     [('Distinct members', [MBR['mem'].get(c, 0) for c in F.index], A1),
@@ -141,16 +141,16 @@ CH_NF = bars([str(int(i)) for i in NF.index], [('Members in this band', NF['memb
 CH_NFV = diverging([(f'{int(i)} format' + ('s' if i > 1 else ''), v) for i, v in NF['ticket'].items()],
     'Average amount paid, by how many formats the member used',
     note='Read with the counts above: the number of members falls as the ladder rises, and the value per member rises '
-         'with it. Correlation, not causation \u2014 but a strong and consistent gradient.')
+         'with it. Correlation, not causation — but a strong and consistent gradient.')
 
 CH_FAV = bars([k for k in FAV.head(8).index], [('Members', FAV['members'].head(8).tolist(), A1),
-                                       ('Mean price paid, \u20b9 hundreds', [v/100 for v in FAV['ticket'].head(8)], B1)],
+                                       ('Mean price paid, ₹ hundreds', [v/100 for v in FAV['ticket'].head(8)], B1)],
     'The format a member uses most, and what those members are worth', h=320, ymax=1300,
     note='Restricted to formats with forty or more members whose favourite format is recorded.')
 
 CH_DH = hbars([(SHORT.get(k, k.replace('Studio ','')), row['tot'], A1 if i < 3 else A2)
                for i, (k, row) in enumerate(DH.sort_values('tot', ascending=False).head(8).iterrows())],
-    'Where each format\u2019s attendance comes from \u2014 total for the month', unit='',
+    'Where each format’s attendance comes from — total for the month', unit='',
     note='Underneath each figure the same number is split by day; see the evidence panel for the full grid.')
 
 PEAK_A = ', '.join(f'<strong>{SHORT.get(c, c)}</strong> draws most on {DH.loc[c].drop("tot").idxmax()}' for c in DH.index[:5])
@@ -158,7 +158,7 @@ PEAK_B = ', '.join(f'{SHORT.get(c, c)} peaks on {DH.loc[c].drop("tot").idxmax()[
 
 CH_COMP = hbars([(SHORT.get(k, k), v, A1 if v < 6 else B1) for k, v in
                  (F26['comp']/F26['att'].replace(0, np.nan)*100).dropna().sort_values(ascending=False).head(8).items()],
-    'Share of each format\u2019s attendance that was complimentary', as_pct=True)
+    'Share of each format’s attendance that was complimentary', as_pct=True)
 
 # --------------------------------------------------- recommendations
 RECS = [
@@ -171,13 +171,13 @@ RECS = [
   f'seat-slots a month that nobody is buying, and lifts the studio-wide utilisation rate on its own.'),
  ('02','Scale Studio FIT deliberately','Programming',
   f'FIT is the best-performer on every efficiency measure: <strong>{F.loc["Studio FIT","fill"]:.1f}% fill, {R(F.loc["Studio FIT","rev_class"])} revenue per class</strong>, '
-  f'and {MBR["regp"].get("Studio FIT", float("nan")):.1f}% of its attendees came four or more times inside the month \u2014 the highest regularity of any format.',
+  f'and {MBR["regp"].get("Studio FIT", float("nan")):.1f}% of its attendees came four or more times inside the month — the highest regularity of any format.',
   f'Adding three FIT sessions a week at the current average of {F.loc["Studio FIT","avg_size"]:.1f} attendees, at {R(F.loc["Studio FIT","rev_head"])} a head, '
   f'is worth about {R(3*4.3*F.loc["Studio FIT","avg_size"]*F.loc["Studio FIT","rev_head"])} of class revenue a month from capacity the studio already owns.'),
  ('03','Treat the express formats as a distinct product, not a short version','Programming + Marketing',
   f'PowerCycle Express fills <strong>{F26.loc["Studio PowerCycle Express","fill"]:.1f}%</strong> against its parent at {F.loc["Studio PowerCycle","fill"]:.1f}%, and '
   f'Cardio Barre fills {F26.loc["Studio Cardio Barre","fill"]:.1f}% against Cardio Barre Express at {F26.loc["Studio Cardio Barre Express","fill"]:.1f}%. '
-  'The express formats are not simply weaker \u2014 at their best they beat the full-length class in a smaller room.',
+  'The express formats are not simply weaker — at their best they beat the full-length class in a smaller room.',
   'Express formats cost less to deliver, fill a harder slot and suit a member who cannot commit ninety minutes. Building two or three '
   'deliberate express slots into peak commuter windows is a cheaper capacity expansion than adding full-length classes.'),
  ('04','Market the multi-format ladder as the product','Marketing + Studio Manager',
@@ -190,17 +190,17 @@ RECS = [
   f'Studio Mat 57 reaches {MBR["mem"].get("Studio Mat 57", 0)} members at {F26.loc["Studio Mat 57","fill"]:.1f}% fill with only '
   f'{MBR["regp"].get("Studio Mat 57", float("nan")):.1f}% returning four or more times. Cardio Barre reaches {MBR["mem"].get("Studio Cardio Barre", 0)} at '
   f'{F26.loc["Studio Cardio Barre","fill"]:.1f}% with {MBR["regp"].get("Studio Cardio Barre", float("nan")):.1f}% regulars.',
-  'These are good products with almost no habit attached. A single well-chosen pairing \u2014 Mat 57 as the recovery companion to Barre 57, '
-  'Cardio Barre as the first step toward Barre 57 \u2014 turns two under-used rooms into a route rather than a stop.'),
+  'These are good products with almost no habit attached. A single well-chosen pairing — Mat 57 as the recovery companion to Barre 57, '
+  'Cardio Barre as the first step toward Barre 57 — turns two under-used rooms into a route rather than a stop.'),
  ('06','Set the comp budget by format, not in total','Studio Manager + Finance',
   f'Complimentary seats run at {F26.loc["Studio Barre 57","comp"]/F26.loc["Studio Barre 57","att"]*100:.1f}% of Barre 57 attendance against '
   f'{F26.loc["Studio FIT","comp"]/F26.loc["Studio FIT","att"]*100:.1f}% for FIT. Across the studio that is {int(F26["comp"].sum()):,} free seats, '
-  f'worth {R(F26["comp"].sum()*TOT_REV/TOT_ATT)} at the studio\u2019s own revenue per head.',
+  f'worth {R(F26["comp"].sum()*TOT_REV/TOT_ATT)} at the studio’s own revenue per head.',
   'A per-format comp allowance makes an invisible number visible. It also stops the formats with the most loyal paying audiences from quietly '
   'absorbing the markdowns that belong to the studio as a whole.'),
  ('07','Use the day grid to re-time, not to cut','Programming',
   f'Every major format has at least one day it owns: {PEAK_B}. The same formats are weak on their worst day by a wide margin.',
-  'The cheapest utilisation gain available is to move sessions from a format\u2019s weakest day to its strongest, and from a format that is weak at '
+  'The cheapest utilisation gain available is to move sessions from a format’s weakest day to its strongest, and from a format that is weak at '
   'that hour to one that is strong. That is a scheduling exercise, not a product decision, and it costs nothing to trial for a month.'),
  ('08','Report formats by their member economics, not their revenue','Management',
   f'Ranked by revenue the formats read PowerCycle, Barre 57, FIT. Ranked by fill they read FIT, Mat 57, PowerCycle X. Ranked by members reached they read '
@@ -216,21 +216,21 @@ RECS = [
   'Favourite format is a useful early-warning field the studio already collects and does not read. A monthly count of members whose favourite '
   'format has gone quiet is a churn watch-list that costs nothing to produce.'),
  ('10','Judge a format on twelve sessions or not at all','Programming',
-  f'<strong>{len(THIN)} of the {len(_FS)} formats Bandra ran in September appeared fewer than twelve times</strong> \u2014 between them {int(THIN["sessions"].sum())} sessions out of {int(_FS["sessions"].sum())}. '
+  f'<strong>{len(THIN)} of the {len(_FS)} formats Bandra ran in September appeared fewer than twelve times</strong> — between them {int(THIN["sessions"].sum())} sessions out of {int(_FS["sessions"].sum())}. '
   f'The express formats ran {int(EXPRESS["sessions"].sum())} sessions in the month between them, filling {EXPRESS["fill"].min():.0f}% to {EXPRESS["fill"].max():.0f}%.',
-  f'A format that runs six times a month cannot be judged on fill rate, and it cannot be judged on revenue either. Either give a new format a real commitment \u2014 a fixed weekly slot for '
-  f'a full quarter \u2014 or stop reporting on it. The studio is currently making programming decisions about formats it has barely tested.'),
+  f'A format that runs six times a month cannot be judged on fill rate, and it cannot be judged on revenue either. Either give a new format a real commitment — a fixed weekly slot for '
+  f'a full quarter — or stop reporting on it. The studio is currently making programming decisions about formats it has barely tested.'),
  ('11','Let the length of a class decide, not the family it belongs to','Programming + Studio Manager',
   f'Inside the same format family the results separate sharply. PowerCycle Express fills <strong>{_FS.loc["Studio PowerCycle Express","fill"]:.0f}%</strong> across {int(_FS.loc["Studio PowerCycle Express","sessions"])} sessions; '
   f'Cardio Barre Express fills {_FS.loc["Studio Cardio Barre Express","fill"]:.0f}% across {int(_FS.loc["Studio Cardio Barre Express","sessions"])}. One is a premium express product, the other is an afternoon of empty seats.',
-  f'The studio\u2019s own timetable already contains the answer to its utilisation problem, in miniature: a short, specific, well-named class sells, and an unspecified short version of a long class does not. '
-  f'Every express format should be rebuilt to the PowerCycle Express template \u2014 its own name, its own benefit, its own slot \u2014 before any of them is withdrawn.'),
+  f'The studio’s own timetable already contains the answer to its utilisation problem, in miniature: a short, specific, well-named class sells, and an unspecified short version of a long class does not. '
+  f'Every express format should be rebuilt to the PowerCycle Express template — its own name, its own benefit, its own slot — before any of them is withdrawn.'),
  ('12','Put revenue per class next to fill rate in every programming review','Studio Manager + Finance',
-  f'Across September the correlation between a format\u2019s fill rate and its revenue per class is almost total \u2014 FIT fills {_FS.loc["Studio FIT","fill"]:.0f}% and earns '
+  f'Across September the correlation between a format’s fill rate and its revenue per class is almost total — FIT fills {_FS.loc["Studio FIT","fill"]:.0f}% and earns '
   f'<strong>{R(_FS.loc["Studio FIT","rpc"])} a class</strong>; PowerCycle fills {_FS.loc["Studio PowerCycle","fill"]:.0f}% and earns {R(_FS.loc["Studio PowerCycle","rpc"])}. '
   f'The two columns rank the formats the same way.',
   f'Fill rate flatters formats with small rooms and penalises formats that were given the big ones, so any review that reads fill alone will keep making the same mistake. Revenue per class '
-  f'is the number that survives the comparison, and pairing it with the studio\u2019s cost per session turns a programming debate into an arithmetic one.'),
+  f'is the number that survives the comparison, and pairing it with the studio’s cost per session turns a programming debate into an arithmetic one.'),
 
 ]
 REC_HTML = rec_html(RECS)
@@ -246,12 +246,12 @@ contribution margin, and a complimentary seat earns nothing by construction.</p>
 META = (f'Sessions ledger &middot; {len(x26):,} classes, September 2026<br/>'
         f'{len(F)} formats compared &middot; {int(TOT_ATT):,} attendances &middot; {R(TOT_REV)} attributed revenue<br/>Snapshot 18 October 2026')
 
-HTML = page('Supreme HQ, Bandra \u2014 Format Comparisons',
+HTML = page('Supreme HQ, Bandra — Format Comparisons',
     'Report five of seven &middot; Product performance',
     'Format comparisons',
     f'{len(F)} formats, one timetable and one audience. The format that carries {F.loc["Studio PowerCycle","sessions"]/TOT_SESS*100:.0f}% of the week fills '
     f'{F.loc["Studio PowerCycle","fill"]:.1f}% of its seats; the format that carries {F.loc["Studio FIT","sessions"]/TOT_SESS*100:.0f}% fills {F.loc["Studio FIT","fill"]:.1f}%. '
-    'This report compares them on eight measures at once and finds that the studio is not short of demand \u2014 it is short of the right demand in the right room.',
+    'This report compares them on eight measures at once and finds that the studio is not short of demand — it is short of the right demand in the right room.',
     META, f'''
 <h2>Start here</h2>
 <div class="sub">On revenue, PowerCycle leads. On every measure of efficiency, it is last among the formats that matter.</div>
@@ -285,11 +285,11 @@ are the widest spread in the table, which tells the studio that format length ma
 
 {CH_ECO}
 
-{ev('Evidence \u2014 the full format matrix, September 2026',
+{ev('Evidence — the full format matrix, September 2026',
     T(['Format','Classes','Seats','Attended','Fill','Booked','Late canc.','Complimentary','Revenue','Per class','Per head','Cancel rate'],
       [[SHORT.get(k, k), int(r['sessions']), int(r['seats']), int(r['att']), P(r['fill']), int(r['booked']), int(r['lc']),
-        int(r['comp']), R(r['rev']), R(r['rev_class']), R(r['rev_head']) if r['rev_head'] == r['rev_head'] else '\u2014',
-        P(r['cancel_rate']) if r['cancel_rate'] == r['cancel_rate'] else '\u2014']
+        int(r['comp']), R(r['rev']), R(r['rev_class']), R(r['rev_head']) if r['rev_head'] == r['rev_head'] else '—',
+        P(r['cancel_rate']) if r['cancel_rate'] == r['cancel_rate'] else '—']
        for k, r in F26.sort_values('att', ascending=False).iterrows()], 'num small'))}
 
 <h2>Reach against regularity</h2>
@@ -307,7 +307,7 @@ Barre 57 {MBR['regp'].get('Studio Barre 57', float('nan')):.1f}%</strong>, and t
 
 {CH_MEM}
 
-{ev('Evidence \u2014 members reached, repeat visits and regularity by format',
+{ev('Evidence — members reached, repeat visits and regularity by format',
     T(['Format','Distinct members','Attendances','Visits per member','Came 4+ times','Came exactly once'],
       [[SHORT.get(k, k), int(r['mem']), int(r['visits']), f"{r['per']:.2f}", P(r['regp']), P(r['once'])]
        for k, r in MBR.sort_values('mem', ascending=False).iterrows()], 'num'))}
@@ -327,7 +327,7 @@ Most of the book has only ever known one room.</p>
 {CH_NF}
 {CH_NFV}
 
-{ev('Evidence \u2014 the format ladder',
+{ev('Evidence — the format ladder',
     T(['Formats used','Members','Mean paid','Mean classes completed','Mean days in force','Visits in the last 30 days'],
       [[int(i), int(r['members']), R(r['ticket']), f"{r['cls']:.1f}", f"{r['life']:.0f}", f"{r['last30']:.1f}"]
        for i, r in NF.iterrows()], 'num'))}
@@ -343,7 +343,7 @@ formats with the most committed ones.</p>
 
 {CH_FAV}
 
-{ev('Evidence \u2014 favourite format against lifetime value',
+{ev('Evidence — favourite format against lifetime value',
     T(['Favourite format','Members','Mean paid','Mean classes completed','Mean days in force','Days since last visit'],
       [[k, int(r['members']), R(r['ticket']), f"{r['cls']:.1f}", f"{r['life']:.0f}", f"{r['since']:.0f}"]
        for k, r in FAV.iterrows()], 'num'))}
@@ -356,7 +356,7 @@ typically less than half the strongest.</p>
 
 {CH_DH}
 
-{ev('Evidence \u2014 attendance by format and day, September 2026',
+{ev('Evidence — attendance by format and day, September 2026',
     T(['Format'] + list(DH.columns[:-1]) + ['Total'],
       [[SHORT.get(k, k)] + [int(v) for v in row[:-1]] + [int(row['tot'])] for k, row in DH.iterrows()], 'num small'))}
 
@@ -376,7 +376,7 @@ against FIT at {F26.loc['Studio FIT','comp']/F26.loc['Studio FIT','att']*100:.1f
 {REC_HTML}
 {SRC}
 ''')
-open('/home/user/Bandra_September_2026_5_Format_Comparisons.html', 'w').write(HTML)
+open('/home/user/reports-arena/Bandra_September_2026_5_Format_Comparisons.html', 'w').write(HTML)
 print(f'Report 5 written: {len(HTML)} bytes | formats {len(F)} | att {int(TOT_ATT)} | rev {TOT_REV:,.0f}')
 print('fill:', {r['name']: round(r['fill'], 1) for _, r in F.iterrows()})
 print('members:', {k: int(v) for k, v in MBR['mem'].items()})

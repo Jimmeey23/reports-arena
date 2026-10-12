@@ -138,15 +138,27 @@ table.srcs tr:last-child td{border-bottom:none}
   display:flex;align-items:center;gap:9px}
 .whole:hover{background:#F1F6F7}
 .whole.ghost{border-bottom:none;border-top:1px solid var(--line);background:#fff;color:var(--mut);font-weight:550}
-.chlist{list-style:none;margin:0;padding:8px;max-height:56vh;overflow:auto}
-.chlist li{border-radius:8px;padding:10px 12px;cursor:pointer;display:flex;gap:11px;transition:.14s}
-.chlist li:hover{background:var(--soft)}
-.chlist li.on{background:#F4F8F9}
-.chlist .n{font-size:10.5px;font-weight:700;color:var(--n1);letter-spacing:.1em;padding-top:3px;min-width:16px}
+.chlist{list-style:none;margin:0;padding:8px;max-height:calc(100vh - 220px);min-height:300px;overflow:auto}
+.chlist li.chap{border-radius:10px;transition:.14s;position:relative}
+.chlist li.chap + li.chap{margin-top:2px}
+.chlist li.chap:hover{background:var(--soft)}
+.chlist li.chap.on{background:#F4F8F9;box-shadow:inset 3px 0 0 var(--a1)}
+.chhead{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;background:none;border:0;padding:11px 12px;cursor:pointer;font:inherit;color:inherit;border-radius:10px}
+.chlist .n{font-size:10.5px;font-weight:700;color:var(--n1);letter-spacing:.1em;padding-top:3px;min-width:18px}
 .chlist li.on .n{color:var(--a1)}
-.chlist .t{font-size:13.5px;font-weight:600;line-height:1.35}
-.chlist .s{font-size:11.5px;color:var(--mut);margin-top:2px;line-height:1.4}
+.chtx{display:block;min-width:0;flex:1}
+.chlist .t{font-size:13.5px;font-weight:600;line-height:1.35;display:block}
+.chlist .s{font-size:11.5px;color:var(--mut);margin-top:2px;line-height:1.4;display:block}
 .chlist li.miss .t{color:var(--n1);font-weight:500}
+.chhead .chev{margin-left:auto;font-size:10px;color:var(--mut);padding-top:5px;transition:transform .18s}
+.chlist li.open .chev{transform:rotate(180deg);color:var(--a1)}
+.chlist .subs{list-style:none;margin:0 0 6px;padding:0 8px 2px 30px;display:none;border-left:1px solid var(--line);margin-left:21px}
+.chlist li.open .subs{display:block}
+.chlist .subitem{margin:1px 0}
+.chlist .sublink{display:block;width:100%;text-align:left;background:none;border:0;border-left:2px solid transparent;font:inherit;color:var(--mut);font-size:12px;line-height:1.35;padding:6px 10px;cursor:pointer;border-radius:0 7px 7px 0;transition:.13s}
+.chlist .sublink:hover{color:var(--ink);background:#fff;box-shadow:0 1px 5px #0b1a330d}
+.chlist li.on .sublink{color:#40566f}
+.chlist li.on .sublink:hover{color:var(--a1)}
 
 .stage{min-width:0}
 .stagebar{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:0 2px 14px}
