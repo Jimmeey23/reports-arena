@@ -1,0 +1,31 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/api/state", "destination": "/api/state.json" },
+    { "source": "/api/report/:run/full", "destination": "/studio-app/runs/:run/report.html" },
+    { "source": "/api/report/:run/report", "destination": "/studio-app/runs/:run/report.html" },
+    { "source": "/api/report/:run/all", "destination": "/studio-app/runs/:run/report.html" },
+    { "source": "/api/report/:run/:chapter", "destination": "/studio-app/runs/:run/:chapter.html" },
+    { "source": "/api/download", "destination": "/studio-app/runs/:run/report.html" },
+    { "source": "/api/raw/:run/:path*", "destination": "/studio-app/runs/:run/:path*" },
+    { "source": "/runs/:path*", "destination": "/studio-app/runs/:path*" },
+    { "source": "/static/:path*", "destination": "/static/:path*" }
+  ],
+  "headers": [
+    {
+      "source": "/api/state.json",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" },
+        { "key": "Content-Type", "value": "application/json; charset=utf-8" }
+      ]
+    },
+    {
+      "source": "/studio-app/runs/(.*).html",
+      "headers": [
+        { "key": "Content-Type", "value": "text/html; charset=utf-8" }
+      ]
+    }
+  ]
+}

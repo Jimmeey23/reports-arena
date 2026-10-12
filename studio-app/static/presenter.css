@@ -29,7 +29,7 @@
 .p57-btn-icon{font-size:13px;display:inline-block;line-height:1}
 .p57-btn-text{font-size:11px;letter-spacing:.01em}
 .p57-indicator-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;margin-left:2px;flex-shrink:0;box-shadow:0 0 0 1.5px var(--paper)}
-.p57-close-btn{padding:5px 9px;font-size:12px;border-radius:8px}
+.p57-close-btn{padding:5px 9px;font-size:12px;border-radius:8px;order:99;margin-left:8px}
 
 /* Collapsible note / annotation / options drawers */
 .p57-collapsible-panel{padding:12px 16px;background:var(--soft);border-bottom:1px solid var(--line);flex-shrink:0;display:flex;flex-direction:column;gap:8px;animation:p57SlideDown .18s ease-out}

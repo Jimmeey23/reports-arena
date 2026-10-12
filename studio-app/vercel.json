@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/api/state", "destination": "/api/state.json" },
+    { "source": "/api/report/:run/full", "destination": "/runs/:run/report.html" },
+    { "source": "/api/report/:run/report", "destination": "/runs/:run/report.html" },
+    { "source": "/api/report/:run/all", "destination": "/runs/:run/report.html" },
+    { "source": "/api/report/:run/:chapter", "destination": "/runs/:run/:chapter.html" },
+    { "source": "/api/download", "destination": "/runs/:run/report.html" },
+    { "source": "/api/raw/:run/:path*", "destination": "/runs/:run/:path*" },
+    { "source": "/static/:path*", "destination": "/static/:path*" }
+  ],
+  "headers": [
+    {
+      "source": "/api/state.json",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" },
+        { "key": "Content-Type", "value": "application/json; charset=utf-8" }
+      ]
+    },
+    {
+      "source": "/runs/(.*).html",
+      "headers": [
+        { "key": "Content-Type", "value": "text/html; charset=utf-8" }
+      ]
+    }
+  ]
+}

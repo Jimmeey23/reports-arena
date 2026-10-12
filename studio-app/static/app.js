@@ -38,10 +38,23 @@ function view(v){
 
 /* ─────────────────────────────────────────── state */
 async function loadState(){
-  const r = await apiFetch('/api/state'); STATE = await r.json();
-  const n = STATE.sources.length, rows = STATE.sources.reduce((a,s)=>a+s.rows,0);
+  try {
+    const r = await apiFetch('/api/state');
+    if (!r.ok) throw new Error('Status ' + r.status);
+    STATE = await r.json();
+  } catch(e) {
+    try {
+      let r2 = await fetch('/api/state.json');
+      if (!r2.ok) r2 = await fetch('/studio-app/api/state.json');
+      STATE = await r2.json();
+    } catch(err2) {
+      console.warn('Fallback to static state failed:', err2);
+    }
+  }
+  if (!STATE) return;
+  const n = (STATE.sources || []).length, rows = (STATE.sources || []).reduce((a,s)=>a+s.rows,0);
   $('#brandSub').textContent = n
-    ? `${n} files · ${rows.toLocaleString()} rows · ${STATE.studios.length} studios`
+    ? `${n} files · ${rows.toLocaleString()} rows · ${(STATE.studios || []).length} studios`
     : 'no data loaded yet';
   renderSources(); renderNeeds(); renderStudios(); renderRuns(); renderLibrary();
 }
@@ -370,7 +383,16 @@ function wire(){
   $('#btnSummary').onclick = () => $('#summary').classList.toggle('on');
   $('#btnPrint').onclick = () => { try{ $('#stage').contentWindow.print(); }catch(e){} };
   $('#btnFull').onclick = () => { if (RUN) window.open(`/api/report/${RUN.id}/full`, '_blank'); };
-  $('#btnDownload').onclick = () => { if (RUN) location.href = `/api/download?run=${RUN.id}`; };
+  $('#btnDownload').onclick = () => {
+    if (RUN) {
+      const a = document.createElement('a');
+      a.href = `/api/download?run=${RUN.id}`;
+      a.download = `Performance_Review_${RUN.id}.html`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+  };
   view('upload');
   loadState();
 }

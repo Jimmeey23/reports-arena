@@ -72,10 +72,10 @@ settingsBtn.setAttribute('aria-label','Toggle teleprompter settings');
 settingsBtn.setAttribute('aria-expanded','false');
 settingsBtn.append(make('span','⚙️','p57-btn-icon'));
 
-const closeDrawer=button('Close',()=>{drawer.hidden=true;root.classList.remove('p57-right-open');stopPrompt();},actionsBar);
+const closeDrawer=button('Close',()=>{drawer.hidden=true;root.classList.remove('p57-right-open');stopPrompt();},dh);
 closeDrawer.classList.add('p57-close-btn');
 
-actionsBar.prepend(noteBtn,annotBtn,settingsBtn);
+actionsBar.append(noteBtn,annotBtn,settingsBtn);
 dh.append(titleGroup,actionsBar);
 drawer.append(dh);
 

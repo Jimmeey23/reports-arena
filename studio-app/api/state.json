@@ -1,0 +1,2028 @@
+{
+ "studios": [
+  {
+   "name": "Kwality House, Kemps Corner",
+   "rows": 104129,
+   "months": [
+    {
+     "year": 2024,
+     "month": 1,
+     "sessions": 262,
+     "label": "January 2024"
+    },
+    {
+     "year": 2024,
+     "month": 2,
+     "sessions": 264,
+     "label": "February 2024"
+    },
+    {
+     "year": 2024,
+     "month": 3,
+     "sessions": 268,
+     "label": "March 2024"
+    },
+    {
+     "year": 2024,
+     "month": 4,
+     "sessions": 272,
+     "label": "April 2024"
+    },
+    {
+     "year": 2024,
+     "month": 5,
+     "sessions": 270,
+     "label": "May 2024"
+    },
+    {
+     "year": 2024,
+     "month": 6,
+     "sessions": 266,
+     "label": "June 2024"
+    },
+    {
+     "year": 2024,
+     "month": 7,
+     "sessions": 279,
+     "label": "July 2024"
+    },
+    {
+     "year": 2024,
+     "month": 8,
+     "sessions": 275,
+     "label": "August 2024"
+    },
+    {
+     "year": 2024,
+     "month": 9,
+     "sessions": 251,
+     "label": "September 2024"
+    },
+    {
+     "year": 2024,
+     "month": 10,
+     "sessions": 259,
+     "label": "October 2024"
+    },
+    {
+     "year": 2024,
+     "month": 11,
+     "sessions": 227,
+     "label": "November 2024"
+    },
+    {
+     "year": 2024,
+     "month": 12,
+     "sessions": 252,
+     "label": "December 2024"
+    },
+    {
+     "year": 2025,
+     "month": 1,
+     "sessions": 245,
+     "label": "January 2025"
+    },
+    {
+     "year": 2025,
+     "month": 2,
+     "sessions": 231,
+     "label": "February 2025"
+    },
+    {
+     "year": 2025,
+     "month": 3,
+     "sessions": 250,
+     "label": "March 2025"
+    },
+    {
+     "year": 2025,
+     "month": 4,
+     "sessions": 253,
+     "label": "April 2025"
+    },
+    {
+     "year": 2025,
+     "month": 5,
+     "sessions": 259,
+     "label": "May 2025"
+    },
+    {
+     "year": 2025,
+     "month": 6,
+     "sessions": 243,
+     "label": "June 2025"
+    },
+    {
+     "year": 2025,
+     "month": 7,
+     "sessions": 261,
+     "label": "July 2025"
+    },
+    {
+     "year": 2025,
+     "month": 8,
+     "sessions": 271,
+     "label": "August 2025"
+    },
+    {
+     "year": 2025,
+     "month": 9,
+     "sessions": 360,
+     "label": "September 2025"
+    },
+    {
+     "year": 2025,
+     "month": 10,
+     "sessions": 349,
+     "label": "October 2025"
+    },
+    {
+     "year": 2025,
+     "month": 11,
+     "sessions": 370,
+     "label": "November 2025"
+    },
+    {
+     "year": 2025,
+     "month": 12,
+     "sessions": 367,
+     "label": "December 2025"
+    },
+    {
+     "year": 2026,
+     "month": 1,
+     "sessions": 332,
+     "label": "January 2026"
+    },
+    {
+     "year": 2026,
+     "month": 2,
+     "sessions": 309,
+     "label": "February 2026"
+    },
+    {
+     "year": 2026,
+     "month": 3,
+     "sessions": 332,
+     "label": "March 2026"
+    },
+    {
+     "year": 2026,
+     "month": 4,
+     "sessions": 338,
+     "label": "April 2026"
+    },
+    {
+     "year": 2026,
+     "month": 5,
+     "sessions": 348,
+     "label": "May 2026"
+    },
+    {
+     "year": 2026,
+     "month": 6,
+     "sessions": 352,
+     "label": "June 2026"
+    },
+    {
+     "year": 2026,
+     "month": 7,
+     "sessions": 368,
+     "label": "July 2026"
+    },
+    {
+     "year": 2026,
+     "month": 8,
+     "sessions": 355,
+     "label": "August 2026"
+    },
+    {
+     "year": 2026,
+     "month": 9,
+     "sessions": 328,
+     "label": "September 2026"
+    },
+    {
+     "year": 2026,
+     "month": 10,
+     "sessions": 198,
+     "label": "October 2026"
+    }
+   ]
+  },
+  {
+   "name": "Supreme HQ, Bandra",
+   "rows": 82434,
+   "months": [
+    {
+     "year": 2024,
+     "month": 5,
+     "sessions": 123,
+     "label": "May 2024"
+    },
+    {
+     "year": 2024,
+     "month": 6,
+     "sessions": 236,
+     "label": "June 2024"
+    },
+    {
+     "year": 2024,
+     "month": 7,
+     "sessions": 260,
+     "label": "July 2024"
+    },
+    {
+     "year": 2024,
+     "month": 8,
+     "sessions": 327,
+     "label": "August 2024"
+    },
+    {
+     "year": 2024,
+     "month": 9,
+     "sessions": 325,
+     "label": "September 2024"
+    },
+    {
+     "year": 2024,
+     "month": 10,
+     "sessions": 327,
+     "label": "October 2024"
+    },
+    {
+     "year": 2024,
+     "month": 11,
+     "sessions": 288,
+     "label": "November 2024"
+    },
+    {
+     "year": 2024,
+     "month": 12,
+     "sessions": 315,
+     "label": "December 2024"
+    },
+    {
+     "year": 2025,
+     "month": 1,
+     "sessions": 323,
+     "label": "January 2025"
+    },
+    {
+     "year": 2025,
+     "month": 2,
+     "sessions": 300,
+     "label": "February 2025"
+    },
+    {
+     "year": 2025,
+     "month": 3,
+     "sessions": 325,
+     "label": "March 2025"
+    },
+    {
+     "year": 2025,
+     "month": 4,
+     "sessions": 313,
+     "label": "April 2025"
+    },
+    {
+     "year": 2025,
+     "month": 5,
+     "sessions": 321,
+     "label": "May 2025"
+    },
+    {
+     "year": 2025,
+     "month": 6,
+     "sessions": 299,
+     "label": "June 2025"
+    },
+    {
+     "year": 2025,
+     "month": 7,
+     "sessions": 323,
+     "label": "July 2025"
+    },
+    {
+     "year": 2025,
+     "month": 8,
+     "sessions": 304,
+     "label": "August 2025"
+    },
+    {
+     "year": 2025,
+     "month": 9,
+     "sessions": 273,
+     "label": "September 2025"
+    },
+    {
+     "year": 2025,
+     "month": 10,
+     "sessions": 265,
+     "label": "October 2025"
+    },
+    {
+     "year": 2025,
+     "month": 11,
+     "sessions": 283,
+     "label": "November 2025"
+    },
+    {
+     "year": 2025,
+     "month": 12,
+     "sessions": 284,
+     "label": "December 2025"
+    },
+    {
+     "year": 2026,
+     "month": 1,
+     "sessions": 245,
+     "label": "January 2026"
+    },
+    {
+     "year": 2026,
+     "month": 2,
+     "sessions": 248,
+     "label": "February 2026"
+    },
+    {
+     "year": 2026,
+     "month": 3,
+     "sessions": 267,
+     "label": "March 2026"
+    },
+    {
+     "year": 2026,
+     "month": 4,
+     "sessions": 257,
+     "label": "April 2026"
+    },
+    {
+     "year": 2026,
+     "month": 5,
+     "sessions": 263,
+     "label": "May 2026"
+    },
+    {
+     "year": 2026,
+     "month": 6,
+     "sessions": 265,
+     "label": "June 2026"
+    },
+    {
+     "year": 2026,
+     "month": 7,
+     "sessions": 284,
+     "label": "July 2026"
+    },
+    {
+     "year": 2026,
+     "month": 8,
+     "sessions": 283,
+     "label": "August 2026"
+    },
+    {
+     "year": 2026,
+     "month": 9,
+     "sessions": 259,
+     "label": "September 2026"
+    },
+    {
+     "year": 2026,
+     "month": 10,
+     "sessions": 182,
+     "label": "October 2026"
+    }
+   ]
+  },
+  {
+   "name": "Kenkere House",
+   "rows": 51230,
+   "months": [
+    {
+     "year": 2024,
+     "month": 1,
+     "sessions": 208,
+     "label": "January 2024"
+    },
+    {
+     "year": 2024,
+     "month": 2,
+     "sessions": 185,
+     "label": "February 2024"
+    },
+    {
+     "year": 2024,
+     "month": 3,
+     "sessions": 205,
+     "label": "March 2024"
+    },
+    {
+     "year": 2024,
+     "month": 4,
+     "sessions": 193,
+     "label": "April 2024"
+    },
+    {
+     "year": 2024,
+     "month": 5,
+     "sessions": 206,
+     "label": "May 2024"
+    },
+    {
+     "year": 2024,
+     "month": 6,
+     "sessions": 199,
+     "label": "June 2024"
+    },
+    {
+     "year": 2024,
+     "month": 7,
+     "sessions": 203,
+     "label": "July 2024"
+    },
+    {
+     "year": 2024,
+     "month": 8,
+     "sessions": 202,
+     "label": "August 2024"
+    },
+    {
+     "year": 2024,
+     "month": 9,
+     "sessions": 196,
+     "label": "September 2024"
+    },
+    {
+     "year": 2024,
+     "month": 10,
+     "sessions": 204,
+     "label": "October 2024"
+    },
+    {
+     "year": 2024,
+     "month": 11,
+     "sessions": 194,
+     "label": "November 2024"
+    },
+    {
+     "year": 2024,
+     "month": 12,
+     "sessions": 202,
+     "label": "December 2024"
+    },
+    {
+     "year": 2025,
+     "month": 1,
+     "sessions": 225,
+     "label": "January 2025"
+    },
+    {
+     "year": 2025,
+     "month": 2,
+     "sessions": 205,
+     "label": "February 2025"
+    },
+    {
+     "year": 2025,
+     "month": 3,
+     "sessions": 227,
+     "label": "March 2025"
+    },
+    {
+     "year": 2025,
+     "month": 4,
+     "sessions": 182,
+     "label": "April 2025"
+    },
+    {
+     "year": 2025,
+     "month": 5,
+     "sessions": 182,
+     "label": "May 2025"
+    },
+    {
+     "year": 2025,
+     "month": 6,
+     "sessions": 177,
+     "label": "June 2025"
+    },
+    {
+     "year": 2025,
+     "month": 7,
+     "sessions": 189,
+     "label": "July 2025"
+    },
+    {
+     "year": 2025,
+     "month": 8,
+     "sessions": 182,
+     "label": "August 2025"
+    },
+    {
+     "year": 2025,
+     "month": 9,
+     "sessions": 184,
+     "label": "September 2025"
+    },
+    {
+     "year": 2025,
+     "month": 10,
+     "sessions": 177,
+     "label": "October 2025"
+    },
+    {
+     "year": 2025,
+     "month": 11,
+     "sessions": 187,
+     "label": "November 2025"
+    },
+    {
+     "year": 2025,
+     "month": 12,
+     "sessions": 196,
+     "label": "December 2025"
+    },
+    {
+     "year": 2026,
+     "month": 1,
+     "sessions": 188,
+     "label": "January 2026"
+    },
+    {
+     "year": 2026,
+     "month": 2,
+     "sessions": 174,
+     "label": "February 2026"
+    },
+    {
+     "year": 2026,
+     "month": 3,
+     "sessions": 196,
+     "label": "March 2026"
+    },
+    {
+     "year": 2026,
+     "month": 4,
+     "sessions": 193,
+     "label": "April 2026"
+    },
+    {
+     "year": 2026,
+     "month": 5,
+     "sessions": 196,
+     "label": "May 2026"
+    },
+    {
+     "year": 2026,
+     "month": 6,
+     "sessions": 194,
+     "label": "June 2026"
+    },
+    {
+     "year": 2026,
+     "month": 7,
+     "sessions": 204,
+     "label": "July 2026"
+    },
+    {
+     "year": 2026,
+     "month": 8,
+     "sessions": 188,
+     "label": "August 2026"
+    },
+    {
+     "year": 2026,
+     "month": 9,
+     "sessions": 191,
+     "label": "September 2026"
+    },
+    {
+     "year": 2026,
+     "month": 10,
+     "sessions": 115,
+     "label": "October 2026"
+    }
+   ]
+  },
+  {
+   "name": "Kenkere House, Bengaluru",
+   "rows": 9892,
+   "months": []
+  },
+  {
+   "name": "Pop-up",
+   "rows": 7059,
+   "months": [
+    {
+     "year": 2025,
+     "month": 8,
+     "sessions": 7,
+     "label": "August 2025"
+    },
+    {
+     "year": 2025,
+     "month": 10,
+     "sessions": 54,
+     "label": "October 2025"
+    },
+    {
+     "year": 2025,
+     "month": 11,
+     "sessions": 69,
+     "label": "November 2025"
+    },
+    {
+     "year": 2025,
+     "month": 12,
+     "sessions": 67,
+     "label": "December 2025"
+    },
+    {
+     "year": 2026,
+     "month": 1,
+     "sessions": 67,
+     "label": "January 2026"
+    },
+    {
+     "year": 2026,
+     "month": 2,
+     "sessions": 64,
+     "label": "February 2026"
+    },
+    {
+     "year": 2026,
+     "month": 3,
+     "sessions": 72,
+     "label": "March 2026"
+    },
+    {
+     "year": 2026,
+     "month": 4,
+     "sessions": 70,
+     "label": "April 2026"
+    },
+    {
+     "year": 2026,
+     "month": 5,
+     "sessions": 72,
+     "label": "May 2026"
+    },
+    {
+     "year": 2026,
+     "month": 6,
+     "sessions": 74,
+     "label": "June 2026"
+    },
+    {
+     "year": 2026,
+     "month": 7,
+     "sessions": 75,
+     "label": "July 2026"
+    },
+    {
+     "year": 2026,
+     "month": 8,
+     "sessions": 55,
+     "label": "August 2026"
+    },
+    {
+     "year": 2026,
+     "month": 9,
+     "sessions": 66,
+     "label": "September 2026"
+    },
+    {
+     "year": 2026,
+     "month": 10,
+     "sessions": 9,
+     "label": "October 2026"
+    }
+   ]
+  },
+  {
+   "name": "the Studio by Copper + Cloves, Indiranagar",
+   "rows": 1713,
+   "months": []
+  },
+  {
+   "name": "Plash Pilates",
+   "rows": 266,
+   "months": [
+    {
+     "year": 2026,
+     "month": 9,
+     "sessions": 16,
+     "label": "September 2026"
+    },
+    {
+     "year": 2026,
+     "month": 10,
+     "sessions": 11,
+     "label": "October 2026"
+    }
+   ]
+  },
+  {
+   "name": "the Studio By Copper + Cloves",
+   "rows": 137,
+   "months": [
+    {
+     "year": 2026,
+     "month": 10,
+     "sessions": 34,
+     "label": "October 2026"
+    }
+   ]
+  },
+  {
+   "name": "Taj Wellington Mews, Colaba, Mumbai",
+   "rows": 119,
+   "months": []
+  },
+  {
+   "name": "Physique 57 India",
+   "rows": 54,
+   "months": []
+  },
+  {
+   "name": "South United Football Club",
+   "rows": 31,
+   "months": []
+  },
+  {
+   "name": "WeWork Prestige Central",
+   "rows": 17,
+   "months": []
+  },
+  {
+   "name": "The Studio by Copper + Cloves",
+   "rows": 14,
+   "months": []
+  },
+  {
+   "name": "WeWork Galaxy",
+   "rows": 12,
+   "months": []
+  },
+  {
+   "name": "Plash pilates studios",
+   "rows": 8,
+   "months": []
+  },
+  {
+   "name": "Pop up",
+   "rows": 4,
+   "months": []
+  },
+  {
+   "name": "pop up plash",
+   "rows": 3,
+   "months": []
+  },
+  {
+   "name": "Out Door",
+   "rows": 1,
+   "months": []
+  }
+ ],
+ "sources": [
+  {
+   "name": "Day End Report - Part 1 - New (9).csv",
+   "kind": "newmembers",
+   "rows": 21171,
+   "folder": "uploaded"
+  },
+  {
+   "name": "Day End Report - Part 1 - Payroll (4).csv",
+   "kind": "payroll",
+   "rows": 1120,
+   "folder": "uploaded"
+  },
+  {
+   "name": "Day End Report - Part 3 - Sessions (19).csv",
+   "kind": "sessions",
+   "rows": 25675,
+   "folder": "uploaded"
+  },
+  {
+   "name": "Day End Report - Part 4 - Checkins (12).csv",
+   "kind": "checkins",
+   "rows": 150821,
+   "folder": "uploaded"
+  },
+  {
+   "name": "Lapsed New - Lapsed (20).csv",
+   "kind": "lapsed",
+   "rows": 29148,
+   "folder": "uploaded"
+  },
+  {
+   "name": "Sales - Raw - Sales (23).csv",
+   "kind": "sales",
+   "rows": 25044,
+   "folder": "uploaded"
+  },
+  {
+   "name": "\u2756 PM - Leads \u2756 - \u25c9 Leads (31).csv",
+   "kind": "leads",
+   "rows": 25315,
+   "folder": "uploaded"
+  }
+ ],
+ "warnings": [],
+ "load_seconds": 1791784652.6,
+ "kinds_present": [
+  "checkins",
+  "lapsed",
+  "leads",
+  "newmembers",
+  "payroll",
+  "sales",
+  "sessions"
+ ],
+ "runs": [
+  {
+   "id": "20261012-081545-b391",
+   "dir": "studio-app/runs/20261012-081545-b391",
+   "label": "September 2026",
+   "studio": "Kwality House, Kemps Corner",
+   "built": "12 October 2026, 11:14",
+   "seconds": 5.8,
+   "sources": [
+    "Day End Report - Part 1 - New (9).csv",
+    "Day End Report - Part 1 - Payroll (4).csv",
+    "Day End Report - Part 3 - Sessions (19).csv",
+    "Day End Report - Part 4 - Checkins (12).csv",
+    "Lapsed New - Lapsed (20).csv",
+    "Sales - Raw - Sales (23).csv",
+    "\u2756 PM - Leads \u2756 - \u25c9 Leads (31).csv"
+   ],
+   "warnings": [],
+   "chapters": [
+    {
+     "id": "sales",
+     "n": 1,
+     "title": "Sales Performance",
+     "subtitle": "\u20b932,06,431 of cash, 179 buyers, \u20b917,913 each",
+     "kpis": [
+      {
+       "label": "Cash taken",
+       "value": "\u20b932,06,431",
+       "detail": "+27.4% on September 2025",
+       "tone": "pos"
+      },
+      {
+       "label": "Transactions",
+       "value": "272",
+       "detail": "179 buyers",
+       "tone": "neu"
+      },
+      {
+       "label": "Average buyer",
+       "value": "\u20b917,913",
+       "detail": "+76.5% on the year",
+       "tone": "pos"
+      },
+      {
+       "label": "Discount given",
+       "value": "\u20b912,65,715",
+       "detail": "28% of gross",
+       "tone": "neu"
+      }
+     ],
+     "summary": "\u20b932,06,431 was taken at Kwality House, Kemps Corner in September 2026, across 272 transactions from 179 buyers. The average buyer spent \u20b917,913, up 77% on the same month last year. The largest category was Memberships at \u20b916,30,524. Class revenue reached \u20b919,01,973 at \u20b95,799 a class.",
+     "summary_ai": "",
+     "facts": [
+      "\u20b932,06,431 of cash from 272 transactions and 179 buyers in September 2026, at an average of \u20b917,913 each.",
+      "59% of that cash has already been delivered as attended classes (\u20b919,01,973).",
+      "53 buyers (30%) bought more than once and produced 38% of the month."
+     ],
+     "narration": "Sales Performance. Kwality House, Kemps Corner, September 2026. 32,06,431 of cash from 272 transactions and 179 buyers in September 2026, at an average of 17,913 each. 59 per cent of that cash has already been delivered as attended classes (19,01,973). 53 buyers (30 per cent) bought more than once and produced 38 per cent of the month. The question this chapter leaves is not whether the month sold, but how much of it was sold at full price.",
+     "recs": 14
+    },
+    {
+     "id": "class",
+     "n": 2,
+     "title": "Class Performance",
+     "subtitle": "328 classes at 45.4% utilisation, \u20b95,799 a class",
+     "kpis": [
+      {
+       "label": "Classes taught",
+       "value": "328",
+       "detail": "-32 on last year",
+       "tone": "neu"
+      },
+      {
+       "label": "Utilisation",
+       "value": "45.4%",
+       "detail": "+2.1 points",
+       "tone": "pos"
+      },
+      {
+       "label": "Attendances",
+       "value": "2,090",
+       "detail": "90% of booked seats",
+       "tone": "neu"
+      },
+      {
+       "label": "Revenue per class",
+       "value": "\u20b95,799",
+       "detail": "\u20b9910 per attendance",
+       "tone": "neu"
+      }
+     ],
+     "summary": "328 classes ran at Kwality House, Kemps Corner in September 2026, offering 4,606 seats and filling 2,090 of them. Utilisation came in at 45.4%, up 5% on the same month last year. Revenue per class was \u20b95,799 and revenue per seat filled \u20b9910. 39 classes ran to two people or fewer.",
+     "summary_ai": "",
+     "facts": [
+      "328 classes, 4,606 seats, 2,090 attendances and 45.4% utilisation in September 2026.",
+      "\u20b919,01,973 of class revenue at \u20b95,799 a class and \u20b9910 per attendance.",
+      "235 booked seats went empty; 234 of those were late cancellations."
+     ],
+     "narration": "Class Performance. Kwality House, Kemps Corner, September 2026. 328 classes, 4,606 seats, 2,090 attendances and 45.4 per cent utilisation in September 2026. 19,01,973 of class revenue at 5,799 a class and 910 per attendance. 235 booked seats went empty; 234 of those were late cancellations. The room is the studio\u2019s fixed cost. Every seat that goes unfilled was paid for anyway.",
+     "recs": 14
+    },
+    {
+     "id": "instructor",
+     "n": 3,
+     "title": "Instructor Performance",
+     "subtitle": "14 trainers, 2.2 times utilisation spread",
+     "kpis": [
+      {
+       "label": "Trainers",
+       "value": "14",
+       "detail": "328 classes",
+       "tone": "neu"
+      },
+      {
+       "label": "Utilisation spread",
+       "value": "2.2\u00d7",
+       "detail": "28% to 62%",
+       "tone": "neg"
+      },
+      {
+       "label": "Revenue per attendee",
+       "value": "\u20b9910",
+       "detail": "flat, whatever the room size",
+       "tone": "neu"
+      },
+      {
+       "label": "Empty classes",
+       "value": "4",
+       "detail": "1.2% of all classes",
+       "tone": "neg"
+      }
+     ],
+     "summary": "14 trainers taught 328 classes in September 2026, drawing 2,090 attendances and \u20b919,01,973 of revenue. Utilisation ranged from 28.4% to 61.6%, a 2.2-fold spread. But revenue per attendee ran only \u20b9769 to \u20b91,076, so most of the spread is the slots rather than the trainers.",
+     "summary_ai": "",
+     "facts": [
+      "14 trainers taught 328 classes and filled 2,090 seats for \u20b919,01,973 in September 2026.",
+      "Utilisation spread 2.2 times, but revenue per attendee only 1.4 times - most of the gap is the slot.",
+      "4 classes ran to nobody; 10.1% of their booked seats were late-cancelled."
+     ],
+     "narration": "Instructor Performance. Kwality House, Kemps Corner, September 2026. 14 trainers taught 328 classes and filled 2,090 seats for 19,01,973 in September 2026. Utilisation spread 2.2 times, but revenue per attendee only 1.4 times - most of the gap is the slot. 4 classes ran to nobody; 10.1 per cent of their booked seats were late-cancelled. The fairest way to read a trainer is against the slots they were given, and then to ask whether those slots should exist.",
+     "recs": 14
+    },
+    {
+     "id": "lapse",
+     "n": 4,
+     "title": "Memberships Lapsed and Churned",
+     "subtitle": "6,782 paid memberships, median life 27 days",
+     "kpis": [
+      {
+       "label": "Memberships on file",
+       "value": "11,710",
+       "detail": "3,243 people",
+       "tone": "neu"
+      },
+      {
+       "label": "Paid memberships",
+       "value": "6,782",
+       "detail": "\u20b98,90,79,136 of recorded money",
+       "tone": "neu"
+      },
+      {
+       "label": "Median life",
+       "value": "27 days",
+       "detail": "days, not months",
+       "tone": "neg"
+      },
+      {
+       "label": "Never attended",
+       "value": "3,191",
+       "detail": "27% of the ledger",
+       "tone": "neg"
+      }
+     ],
+     "summary": "11,710 memberships are in the Kwality House, Kemps Corner ledger, 6,782 of them paid. 42% of paid memberships survive thirty days and 5% survive six months. The median membership lasts 27 days and carries \u20b913,135 of recorded cash. Single Class keeps its members best at 2% still live or renewed.",
+     "summary_ai": "",
+     "facts": [
+      "11,710 memberships at this studio, 6,782 of them paid for, across \u20b98,90,79,136 of recorded money.",
+      "42% of paid memberships survive thirty days and 1.9% survive a year.",
+      "The median paid membership lasts 27 days; 3,191 produced no attendance at all.",
+      "76,258,641 classes sit unspent on the book, worth about \u20b97,62,58,641 of delivered value."
+     ],
+     "narration": "Memberships Lapsed and Churned. Kwality House, Kemps Corner, September 2026. 11,710 memberships at this studio, 6,782 of them paid for, across 8,90,79,136 of recorded money. 42 per cent of paid memberships survive thirty days and 1.9 per cent survive a year. The median paid membership lasts 27 days; 3,191 produced no attendance at all. 76,258,641 classes sit unspent on the book, worth about 7,62,58,641 of delivered value. Members are not lost in a moment. They stop coming, and everything needed to see it is already recorded.",
+     "recs": 14
+    },
+    {
+     "id": "format",
+     "n": 5,
+     "title": "Format Comparisons",
+     "subtitle": "16 formats, 86% to 15% fill",
+     "kpis": [
+      {
+       "label": "Formats",
+       "value": "16",
+       "detail": "328 classes",
+       "tone": "neu"
+      },
+      {
+       "label": "Fullest",
+       "value": "86%",
+       "detail": "Strength Lab",
+       "tone": "pos"
+      },
+      {
+       "label": "Emptiest",
+       "value": "15%",
+       "detail": "Recovery",
+       "tone": "neg"
+      },
+      {
+       "label": "Best per class",
+       "value": "\u20b910,360",
+       "detail": "Mat 57",
+       "tone": "neu"
+      }
+     ],
+     "summary": "16 formats ran 328 classes in September 2026 for \u20b919,01,973. Strength Lab filled 86.0% of its seats against 15.0% for Recovery. Barre 57 reached the most members at 230.",
+     "summary_ai": "",
+     "facts": [
+      "16 formats ran 328 classes for \u20b919,01,973 in September 2026.",
+      "Strength Lab is the fullest at 86.0%; Recovery the emptiest at 15.0%.",
+      "Mat 57 earns the most per class at \u20b910,360."
+     ],
+     "narration": "Format Comparisons. Kwality House, Kemps Corner, September 2026. 16 formats ran 328 classes for 19,01,973 in September 2026. Strength Lab is the fullest at 86.0 per cent; Recovery the emptiest at 15.0 per cent. Mat 57 earns the most per class at 10,360. No format wins on every measure, so the studio\u2019s job is to decide what each one is for.",
+     "recs": 12
+    },
+    {
+     "id": "cancels",
+     "n": 6,
+     "title": "Late Cancellations and Discounts",
+     "subtitle": "234 seats released late, 10.1% of the book",
+     "kpis": [
+      {
+       "label": "Seats released late",
+       "value": "234",
+       "detail": "10.1% of the book",
+       "tone": "neg"
+      },
+      {
+       "label": "Value at average",
+       "value": "\u20b92,12,948",
+       "detail": "opportunity cost, not a booked loss",
+       "tone": "neu"
+      },
+      {
+       "label": "Discount given",
+       "value": "\u20b912,65,715",
+       "detail": "28.3% depth",
+       "tone": "neu"
+      },
+      {
+       "label": "Year on year",
+       "value": "-17.0 pts",
+       "detail": "September 2025 was 27.0%",
+       "tone": "neu"
+      }
+     ],
+     "summary": "234 seats were released late in September 2026, 10.1% of everything booked. That is down from 802 a year earlier. Attendance ran at 89.9% of the booked book, and the board is only 50.5% booked in the first place. Discount depth stands at 19.3% across 15% of sales.",
+     "summary_ai": "",
+     "facts": [
+      "234 seats were released late in September 2026, 10.1% of everything booked.",
+      "At \u20b9910 of revenue per attendance those seats are worth about \u20b92,12,948.",
+      "1,265,715 rupees of discount went out on the same month, spread across 15% of transactions."
+     ],
+     "narration": "Late Cancellations and Discounts. Kwality House, Kemps Corner, September 2026. 234 seats were released late in September 2026, 10.1 per cent of everything booked. At 910 of revenue per attendance those seats are worth about 2,12,948. 1,265,715 rupees of discount went out on the same month, spread across 15 per cent of transactions. A released seat is a member telling the studio, in the only way they can, that the time no longer works.",
+     "recs": 14
+    },
+    {
+     "id": "overview",
+     "n": 7,
+     "title": "Studio Overview and Intelligence",
+     "subtitle": "328 classes at 45.4%, \u20b932,06,431 banked",
+     "kpis": [
+      {
+       "label": "Classes",
+       "value": "328",
+       "detail": "2,090 attendances",
+       "tone": "neu"
+      },
+      {
+       "label": "Utilisation",
+       "value": "45.4%",
+       "detail": "59% of cash delivered",
+       "tone": "neu"
+      },
+      {
+       "label": "Cash",
+       "value": "\u20b932,06,431",
+       "detail": "179 buyers",
+       "tone": "neu"
+      },
+      {
+       "label": "Visits per member",
+       "value": "4.41",
+       "detail": "474 members",
+       "tone": "neu"
+      }
+     ],
+     "summary": "Kwality House, Kemps Corner ran 328 classes at 45.4% utilisation in September 2026, earning \u20b919,01,973 from the room. \u20b932,06,431 was taken from 179 buyers. The 147 members who returned from the same month last year gave 140 fewer visits, about 7% of the month. 189 leads arrived and 17.6% of all leads on file have converted.",
+     "summary_ai": "",
+     "facts": [
+      "328 classes, 45.4% utilisation and \u20b919,01,973 of delivered revenue in September 2026, against \u20b932,06,431 of cash taken.",
+      "474 people trained here at 4.41 visits each.",
+      "147 members came in both September 2025 and September 2026; they came 140 fewer times this year, worth about \u20b91,27,405 of delivered revenue.",
+      "1,068 leads sit open with a mean age of 782 days - unsold demand larger than the studio can serve in a year."
+     ],
+     "narration": "Studio Overview and Intelligence. Kwality House, Kemps Corner, September 2026. 328 classes, 45.4 per cent utilisation and 19,01,973 of delivered revenue in September 2026, against 32,06,431 of cash taken. 474 people trained here at 4.41 visits each. 147 members came in both September 2025 and September 2026; they came 140 fewer times this year, worth about 1,27,405 of delivered revenue. 1,068 leads sit open with a mean age of 782 days - unsold demand larger than the studio can serve in a year. Read together, these ledgers describe a business that earns well per class and loses its regulars slowly.",
+     "recs": 12
+    },
+    {
+     "id": "leads",
+     "n": 8,
+     "title": "Lead Performance and Insights",
+     "subtitle": "5,709 leads, 34.9% trialled, 17.6% won",
+     "kpis": [
+      {
+       "label": "Leads on file",
+       "value": "5,709",
+       "detail": "189 in September 2026",
+       "tone": "neu"
+      },
+      {
+       "label": "Trialled",
+       "value": "34.9%",
+       "detail": "1,991 people",
+       "tone": "neu"
+      },
+      {
+       "label": "Won",
+       "value": "17.6%",
+       "detail": "1,003 memberships",
+       "tone": "neu"
+      },
+      {
+       "label": "Open file",
+       "value": "1,068",
+       "detail": "mean age 782 days",
+       "tone": "neg"
+      }
+     ],
+     "summary": "5,709 leads are recorded for Kwality House, Kemps Corner: 1,991 completed a trial, 1,003 became members, 888 are still with the studio. Trial-takers convert at 36.0% against 7.69% without one. 49% of memberships are sold the same day the enquiry arrives. 1,068 leads are still marked open at a mean age of 782 days.",
+     "summary_ai": "",
+     "facts": [
+      "5,709 leads on file for this studio: 1,991 trialled, 1,003 won, 888 retained.",
+      "Trials convert at 36.0% against those without one.",
+      "49% of wins closed on the day of the enquiry; 1,068 leads sit open with a mean age of 782 days."
+     ],
+     "narration": "Lead Performance and Insights. Kwality House, Kemps Corner, September 2026. 5,709 leads on file for this studio: 1,991 trialled, 1,003 won, 888 retained. Trials convert at 36.0 per cent against those without one. 49 per cent of wins closed on the day of the enquiry; 1,068 leads sit open with a mean age of 782 days. The trial is the gate and the same day is the deadline. Everything else in this chapter is a consequence of those two.",
+     "recs": 12
+    },
+    {
+     "id": "behaviour",
+     "n": 9,
+     "title": "Member Behaviour and Patterns",
+     "subtitle": "474 members, 4.41 visits each, 39% of attendance in the top tenth",
+     "kpis": [
+      {
+       "label": "Members who came",
+       "value": "474",
+       "detail": "2,090 visits",
+       "tone": "neu"
+      },
+      {
+       "label": "Visits per member",
+       "value": "4.41",
+       "detail": "median gap 2 days",
+       "tone": "pos"
+      },
+      {
+       "label": "Came exactly once",
+       "value": "214",
+       "detail": "45% of the base",
+       "tone": "neg"
+      },
+      {
+       "label": "Top tenth of members",
+       "value": "39%",
+       "detail": "47 people",
+       "tone": "neg"
+      }
+     ],
+     "summary": "474 members trained 2,090 times in September 2026, 4.41 visits each. 45% came exactly once and the top tenth delivered 39% of attendance. 290 of 474 members do most of their training before noon. The median gap between visits is 2 day and between purchases 11 days.",
+     "summary_ai": "",
+     "facts": [
+      "474 members made 2,090 visits in September 2026 at 4.41 each; 214 came exactly once.",
+      "The median gap between visits across the studio\u2019s whole ledger is 2 days and 87% of gaps are a week or less.",
+      "The tenth of the base that comes most produces 39% of all attendance.",
+      "Of 3,344 recorded first-timers, 22% reached a third visit - the point at which a 2-for-1 intro pack member is genuinely returning."
+     ],
+     "narration": "Member Behaviour and Patterns. Kwality House, Kemps Corner, September 2026. 474 members made 2,090 visits in September 2026 at 4.41 each; 214 came exactly once. The median gap between visits across the studio\u2019s whole ledger is 2 days and 87 per cent of gaps are a week or less. The tenth of the base that comes most produces 39 per cent of all attendance. Of 3,344 recorded first-timers, 22 per cent reached a third visit - the point at which a 2-for-1 intro pack member is genuinely returning. Most of what looks like churn at this studio is one early step that nobody currently owns.",
+     "recs": 14
+    }
+   ]
+  },
+  {
+   "id": "20261011-232828-eb72",
+   "dir": "studio-app/runs/20261011-232828-eb72",
+   "label": "September 2026",
+   "studio": "Supreme HQ, Bandra",
+   "built": "12 October 2026, 11:15",
+   "seconds": 5.1,
+   "sources": [
+    "Day End Report - Part 1 - New (9).csv",
+    "Day End Report - Part 1 - Payroll (4).csv",
+    "Day End Report - Part 3 - Sessions (19).csv",
+    "Day End Report - Part 4 - Checkins (12).csv",
+    "Lapsed New - Lapsed (20).csv",
+    "Sales - Raw - Sales (23).csv",
+    "\u2756 PM - Leads \u2756 - \u25c9 Leads (31).csv"
+   ],
+   "warnings": [],
+   "chapters": [
+    {
+     "id": "sales",
+     "n": 1,
+     "title": "Sales Performance",
+     "subtitle": "\u20b915,29,410 of cash, 139 buyers, \u20b911,003 each",
+     "kpis": [
+      {
+       "label": "Cash taken",
+       "value": "\u20b915,29,410",
+       "detail": "-2.3% on September 2025",
+       "tone": "neg"
+      },
+      {
+       "label": "Transactions",
+       "value": "213",
+       "detail": "139 buyers",
+       "tone": "neu"
+      },
+      {
+       "label": "Average buyer",
+       "value": "\u20b911,003",
+       "detail": "+5.5% on the year",
+       "tone": "pos"
+      },
+      {
+       "label": "Discount given",
+       "value": "\u20b91,63,709",
+       "detail": "10% of gross",
+       "tone": "neu"
+      }
+     ],
+     "summary": "\u20b915,29,410 was taken at Supreme HQ, Bandra in September 2026, across 213 transactions from 139 buyers. The average buyer spent \u20b911,003, up 5% on the same month last year. The largest category was Memberships at \u20b96,66,610. Class revenue reached \u20b913,06,451 at \u20b95,044 a class.",
+     "summary_ai": "",
+     "facts": [
+      "\u20b915,29,410 of cash from 213 transactions and 139 buyers in September 2026, at an average of \u20b911,003 each.",
+      "85% of that cash has already been delivered as attended classes (\u20b913,06,451).",
+      "41 buyers (29%) bought more than once and produced 34% of the month."
+     ],
+     "narration": "Sales Performance. Supreme HQ, Bandra, September 2026. 15,29,410 of cash from 213 transactions and 139 buyers in September 2026, at an average of 11,003 each. 85 per cent of that cash has already been delivered as attended classes (13,06,451). 41 buyers (29 per cent) bought more than once and produced 34 per cent of the month. The question this chapter leaves is not whether the month sold, but how much of it was sold at full price.",
+     "recs": 14
+    },
+    {
+     "id": "class",
+     "n": 2,
+     "title": "Class Performance",
+     "subtitle": "259 classes at 42.6% utilisation, \u20b95,044 a class",
+     "kpis": [
+      {
+       "label": "Classes taught",
+       "value": "259",
+       "detail": "-14 on last year",
+       "tone": "neu"
+      },
+      {
+       "label": "Utilisation",
+       "value": "42.6%",
+       "detail": "+0.8 points",
+       "tone": "pos"
+      },
+      {
+       "label": "Attendances",
+       "value": "1,404",
+       "detail": "88% of booked seats",
+       "tone": "neu"
+      },
+      {
+       "label": "Revenue per class",
+       "value": "\u20b95,044",
+       "detail": "\u20b9931 per attendance",
+       "tone": "neu"
+      }
+     ],
+     "summary": "259 classes ran at Supreme HQ, Bandra in September 2026, offering 3,293 seats and filling 1,404 of them. Utilisation came in at 42.6%, up 2% on the same month last year. Revenue per class was \u20b95,044 and revenue per seat filled \u20b9931. 49 classes ran to two people or fewer.",
+     "summary_ai": "",
+     "facts": [
+      "259 classes, 3,293 seats, 1,404 attendances and 42.6% utilisation in September 2026.",
+      "\u20b913,06,451 of class revenue at \u20b95,044 a class and \u20b9931 per attendance.",
+      "200 booked seats went empty; 199 of those were late cancellations."
+     ],
+     "narration": "Class Performance. Supreme HQ, Bandra, September 2026. 259 classes, 3,293 seats, 1,404 attendances and 42.6 per cent utilisation in September 2026. 13,06,451 of class revenue at 5,044 a class and 931 per attendance. 200 booked seats went empty; 199 of those were late cancellations. The room is the studio\u2019s fixed cost. Every seat that goes unfilled was paid for anyway.",
+     "recs": 14
+    },
+    {
+     "id": "instructor",
+     "n": 3,
+     "title": "Instructor Performance",
+     "subtitle": "14 trainers, 2.2 times utilisation spread",
+     "kpis": [
+      {
+       "label": "Trainers",
+       "value": "14",
+       "detail": "259 classes",
+       "tone": "neu"
+      },
+      {
+       "label": "Utilisation spread",
+       "value": "2.2\u00d7",
+       "detail": "29% to 63%",
+       "tone": "neg"
+      },
+      {
+       "label": "Revenue per attendee",
+       "value": "\u20b9931",
+       "detail": "flat, whatever the room size",
+       "tone": "neu"
+      },
+      {
+       "label": "Empty classes",
+       "value": "11",
+       "detail": "4.2% of all classes",
+       "tone": "neg"
+      }
+     ],
+     "summary": "14 trainers taught 259 classes in September 2026, drawing 1,404 attendances and \u20b913,06,451 of revenue. Utilisation ranged from 29.1% to 62.7%, a 2.2-fold spread. But revenue per attendee ran only \u20b9783 to \u20b91,329, so most of the spread is the slots rather than the trainers.",
+     "summary_ai": "",
+     "facts": [
+      "14 trainers taught 259 classes and filled 1,404 seats for \u20b913,06,451 in September 2026.",
+      "Utilisation spread 2.2 times, but revenue per attendee only 1.7 times - most of the gap is the slot.",
+      "11 classes ran to nobody; 12.4% of their booked seats were late-cancelled."
+     ],
+     "narration": "Instructor Performance. Supreme HQ, Bandra, September 2026. 14 trainers taught 259 classes and filled 1,404 seats for 13,06,451 in September 2026. Utilisation spread 2.2 times, but revenue per attendee only 1.7 times - most of the gap is the slot. 11 classes ran to nobody; 12.4 per cent of their booked seats were late-cancelled. The fairest way to read a trainer is against the slots they were given, and then to ask whether those slots should exist.",
+     "recs": 14
+    },
+    {
+     "id": "lapse",
+     "n": 4,
+     "title": "Memberships Lapsed and Churned",
+     "subtitle": "3,974 paid memberships, median life 18 days",
+     "kpis": [
+      {
+       "label": "Memberships on file",
+       "value": "8,707",
+       "detail": "3,768 people",
+       "tone": "neu"
+      },
+      {
+       "label": "Paid memberships",
+       "value": "3,974",
+       "detail": "\u20b94,40,74,830 of recorded money",
+       "tone": "neu"
+      },
+      {
+       "label": "Median life",
+       "value": "18 days",
+       "detail": "days, not months",
+       "tone": "neg"
+      },
+      {
+       "label": "Never attended",
+       "value": "1,107",
+       "detail": "13% of the ledger",
+       "tone": "neg"
+      }
+     ],
+     "summary": "8,707 memberships are in the Supreme HQ, Bandra ledger, 3,974 of them paid. 42% of paid memberships survive thirty days and 4% survive six months. The median membership lasts 18 days and carries \u20b911,091 of recorded cash. Single Class keeps its members best at 5% still live or renewed.",
+     "summary_ai": "",
+     "facts": [
+      "8,707 memberships at this studio, 3,974 of them paid for, across \u20b94,40,74,830 of recorded money.",
+      "42% of paid memberships survive thirty days and 1.7% survive a year.",
+      "The median paid membership lasts 18 days; 1,107 produced no attendance at all.",
+      "37,445,405 classes sit unspent on the book, worth about \u20b93,74,45,405 of delivered value."
+     ],
+     "narration": "Memberships Lapsed and Churned. Supreme HQ, Bandra, September 2026. 8,707 memberships at this studio, 3,974 of them paid for, across 4,40,74,830 of recorded money. 42 per cent of paid memberships survive thirty days and 1.7 per cent survive a year. The median paid membership lasts 18 days; 1,107 produced no attendance at all. 37,445,405 classes sit unspent on the book, worth about 3,74,45,405 of delivered value. Members are not lost in a moment. They stop coming, and everything needed to see it is already recorded.",
+     "recs": 14
+    },
+    {
+     "id": "format",
+     "n": 5,
+     "title": "Format Comparisons",
+     "subtitle": "12 formats, 86% to 0% fill",
+     "kpis": [
+      {
+       "label": "Formats",
+       "value": "12",
+       "detail": "259 classes",
+       "tone": "neu"
+      },
+      {
+       "label": "Fullest",
+       "value": "86%",
+       "detail": "Hosted Class",
+       "tone": "pos"
+      },
+      {
+       "label": "Emptiest",
+       "value": "0%",
+       "detail": "Trainer's Choice",
+       "tone": "neg"
+      },
+      {
+       "label": "Best per class",
+       "value": "\u20b97,252",
+       "detail": "PowerCycle Express",
+       "tone": "neu"
+      }
+     ],
+     "summary": "12 formats ran 259 classes in September 2026 for \u20b913,06,451. Hosted Class filled 85.7% of its seats against 0.0% for Trainer's Choice. PowerCycle reached the most members at 181.",
+     "summary_ai": "",
+     "facts": [
+      "12 formats ran 259 classes for \u20b913,06,451 in September 2026.",
+      "Hosted Class is the fullest at 85.7%; Trainer's Choice the emptiest at 0.0%.",
+      "PowerCycle Express earns the most per class at \u20b97,252."
+     ],
+     "narration": "Format Comparisons. Supreme HQ, Bandra, September 2026. 12 formats ran 259 classes for 13,06,451 in September 2026. Hosted Class is the fullest at 85.7 per cent; Trainer's Choice the emptiest at 0.0 per cent. PowerCycle Express earns the most per class at 7,252. No format wins on every measure, so the studio\u2019s job is to decide what each one is for.",
+     "recs": 14
+    },
+    {
+     "id": "cancels",
+     "n": 6,
+     "title": "Late Cancellations and Discounts",
+     "subtitle": "199 seats released late, 12.4% of the book",
+     "kpis": [
+      {
+       "label": "Seats released late",
+       "value": "199",
+       "detail": "12.4% of the book",
+       "tone": "neg"
+      },
+      {
+       "label": "Value at average",
+       "value": "\u20b91,85,174",
+       "detail": "opportunity cost, not a booked loss",
+       "tone": "neu"
+      },
+      {
+       "label": "Discount given",
+       "value": "\u20b91,63,709",
+       "detail": "9.7% depth",
+       "tone": "neu"
+      },
+      {
+       "label": "Year on year",
+       "value": "-18.4 pts",
+       "detail": "September 2025 was 30.8%",
+       "tone": "neu"
+      }
+     ],
+     "summary": "199 seats were released late in September 2026, 12.4% of everything booked. That is down from 658 a year earlier. Attendance ran at 87.5% of the booked book, and the board is only 48.7% booked in the first place. Discount depth stands at 13.2% across 18% of sales.",
+     "summary_ai": "",
+     "facts": [
+      "199 seats were released late in September 2026, 12.4% of everything booked.",
+      "At \u20b9931 of revenue per attendance those seats are worth about \u20b91,85,174.",
+      "163,709 rupees of discount went out on the same month, spread across 17% of transactions."
+     ],
+     "narration": "Late Cancellations and Discounts. Supreme HQ, Bandra, September 2026. 199 seats were released late in September 2026, 12.4 per cent of everything booked. At 931 of revenue per attendance those seats are worth about 1,85,174. 163,709 rupees of discount went out on the same month, spread across 17 per cent of transactions. A released seat is a member telling the studio, in the only way they can, that the time no longer works.",
+     "recs": 14
+    },
+    {
+     "id": "overview",
+     "n": 7,
+     "title": "Studio Overview and Intelligence",
+     "subtitle": "259 classes at 42.6%, \u20b915,29,410 banked",
+     "kpis": [
+      {
+       "label": "Classes",
+       "value": "259",
+       "detail": "1,404 attendances",
+       "tone": "neu"
+      },
+      {
+       "label": "Utilisation",
+       "value": "42.6%",
+       "detail": "85% of cash delivered",
+       "tone": "neu"
+      },
+      {
+       "label": "Cash",
+       "value": "\u20b915,29,410",
+       "detail": "139 buyers",
+       "tone": "neu"
+      },
+      {
+       "label": "Visits per member",
+       "value": "3.56",
+       "detail": "394 members",
+       "tone": "neu"
+      }
+     ],
+     "summary": "Supreme HQ, Bandra ran 259 classes at 42.6% utilisation in September 2026, earning \u20b913,06,451 from the room. \u20b915,29,410 was taken from 139 buyers. The 78 members who returned from the same month last year gave 252 fewer visits, about 18% of the month. 189 leads arrived and 12.9% of all leads on file have converted.",
+     "summary_ai": "",
+     "facts": [
+      "259 classes, 42.6% utilisation and \u20b913,06,451 of delivered revenue in September 2026, against \u20b915,29,410 of cash taken.",
+      "394 people trained here at 3.56 visits each.",
+      "78 members came in both September 2025 and September 2026; they came 252 fewer times this year, worth about \u20b92,34,491 of delivered revenue.",
+      "2,120 leads sit open with a mean age of 597 days - unsold demand larger than the studio can serve in a year."
+     ],
+     "narration": "Studio Overview and Intelligence. Supreme HQ, Bandra, September 2026. 259 classes, 42.6 per cent utilisation and 13,06,451 of delivered revenue in September 2026, against 15,29,410 of cash taken. 394 people trained here at 3.56 visits each. 78 members came in both September 2025 and September 2026; they came 252 fewer times this year, worth about 2,34,491 of delivered revenue. 2,120 leads sit open with a mean age of 597 days - unsold demand larger than the studio can serve in a year. Read together, these ledgers describe a business that earns well per class and loses its regulars slowly.",
+     "recs": 13
+    },
+    {
+     "id": "leads",
+     "n": 8,
+     "title": "Lead Performance and Insights",
+     "subtitle": "7,822 leads, 44.7% trialled, 12.9% won",
+     "kpis": [
+      {
+       "label": "Leads on file",
+       "value": "7,822",
+       "detail": "189 in September 2026",
+       "tone": "neu"
+      },
+      {
+       "label": "Trialled",
+       "value": "44.7%",
+       "detail": "3,493 people",
+       "tone": "neu"
+      },
+      {
+       "label": "Won",
+       "value": "12.9%",
+       "detail": "1,006 memberships",
+       "tone": "neu"
+      },
+      {
+       "label": "Open file",
+       "value": "2,120",
+       "detail": "mean age 597 days",
+       "tone": "neg"
+      }
+     ],
+     "summary": "7,822 leads are recorded for Supreme HQ, Bandra: 3,493 completed a trial, 1,006 became members, 1,439 are still with the studio. Trial-takers convert at 26.1% against 2.19% without one. 61% of memberships are sold the same day the enquiry arrives. 2,120 leads are still marked open at a mean age of 597 days.",
+     "summary_ai": "",
+     "facts": [
+      "7,822 leads on file for this studio: 3,493 trialled, 1,006 won, 1,439 retained.",
+      "Trials convert at 26.1% against those without one.",
+      "61% of wins closed on the day of the enquiry; 2,120 leads sit open with a mean age of 597 days."
+     ],
+     "narration": "Lead Performance and Insights. Supreme HQ, Bandra, September 2026. 7,822 leads on file for this studio: 3,493 trialled, 1,006 won, 1,439 retained. Trials convert at 26.1 per cent against those without one. 61 per cent of wins closed on the day of the enquiry; 2,120 leads sit open with a mean age of 597 days. The trial is the gate and the same day is the deadline. Everything else in this chapter is a consequence of those two.",
+     "recs": 13
+    },
+    {
+     "id": "behaviour",
+     "n": 9,
+     "title": "Member Behaviour and Patterns",
+     "subtitle": "394 members, 3.56 visits each, 42% of attendance in the top tenth",
+     "kpis": [
+      {
+       "label": "Members who came",
+       "value": "394",
+       "detail": "1,404 visits",
+       "tone": "neu"
+      },
+      {
+       "label": "Visits per member",
+       "value": "3.56",
+       "detail": "median gap 1 days",
+       "tone": "neg"
+      },
+      {
+       "label": "Came exactly once",
+       "value": "205",
+       "detail": "52% of the base",
+       "tone": "neg"
+      },
+      {
+       "label": "Top tenth of members",
+       "value": "42%",
+       "detail": "39 people",
+       "tone": "neg"
+      }
+     ],
+     "summary": "394 members trained 1,404 times in September 2026, 3.56 visits each. 52% came exactly once and the top tenth delivered 42% of attendance. 249 of 394 members do most of their training before noon. The median gap between visits is 1 day and between purchases 14 days.",
+     "summary_ai": "",
+     "facts": [
+      "394 members made 1,404 visits in September 2026 at 3.56 each; 205 came exactly once.",
+      "The median gap between visits across the studio\u2019s whole ledger is 1 days and 85% of gaps are a week or less.",
+      "The tenth of the base that comes most produces 42% of all attendance.",
+      "Of 4,218 recorded first-timers, 19% reached a third visit - the point at which a 2-for-1 intro pack member is genuinely returning."
+     ],
+     "narration": "Member Behaviour and Patterns. Supreme HQ, Bandra, September 2026. 394 members made 1,404 visits in September 2026 at 3.56 each; 205 came exactly once. The median gap between visits across the studio\u2019s whole ledger is 1 days and 85 per cent of gaps are a week or less. The tenth of the base that comes most produces 42 per cent of all attendance. Of 4,218 recorded first-timers, 19 per cent reached a third visit - the point at which a 2-for-1 intro pack member is genuinely returning. Most of what looks like churn at this studio is one early step that nobody currently owns.",
+     "recs": 14
+    }
+   ]
+  },
+  {
+   "id": "20261011-173500-demo",
+   "dir": "studio-app/runs/20261011-173500-demo",
+   "label": "September 2026",
+   "studio": "Supreme HQ, Bandra",
+   "built": "12 October 2026, 11:15",
+   "seconds": 5.2,
+   "sources": [
+    "Day End Report - Part 1 - New (9).csv",
+    "Day End Report - Part 1 - Payroll (4).csv",
+    "Day End Report - Part 3 - Sessions (19).csv",
+    "Day End Report - Part 4 - Checkins (12).csv",
+    "Lapsed New - Lapsed (20).csv",
+    "Sales - Raw - Sales (23).csv",
+    "\u2756 PM - Leads \u2756 - \u25c9 Leads (31).csv"
+   ],
+   "warnings": [],
+   "chapters": [
+    {
+     "id": "sales",
+     "n": 1,
+     "title": "Sales Performance",
+     "subtitle": "\u20b915,29,410 of cash, 139 buyers, \u20b911,003 each",
+     "kpis": [
+      {
+       "label": "Cash taken",
+       "value": "\u20b915,29,410",
+       "detail": "-2.3% on September 2025",
+       "tone": "neg"
+      },
+      {
+       "label": "Transactions",
+       "value": "213",
+       "detail": "139 buyers",
+       "tone": "neu"
+      },
+      {
+       "label": "Average buyer",
+       "value": "\u20b911,003",
+       "detail": "+5.5% on the year",
+       "tone": "pos"
+      },
+      {
+       "label": "Discount given",
+       "value": "\u20b91,63,709",
+       "detail": "10% of gross",
+       "tone": "neu"
+      }
+     ],
+     "summary": "\u20b915,29,410 was taken at Supreme HQ, Bandra in September 2026, across 213 transactions from 139 buyers. The average buyer spent \u20b911,003, up 5% on the same month last year. The largest category was Memberships at \u20b96,66,610. Class revenue reached \u20b913,06,451 at \u20b95,044 a class.",
+     "summary_ai": "",
+     "facts": [
+      "\u20b915,29,410 of cash from 213 transactions and 139 buyers in September 2026, at an average of \u20b911,003 each.",
+      "85% of that cash has already been delivered as attended classes (\u20b913,06,451).",
+      "41 buyers (29%) bought more than once and produced 34% of the month."
+     ],
+     "narration": "Sales Performance. Supreme HQ, Bandra, September 2026. 15,29,410 of cash from 213 transactions and 139 buyers in September 2026, at an average of 11,003 each. 85 per cent of that cash has already been delivered as attended classes (13,06,451). 41 buyers (29 per cent) bought more than once and produced 34 per cent of the month. The question this chapter leaves is not whether the month sold, but how much of it was sold at full price.",
+     "recs": 14
+    },
+    {
+     "id": "class",
+     "n": 2,
+     "title": "Class Performance",
+     "subtitle": "259 classes at 42.6% utilisation, \u20b95,044 a class",
+     "kpis": [
+      {
+       "label": "Classes taught",
+       "value": "259",
+       "detail": "-14 on last year",
+       "tone": "neu"
+      },
+      {
+       "label": "Utilisation",
+       "value": "42.6%",
+       "detail": "+0.8 points",
+       "tone": "pos"
+      },
+      {
+       "label": "Attendances",
+       "value": "1,404",
+       "detail": "88% of booked seats",
+       "tone": "neu"
+      },
+      {
+       "label": "Revenue per class",
+       "value": "\u20b95,044",
+       "detail": "\u20b9931 per attendance",
+       "tone": "neu"
+      }
+     ],
+     "summary": "259 classes ran at Supreme HQ, Bandra in September 2026, offering 3,293 seats and filling 1,404 of them. Utilisation came in at 42.6%, up 2% on the same month last year. Revenue per class was \u20b95,044 and revenue per seat filled \u20b9931. 49 classes ran to two people or fewer.",
+     "summary_ai": "",
+     "facts": [
+      "259 classes, 3,293 seats, 1,404 attendances and 42.6% utilisation in September 2026.",
+      "\u20b913,06,451 of class revenue at \u20b95,044 a class and \u20b9931 per attendance.",
+      "200 booked seats went empty; 199 of those were late cancellations."
+     ],
+     "narration": "Class Performance. Supreme HQ, Bandra, September 2026. 259 classes, 3,293 seats, 1,404 attendances and 42.6 per cent utilisation in September 2026. 13,06,451 of class revenue at 5,044 a class and 931 per attendance. 200 booked seats went empty; 199 of those were late cancellations. The room is the studio\u2019s fixed cost. Every seat that goes unfilled was paid for anyway.",
+     "recs": 14
+    },
+    {
+     "id": "instructor",
+     "n": 3,
+     "title": "Instructor Performance",
+     "subtitle": "14 trainers, 2.2 times utilisation spread",
+     "kpis": [
+      {
+       "label": "Trainers",
+       "value": "14",
+       "detail": "259 classes",
+       "tone": "neu"
+      },
+      {
+       "label": "Utilisation spread",
+       "value": "2.2\u00d7",
+       "detail": "29% to 63%",
+       "tone": "neg"
+      },
+      {
+       "label": "Revenue per attendee",
+       "value": "\u20b9931",
+       "detail": "flat, whatever the room size",
+       "tone": "neu"
+      },
+      {
+       "label": "Empty classes",
+       "value": "11",
+       "detail": "4.2% of all classes",
+       "tone": "neg"
+      }
+     ],
+     "summary": "14 trainers taught 259 classes in September 2026, drawing 1,404 attendances and \u20b913,06,451 of revenue. Utilisation ranged from 29.1% to 62.7%, a 2.2-fold spread. But revenue per attendee ran only \u20b9783 to \u20b91,329, so most of the spread is the slots rather than the trainers.",
+     "summary_ai": "",
+     "facts": [
+      "14 trainers taught 259 classes and filled 1,404 seats for \u20b913,06,451 in September 2026.",
+      "Utilisation spread 2.2 times, but revenue per attendee only 1.7 times - most of the gap is the slot.",
+      "11 classes ran to nobody; 12.4% of their booked seats were late-cancelled."
+     ],
+     "narration": "Instructor Performance. Supreme HQ, Bandra, September 2026. 14 trainers taught 259 classes and filled 1,404 seats for 13,06,451 in September 2026. Utilisation spread 2.2 times, but revenue per attendee only 1.7 times - most of the gap is the slot. 11 classes ran to nobody; 12.4 per cent of their booked seats were late-cancelled. The fairest way to read a trainer is against the slots they were given, and then to ask whether those slots should exist.",
+     "recs": 14
+    },
+    {
+     "id": "lapse",
+     "n": 4,
+     "title": "Memberships Lapsed and Churned",
+     "subtitle": "3,974 paid memberships, median life 18 days",
+     "kpis": [
+      {
+       "label": "Memberships on file",
+       "value": "8,707",
+       "detail": "3,768 people",
+       "tone": "neu"
+      },
+      {
+       "label": "Paid memberships",
+       "value": "3,974",
+       "detail": "\u20b94,40,74,830 of recorded money",
+       "tone": "neu"
+      },
+      {
+       "label": "Median life",
+       "value": "18 days",
+       "detail": "days, not months",
+       "tone": "neg"
+      },
+      {
+       "label": "Never attended",
+       "value": "1,107",
+       "detail": "13% of the ledger",
+       "tone": "neg"
+      }
+     ],
+     "summary": "8,707 memberships are in the Supreme HQ, Bandra ledger, 3,974 of them paid. 42% of paid memberships survive thirty days and 4% survive six months. The median membership lasts 18 days and carries \u20b911,091 of recorded cash. Single Class keeps its members best at 5% still live or renewed.",
+     "summary_ai": "",
+     "facts": [
+      "8,707 memberships at this studio, 3,974 of them paid for, across \u20b94,40,74,830 of recorded money.",
+      "42% of paid memberships survive thirty days and 1.7% survive a year.",
+      "The median paid membership lasts 18 days; 1,107 produced no attendance at all.",
+      "37,445,405 classes sit unspent on the book, worth about \u20b93,74,45,405 of delivered value."
+     ],
+     "narration": "Memberships Lapsed and Churned. Supreme HQ, Bandra, September 2026. 8,707 memberships at this studio, 3,974 of them paid for, across 4,40,74,830 of recorded money. 42 per cent of paid memberships survive thirty days and 1.7 per cent survive a year. The median paid membership lasts 18 days; 1,107 produced no attendance at all. 37,445,405 classes sit unspent on the book, worth about 3,74,45,405 of delivered value. Members are not lost in a moment. They stop coming, and everything needed to see it is already recorded.",
+     "recs": 14
+    },
+    {
+     "id": "format",
+     "n": 5,
+     "title": "Format Comparisons",
+     "subtitle": "12 formats, 86% to 0% fill",
+     "kpis": [
+      {
+       "label": "Formats",
+       "value": "12",
+       "detail": "259 classes",
+       "tone": "neu"
+      },
+      {
+       "label": "Fullest",
+       "value": "86%",
+       "detail": "Hosted Class",
+       "tone": "pos"
+      },
+      {
+       "label": "Emptiest",
+       "value": "0%",
+       "detail": "Trainer's Choice",
+       "tone": "neg"
+      },
+      {
+       "label": "Best per class",
+       "value": "\u20b97,252",
+       "detail": "PowerCycle Express",
+       "tone": "neu"
+      }
+     ],
+     "summary": "12 formats ran 259 classes in September 2026 for \u20b913,06,451. Hosted Class filled 85.7% of its seats against 0.0% for Trainer's Choice. PowerCycle reached the most members at 181.",
+     "summary_ai": "",
+     "facts": [
+      "12 formats ran 259 classes for \u20b913,06,451 in September 2026.",
+      "Hosted Class is the fullest at 85.7%; Trainer's Choice the emptiest at 0.0%.",
+      "PowerCycle Express earns the most per class at \u20b97,252."
+     ],
+     "narration": "Format Comparisons. Supreme HQ, Bandra, September 2026. 12 formats ran 259 classes for 13,06,451 in September 2026. Hosted Class is the fullest at 85.7 per cent; Trainer's Choice the emptiest at 0.0 per cent. PowerCycle Express earns the most per class at 7,252. No format wins on every measure, so the studio\u2019s job is to decide what each one is for.",
+     "recs": 14
+    },
+    {
+     "id": "cancels",
+     "n": 6,
+     "title": "Late Cancellations and Discounts",
+     "subtitle": "199 seats released late, 12.4% of the book",
+     "kpis": [
+      {
+       "label": "Seats released late",
+       "value": "199",
+       "detail": "12.4% of the book",
+       "tone": "neg"
+      },
+      {
+       "label": "Value at average",
+       "value": "\u20b91,85,174",
+       "detail": "opportunity cost, not a booked loss",
+       "tone": "neu"
+      },
+      {
+       "label": "Discount given",
+       "value": "\u20b91,63,709",
+       "detail": "9.7% depth",
+       "tone": "neu"
+      },
+      {
+       "label": "Year on year",
+       "value": "-18.4 pts",
+       "detail": "September 2025 was 30.8%",
+       "tone": "neu"
+      }
+     ],
+     "summary": "199 seats were released late in September 2026, 12.4% of everything booked. That is down from 658 a year earlier. Attendance ran at 87.5% of the booked book, and the board is only 48.7% booked in the first place. Discount depth stands at 13.2% across 18% of sales.",
+     "summary_ai": "",
+     "facts": [
+      "199 seats were released late in September 2026, 12.4% of everything booked.",
+      "At \u20b9931 of revenue per attendance those seats are worth about \u20b91,85,174.",
+      "163,709 rupees of discount went out on the same month, spread across 17% of transactions."
+     ],
+     "narration": "Late Cancellations and Discounts. Supreme HQ, Bandra, September 2026. 199 seats were released late in September 2026, 12.4 per cent of everything booked. At 931 of revenue per attendance those seats are worth about 1,85,174. 163,709 rupees of discount went out on the same month, spread across 17 per cent of transactions. A released seat is a member telling the studio, in the only way they can, that the time no longer works.",
+     "recs": 14
+    },
+    {
+     "id": "overview",
+     "n": 7,
+     "title": "Studio Overview and Intelligence",
+     "subtitle": "259 classes at 42.6%, \u20b915,29,410 banked",
+     "kpis": [
+      {
+       "label": "Classes",
+       "value": "259",
+       "detail": "1,404 attendances",
+       "tone": "neu"
+      },
+      {
+       "label": "Utilisation",
+       "value": "42.6%",
+       "detail": "85% of cash delivered",
+       "tone": "neu"
+      },
+      {
+       "label": "Cash",
+       "value": "\u20b915,29,410",
+       "detail": "139 buyers",
+       "tone": "neu"
+      },
+      {
+       "label": "Visits per member",
+       "value": "3.56",
+       "detail": "394 members",
+       "tone": "neu"
+      }
+     ],
+     "summary": "Supreme HQ, Bandra ran 259 classes at 42.6% utilisation in September 2026, earning \u20b913,06,451 from the room. \u20b915,29,410 was taken from 139 buyers. The 78 members who returned from the same month last year gave 252 fewer visits, about 18% of the month. 189 leads arrived and 12.9% of all leads on file have converted.",
+     "summary_ai": "",
+     "facts": [
+      "259 classes, 42.6% utilisation and \u20b913,06,451 of delivered revenue in September 2026, against \u20b915,29,410 of cash taken.",
+      "394 people trained here at 3.56 visits each.",
+      "78 members came in both September 2025 and September 2026; they came 252 fewer times this year, worth about \u20b92,34,491 of delivered revenue.",
+      "2,120 leads sit open with a mean age of 597 days - unsold demand larger than the studio can serve in a year."
+     ],
+     "narration": "Studio Overview and Intelligence. Supreme HQ, Bandra, September 2026. 259 classes, 42.6 per cent utilisation and 13,06,451 of delivered revenue in September 2026, against 15,29,410 of cash taken. 394 people trained here at 3.56 visits each. 78 members came in both September 2025 and September 2026; they came 252 fewer times this year, worth about 2,34,491 of delivered revenue. 2,120 leads sit open with a mean age of 597 days - unsold demand larger than the studio can serve in a year. Read together, these ledgers describe a business that earns well per class and loses its regulars slowly.",
+     "recs": 13
+    },
+    {
+     "id": "leads",
+     "n": 8,
+     "title": "Lead Performance and Insights",
+     "subtitle": "7,822 leads, 44.7% trialled, 12.9% won",
+     "kpis": [
+      {
+       "label": "Leads on file",
+       "value": "7,822",
+       "detail": "189 in September 2026",
+       "tone": "neu"
+      },
+      {
+       "label": "Trialled",
+       "value": "44.7%",
+       "detail": "3,493 people",
+       "tone": "neu"
+      },
+      {
+       "label": "Won",
+       "value": "12.9%",
+       "detail": "1,006 memberships",
+       "tone": "neu"
+      },
+      {
+       "label": "Open file",
+       "value": "2,120",
+       "detail": "mean age 597 days",
+       "tone": "neg"
+      }
+     ],
+     "summary": "7,822 leads are recorded for Supreme HQ, Bandra: 3,493 completed a trial, 1,006 became members, 1,439 are still with the studio. Trial-takers convert at 26.1% against 2.19% without one. 61% of memberships are sold the same day the enquiry arrives. 2,120 leads are still marked open at a mean age of 597 days.",
+     "summary_ai": "",
+     "facts": [
+      "7,822 leads on file for this studio: 3,493 trialled, 1,006 won, 1,439 retained.",
+      "Trials convert at 26.1% against those without one.",
+      "61% of wins closed on the day of the enquiry; 2,120 leads sit open with a mean age of 597 days."
+     ],
+     "narration": "Lead Performance and Insights. Supreme HQ, Bandra, September 2026. 7,822 leads on file for this studio: 3,493 trialled, 1,006 won, 1,439 retained. Trials convert at 26.1 per cent against those without one. 61 per cent of wins closed on the day of the enquiry; 2,120 leads sit open with a mean age of 597 days. The trial is the gate and the same day is the deadline. Everything else in this chapter is a consequence of those two.",
+     "recs": 13
+    },
+    {
+     "id": "behaviour",
+     "n": 9,
+     "title": "Member Behaviour and Patterns",
+     "subtitle": "394 members, 3.56 visits each, 42% of attendance in the top tenth",
+     "kpis": [
+      {
+       "label": "Members who came",
+       "value": "394",
+       "detail": "1,404 visits",
+       "tone": "neu"
+      },
+      {
+       "label": "Visits per member",
+       "value": "3.56",
+       "detail": "median gap 1 days",
+       "tone": "neg"
+      },
+      {
+       "label": "Came exactly once",
+       "value": "205",
+       "detail": "52% of the base",
+       "tone": "neg"
+      },
+      {
+       "label": "Top tenth of members",
+       "value": "42%",
+       "detail": "39 people",
+       "tone": "neg"
+      }
+     ],
+     "summary": "394 members trained 1,404 times in September 2026, 3.56 visits each. 52% came exactly once and the top tenth delivered 42% of attendance. 249 of 394 members do most of their training before noon. The median gap between visits is 1 day and between purchases 14 days.",
+     "summary_ai": "",
+     "facts": [
+      "394 members made 1,404 visits in September 2026 at 3.56 each; 205 came exactly once.",
+      "The median gap between visits across the studio\u2019s whole ledger is 1 days and 85% of gaps are a week or less.",
+      "The tenth of the base that comes most produces 42% of all attendance.",
+      "Of 4,218 recorded first-timers, 19% reached a third visit - the point at which a 2-for-1 intro pack member is genuinely returning."
+     ],
+     "narration": "Member Behaviour and Patterns. Supreme HQ, Bandra, September 2026. 394 members made 1,404 visits in September 2026 at 3.56 each; 205 came exactly once. The median gap between visits across the studio\u2019s whole ledger is 1 days and 85 per cent of gaps are a week or less. The tenth of the base that comes most produces 42 per cent of all attendance. Of 4,218 recorded first-timers, 19 per cent reached a third visit - the point at which a 2-for-1 intro pack member is genuinely returning. Most of what looks like churn at this studio is one early step that nobody currently owns.",
+     "recs": 14
+    }
+   ]
+  }
+ ],
+ "logs": [
+  "Studio Intelligence ready",
+  "Loaded 7 sources",
+  "3 reviews ready"
+ ]
+}
