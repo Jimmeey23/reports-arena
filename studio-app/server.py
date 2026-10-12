@@ -448,7 +448,7 @@ class Handler(BaseHTTPRequestHandler):
                 req = json.loads(self.rfile.read(n) or b'{}')
                 studio = req.get('studio'); year = int(req.get('year')); month = int(req.get('month'))
                 chapters = req.get('chapters') or []
-                llm = req.get('llm') or {}
+                llm_config = req.get('llm') or {}
                 if not studio:
                     return self._send(400, dict(error='choose a studio'))
                 D = batch_dataset(self.headers.get('X-Upload-Batch'))
@@ -456,7 +456,7 @@ class Handler(BaseHTTPRequestHandler):
                     raise WorkspaceError(400, 'Upload fresh exports before generating a report')
                 if studio not in D.studios() or not any(y==year and m==month for y,m,_ in D.months(studio)):
                     raise WorkspaceError(400, 'Choose a studio and month from the fresh exports')
-                jid = start_job('generate', lambda j: do_generate(j, studio, year, month, chapters, llm, D))
+                jid = start_job('generate', lambda j: do_generate(j, studio, year, month, chapters, llm_config, D))
                 return self._send(200, dict(job=jid))
 
             if u.path == '/api/remove':

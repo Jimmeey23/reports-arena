@@ -1,6 +1,7 @@
 import importlib.util, json, tempfile, threading, unittest, urllib.request, urllib.error, time
 from pathlib import Path
 import sys
+from unittest.mock import patch
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from engine.workspace import Workspace, WorkspaceError
 from engine.reader import enhance_report
@@ -96,5 +97,15 @@ class ServerTests(unittest.TestCase):
         self.server.WORKSPACE=Workspace(Path(self.temp.name)/'workspace.db')
         _,raw=self.request('/api/workspace?report=saved/report',headers=host);self.assertEqual(json.loads(raw)['edits']['text-0'],'Edited')
         status,_=self.request('/api/meetings',json.dumps({'report':'saved/../server'}).encode(),host);self.assertEqual(status,400)
+
+    def test_ai_settings_use_llm_module(self):
+        with patch.object(self.server.llm, 'configure') as configure, \
+             patch.object(self.server.llm, 'status', return_value={'configured': True, 'model': 'test-model'}), \
+             patch.object(self.server.AI_STORE, 'config_put') as config_put:
+            status, raw = self.request('/api/ai/key', json.dumps({'model': 'test-model'}).encode())
+            self.assertEqual(status, 200, raw)
+            self.assertEqual(json.loads(raw), {'ok': True, 'configured': True, 'model': 'test-model'})
+            configure.assert_called_once_with(key=None, model='test-model', base=None)
+            self.assertEqual(config_put.call_args.args[0], 'ai')
 
 if __name__=='__main__':unittest.main()
