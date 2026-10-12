@@ -176,7 +176,7 @@ def edit_element(instruction, current_html, pack):
     if not llm.status()['configured']:
         if 'shorten' in ins:
             return dict(html=_DETERMINISTIC_EDITS['shorten'](text), mode='deterministic', tokens=0)
-        return dict(error='Editing with AI needs a key. Set P57_AI_KEY (or AI settings) - '
+        return dict(error='Editing with AI needs a key. Set OPENAI_API_KEY (or AI settings) - '
                           'manual editing works without one.')
     sys_prompt = ('You rewrite ONE fragment of a studio report. Rules: keep every number exactly as '
                   'given; add no new facts; output only the rewritten text, no markup, no preamble; '
@@ -202,7 +202,7 @@ def create_element(instruction, pack):
     if not llm.status()['configured']:
         if det.get('ok'):
             return dict(html=f'<p>{det["answer"]}</p>', mode='deterministic', tokens=0)
-        return dict(error='Creating with AI needs a key. Set P57_AI_KEY - or use the manual tools '
+        return dict(error='Creating with AI needs a key. Set OPENAI_API_KEY - or use the manual tools '
                           'to add and edit blocks yourself.')
     try:
         out = llm.complete([

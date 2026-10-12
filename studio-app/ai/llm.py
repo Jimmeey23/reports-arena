@@ -2,7 +2,7 @@
 
 Configuration via environment:
 
-    P57_AI_KEY      API key (also settable at runtime through /api/ai/key)
+    OPENAI_API_KEY      API key (also settable at runtime through /api/ai/key)
     P57_AI_MODEL    model name, default gpt-4o-mini
     P57_AI_BASE     chat-completions base URL,
                     default https://api.openai.com/v1/chat/completions
@@ -36,7 +36,7 @@ def configure(key=None, model=None, base=None):
 
 
 def status():
-    key = _runtime['key'] or os.environ.get('P57_AI_KEY', '').strip()
+    key = _runtime['key'] or os.environ.get('OPENAI_API_KEY', '').strip()
     return dict(configured=bool(key),
                 model=_runtime['model'] or os.environ.get('P57_AI_MODEL') or DEFAULT_MODEL,
                 base=_runtime['base'] or os.environ.get('P57_AI_BASE') or DEFAULT_BASE)
@@ -47,12 +47,12 @@ def complete(messages, max_tokens=320, temperature=0.2, timeout=45):
     or the provider is unreachable."""
     cfg = status()
     if not cfg['configured']:
-        raise AIUnavailable('No AI key is configured. Set P57_AI_KEY or use the AI settings in the app.')
+        raise AIUnavailable('No AI key is configured. Set OPENAI_API_KEY or use the AI settings in the app.')
     body = json.dumps(dict(model=cfg['model'], messages=messages,
                            max_tokens=max_tokens, temperature=temperature)).encode()
     req = urllib.request.Request(cfg['base'], data=body, headers={
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + (_runtime['key'] or os.environ.get('P57_AI_KEY', '').strip()),
+        'Authorization': 'Bearer ' + (_runtime['key'] or os.environ.get('OPENAI_API_KEY', '').strip()),
     })
     try:
         with urllib.request.urlopen(req, timeout=timeout) as res:
