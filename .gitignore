@@ -4,6 +4,7 @@ __pycache__/
 .DS_Store
 .env
 node_modules/
+vercel-public/
 
 # Generated review artifacts (rebuildable from uploaded exports; each run is
 # ~150MB including the uncapped records.json, so they stay out of Git).

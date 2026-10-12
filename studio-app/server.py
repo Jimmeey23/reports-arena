@@ -6,7 +6,7 @@ Run:  python3 server.py [--port 8000]
 Nothing outside the standard library is required.
 """
 from __future__ import annotations
-import os, sys, json, time, uuid, threading, mimetypes, traceback, sqlite3
+import os, sys, json, time, uuid, threading, mimetypes, traceback, sqlite3, shutil
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 from pathlib import Path
@@ -21,13 +21,23 @@ from engine.metrics import MONTH_NAMES
 from ai import agent, llm, metrics_pack
 from ai.store import Store, _now as _now_iso
 
-DATA = os.path.join(HERE, 'data')
+STORAGE = os.environ.get('P57_STORAGE_DIR') or os.environ.get('RAILWAY_VOLUME_MOUNT_PATH') or HERE
+DATA = os.path.join(STORAGE, 'data')
 UPLOADS = os.path.join(DATA, 'uploaded')
-RUNS = os.path.join(HERE, 'runs')
+RUNS = os.path.join(STORAGE, 'runs')
 SEED = []  # Source files are accepted only from an explicit fresh upload batch.
 STATIC = os.path.join(HERE, 'static')
 for d in (DATA, UPLOADS, RUNS):
     os.makedirs(d, exist_ok=True)
+
+# Preserve the bundled report library when starting on a fresh volume.
+bundled_runs = os.path.join(HERE, 'runs')
+if os.path.abspath(RUNS) != os.path.abspath(bundled_runs) and os.path.isdir(bundled_runs):
+    for rid in os.listdir(bundled_runs):
+        source = os.path.join(bundled_runs, rid)
+        target = os.path.join(RUNS, rid)
+        if os.path.isfile(os.path.join(source, 'manifest.json')) and not os.path.exists(target):
+            shutil.copytree(source, target)
 
 WORKSPACE = Workspace(os.environ.get('P57_WORKSPACE_DB', os.path.join(DATA, 'workspace.sqlite3')))
 AI_STORE = Store(os.path.join(DATA, 'ai.sqlite3'))
@@ -562,7 +572,7 @@ def hydrate_report_store():
 
 
 def main():
-    port = 8000
+    port = int(os.environ.get('PORT', '8000'))
     if '--port' in sys.argv:
         port = int(sys.argv[sys.argv.index('--port') + 1])
     print('Studio Intelligence')
