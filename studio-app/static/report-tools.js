@@ -8,10 +8,10 @@ const brand=make('div',null,'rt-brand');brand.append(make('b','PHYSIQUE 57'),mak
 const progress=make('div',null,'rt-progress');document.body.prepend(bar,progress);
 let prefs={};try{prefs=JSON.parse(localStorage.getItem('p57-report-appearance')||'{}');}catch{}
 function save(){try{localStorage.setItem('p57-report-appearance',JSON.stringify(prefs));}catch{}}
-function select(label,items,key,apply){const l=make('label',label),s=make('select');s.setAttribute('aria-label',label);items.forEach(([v,t])=>{const o=make('option',t);o.value=v;s.append(o);});s.value=prefs[key]||items[0][0];apply(s.value);s.onchange=()=>{prefs[key]=s.value;save();apply(s.value);if(key==='theme'){const accent=prefs.accent||'#0f2c5e';root.style.setProperty('--a1',s.value==='dark'?'#8cb6ff':accent);root.style.setProperty('--a2',s.value==='dark'?'#8cb6ff':accent);}};l.append(s);bar.append(l);return s;}
+function select(label,items,key,apply){const l=make('label',label),s=make('select');s.setAttribute('aria-label',label);items.forEach(([v,t])=>{const o=make('option',t);o.value=v;s.append(o);});s.value=prefs[key]||items[0][0];apply(s.value);s.onchange=()=>{prefs[key]=s.value;save();apply(s.value);if(key==='theme'){const accent=prefs.accent||'#0f4c5c';root.style.setProperty('--a1',s.value==='dark'?'#7fc8bb':accent);root.style.setProperty('--a2',s.value==='dark'?'#7fc8bb':accent);}};l.append(s);bar.append(l);return s;}
 function button(text,fn,parent=bar){const b=make('button',text);b.type='button';b.onclick=fn;parent.append(b);return b;}
 select('Theme',[['light','Crisp paper'],['warm','Warm parchment'],['dark','Midnight']],'theme',v=>root.dataset.theme=v);
-select('Colour',[['#0f2c5e','Navy'],['#0f666b','Teal'],['#59416f','Plum'],['#376348','Forest'],['#7e492c','Copper']],'accent',v=>{root.style.setProperty('--a1',prefs.theme==='dark'?'#8cb6ff':v);root.style.setProperty('--a2',prefs.theme==='dark'?'#8cb6ff':v);});
+select('Colour',[['#0f4c5c','Studio teal'],['#0f2c5e','Navy'],['#59416f','Plum'],['#376348','Forest'],['#7e492c','Copper']],'accent',v=>{root.style.setProperty('--a1',prefs.theme==='dark'?'#7fc8bb':v);root.style.setProperty('--a2',prefs.theme==='dark'?'#7fc8bb':v);});
 select('Layout',[['adaptive','Wide'],['reading','Reading'],['grid','Metric grid']],'layout',v=>root.dataset.layout=v);
 select('Density',[['comfortable','Comfortable'],['compact','Compact']],'density',v=>root.dataset.density=v);
 select('Text',[['16','100%'],['18','112%'],['20','125%']],'size',v=>root.style.setProperty('--report-size',v+'px'));

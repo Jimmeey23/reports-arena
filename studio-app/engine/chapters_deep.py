@@ -137,8 +137,8 @@ def sales(M):
         p = [para(f'The number of people who paid to train at this studio in {lab} was <strong>{pn["members"]}</strong>'
                   + (f', against {pp["members"]} in {yrp(M)}' if pp.get('members') else '')
                   + (f' and {p2["members"]} in {MONTH_NAMES[M.m - 1]} {y - 2}' if p2.get('members') else '')
-                  + '. The base is widening.' if (not pp.get('members')) or pn['members'] >= pp['members'] else
-                  '. The base is narrowing.')]
+                  + ('. The base is widening.' if (not pp.get('members')) or pn['members'] >= pp['members'] else
+                     '. The base is narrowing.'))]
         if pp.get('members') and p2.get('members'):
             p.append(para(f'Breadth and depth have moved in opposite directions for two years. The studio reaches '
                           f'{(pn["members"] - p2["members"]) / p2["members"] * 100:+.0f}% more people than it did two Septembers ago, '

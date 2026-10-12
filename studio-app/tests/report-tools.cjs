@@ -16,7 +16,7 @@ d.querySelector('th:nth-child(2) button').click();assert.equal(d.querySelector('
 d.querySelector('th:nth-child(2) button').click();assert.equal(d.querySelector('tbody tr td').textContent,'B');
 const filter=d.querySelector('.rt-table-tools input');filter.value='A';filter.dispatchEvent(new w.Event('input'));assert.equal([...d.querySelectorAll('tbody tr')].filter(r=>!r.hidden).length,1);
 d.querySelector('tbody tr:not([hidden]) td button').click();assert.equal(d.querySelector('dialog').open,true);assert.match(d.querySelector('dialog').textContent,/₹1,200/);button('Close').click();
-const theme=d.querySelector('select[aria-label="Theme"]');theme.value='dark';theme.dispatchEvent(new w.Event('change'));assert.equal(d.documentElement.dataset.theme,'dark');assert.equal(d.documentElement.style.getPropertyValue('--a1'),'#8cb6ff');
+const theme=d.querySelector('select[aria-label="Theme"]');theme.value='dark';theme.dispatchEvent(new w.Event('change'));assert.equal(d.documentElement.dataset.theme,'dark');assert.equal(d.documentElement.style.getPropertyValue('--a1'),'#7fc8bb');
 button('Notes').click();const note=d.querySelector('textarea');note.value='Follow up on attendance';note.dispatchEvent(new w.Event('input'));assert.equal(w.localStorage.getItem('p57-notes:Test review'),note.value);
 const search=d.querySelector('input[aria-label="Find in report"]');search.value='1,200';search.dispatchEvent(new w.Event('input'));assert.equal(d.querySelector('details').open,true);assert.match(d.querySelector('.rt-status').textContent,/1 \/ 1/);
 w.eval(fs.readFileSync(require('node:path').join(__dirname,'../static/report-tools.js'),'utf8'));assert.equal(d.querySelectorAll('.rt-toolbar').length,1);

@@ -415,7 +415,8 @@ class Handler(BaseHTTPRequestHandler):
             if p in ('/', '/index.html'):
                 return self._file(os.path.join(STATIC, 'index.html'), 'text/html; charset=utf-8')
             if p.startswith('/static/'):
-                return self._file(os.path.join(STATIC, os.path.basename(p)))
+                sub = 'fonts' if p.startswith('/static/fonts/') else ''
+                return self._file(os.path.join(STATIC, sub, os.path.basename(p)))
             if p == '/api/state':
                 if STATE['dataset'] is None:
                     load()
