@@ -1,0 +1,71 @@
+# ------------------------------------------------------------ round-5 additions: what the first purchase predicts
+N9 = pd.read_csv('/home/user/uploads/Day End Report - Part 1 - New (9).csv', low_memory=False)
+N9 = N9[N9['First Visit Location'] == 'Supreme HQ, Bandra'].copy()
+for _c in ['Ltv', 'No of Visits', 'Days To Second Visit', 'Visits Per Month']:
+    N9[_c] = X.num(N9[_c]) if hasattr(X, 'num') else pd.to_numeric(
+        N9[_c].astype(str).str.replace(r'[,\\s\\u20b9]', '', regex=True), errors='coerce')
+FP = N9[N9['First Purchase Post Trial'].notna()].groupby('First Purchase Post Trial').agg(
+    people=('Member Id', 'size'), ltv=('Ltv', 'mean'), visits=('No of Visits', 'mean'), vpm=('Visits Per Month', 'mean'))
+FP = FP[FP['people'] >= 25].sort_values('ltv', ascending=False)
+FPN = FP.copy(); FPN.index = [str(i).replace('Studio ', '') for i in FPN.index]
+TOP_STARTER = FPN['ltv'].idxmax(); LOW_STARTER = FPN['ltv'].idxmin()
+FP_RATIO = FPN['ltv'].max() / max(FPN['ltv'].min(), 1)
+N9['d2'] = pd.cut(N9['Days To Second Visit'], [-1, 1, 3, 7, 14, 30, 100000],
+                  labels=['same or next day', '2 to 3 days', '4 to 7 days', '8 to 14 days', '15 to 30 days', '31+ or never'])
+SP = N9.groupby('d2', observed=True).agg(people=('Member Id', 'size'), ltv=('Ltv', 'mean'), visits=('No of Visits', 'mean'))
+SP7 = float(SP.loc['4 to 7 days', 'ltv']); SPLAST = float(SP.loc['31+ or never', 'ltv'])
+SPLAST_N = int(SP.loc['31+ or never', 'people'])
+
+CH_FPLTV = hbars([(i, float(r['ltv']), TER if r['ltv'] >= FPN['ltv'].median() else GREY) for i, r in FPN.iterrows()],
+    'Lifetime value of a member, by the first thing they ever bought', maxv=82000,
+    note=f'{len(N9):,} Bandra first-timers with a recorded first purchase. The product a member starts on predicts more about their eventual value than '
+         'anything except how fast they came back a second time.')
+
+CH_SPEED = bars([str(i) for i in SP.index],
+                [('Mean lifetime value, \u20b9 hundreds', [float(r['ltv']) / 100 for _, r in SP.iterrows()], TER),
+                 ('Mean visits (\u00d78, on the same axis)', [float(r['visits']) * 8 for _, r in SP.iterrows()], GREY)],
+    'How fast the second visit came, against what the member went on to be worth', h=320, ymax=430,
+    note='The second visit is decided within days and predicts almost everything after it. Members who returned within a week are worth about three times '
+         'those who took a month, or never came back.')
+
+SEC_SALES = f'''
+<h2>What the first purchase predicts</h2>
+<div class="sub">Nothing in the sales ledger separates members as sharply as the product they started on &mdash; except how quickly they came back.</div>
+
+<p>Take the {len(N9):,} people whose first visit to Bandra is on record and group them by the first thing they bought. The spread in eventual lifetime value is
+not marginal, it is structural. A member who started on a <strong>{TOP_STARTER} is worth {R(FPN['ltv'].max())} to the studio</strong>. One who started on a
+<strong>{LOW_STARTER} is worth {R(FPN['ltv'].min())}</strong>. Between them sit every other product in the range, in a consistent order: memberships first,
+packages second, single classes last.</p>
+
+<p>The obvious caution applies, and it is worth stating plainly: members who chose a bigger commitment were already more committed. But the gap is
+<strong>{FP_RATIO:.1f}-fold</strong>, and the studio sells both products from the same front desk within the same minute. What a new client is offered first is
+not a neutral choice.</p>
+
+{CH_FPLTV}
+
+<p>The second predictor is time, and it is even more directly actionable. Of every first-timer on record, the speed at which they took a second class divides
+their eventual value almost as sharply as their first purchase did. Members who returned <strong>within a week are worth {R(SP7)} on average</strong>; those who
+took a month, or never came back at all, are worth <strong>{R(SPLAST)}</strong>.</p>
+
+{CH_SPEED}
+
+{ev('Evidence &mdash; first purchase and speed to the second visit',
+    T(['First purchase', 'People', 'Mean lifetime value', 'Mean visits', 'Visits per month'],
+      [[i, int(r['people']), R(r['ltv']), f"{r['visits']:.1f}", f"{r['vpm']:.1f}"] for i, r in FPN.iterrows()], 'num') +
+    '<p style="font-size:13.5px;color:#6B7280;margin-top:16px"><strong>By speed to the second visit</strong></p>' +
+    T(['Second visit within', 'People', 'Mean lifetime value', 'Mean visits'],
+      [[str(i), int(r['people']), R(r['ltv']), f"{r['visits']:.1f}"] for i, r in SP.iterrows()], 'num'))}
+'''
+
+RECS_SALES = ''' ('12','Lead with the membership, not the single class','Sales + Front Desk',
+  f'A first-time buyer who starts on a <strong>{TOP_STARTER} goes on to be worth {R(FPN["ltv"].max())}</strong>; one who starts on a '
+  f'<strong>{LOW_STARTER} is worth {R(FPN["ltv"].min())}</strong>. There are {int(FPN.loc[LOW_STARTER,"people"])} people in that bottom group and '
+  f'{int(FPN.loc[TOP_STARTER,"people"])} in the top one.',
+  f'Both are sold at the same desk. Presenting the commitment first \\u2014 and treating the trial entry as a route into it rather than as a purchase in its own '
+  f'right \\u2014 changes the mix without touching the price list.'),
+ ('13','Book the second class before the first one ends','Front Desk + Sales + CRM',
+  f'Members who took their second class inside a week are worth <strong>{R(SP7)}</strong>; those who waited a month or never returned are worth '
+  f'<strong>{R(SPLAST)}</strong>. There are {SPLAST_N} people in that last group alone.',
+  f'This is a front-desk action, not a campaign: at the end of every first class, before the client leaves the building, the next visit is chosen and booked. '
+  f'It costs nothing, it is measurable within a week, and on this data it is the highest-value habit the sales and service teams could adopt.'),
+'''

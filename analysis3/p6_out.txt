@@ -1,0 +1,440 @@
+
+
+##################### BLOCK 1 controlled trainer comparison #####################
+slots compared: 37 | mean spread 1.7 attendees | median 1.3
+slots where the spread exceeds 4 attendees: 2 = 5%
+mean attendance of the best trainer in each slot: 6.5 | worst: 4.8
+                                          slot  n_sess  trainers            best  best_att              worst  worst_att  spread  spread_pct  cap
+        Studio Barre 57 | Wednesday | 19:15:00      41         3 Karanvir Bhatia       6.6 Simonelle De Vitre        1.3     5.3       397.2 14.0
+         Studio PowerCycle | Monday | 19:30:00      40         3 Karanvir Bhatia       8.8       Anmol Sharma        3.6     5.2       143.1 12.8
+           Studio Barre 57 | Monday | 18:15:00      40         2 Karanvir Bhatia       9.3      Pranjali Jain        6.3     3.0        47.6 14.0
+      Studio PowerCycle | Wednesday | 18:30:00      41         2 Cauveri Vikrant       6.7  Mrigakshi Jaiswal        3.7     2.9        78.5 13.0
+         Studio Barre 57 | Saturday | 09:00:00      41         2  Atulan Purohit       8.6   Richard  D'Costa        5.7     2.9        51.0 14.0
+         Studio PowerCycle | Friday | 08:00:00      40         2 Karanvir Bhatia       4.0     Raunak Khemuka        1.3     2.7       208.1 13.0
+Studio PowerCycle Express | Tuesday | 19:15:00      41         2 Cauveri Vikrant      10.0 Simonelle De Vitre        7.4     2.6        35.3 13.0
+             Studio Mat 57 | Friday | 11:00:00      38         2   Pranjali Jain       5.1    Karanvir Bhatia        2.5     2.6       102.6 11.2
+       Studio Cardio Barre | Friday | 10:15:00      40         3  Atulan Purohit       6.2      Pranjali Jain        3.7     2.5        68.0 14.0
+               Studio FIT | Tuesday | 18:30:00      10         2  Atulan Purohit       7.7   Richard  D'Costa        5.3     2.3        43.8 10.0
+       Studio PowerCycle | Saturday | 09:30:00      39         2    Rohan Dahima       7.8      Bret Saldanha        5.7     2.1        37.9 13.0
+         Studio Recovery | Saturday | 12:30:00      41         2    Rohan Dahima       5.5    Karanvir Bhatia        3.3     2.1        63.7 13.4
+          Studio Barre 57 | Tuesday | 19:45:00      24         2  Atulan Purohit       6.2   Richard  D'Costa        4.2     2.1        50.0 14.0
+     Studio Cardio Barre | Saturday | 18:00:00      12         2 Karanvir Bhatia       3.7        Simran Dutt        1.8     1.9       103.7 14.0
+         Studio Barre 57 | Thursday | 18:00:00      41         2   Pranjali Jain       7.5     Atulan Purohit        5.9     1.6        26.2 14.0
+         Studio Barre 57 | Saturday | 11:30:00      41         2  Atulan Purohit      10.5    Karanvir Bhatia        9.0     1.5        17.0 14.0
+
+per-trainer average premium against the mean of the identical slots:
+                    slots  avg_vs_slot  avg_att
+trainer                                        
+Atulan Purohit          9          0.7      7.8
+Cauveri Vikrant         8          0.5      5.7
+Vivaran Dhasmana        4          0.5      5.7
+Karanvir Bhatia        12          0.4      5.5
+Reshma Sharma           8          0.2      6.3
+Anisha Shah             5         -0.1      6.4
+Pranjali Jain           6         -0.1      5.8
+Richard  D'Costa        7         -0.7      4.9
+Simonelle De Vitre      8         -0.8      4.0
+
+
+##################### BLOCK 2 room size vs fill #####################
+ALL MONTHS ON FILE
+            sessions  att   cap     rev  fill
+cband                                        
+<=10 seats       953  5.7   9.9  3531.2  57.4
+11-14           7362  4.6  13.3  3118.1  34.7
+15-18             42  6.1  15.0   162.9  40.9
+19-22              9  3.6  20.0  2968.0  17.8
+
+SEPT 2026
+            sessions  att   cap     rev  fill
+cband                                        
+<=10 seats        47  6.3  10.0  6237.3  63.0
+11-14            212  5.2  13.3  4779.7  39.2
+
+
+##################### BLOCK 3 booking leakage #####################
+booked 1,604 | attended 1,404 | late cancelled 199 | no-show 1
+booked-to-attended conversion 87.5%
+
+by format (5+ sessions):
+                             booked  att  lc  ns  sess   conv  ns_rate
+Class                                                                 
+Studio Mat 57 Express            12   12   0   0     5  100.0      0.0
+Studio PowerCycle Express        44   41   3   0     6   93.2      0.0
+Studio Mat 57                   144  129  15   0    20   89.6      0.0
+Studio Barre 57                 370  331  39   0    53   89.5      0.0
+Studio Recovery                  28   25   3   0     6   89.3      0.0
+Studio Cardio Barre              91   81  10   0    21   89.0      0.0
+Studio PowerCycle               475  410  64   1    90   86.3      0.2
+Studio Back Body Blaze           73   63  10   0    10   86.3      0.0
+Studio FIT                      329  277  52   0    39   84.2      0.0
+Studio Cardio Barre Express      14   11   3   0     6   78.6      0.0
+
+all time by year:
+      booked    att    lc  conv  lc_rate
+dt                                      
+2024   10000   8040  1925  80.4     19.2
+2025   24545  17879  6660  72.8     27.1
+2026   16038  13834  2064  86.3     12.9
+
+
+##################### BLOCK 4 hosted classes #####################
+Sept-26: 2 sessions | 24 attendees | revenue Rs 0 | seats put on 28
+all time: 82 sessions | 787 attendees | revenue Rs 7,660
+
+
+##################### BLOCK 5 first purchase to LTV #####################
+Bandra first-timers on file: 4,218
+
+by the product they first bought:
+                                people      ltv  visits   days  vpm
+First Purchase Post Trial                                          
+Studio 1 Month Unlimited           172  74283.0    68.0  267.0  8.0
+Studio 12 Class Package            166  53684.0    40.0  231.0  5.0
+Studio 10 Single Class Package      39  50604.0    28.0  283.0  3.0
+Studio 8 Class Package              60  32227.0    20.0  208.0  4.0
+Studio 2 Week Unlimited             26  30833.0    27.0  204.0  9.0
+Studio 10 Class Package             29  24697.0    12.0  150.0  4.0
+Studio 4 Class Package              80  19675.0    13.0  207.0  4.0
+Session                            173  16828.0    13.0  234.0  3.0
+Studio Single Class                200  13689.0    11.0  234.0  2.0
+
+by speed to the second visit:
+               people      ltv  visits   vpm  retained
+d2                                                    
+same/next day     196  39768.0    41.0  14.0      72.0
+2-3 days          264  32373.0    28.0   8.0      83.0
+4-7 days          345  27745.0    22.0   5.0      79.0
+8-14 days         200  23202.0    18.0   4.0      74.0
+15-30 days        121  16632.0    12.0   2.0      87.0
+31+ or never      401  13918.0    11.0   1.0      95.0
+
+by first-visit source:
+                                   people      ltv  visits  vpm
+Source                                                         
+Incoming call                          64  29201.0    26.0  3.0
+Social - Instagram                     86  23540.0    25.0  3.0
+Enquiry on call                       137  20902.0    19.0  3.0
+Staff Referral                         58  14480.0    12.0  3.0
+Website                               747  14270.0    11.0  2.0
+Walkin                                 76  11143.0     7.0  3.0
+Client Referral                       685  10282.0     9.0  2.0
+Website Form                          212   9044.0     7.0  2.0
+Abandoned checkout                     71   8018.0    10.0  2.0
+Yellow Messenger/Whatsapp Enquiry     243   7553.0     6.0  2.0
+Social                                 38   4238.0     4.0  2.0
+Hosted Class                          796   4010.0     4.0  1.0
+Influencer Sign-up                     61    786.0     2.0  0.0
+
+by first-visit type:
+                  people     ltv  visits  vpm
+First Visit Type                             
+session             4212  9182.0     8.0  2.0
+
+lifetime-value quartile against behaviour:
+                 people      ltv  visits  vpm  late_cancel  payments   days
+lq                                                                         
+bottom quartile    1055      0.0     1.2  0.7          1.7       0.0   31.3
+second             1054      0.0     1.4  1.2          1.5       0.0   16.5
+third              1054    114.5     1.5  1.2          1.5       0.1   10.9
+top quartile       1055  36650.4    29.2  4.4         13.1       3.3  220.0
+
+conversion speed bucket:
+                         people      ltv  visits
+Conversion Speed Bucket                         
+1-7 Days                    359  44017.0    38.0
+31-90 Days                  121  35328.0    29.0
+8-30 Days                   205  37130.0    30.0
+90+ Days                    191  21779.0    16.0
+Not Converted              3214    196.0     1.0
+Same Day                    128  49299.0    35.0
+
+lifecycle status:
+                  people      ltv  visits
+Lifecycle Status                         
+Active               395  49839.0    43.0
+At Risk              168  19268.0    17.0
+Churned             3008   3812.0     4.0
+Lapsed               642   6699.0     7.0
+No Visits              5  19186.0     0.0
+
+
+##################### BLOCK 6 teaching economics #####################
+monthly teaching payroll, Bandra:
+                sessions  empty      pay  cust  new  ret  empty_pct  pay_per_cust
+mo                                                                               
+Apr-2025           313.0      9   836595  1682  161   59        2.9         497.4
+Apr-2026           257.0      3  1249721  1612   99   33        1.2         775.3
+Aug-2024           327.0     36   763806  1308  313  104       11.0         583.9
+Aug-2025           304.0      1  1010719  1827  118   37        0.3         553.2
+Aug-2026           283.0     10  1429010  1737  148   28        3.5         822.7
+Dec-2024           315.0     36   660189  1019   89   34       11.4         647.9
+Dec-2025           284.0     19   892864  1268  119   31        6.7         704.2
+Feb-2025           300.0     26   592145  1135  108   36        8.7         521.7
+Feb-2026           248.0     13   987556  1275   89   24        5.2         774.6
+Jan-2025           323.0     18   752851  1172   94   29        5.6         642.4
+Jan-2026           245.0     14   851993  1129  100   36        5.7         754.6
+Jul-2024           260.0     31   601498   938  176   62       11.9         641.3
+Jul-2025           323.0      7   957482  1825  165   55        2.2         524.6
+July 2026          284.0     16  1199664  1516    0    0        5.6         791.3
+Jun-2024           236.0     27   483725   799  212   85       11.4         605.4
+Jun-2025           299.0      8   936501  1828  165   43        2.7         512.3
+Jun-2026           265.0     15  1103110  1455  102   24        5.7         758.2
+Mar-2025           325.0     16   703439  1351   97   33        4.9         520.7
+Mar-2026           267.0     15  1151713  1542  102   37        5.6         746.9
+May-2024           123.0     25    85716   588  383  112       20.3         145.8
+May-2025           321.0      9   950189  1739  146   53        2.8         546.4
+May-2026           263.0     10  1213471  1625  141   39        3.8         746.8
+Nov-2024           288.0     16   675660  1060   99   27        5.6         637.4
+Nov-2025           283.0     14  1018493  1343  114   28        4.9         758.4
+Oct-2024           327.0     39   772119  1170   79   30       11.9         659.9
+Oct-2025           265.0     20   873744  1233   78   22        7.5         708.6
+October 2026       182.0     79   539072   539    0    0       43.4        1000.1
+Sep-2024           325.0     33   773070  1158  147   67       10.2         667.6
+Sep-2025           273.0     14   981454  1476   98   30        5.1         664.9
+September 2026     259.0     11  1306453  1404    0    0        4.2         930.5
+
+per-teacher, August 2026 (last full month on file):
+                    sessions  att       rev  empty  Total Paid  Total Customers  Cycle Sessions  Strength Sessions  Barre Sessions  pay_per_session  cost_per_attendee  revenue_per_attendee  empty_share
+Trainer                                                                                                                                                                                                  
+Karanvir Bhatia           35  230  185481.0      0      103711               98               6                  0              15           2963.0              451.0                 806.0          0.0
+Reshma Sharma             35  218  163008.0      0      128456              164              11                  0              20           3670.0              589.0                 748.0          0.0
+Vivaran Dhasmana          35  263  219408.0      2      204536              205              21                  0              18           5844.0              778.0                 834.0          6.0
+Cauveri Vikrant           25  160  132078.0      3       56230               54               5                  0               4           2249.0              351.0                 825.0         12.0
+Richard  D'Costa          22  102  100434.0      1       46367               46               3                  0               9           2108.0              455.0                 985.0          5.0
+Pranjali Jain             21  130  110529.0      0      122193              119               0                  0              23           5819.0              940.0                 850.0          0.0
+Atulan Purohit            20  165  108036.0      0      175972              205               0                  0              27           8799.0             1066.0                 655.0          0.0
+Rohan Dahima              19  131  122079.0      0      112849              136              10                  0               7           5939.0              861.0                 932.0          0.0
+Anmol Sharma              17   52   51260.0      1       77636               76              17                  0               4           4567.0             1493.0                 986.0          6.0
+Mrigakshi Jaiswal         17   82   59370.0      0       90181              103               9                  0              17           5305.0             1100.0                 724.0          0.0
+Simonelle De Vitre        15   74   59733.0      2       51167               50               6                  0               5           3411.0              691.0                 807.0         13.0
+Karan Bhatia              10   61   61120.0      0       34726               37               0                  0               6           3473.0              569.0                1002.0          0.0
+Anisha Shah                9   61   51578.0      0       79832               94               4                  0               8           8870.0             1309.0                 846.0          0.0
+Raunak Khemuka             3    8    4896.0      1       22597               17               4                  0               0           7532.0             2825.0                 612.0         33.0
+
+studio teaching pay that month: Rs 1,306,453 | sessions 259 | empty 11 = 4.2%
+
+discipline mix and pay per session:
+                cycle_sessions  cycle_pay_per_session  strength_sessions  strength_pay_per_session  barre_sessions  barre_pay_per_session
+mo                                                                                                                                       
+Apr-2025                   110                 3644.5                  0                       NaN             203                 2146.3
+Apr-2026                    83                 5324.5                  0                       NaN             174                 4642.5
+Aug-2024                    98                 2806.9                  0                       NaN             229                 2134.2
+Aug-2025                   106                 4193.9                  0                       NaN             198                 2859.4
+Aug-2026                    84                 6127.7                  0                       NaN             199                 4594.4
+Dec-2024                   119                 2330.7                  0                       NaN             196                 1953.3
+Dec-2025                    98                 3171.9                  0                       NaN             186                 3129.1
+Feb-2025                   107                 2396.8                  0                       NaN             193                 1739.3
+Feb-2026                    80                 4106.7                  0                       NaN             168                 3922.7
+Jan-2025                   117                 2414.2                  0                       NaN             206                 2283.4
+Jan-2026                    78                 4134.8                  0                       NaN             167                 3170.5
+Jul-2024                     0                    NaN                  0                       NaN             260                 2313.5
+Jul-2025                   113                 4118.8                  0                       NaN             210                 2343.1
+July 2026                   84                 5040.1                  0                       NaN             200                 3881.5
+Jun-2024                     0                    NaN                  0                       NaN             236                 2049.7
+Jun-2025                   107                 4321.4                  0                       NaN             192                 2469.4
+Jun-2026                    82                 4600.0                  0                       NaN             183                 3966.7
+Mar-2025                   118                 2794.4                  0                       NaN             207                 1805.3
+Mar-2026                    88                 4505.8                  0                       NaN             179                 4219.0
+May-2024                     0                    NaN                  0                       NaN             123                  696.9
+May-2025                   112                 4208.0                  0                       NaN             209                 2291.4
+May-2026                    84                 5088.4                  0                       NaN             179                 4391.3
+Nov-2024                   109                 2733.5                  0                       NaN             179                 2110.1
+Nov-2025                    98                 3976.1                  0                       NaN             185                 3399.1
+Oct-2024                   124                 3169.6                  0                       NaN             203                 1867.4
+Oct-2025                    93                 3420.6                  0                       NaN             172                 3230.4
+October 2026                45                 3493.3                 47                    3327.3              90                 2505.4
+Sep-2024                   121                 2832.1                  0                       NaN             204                 2109.7
+Sep-2025                    97                 4179.7                  0                       NaN             176                 3272.9
+September 2026              96                 4543.7                  0                       NaN             163                 5339.0
+
+
+##################### BLOCK 7 payment method / concentration / discount #####################
+
+payment method 2025:
+                            n       val   pct
+Payment Method                               
+custom                    140  951646.0  61.0
+stripe                     53  409547.0  26.0
+cash                       19  109831.0   7.0
+multiple-payment-methods    6   93707.0   6.0
+
+payment method 2026:
+                            n       val   pct
+Payment Method                               
+custom                    151  892920.0  58.0
+stripe                     28  358952.0  23.0
+multiple-payment-methods   13  177162.0  12.0
+cash                       21  100377.0   7.0
+
+discount depth by seller, 2026 (20+ sales):
+                  sales      gross      disc    n  depth  pct_sales
+Sold By                                                            
+Deesha Changwani    463  3499761.2  602435.0   65   17.2       14.0
+Nadiya Shaikh       595  3804898.9  629031.9  100   16.5       16.8
+Imran Shaikh        344  3292046.2  409521.1   60   12.4       17.4
+Shipra Bhika        373  4329126.2  529500.2  104   12.2       27.9
+-                   361  4069738.4  338839.8   64    8.3       17.7
+
+discount depth by product, 2026 (15+ sales):
+                          sales      gross      disc    n  depth  pct_sales
+Cleaned Product                                                            
+Studio 1 Month Unlimited    185  3804388.7  823218.8  125   21.6       67.6
+Studio 3 Month Unlimited     39  2117097.1  383693.4   29   18.1       74.4
+Studio 10 Class Package      94  1599969.2  208600.0   89   13.0       94.7
+Studio 6 Month Unlimited     15  1588098.4  197932.5   15   12.5      100.0
+Studio 12 Class Package     155  2534448.3  163142.5   84    6.4       54.2
+Studio 8 Class Package       76   844592.0   14460.0   10    1.7       13.2
+Session                     221   523390.5    5687.5    3    1.1        1.4
+Studio Single Class         366   680123.5     350.0    1    0.1        0.3
+Money Credits                61    12743.0       0.0    0    0.0        0.0
+Retail - Apparel             38    61670.6       0.0    0    0.0        0.0
+Retail - Consumables        204    44660.0       0.0    0    0.0        0.0
+Retail - Other Retail       208   134365.5       0.0    0    0.0        0.0
+Studio 4 Class Package       86   497804.6       0.0    0    0.0        0.0
+Studio Newcomers 2 For 1    310   574665.0       0.0    0    0.0        0.0
+
+discount code usage, 2026:
+                    n      disc
+Discount Code                  
+ANNI-241-CU$T0M    27  456750.0
+ZAP10             172  435298.0
+ANNI-443-CU$T0M    12  213000.0
+NC2025SHQ15        52  155670.0
+BOGO-SHQ-FB-2026   34  150875.0
+ANN-2026-25%-SHQ    3  144375.0
+FEBSELFLOVE4M4P     6  137954.0
+NC-2026-SHQ        40  137250.0
+SHQ20               3  115500.0
+ANN2025PRE$@LE      2   96250.0
+OTTWENTEE           2   77000.0
+B1GG25Ann2026       1   48125.0
+20OFFSHQ            1   41800.0
+ANNUALSHQ20         1   40117.0
+SHQ20OFF            1   38500.0
+SHQ4                2   35497.0
+
+buyers in the last 12 months: 1,017 | total Rs 20,537,488
+  top 10 buyers = 10.1% of sales
+  top 25 buyers = 21.6% of sales
+  top 50 buyers = 36.4% of sales
+  top 100 buyers = 56.7% of sales
+  top 200 buyers = 76.4% of sales
+  one-purchase-only buyers: 549 of 1017
+
+revenue by category, Sept-26 vs Sept-25:
+yr                           2025      2026
+cat                                        
+Class Packages           595982.0  610017.0
+Memberships              756893.0  666610.0
+Money Credits              5823.0    2712.0
+Newcomers Special         39555.0   48562.0
+Privates                      0.0    5250.0
+Retail                    47972.0   11354.0
+Sessions/Single Classes  118506.0  184905.0
+
+purchase type, Sept-26:
+                 n        val
+Purchase Type                
+membership     114  1272314.0
+money-credit     3     2712.0
+pos-cart        27   182055.0
+product         35     6284.0
+session         34    66045.0
+
+
+##################### BLOCK 9 format adjacency #####################
+!! 9 format adjacency FAILED: AttributeError: module 'd1_data' has no attribute 'CK'
+
+
+##################### BLOCK 10 when people buy #####################
+           size        sum
+dt                        
+Monday      346  2595038.0
+Tuesday     314  2400135.0
+Wednesday   306  2319418.0
+Thursday    263  2259676.0
+Friday      329  3092056.0
+Saturday    372  2710965.0
+Sunday      212  1375150.0
+
+by hour (2026):
+      size        sum
+hr                   
+0.0      6    27825.0
+1.0      2    14436.0
+2.0      1     1838.0
+3.0      1     5618.0
+6.0      6    74997.0
+7.0     58   722858.0
+8.0     93   864058.0
+9.0    125  1073526.0
+10.0   240  1273605.0
+11.0   255  1995125.0
+12.0   283  2710957.0
+13.0   113  1409171.0
+14.0   101   742166.0
+15.0   102  1136417.0
+16.0    98   481737.0
+17.0   112   813790.0
+18.0   157   874171.0
+19.0   191  1281742.0
+20.0   149   840375.0
+21.0    20   189992.0
+22.0    19   177607.0
+23.0    10    40425.0
+
+by day of month, 2026:
+    size        sum
+dt                 
+1     70   340504.0
+2     70   346547.0
+3     65   347650.0
+4     63   462081.0
+5     53   329414.0
+6     62   360434.0
+7     73   366877.0
+8     80   813032.0
+9     76   469564.0
+10    81   871011.0
+11    84   596976.0
+12    76   424237.0
+13    83   979296.0
+14    95  1038153.0
+15    74   498562.0
+16    78   587125.0
+17    75   707416.0
+18    56   590416.0
+19    61   303069.0
+20    79   502116.0
+21    63   342964.0
+22    56   276014.0
+23    62   529464.0
+24    73   699942.0
+25    66   505894.0
+26    59   549267.0
+27    77   393397.0
+28    67   600756.0
+29    58   217799.0
+30    61   752049.0
+31    46   950411.0
+
+
+##################### BLOCK 11 teacher conversion #####################
+last six months on file, by teacher:
+                    months  sessions  empty  cust  new  conv  ret  conv_rate  ret_rate
+Teacher Name                                                                          
+Raunak Khemuka           4       5.8    1.8    42    1     1    0      100.0       0.0
+Mrigakshi Jaiswal        6      19.3    2.2   495   12     8    8       66.7       1.6
+Anisha Shah              6      12.3    0.7   458   11     6    7       54.5       1.5
+Anmol Sharma             4      12.0    3.0   172    2     1    1       50.0       0.6
+Atulan Purohit           6      25.2    2.7   749   35    17   21       48.6       2.8
+Karan Bhatia             6      19.3    1.3   462   51    19   24       37.3       5.2
+Vivaran Dhasmana         6      35.5    2.2  1102   56    20   22       35.7       2.0
+Karanvir Bhatia          6      33.8    3.8   818   40    14   19       35.0       2.3
+Richard  D'Costa         6      16.3    3.2   291   23     8    8       34.8       2.7
+Reshma Sharma            6      18.3    2.3   472   34    10   11       29.4       2.3
+Cauveri Vikrant          6      26.3    2.5   734   58    12   13       20.7       1.8
+Pranjali Jain            6      16.2    3.2   300   11     2    2       18.2       0.7
+Rohan Dahima             6      21.0    2.0   563   42     5   11       11.9       2.0
+Simonelle De Vitre       4      15.2    2.8   216   19     2    2       10.5       0.9

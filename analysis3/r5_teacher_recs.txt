@@ -1,0 +1,10 @@
+ ('13','Assess trainers against their own slots, using the matched table','Head of Training + Studio Manager',
+  f'Across <strong>{CS_N} slots taught by two or more trainers in 2026, the median attendance gap is {CS_MED:.1f} people</strong> and only {CS_BIG} slots show '
+  f'a gap of more than four. The published utilisation spread looks far wider because it compares different slots.',
+  f'The matched table is the fair test and it is already built. Using it in monthly reviews protects trainers who hold difficult slots, identifies the few '
+  f'genuine outliers, and makes the conversation about the timetable rather than about personalities.'),
+ ('14','Reprice or rerun the Cycle programme','Finance + Programming + Head of Training',
+  f'Cycle sessions are paid <strong>{R(_CYR)} per session</strong> across {int(_DSUM["Cycle Sessions"]):,} sessions and run at {_CFILL:.1f}% utilisation; '
+  f'Barre is paid {R(_BYR)} at {_BFILL:.1f}%. Cycle carries {_CSH:.0f}% of all recorded teaching sessions.',
+  f'The studio is paying its highest per-session rate for the rooms it fills least. Either the format is re-engineered towards the express, smaller-room version '
+  f'the utilisation data supports, or the rate structure is changed to match what each room actually delivers.'),

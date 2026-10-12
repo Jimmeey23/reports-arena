@@ -1,0 +1,52 @@
+
+<h2>The returning core &mdash; the number behind the number</h2>
+<div class="sub">The month had more members than last September and fewer visits. The explanation sits with {len(RETM)} people.</div>
+
+<p>Every comparison in this report so far is between two Septembers as wholes. Matching them member by member isolates the cause, and it is unambiguous.
+Of the {len(S25)} members who trained at Bandra in September 2025, <strong>{len(RETM)} returned this September</strong>. Those {len(RETM)} people made
+<strong>{SEAT_RET25:.0f} visits last September and {SEAT_RET:.0f} this September</strong> &mdash; the same members, {HOLD:.0%} fewer visits, a shortfall of
+<strong>{LOST:.0f} attendances</strong>. That is {LOST/C26["att"]*100:.0f}% of everything the studio delivered in September 2026.</p>
+
+<p>The {len(GONEM)} who did not return are a different story. They had a <strong>median of {V25.reindex(list(GONEM)).median():.0f} visit</strong> in September 2025 and
+averaged {V25.reindex(list(GONEM)).mean():.2f}. These are not lost regulars; they are one-time visitors who never formed a habit. Meanwhile the studio recruited
+<strong>{len(NEWM)} attendees this September who had not trained in the same month last year</strong>, and they contributed {SEAT_NEW:.0f} visits &mdash; more,
+in fact, than the {V25.reindex(list(GONEM)).sum():.0f} the leavers had taken with them.</p>
+
+<div class="call b"><h4>What this changes</h4>
+<p>Bandra&rsquo;s September problem is not churn and it is not acquisition. Both of those are working. It is that the members who are still here are coming
+{HOLD:.0%} less often, and that single movement is larger than the whole year-on-year gap in attendance. Fill rates, revenue per class and class counts all
+follow from it &mdash; which means the fix belongs in frequency, not in the timetable alone.</p></div>
+
+{CH_BASE}
+{CH_CORE}
+
+{ev('Evidence &mdash; the three groups, matched member by member',
+    T(['Group', 'Members', 'Visits this September', 'Mean visits each', 'Median visits'],
+      [['Trained in both Septembers', len(RETM), f"{SEAT_RET:.0f}", f"{SEAT_RET/len(RETM):.2f}", f"{V_RET26.median():.0f}"],
+       ['Here in Sept 2025, not this year', len(GONEM), '\u2014', f"{V25.reindex(list(GONEM)).mean():.2f} last year", f"{V25.reindex(list(GONEM)).median():.0f} last year"],
+       ['New this September', len(NEWM), f"{SEAT_NEW:.0f}", f"{SEAT_NEW/len(NEWM):.2f}", f"{V26.reindex(list(NEWM)).median():.0f}"],
+       ['Trained in all three Septembers', len(S24 & S25 & S26), '\u2014', '\u2014', '\u2014']], 'num') +
+    f'<p style="font-size:13.5px;color:#6B7280;margin-top:14px">Only {len(S24 & S25 & S26)} members trained at Bandra in all three of September 2024, 2025 and 2026.</p>')}
+
+<h2>The board, and the room it sits in</h2>
+<div class="sub">Bookings are down a quarter, the share honoured is up seventeen points, and one room size is doing all the work.</div>
+
+<p>Attendance falls when bookings fall, and bookings fell hard this year: <strong>{BK.loc[2025,"booked"]:,} seats booked in September 2025 against
+{BK.loc[2026,"booked"]:,} this September, {BK.loc[2025,"booked_sess"]:.1f} per class down to {BK.loc[2026,"booked_sess"]:.1f}</strong>. What the studio got in return is a
+book it can trust: {BK.loc[2026,"conv"]:.1f}% of booked seats were attended against {BK.loc[2025,"conv"]:.1f}% a year ago.</p>
+
+<p>The seat count is the more actionable finding. Booked seats represent <strong>{BK.loc[2026,"board"]:.1f}% of the seats the studio put on the board</strong>,
+against {BK.loc[2025,"board"]:.1f}% last September. Half the timetable is unsold before a single class begins.</p>
+
+{CH_BOARD}
+
+<p>Split by room size and the answer becomes specific. Classes in the smallest room &mdash; ten or eleven seats &mdash; fill
+<strong>{_B10:.1f}%</strong> of their seats and earn {R(_R10)} each, across {_N10} classes. Classes in a twelve- or thirteen-seat room fill
+<strong>{_B12:.1f}%</strong> and earn {R(_R12)}. The bigger room holds {_N12} of the month&rsquo;s {int(RB['sessions'].sum())} classes and returns
+about {_R12/_R10*100-100:+.0f}% revenue per class.</p>
+
+{CH_ROOM}
+
+<p>One more thing belongs alongside this. <strong>{PCT1F:.0f}% of September&rsquo;s members trained in only one format.</strong> Members who use the whole building are
+the members who keep coming; the members who use one room were the ones who stayed longer last year and did not this year. Widening what a member does inside the
+studio is not a separate initiative from fixing frequency &mdash; it is the same initiative.</p>

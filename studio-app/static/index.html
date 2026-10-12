@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Studio Intelligence — performance reviews from your own exports</title>
+<link rel="stylesheet" href="/static/app.css"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230F4C5C'/><path d='M8 21V11m5 10V8m5 13v-7m5 7v-11' stroke='white' stroke-width='2.4' stroke-linecap='round'/></svg>"/>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">
+    <svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true">
+      <rect width="32" height="32" rx="7" fill="#0F4C5C"/>
+      <path d="M8 21V11m5 10V8m5 13v-7m5 7v-11" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>
+    </svg>
+    <div>
+      <div class="bt">PHYSIQUE 57 <span class="brand-divider">/</span> Intelligence</div>
+      <div class="bs" id="brandSub">no data loaded yet</div>
+    </div>
+  </div>
+  <nav class="tabs" id="tabs">
+    <button data-view="upload" class="on"><span class="tn">01</span> Data</button>
+    <button data-view="build"><span class="tn">02</span> Build</button>
+    <button data-view="read" id="tabRead"><span class="tn">03</span> Review</button>
+  </nav>
+  <div class="hact">
+    <button class="btn ghost sm" id="btnReload" title="Re-scan the files on disk">Re-scan</button>
+    <button class="btn sm" id="btnDownload" disabled>Download report</button>
+  </div>
+</header>
+
+<main>
+
+<!-- ────────────────────────────────────────────── 01 data -->
+<section class="view on" id="v-upload">
+  <div class="panel saved-library"><div class="phead"><h3>Previously generated reviews</h3><span class="muted">Saved across sessions</span></div><div id="savedReports"></div><div class="library-join"><label for="libraryCode">Join a guided session</label><input id="libraryCode" placeholder="Meeting code" maxlength="9"/><button class="btn sm" id="libraryJoin">Join</button><span id="libraryStatus" role="status"></span></div></div>
+  <div class="hero">
+    <div class="kick">The monthly studio briefing</div>
+    <h1>Every number.<br/><em>A clearer perspective.</em></h1>
+    <p class="lede">Upload any mix of the studio’s day-end files — sessions, check-ins, sales, new members,
+      memberships, leads, payroll. The app recognises each file from its header row, finds which studio and
+      which month it covers, and builds the review using only your fresh uploads. Saved reports remain available above.</p>
+  </div>
+
+  <div class="uploadgrid">
+    <div class="drop" id="drop">
+      <svg viewBox="0 0 48 48" width="34" height="34" aria-hidden="true">
+        <path d="M24 32V12m0 0l-7 7m7-7l7 7" stroke="#0F4C5C" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M10 32v4a3 3 0 003 3h22a3 3 0 003-3v-4" stroke="#0F4C5C" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      </svg>
+      <div class="dh">Drop the exports here</div>
+      <div class="ds"><label for="file">Choose fresh exports</label> — bulk upload, any order, any number</div>
+      <input type="file" id="file" multiple aria-label="Choose fresh exports" style="display:block;max-width:100%;margin:14px auto;font:inherit"/>
+      <div class="dmeta" id="dropMeta"></div>
+    </div>
+
+    <aside class="needs">
+      <h3>What the review can use</h3>
+      <p class="muted">Each file unlocks more of the review. The app tells you what is missing rather than estimating it.</p>
+      <ul class="needlist" id="needlist"></ul>
+    </aside>
+  </div>
+
+  <div class="panel" id="sourcesPanel">
+    <div class="phead"><h3>Fresh uploads for this review</h3><span class="muted" id="srcCount"></span></div>
+    <table class="srcs" id="srcs"></table>
+    <div class="notes" id="warnbox"></div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────────── 02 build -->
+<section class="view" id="v-build">
+  <div class="hero sm">
+    <div class="kick">Step two</div>
+    <h1>Choose the studio and the month.</h1>
+  </div>
+
+  <div class="panel">
+    <div class="phead"><h3>Studio</h3><span class="muted">every location found in the uploads</span></div>
+    <div class="picks" id="studios"></div>
+  </div>
+
+  <div class="panel">
+    <div class="phead"><h3>Period</h3><span class="muted" id="periodHint">pick a studio first</span></div>
+    <div class="picks months" id="months"></div>
+  </div>
+
+  <div class="panel">
+    <div class="phead"><h3>Chapters</h3>
+      <span class="muted"><button class="link" id="allCh">select all</button> · <button class="link" id="noneCh">clear</button></span></div>
+    <div class="picks chaps" id="chapters"></div>
+  </div>
+
+  <div class="panel">
+    <div class="phead"><h3>AI summaries</h3><span class="muted">optional</span></div>
+    <p class="muted">Summaries and narration are composed on this machine from the computed figures, so the app works with no
+      key at all. Add a model key to have those sentences rewritten more fluently — the model is only ever given the facts
+      the engine calculated, never asked to produce new ones.</p>
+    <div class="row">
+      <label class="fld"><span>Model</span>
+        <select id="llmModel">
+          <option value="">built-in writer (no key needed)</option>
+          <option value="gpt-4o-mini">OpenAI · gpt-4o-mini</option>
+          <option value="gpt-4o">OpenAI · gpt-4o</option>
+        </select></label>
+      <label class="fld"><span>API key</span>
+        <input type="password" id="llmKey" placeholder="sk-… (kept in this browser only)"/></label>
+    </div>
+  </div>
+
+  <div class="genbar">
+    <div class="geninfo" id="genInfo">Ready.</div>
+    <button class="btn lg" id="btnGen" disabled>Generate the review</button>
+  </div>
+  <div class="progress" id="prog"><div class="bar"><i></i></div><div class="plog" id="plog"></div></div>
+</section>
+
+<!-- ────────────────────────────────────────────── 03 read -->
+<section class="view" id="v-read">
+  <div class="review-heading"><div><div class="kick">Studio intelligence / Performance review</div><h1>Your monthly briefing.</h1></div><p>Explore the evidence. Decide what comes next.</p></div><div class="runs" id="runs"></div>
+  <div class="reader">
+    <aside class="rail">
+      <div class="railhead">
+        <div class="rl" id="runLabel">—</div>
+        <div class="rs" id="runSub"></div>
+      </div>
+      <button class="whole" id="btnWhole">
+        <svg viewBox="0 0 24 24" width="15" height="15"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg>
+        Listen to the whole review
+      </button>
+      <ol class="chlist" id="chlist"></ol>
+      <button class="whole ghost" id="btnFull">Open all chapters as one document</button>
+    </aside>
+
+    <div class="stage">
+      <div class="stagebar">
+        <div class="chmeta"><span class="cnum" id="cNum">01</span>
+          <div><div class="ctitle" id="cTitle">Loading…</div><div class="csub" id="cSub"></div></div></div>
+        <div class="cactions">
+          <button class="btn ghost sm" id="btnPrev" aria-label="Previous chapter">←</button><button class="btn ghost sm" id="btnNext" aria-label="Next chapter">→</button><button class="btn ghost sm" id="btnFocus" aria-pressed="false">Focus</button><button class="btn ghost sm" id="btnSummary">Summary</button>
+          <button class="btn ghost sm" id="btnNarr">
+            <svg viewBox="0 0 24 24" width="13" height="13" id="narrIcon"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg>
+            <span id="narrTxt">Listen</span>
+          </button>
+          <button class="btn ghost sm" id="btnPrint">Print</button>
+        </div>
+      </div>
+
+      <div class="summary" id="summary">
+        <div class="sh"><span>In short</span><span class="aiTag" id="aiTag">written from the data</span></div>
+        <p id="sumText"></p>
+        <ul class="facts" id="facts"></ul>
+      </div>
+
+      <div class="narrbar" id="narrbar">
+        <div class="nleft">
+          <span class="pulse"></span><span id="narrStatus">Reading…</span>
+        </div>
+        <div class="nmid"><input type="range" min="0.6" max="1.4" step="0.1" value="1" id="rate"/><span id="rateTxt">1.0×</span></div>
+        <div class="nright">
+          <select id="voice"></select>
+          <button class="btn ghost sm" id="btnPause">Pause</button><button class="btn ghost sm" id="btnStop">Stop</button>
+        </div>
+      </div>
+
+      <iframe id="stage" title="chapter" allow="fullscreen"></iframe>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="/static/app.js?v=full-view-7"></script>
+<script src="/static/library-session.js"></script>
+</body>
+</html>

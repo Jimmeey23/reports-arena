@@ -1,0 +1,23 @@
+// Run with NODE_PATH pointing to a jsdom installation.
+const {JSDOM}=require('jsdom');
+const fs=require('node:fs');
+const assert=require('node:assert/strict');
+const html='<html><head><title>Test review</title></head><body><header><h1>Review</h1></header><div class="wrap"><h2 id="evidence">Evidence</h2><details><summary>Ledger</summary><table><thead><tr><th>Member</th><th>Revenue</th></tr></thead><tbody><tr><td>A</td><td>₹1,200</td></tr><tr><td>B</td><td>₹300</td></tr></tbody></table></details></div></body></html>';
+const dom=new JSDOM(html,{url:'http://localhost/test',runScripts:'outside-only'});
+const w=dom.window,d=w.document;
+w.HTMLElement.prototype.scrollIntoView=function(){};
+w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};
+w.HTMLDialogElement.prototype.close=function(){this.open=false;};
+w.eval(fs.readFileSync(require('node:path').join(__dirname,'../static/report-tools.js'),'utf8'));
+const button=t=>[...d.querySelectorAll('button')].find(b=>b.textContent===t);
+button('Expand evidence').click();assert.equal(d.querySelector('details').open,true);
+button('Collapse').click();assert.equal(d.querySelector('details').open,false);
+d.querySelector('th:nth-child(2) button').click();assert.equal(d.querySelector('tbody tr td').textContent,'A');
+d.querySelector('th:nth-child(2) button').click();assert.equal(d.querySelector('tbody tr td').textContent,'B');
+const filter=d.querySelector('.rt-table-tools input');filter.value='A';filter.dispatchEvent(new w.Event('input'));assert.equal([...d.querySelectorAll('tbody tr')].filter(r=>!r.hidden).length,1);
+d.querySelector('tbody tr:not([hidden]) td button').click();assert.equal(d.querySelector('dialog').open,true);assert.match(d.querySelector('dialog').textContent,/₹1,200/);button('Close').click();
+const theme=d.querySelector('select[aria-label="Theme"]');theme.value='dark';theme.dispatchEvent(new w.Event('change'));assert.equal(d.documentElement.dataset.theme,'dark');assert.equal(d.documentElement.style.getPropertyValue('--a1'),'#8cb6ff');
+button('Notes').click();const note=d.querySelector('textarea');note.value='Follow up on attendance';note.dispatchEvent(new w.Event('input'));assert.equal(w.localStorage.getItem('p57-notes:Test review'),note.value);
+const search=d.querySelector('input[aria-label="Find in report"]');search.value='1,200';search.dispatchEvent(new w.Event('input'));assert.equal(d.querySelector('details').open,true);assert.match(d.querySelector('.rt-status').textContent,/1 \/ 1/);
+w.eval(fs.readFileSync(require('node:path').join(__dirname,'../static/report-tools.js'),'utf8'));assert.equal(d.querySelectorAll('.rt-toolbar').length,1);
+console.log('Passed: evidence, numeric sorting, filtering, record detail, dark theme, note persistence, search, duplicate initialization.');

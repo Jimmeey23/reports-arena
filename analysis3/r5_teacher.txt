@@ -1,0 +1,119 @@
+# ------------------------------------------------------------ round-5 additions: the controlled comparison
+_S = D.XB[D.XB['dt'] >= '2026-01-01'].copy()
+_S['capr'] = _S['Capacity'] / _S['Classes'].clip(lower=1)
+_S['slot'] = _S['Class'].astype(str) + ' | ' + _S['Day'].astype(str) + ' | ' + _S['Time'].astype(str)
+_G = _S.groupby('slot').agg(n=('SessionID', 'size'), trainers=('Trainer', 'nunique'))
+_rows = []
+for _sl, _r in _G[_G['trainers'] >= 2].iterrows():
+    _sub = _S[_S['slot'] == _sl]
+    _t = _sub.groupby('Trainer').agg(n=('SessionID', 'size'), att=('CheckedIn', 'mean'), rev=('Revenue', 'mean'))
+    _t = _t[_t['n'] >= 3]
+    if len(_t) < 2:
+        continue
+    _t = _t.sort_values('att', ascending=False)
+    _rows.append(dict(slot=_sl, best=_t.index[0], best_att=float(_t['att'].iloc[0]), worst=_t.index[-1],
+                      worst_att=float(_t['att'].iloc[-1]), spread=float(_t['att'].iloc[0] - _t['att'].iloc[-1]),
+                      spread_pct=float((_t['att'].iloc[0] - _t['att'].iloc[-1]) / max(_t['att'].iloc[-1], .01) * 100),
+                      n_trainers=len(_t)))
+CSLOT = pd.DataFrame(_rows).sort_values('spread', ascending=False)
+CS_N = len(CSLOT)
+CS_BEST = float(CSLOT['best_att'].mean()); CS_WORST = float(CSLOT['worst_att'].mean())
+CS_MED = float(CSLOT['spread'].median()); CS_BIG = int((CSLOT['spread'] > 4).sum())
+CS_PCT = CS_BIG / max(CS_N, 1) * 100
+
+def _slotlab(sl):
+    _p = sl.split(' | ')
+    return f"{_p[0].replace('Studio ','')} \\u2014 {_p[1]} {str(_p[2])[:5]}"
+CH_CTRL = hbars([(_slotlab(r['slot']), r['spread'], TER if r['spread'] >= 3 else GREY) for _, r in CSLOT.head(10).iterrows()],
+    'Same class, same day, same time, different trainer \\u2014 the attendance gap', unit=' people',
+    note=f'Each bar is one slot in which two or more trainers have each taught at least three times during 2026. '
+         f'Only {CS_BIG} of {CS_N} slots show a gap wider than four people.')
+
+# teaching cost by discipline, against fill
+_PY = pd.read_csv('/home/user/uploads/Day End Report - Part 1 - Payroll (4).csv', low_memory=False)
+_PY = _PY[_PY['Location'] == 'Supreme HQ, Bandra'].copy()
+for _c in ['Cycle Sessions', 'Cycle Paid', 'Strength Sessions', 'Strength Paid', 'Barre Sessions', 'Barre Paid',
+           'Total Sessions', 'Total Customers', 'New', 'Converted', 'Retained']:
+    _PY[_c] = pd.to_numeric(_PY[_c].astype(str).str.replace(r'[,\\s\\u20b9]', '', regex=True), errors='coerce')
+_DSUM = _PY[['Cycle Sessions', 'Cycle Paid', 'Strength Sessions', 'Strength Paid', 'Barre Sessions', 'Barre Paid']].sum()
+_CYR = _DSUM['Cycle Paid'] / max(_DSUM['Cycle Sessions'], 1)
+_BYR = _DSUM['Barre Paid'] / max(_DSUM['Barre Sessions'], 1)
+_CSH = _DSUM['Cycle Sessions'] / max(_DSUM[['Cycle Sessions', 'Strength Sessions', 'Barre Sessions']].sum(), 1) * 100
+_CFILL = float(FMT.loc['Studio PowerCycle', 'fill']); _BFILL = float(FMT.loc['Studio Barre 57', 'fill'])
+
+CH_DISC = bars(['Cycle', 'Barre'],
+    [('Paid per session, \\u20b9 thousands', [_CYR / 1000, _BYR / 1000], TER),
+     ('Capacity utilisation, %', [_CFILL, _BFILL], GREY)],
+    'What the studio pays for a session, against how full that discipline runs', h=300, ymax=75,
+    note='Cycle sessions carry the highest average amount paid per session in the payroll file and run the emptiest classes in the timetable. '
+         'The two bars share an axis; the first is in thousands of rupees.')
+
+_PY6 = _PY.copy(); _PY6['mo'] = _PY6['Month Year'].astype(str)
+_last6 = sorted(_PY6['mo'].unique())[-6:]
+_PY6 = _PY6[_PY6['mo'].isin(_last6)]
+_CONV = _PY6.groupby('Teacher Name').agg(months=('mo', 'nunique'), sessions=('Total Sessions', 'mean'),
+                                         cust=('Total Customers', 'sum'), new=('New', 'sum'),
+                                         conv=('Converted', 'sum'), ret=('Retained', 'sum'))
+_CONV['conv_rate'] = _CONV['conv'] / _CONV['new'].replace(0, np.nan) * 100
+_CONV = _CONV[_CONV['months'] >= 3].sort_values('conv_rate', ascending=False)
+
+SEC_TEACH = f'''
+<h2>The controlled test: same slot, different trainer</h2>
+<div class="sub">This is the comparison the studio has never been able to make &mdash; and it settles a question the scorecard cannot.</div>
+
+<p>A raw utilisation table compares trainers who teach different things at different times, which is not a fair test. So take only the slots where
+<strong>the same class runs on the same day at the same time under more than one trainer</strong>, and each trainer has taught that slot at least three times
+during 2026. There are <strong>{CS_N} such slots</strong>. Everything about them is identical except who is standing at the front.</p>
+
+<p>The result is quieter than the scorecard implies, and considerably more useful. Across those {CS_N} matched slots the better trainer averages
+<strong>{CS_BEST:.1f} attendees against {CS_WORST:.1f} for the weaker one</strong>, a mean gap of {CS_BEST-CS_WORST:.1f} &mdash; but the
+<strong>median gap within a slot is only {CS_MED:.1f} people</strong>, and in just {CS_BIG} of the {CS_N} slots ({CS_PCT:.0f}%) does the gap exceed four.
+A few slots do separate sharply, and those are real: at Monday 19:30 PowerCycle one trainer averages 8.8 attendees against 3.6, and at Wednesday 19:15 Barre 57,
+6.6 against 1.3.</p>
+
+<div class="call"><h4>What this means for how the studio manages trainers</h4>
+<p>Most of the utilisation spread in the scorecard belongs to the slots, not the people. A trainer who holds the early-morning and Wednesday positions will look
+weak whatever they do; one who holds Saturday mornings will look strong. Assessment should be made against the same slot, and only the handful of genuine
+outliers should drive staffing decisions &mdash; in both directions.</p></div>
+
+{CH_CTRL}
+
+{ev('Evidence &mdash; every matched slot in 2026, with the trainers and the gap',
+    T(['Slot', 'Trainers compared', 'Best', 'Attendees', 'Weakest', 'Attendees', 'Gap', 'Gap %'],
+      [[r['slot'], int(r['n_trainers']), r['best'], f"{r['best_att']:.1f}", r['worst'], f"{r['worst_att']:.1f}",
+        f"{r['spread']:.1f}", P(r['spread_pct'])] for _, r in CSLOT.iterrows()], 'num'))}
+
+<h2>Where the teaching money goes</h2>
+<div class="sub">The studio pays the most per session for the discipline that fills the fewest seats.</div>
+
+<p>The payroll file separates teaching into three disciplines, and read against the timetable the pattern is uncomfortable:
+<strong>Cycle sessions are paid an average of {R(_CYR)} per session across {int(_DSUM["Cycle Sessions"]):,} sessions</strong> and run at
+<strong>{_CFILL:.1f}% capacity utilisation</strong>, while Barre sessions are paid {R(_BYR)} across {int(_DSUM["Barre Sessions"]):,} sessions and run at
+{_BFILL:.1f}%. Cycle carries {_CSH:.0f}% of all recorded teaching sessions.</p>
+
+<p>This is not a criticism of any individual. It is what a timetable built on programme mix rather than measured format economics produces, and it is the same
+finding as the room-size analysis in the class report &mdash; seen from the cost side rather than the revenue side.</p>
+
+{CH_DISC}
+
+<p>One measure here looks forward rather than back. Across the last six months on file, the trainer whose classes produce the most first-time conversions is
+<strong>{_CONV.index[0]}, at {_CONV["conv_rate"].iloc[0]:.0f}% of new clients converting</strong>, against {_CONV["conv_rate"].min():.0f}% at the other end of the table.
+The sample per trainer is small and this should be read as a signal rather than a verdict &mdash; but it is the number that says who should be teaching the trial classes.</p>
+
+{ev('Evidence &mdash; new clients, conversions and retention by trainer, last six months on file',
+    T(['Trainer', 'Sessions a month', 'Clients taught', 'New clients', 'Converted', 'Conversion', 'Retained'],
+      [[i, f"{r['sessions']:.1f}", int(r['cust']), int(r['new']), int(r['conv']), P(r['conv_rate']), int(r['ret'])]
+       for i, r in _CONV.iterrows()], 'num'))}
+'''
+
+RECS_TEACH = ''' ('13','Assess trainers against their own slots, using the matched table','Head of Training + Studio Manager',
+  f'Across <strong>{CS_N} slots taught by two or more trainers in 2026, the median attendance gap is {CS_MED:.1f} people</strong> and only {CS_BIG} slots show '
+  f'a gap of more than four. The published utilisation spread looks far wider because it compares different slots.',
+  f'The matched table is the fair test and it is already built. Using it in monthly reviews protects trainers who hold difficult slots, identifies the few '
+  f'genuine outliers, and makes the conversation about the timetable rather than about personalities.'),
+ ('14','Reprice or rerun the Cycle programme','Finance + Programming + Head of Training',
+  f'Cycle sessions are paid <strong>{R(_CYR)} per session</strong> across {int(_DSUM["Cycle Sessions"]):,} sessions and run at {_CFILL:.1f}% utilisation; '
+  f'Barre is paid {R(_BYR)} at {_BFILL:.1f}%. Cycle carries {_CSH:.0f}% of all recorded teaching sessions.',
+  f'The studio is paying its highest per-session rate for the rooms it fills least. Either the format is re-engineered towards the express, smaller-room version '
+  f'the utilisation data supports, or the rate structure is changed to match what each room actually delivers.'),
+'''

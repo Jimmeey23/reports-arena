@@ -1,0 +1,11 @@
+ ('13','Ring-fence the returning core with a monthly frequency call','Studio Manager + CRM',
+  f'<strong>{len(RETM)} members came in both Septembers and made {HOLD:.0%} fewer visits.</strong> {(V_RET26 < V_RET25).sum()} of the {len(RETM)} attended less this year '
+  f'than last. The leavers, by contrast, had a median of {V25.reindex(list(GONEM)).median():.0f} visit last year.',
+  f'These {len(RETM)} people are the studio\\u2019s most reachable asset and its biggest current leak: {LOST:.0f} visits, or {LOST/C26["att"]*100:.0f}% of '
+  f'September\\u2019s attendance, went with them. A weekly look at the top 100 attendees by visit count, and a call to anyone whose rolling four-week frequency '
+  f'has fallen by a third, is the cheapest intervention available to the studio.'),
+ ('14','Cut the twelve- and thirteen-seat room before anything else','Programming + Studio Manager',
+  f'That room size holds <strong>{_N12} of September\\u2019s classes</strong>, fills {_B12:.1f}% and earns {R(_R12)} a class, against {_B10:.1f}% and {R(_R10)} '
+  f'in the small room.',
+  f'Removing roughly a third of those classes and re-running them in the small room would lift studio-wide seat utilisation by an estimated '
+  f'{_N12*0.3*float(RB.loc["12 to 13 seats","att"])/x26["Capacity"].sum()*100:.1f} points without changing the shape or the cost of the timetable.'),

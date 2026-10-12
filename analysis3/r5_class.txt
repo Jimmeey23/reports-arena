@@ -1,0 +1,129 @@
+# ------------------------------------------------------------ round-5 additions: the returning core
+_CK = pd.read_csv('/home/user/google_drive/Day End Report - Part 4', low_memory=False,
+                  usecols=['Member ID','Location','Date (IST)','Checked In','Cleaned Class'])
+_CK = _CK[_CK['Location'] == 'Supreme HQ, Bandra'].copy()
+_CK['dt'] = pd.to_datetime(_CK['Date (IST)'], errors='coerce')
+_AT = _CK[_CK['Checked In'] == True]
+A26 = _AT[(_AT['dt'] >= '2026-09-01') & (_AT['dt'] < '2026-10-01')]
+A25 = _AT[(_AT['dt'] >= '2025-09-01') & (_AT['dt'] < '2025-10-01')]
+A24 = _AT[(_AT['dt'] >= '2024-09-01') & (_AT['dt'] < '2024-10-01')]
+V26 = A26.groupby('Member ID').size(); V25 = A25.groupby('Member ID').size()
+S25, S26, S24 = set(A25['Member ID']), set(A26['Member ID']), set(A24['Member ID'])
+RETM = S26 & S25; GONEM = S25 - S26; NEWM = S26 - S25
+SEAT_RET = V26.reindex(list(RETM)).sum(); SEAT_NEW = V26.reindex(list(NEWM)).sum()
+SEAT_RET25 = V25.reindex(list(RETM)).sum()
+LOST = SEAT_RET25 - SEAT_RET
+HOLD = 1 - SEAT_RET / SEAT_RET25
+V_RET26 = V26.reindex(list(RETM)); V_RET25 = V25.reindex(list(RETM))
+CORE_TOP = V_RET26.nlargest(10).index
+MULTIF = A26.groupby('Member ID')['Cleaned Class'].nunique()
+PCT1F = (MULTIF == 1).mean() * 100
+
+CH_CORE = dumbbell([(m, float(V25.get(m, 0)), float(V26.get(m, 0))) for m in CORE_TOP],
+    'The same ten members, this September against last', unit='visits',
+    note=f'Taken from the {len(RETM)} members who trained at Bandra in both September 2025 and September 2026, ranked by this year\u2019s visits. '
+         f'{(V_RET26 < V_RET25).sum()} of the {len(RETM)} attended less this year than last.')
+
+CH_BASE = bars(['Sept 2024', 'Sept 2025', 'Sept 2026'],
+    [('Distinct members', [len(S24), len(S25), len(S26)], BLU),
+     ('Visits each made (\u00d760, on the same axis)', [A24.groupby('Member ID').size().mean() * 60,
+                                                       A25.groupby('Member ID').size().mean() * 60, V26.mean() * 60], TER)],
+    'More members, fewer visits each', h=320, ymax=480,
+    note=f'{len(S26)} members trained in September 2026 against {len(S25)} a year earlier \u2014 {len(S26)/len(S25)*100-100:+.0f}% \u2014 but each of them came '
+         f'{V26.mean():.2f} times against {V25.mean():.2f}. The frequency bars are drawn at sixty times their true value so that they sit on the same axis.')
+
+BK = pd.DataFrame({y: dict(seats=int(sub['Capacity'].sum()), booked=int(sub['Booked'].sum()),
+                           att=int(sub['CheckedIn'].sum()), lc=int(sub['LateCancelled'].sum()))
+                   for y, sub in ((2024, x24), (2025, x25), (2026, x26))}).T
+BK['board'] = BK['booked'] / BK['seats'] * 100
+BK['conv'] = BK['att'] / BK['booked'] * 100
+BK['booked_sess'] = BK['booked'] / pd.Series({2024: len(x24), 2025: len(x25), 2026: len(x26)})
+CH_BOARD = lines(['Sept 2024', 'Sept 2025', 'Sept 2026'],
+    [('Seats booked, as a share of the board', [BK.loc[y, 'board'] / 100 for y in (2024, 2025, 2026)], BLU),
+     ('Booked seats that were attended', [BK.loc[y, 'conv'] / 100 for y in (2024, 2025, 2026)], TER)],
+    'The board is emptier, and what is on it is more honest', h=300, as_pct=True, ymax=1.0,
+    note=f'Bookings fell {BK.loc[2025,"booked"]-BK.loc[2026,"booked"]:,} seats year on year, but the share honoured rose from {BK.loc[2025,"conv"]:.1f}% '
+         f'to {BK.loc[2026,"conv"]:.1f}%. The studio is selling less of its timetable and keeping more of what it sells.')
+
+_x26 = x26.copy(); _x26['capr'] = _x26['Capacity'] / _x26['Classes'].clip(lower=1)
+_x26['rband'] = pd.cut(_x26['capr'], [0, 11, 13, 40], labels=['10 to 11 seats', '12 to 13 seats', '14 or more seats'])
+RB = _x26.groupby('rband', observed=True).agg(sessions=('SessionID', 'size'), att=('CheckedIn', 'mean'),
+                                              capr=('capr', 'mean'), rev=('Revenue', 'mean'))
+RB['fill'] = RB['att'] / RB['capr'] * 100
+_B10 = float(RB.loc['10 to 11 seats', 'fill']); _B12 = float(RB.loc['12 to 13 seats', 'fill'])
+_R10 = float(RB.loc['10 to 11 seats', 'rev']); _R12 = float(RB.loc['12 to 13 seats', 'rev'])
+_N10 = int(RB.loc['10 to 11 seats', 'sessions']); _N12 = int(RB.loc['12 to 13 seats', 'sessions'])
+CH_ROOM = bars([str(i) for i in RB.index],
+    [('Seats offered', [float(r['capr']) for _, r in RB.iterrows()], GREY),
+     ('Seats filled', [float(r['att']) for _, r in RB.iterrows()], TER),
+     ('Revenue per class, \u20b9 hundreds', [float(r['rev']) / 100 for _, r in RB.iterrows()], GOLD)],
+    'Room size against what the room earns', h=310, ymax=65,
+    note='Read the first two bars as a pair: the room with ten or eleven seats fills, the room with twelve or thirteen does not. '
+         'The third bar is on the same axis in hundreds of rupees.')
+
+SEC_CLASS = f'''
+<h2>The returning core &mdash; the number behind the number</h2>
+<div class="sub">The month had more members than last September and fewer visits. The explanation sits with {len(RETM)} people.</div>
+
+<p>Every comparison in this report so far is between two Septembers as wholes. Matching them member by member isolates the cause, and it is unambiguous.
+Of the {len(S25)} members who trained at Bandra in September 2025, <strong>{len(RETM)} returned this September</strong>. Those {len(RETM)} people made
+<strong>{SEAT_RET25:.0f} visits last September and {SEAT_RET:.0f} this September</strong> &mdash; the same members, {HOLD:.0%} fewer visits, a shortfall of
+<strong>{LOST:.0f} attendances</strong>. That is {LOST/C26["att"]*100:.0f}% of everything the studio delivered in September 2026.</p>
+
+<p>The {len(GONEM)} who did not return are a different story. They had a <strong>median of {V25.reindex(list(GONEM)).median():.0f} visit</strong> in September 2025 and
+averaged {V25.reindex(list(GONEM)).mean():.2f}. These are not lost regulars; they are one-time visitors who never formed a habit. Meanwhile the studio recruited
+<strong>{len(NEWM)} attendees this September who had not trained in the same month last year</strong>, and they contributed {SEAT_NEW:.0f} visits &mdash; more,
+in fact, than the {V25.reindex(list(GONEM)).sum():.0f} the leavers had taken with them.</p>
+
+<div class="call b"><h4>What this changes</h4>
+<p>Bandra&rsquo;s September problem is not churn and it is not acquisition. Both of those are working. It is that the members who are still here are coming
+{HOLD:.0%} less often, and that single movement is larger than the whole year-on-year gap in attendance. Fill rates, revenue per class and class counts all
+follow from it &mdash; which means the fix belongs in frequency, not in the timetable alone.</p></div>
+
+{CH_BASE}
+{CH_CORE}
+
+{ev('Evidence &mdash; the three groups, matched member by member',
+    T(['Group', 'Members', 'Visits this September', 'Mean visits each', 'Median visits'],
+      [['Trained in both Septembers', len(RETM), f"{SEAT_RET:.0f}", f"{SEAT_RET/len(RETM):.2f}", f"{V_RET26.median():.0f}"],
+       ['Here in Sept 2025, not this year', len(GONEM), '\u2014', f"{V25.reindex(list(GONEM)).mean():.2f} last year", f"{V25.reindex(list(GONEM)).median():.0f} last year"],
+       ['New this September', len(NEWM), f"{SEAT_NEW:.0f}", f"{SEAT_NEW/len(NEWM):.2f}", f"{V26.reindex(list(NEWM)).median():.0f}"],
+       ['Trained in all three Septembers', len(S24 & S25 & S26), '\u2014', '\u2014', '\u2014']], 'num') +
+    f'<p style="font-size:13.5px;color:#6B7280;margin-top:14px">Only {len(S24 & S25 & S26)} members trained at Bandra in all three of September 2024, 2025 and 2026.</p>')}
+
+<h2>The board, and the room it sits in</h2>
+<div class="sub">Bookings are down a quarter, the share honoured is up seventeen points, and one room size is doing all the work.</div>
+
+<p>Attendance falls when bookings fall, and bookings fell hard this year: <strong>{BK.loc[2025,"booked"]:,} seats booked in September 2025 against
+{BK.loc[2026,"booked"]:,} this September, {BK.loc[2025,"booked_sess"]:.1f} per class down to {BK.loc[2026,"booked_sess"]:.1f}</strong>. What the studio got in return is a
+book it can trust: {BK.loc[2026,"conv"]:.1f}% of booked seats were attended against {BK.loc[2025,"conv"]:.1f}% a year ago.</p>
+
+<p>The seat count is the more actionable finding. Booked seats represent <strong>{BK.loc[2026,"board"]:.1f}% of the seats the studio put on the board</strong>,
+against {BK.loc[2025,"board"]:.1f}% last September. Half the timetable is unsold before a single class begins.</p>
+
+{CH_BOARD}
+
+<p>Split by room size and the answer becomes specific. Classes in the smallest room &mdash; ten or eleven seats &mdash; fill
+<strong>{_B10:.1f}%</strong> of their seats and earn {R(_R10)} each, across {_N10} classes. Classes in a twelve- or thirteen-seat room fill
+<strong>{_B12:.1f}%</strong> and earn {R(_R12)}. The bigger room holds {_N12} of the month&rsquo;s {int(RB['sessions'].sum())} classes and returns
+about {_R12/_R10*100-100:+.0f}% revenue per class.</p>
+
+{CH_ROOM}
+
+<p>One more thing belongs alongside this. <strong>{PCT1F:.0f}% of September&rsquo;s members trained in only one format.</strong> Members who use the whole building are
+the members who keep coming; the members who use one room were the ones who stayed longer last year and did not this year. Widening what a member does inside the
+studio is not a separate initiative from fixing frequency &mdash; it is the same initiative.</p>
+'''
+
+RECS_CLASS = ''' ('13','Ring-fence the returning core with a monthly frequency call','Studio Manager + CRM',
+  f'<strong>{len(RETM)} members came in both Septembers and made {HOLD:.0%} fewer visits.</strong> {(V_RET26 < V_RET25).sum()} of the {len(RETM)} attended less this year '
+  f'than last. The leavers, by contrast, had a median of {V25.reindex(list(GONEM)).median():.0f} visit last year.',
+  f'These {len(RETM)} people are the studio\\u2019s most reachable asset and its biggest current leak: {LOST:.0f} visits, or {LOST/C26["att"]*100:.0f}% of '
+  f'September\\u2019s attendance, went with them. A weekly look at the top 100 attendees by visit count, and a call to anyone whose rolling four-week frequency '
+  f'has fallen by a third, is the cheapest intervention available to the studio.'),
+ ('14','Cut the twelve- and thirteen-seat room before anything else','Programming + Studio Manager',
+  f'That room size holds <strong>{_N12} of September\\u2019s classes</strong>, fills {_B12:.1f}% and earns {R(_R12)} a class, against {_B10:.1f}% and {R(_R10)} '
+  f'in the small room.',
+  f'Removing roughly a third of those classes and re-running them in the small room would lift studio-wide seat utilisation by an estimated '
+  f'{_N12*0.3*float(RB.loc["12 to 13 seats","att"])/x26["Capacity"].sum()*100:.1f} points without changing the shape or the cost of the timetable.'),
+'''

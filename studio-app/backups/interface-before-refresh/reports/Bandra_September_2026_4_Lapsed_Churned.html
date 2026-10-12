@@ -1,0 +1,346 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Supreme HQ, Bandra — Lapsed and Churned Memberships</title>
+<style>
+ *{box-sizing:border-box}
+ :root{--ink:#12161A;--mut:#6B7280;--line:#E7E5E2;--soft:#F7F7F6;
+   --a1:#0F4C5C;--a2:#3F7F8C;--a3:#A6C4C9;--b1:#BE7048;--b2:#E2C3AC;--n1:#8C939A;--n2:#D3D7DA}
+ html{-webkit-text-size-adjust:100%}
+ body{margin:0;background:#fff;color:var(--ink);
+   font:16px/1.68 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+   -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+ .wrap{max-width:1060px;margin:0 auto;padding:0 30px 120px}
+ header{background:#fff;border-bottom:1px solid var(--line);padding:64px 0 46px;margin-bottom:56px}
+ header .inner{max-width:1060px;margin:0 auto;padding:0 30px}
+ .kick{font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--a1);font-weight:600;
+   display:flex;align-items:center;gap:12px;margin-bottom:24px}
+ .kick:before{content:"";width:26px;height:1.5px;background:var(--a1);display:block}
+ h1{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:48px;line-height:1.08;
+   margin:0 0 22px;font-weight:400;letter-spacing:-.018em;max-width:24ch}
+ header .lede{color:#3C4450;margin:0;max-width:76ch;font-size:17px;line-height:1.65}
+ header .meta{margin-top:32px;padding-top:20px;border-top:1px solid var(--line);display:flex;
+   gap:30px;flex-wrap:wrap;font-size:12.5px;color:var(--mut);letter-spacing:.01em}
+ .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:0 0 40px;
+   border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+ .kpi{padding:24px 22px 24px 0}
+ .kpi+.kpi{border-left:1px solid var(--line);padding-left:22px}
+ .kpi .l{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-bottom:12px;font-weight:600}
+ .kpi .v{font-family:Georgia,serif;font-size:31px;font-weight:400;line-height:1;letter-spacing:-.025em}
+ .kpi .d{font-size:12.5px;color:var(--mut);margin-top:10px;line-height:1.5}
+ .t-pos{color:var(--a1);font-weight:600} .t-neu{color:var(--mut);font-weight:600} .t-neg{color:var(--b1);font-weight:600}
+ .pos{color:var(--a1);font-weight:600} .neu{color:var(--mut);font-weight:600} .neg{color:var(--b1);font-weight:600}
+ h2{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--a1);font-weight:700;
+   margin:82px 0 10px;display:flex;align-items:center;gap:12px}
+ h2:before{content:"";width:22px;height:1.5px;background:var(--a1);display:block;flex:0 0 22px}
+ .sub{font-family:Georgia,serif;font-size:29px;font-weight:400;letter-spacing:-.02em;margin:0 0 24px;
+   line-height:1.24;max-width:34ch}
+ h3{font-size:18px;margin:0 0 8px;font-weight:650;letter-spacing:-.012em}
+ h4{font-size:14.5px;margin:28px 0 10px;font-weight:650}
+ p{margin:0 0 17px}
+ strong,b{font-weight:650}
+ .chart{background:#fff;border:1px solid var(--line);border-radius:4px;padding:24px 26px 12px;margin:0 0 22px}
+ .chart figcaption{font-size:14.5px;font-weight:650;margin-bottom:16px;letter-spacing:-.008em;line-height:1.4}
+ .cnote{font-size:12.5px;color:var(--mut);line-height:1.6;margin:8px 0 6px;padding-top:13px;border-top:1px solid var(--line)}
+ table{width:100%;border-collapse:collapse;background:#fff;font-size:13.5px;margin:0 0 14px;
+   border-top:1px solid var(--ink);border-bottom:1px solid var(--line)}
+ th{text-align:left;padding:11px 12px;font-size:10px;text-transform:uppercase;letter-spacing:.1em;
+   color:var(--mut);font-weight:700;border-bottom:1px solid var(--line);white-space:nowrap}
+ td{padding:10px 12px;border-bottom:1px solid var(--soft);vertical-align:top}
+ tr:last-child td{border-bottom:none}
+ table.small{font-size:12.5px} table.small td{padding:7px 10px} table.small th{padding:8px 10px}
+ .num td,.num th{font-variant-numeric:tabular-nums}
+ .call{border:1px solid var(--line);border-left:2.5px solid var(--a1);border-radius:3px;background:#fff;
+   padding:22px 26px;margin:0 0 24px}
+ .call.b{border-left-color:var(--b1)} .call.n{border-left-color:var(--n1)}
+ .call p:last-child{margin-bottom:0} .call h4{margin-top:0}
+ .stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;background:#fff;
+   border-top:1px solid var(--ink);border-bottom:1px solid var(--line);padding:22px 0;margin:0 0 24px}
+ .stat>div{padding:0 20px;border-left:1px solid var(--line)}
+ .stat>div:first-child{border-left:none;padding-left:0}
+ .stat .v{font-family:Georgia,serif;font-size:27px;line-height:1;letter-spacing:-.025em}
+ .stat .l{font-size:10.5px;text-transform:uppercase;letter-spacing:.11em;color:var(--mut);margin-top:10px;
+   line-height:1.45;font-weight:600}
+ details.ev{border:1px solid var(--line);border-radius:3px;background:#fff;margin:0 0 20px;overflow:hidden}
+ details.ev summary{cursor:pointer;list-style:none;padding:15px 22px;font-size:13.5px;font-weight:600;
+   color:var(--a1);display:flex;align-items:center;gap:11px;user-select:none;letter-spacing:.005em}
+ details.ev summary::-webkit-details-marker{display:none}
+ details.ev .evi{width:13px;height:13px;flex:0 0 13px;border-radius:2px;border:1.4px solid currentColor;position:relative;transition:.18s}
+ details.ev .evi:after{content:"";position:absolute;left:3.4px;top:3px;width:4.6px;height:4.6px;border-right:1.4px solid currentColor;
+   border-bottom:1.4px solid currentColor;transform:rotate(45deg);transition:.18s}
+ details.ev[open] .evi:after{transform:rotate(225deg);top:4.4px}
+ details.ev summary:hover{background:var(--SOFT)}
+ .evb{padding:6px 22px 22px;border-top:1px solid var(--line);background:#fff}
+ .evb table{margin-top:16px}
+ .hyp{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0;margin:0 0 26px;
+   border-top:1px solid var(--ink);border-bottom:1px solid var(--line)}
+ .hcard{padding:22px;border-left:1px solid var(--line)}
+ .hcard:first-child{border-left:none;padding-left:0}
+ .hcard .tag{display:inline-block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:4px 9px;
+   border-radius:2px;font-weight:700;margin-bottom:13px;border:1px solid}
+ .tag.no{background:#FBF1EC;color:#9A5533;border-color:#F0DACE}
+ .tag.yes{background:#EDF4F5;color:var(--a1);border-color:#CFE1E4}
+ .tag.part{background:#F7F7F6;color:#59606A;border-color:#E3E3E1}
+ .hcard h3{font-size:16px;margin-bottom:9px}
+ .hcard p{font-size:14px;margin:0;color:#3A4049;line-height:1.62}
+ .hcard .verdict{font-size:12.5px;color:var(--mut);margin-top:13px;padding-top:12px;border-top:1px solid var(--line)}
+ .rec{display:flex;gap:22px;border-top:1px solid var(--line);padding:26px 0 4px;margin-bottom:0}
+ .rec:first-of-type{border-top:1px solid var(--ink)}
+ .rn{flex:0 0 34px;height:34px;border-radius:50%;background:var(--a1);color:#fff;display:flex;
+   align-items:center;justify-content:center;font-family:Georgia,serif;font-size:14px}
+ .rb{flex:1;min-width:0} .ro{font-size:12px;color:var(--mut);margin-bottom:16px;letter-spacing:.02em;
+   text-transform:uppercase;font-weight:600}
+ .rec p{font-size:14.5px;margin:0 0 13px;color:#2C323A;line-height:1.64}
+ .rec .imp{margin-bottom:14px;color:#20505C}
+ .lbl{display:block;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--mut);
+   font-weight:700;margin-bottom:4px}
+ ul{margin:0 0 18px;padding-left:20px} li{margin-bottom:9px}
+ hr{border:none;border-top:1px solid var(--line);margin:34px 0}
+ .toc{border-top:1px solid var(--ink);border-bottom:1px solid var(--line);padding:22px 0 24px;margin:0 0 8px;
+   display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2px 34px}
+ .toc .tocl{grid-column:1/-1;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--mut);
+   font-weight:700;margin-bottom:12px}
+ .toc a{display:flex;gap:11px;padding:5px 0;font-size:13.5px;color:#2C323A;text-decoration:none;
+   border-bottom:1px solid transparent;line-height:1.35;transition:.15s}
+ .toc a:hover{color:var(--a1)}
+ .toc a span{font-variant-numeric:tabular-nums;color:var(--a3);font-size:11px;padding-top:2px;
+   min-width:16px;font-weight:600}
+ .toc a:hover span{color:var(--a1)}
+ footer{margin-top:78px;padding-top:24px;border-top:1px solid var(--line);font-size:12.5px;color:var(--mut);line-height:1.75}
+ @media(max-width:880px){
+   .kpis{grid-template-columns:repeat(2,1fr)}
+   .kpi{padding:20px 16px 20px 0} .kpi+.kpi{padding-left:16px}
+   h1{font-size:33px} .sub{font-size:22px} .hyp{grid-template-columns:1fr}
+   .hcard{border-left:none;padding-left:0;border-top:1px solid var(--line)}
+   .hcard:first-child{border-top:none}
+   .stat{grid-template-columns:repeat(2,1fr);gap:18px 0}
+   .stat>div:nth-child(odd){border-left:none;padding-left:0}
+   header{padding:44px 0 34px} header .inner{padding:0 22px} .wrap{padding:0 22px 80px}
+ }
+</style></head><body>
+<header><div class="inner">
+ <div class="kick">Report four of seven &middot; Membership lifecycle</div>
+ <h1>Lapsed and churned memberships</h1>
+ <p class="lede">Every membership Bandra has ever sold, read forward from the day it was bought. The median paid membership lasts 19 days, 57.0% are finished inside a month, and the way they end is split almost evenly between members who never started and members who quietly stopped.</p>
+ <div class="meta">Lapse ledger &middot; 8,707 Bandra membership instances and 3,974 paid memberships<br/>Check-in ledger &middot; 3,768 members, 2022 to October 2026<br/>Snapshot 18 October 2026</div>
+</div></header>
+<div class="wrap">
+<nav class="toc"><div class="tocl">Contents</div><a href="#start-here"><span>01</span>Start here</a><a href="#the-shape-of-the-churn-book"><span>02</span>The shape of the churn book</a><a href="#the-two-ways-to-lose-a-member"><span>03</span>The two ways to lose a member</a><a href="#did-they-use-what-they-paid-for"><span>04</span>Did they use what they paid for?</a><a href="#the-decline-that-comes-first"><span>05</span>The decline that comes first</a><a href="#product-by-product"><span>06</span>Product by product</a><a href="#who-is-winnable"><span>07</span>Who is winnable</a><a href="#what-the-lost-book-cost"><span>08</span>What the lost book cost</a><a href="#recommendations"><span>09</span>Recommendations</a></nav>
+
+<h2 id="start-here">Start here</h2>
+<div class="sub">The churn book is not a story about losing loyal members. It is a story about memberships that never really began.</div>
+
+<p>Every membership ever sold at Bandra sits in this ledger: <strong>8,707 memberships taken out by 3,768 people</strong>, of which
+3,974 were paid memberships from 1,699 members. Read forward from purchase, the pattern is stark and consistent across two years of
+trading: <strong>one in five paid memberships ends within a week. More than half end within a month. Only 3.2% are still in force a year later.</strong></p>
+
+<p>The median paid Bandra membership lasts <strong>19 days</strong>. Not months &mdash; days. And it has shortened: the median membership bought in 2024
+ran 29 days, one bought in 2025 ran 17, and one bought so far in 2026 is running 19.
+Every retention, referral and frequency conversation the studio has depends on that number, and it is getting worse.</p>
+
+<p>The reassuring reading is in <em>how</em> people are lost rather than how many. Among memberships with enough visits to measure a trend,
+<strong>37.2% ran a second half that was half the first or worse</strong> &mdash; and
+10.5% ended with a second half in which the member did not attend at all. They did not cancel, complain or ask for a refund. They
+drifted, while the membership was still live and still contactable. That is a recoverable failure, and it is what this report is built around.</p>
+
+<figure class="chart"><figcaption>How long a paid Bandra membership actually lasts</figcaption><svg viewBox="0 0 1000 330" width="100%" style="height:auto;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif"><line x1="62" y1="256.0" x2="974" y2="256.0" stroke="#E7E5E2"/><text x="53" y="260.0" text-anchor="end" font-size="10" fill="#6B7280">0%</text><line x1="62" y1="198.5" x2="974" y2="198.5" stroke="#E7E5E2"/><text x="53" y="202.5" text-anchor="end" font-size="10" fill="#6B7280">25%</text><line x1="62" y1="141.0" x2="974" y2="141.0" stroke="#E7E5E2"/><text x="53" y="145.0" text-anchor="end" font-size="10" fill="#6B7280">50%</text><line x1="62" y1="83.5" x2="974" y2="83.5" stroke="#E7E5E2"/><text x="53" y="87.5" text-anchor="end" font-size="10" fill="#6B7280">75%</text><line x1="62" y1="26.0" x2="974" y2="26.0" stroke="#E7E5E2"/><text x="53" y="30.0" text-anchor="end" font-size="10" fill="#6B7280">100%</text><path d="M62.0,72.3 L176.0,124.2 L290.0,157.2 L404.0,185.9 L518.0,201.0 L632.0,220.3 L746.0,233.6 L860.0,243.2 L974.0,248.7" fill="none" stroke="#0F4C5C" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="62.0" cy="72.3" r="3" fill="#fff" stroke="#0F4C5C" stroke-width="1.8"/><circle cx="176.0" cy="124.2" r="3" fill="#fff" stroke="#0F4C5C" stroke-width="1.8"/><circle cx="290.0" cy="157.2" r="3" fill="#fff" stroke="#0F4C5C" stroke-width="1.8"/><circle cx="404.0" cy="185.9" r="3" fill="#fff" stroke="#0F4C5C" stroke-width="1.8"/><circle cx="518.0" cy="201.0" r="3" fill="#fff" stroke="#0F4C5C" stroke-width="1.8"/><circle cx="632.0" cy="220.3" r="3" fill="#fff" stroke="#0F4C5C" stroke-width="1.8"/><circle cx="746.0" cy="233.6" r="3" fill="#fff" stroke="#0F4C5C" stroke-width="1.8"/><circle cx="860.0" cy="243.2" r="3" fill="#fff" stroke="#0F4C5C" stroke-width="1.8"/><circle cx="974.0" cy="248.7" r="3" fill="#fff" stroke="#0F4C5C" stroke-width="1.8"/><path d="M62.0,209.7 L176.0,157.8 L290.0,124.8 L404.0,96.1 L518.0,81.0 L632.0,61.7 L746.0,48.4 L860.0,38.8 L974.0,33.3" fill="none" stroke="#BE7048" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="62.0" cy="209.7" r="3" fill="#fff" stroke="#BE7048" stroke-width="1.8"/><circle cx="176.0" cy="157.8" r="3" fill="#fff" stroke="#BE7048" stroke-width="1.8"/><circle cx="290.0" cy="124.8" r="3" fill="#fff" stroke="#BE7048" stroke-width="1.8"/><circle cx="404.0" cy="96.1" r="3" fill="#fff" stroke="#BE7048" stroke-width="1.8"/><circle cx="518.0" cy="81.0" r="3" fill="#fff" stroke="#BE7048" stroke-width="1.8"/><circle cx="632.0" cy="61.7" r="3" fill="#fff" stroke="#BE7048" stroke-width="1.8"/><circle cx="746.0" cy="48.4" r="3" fill="#fff" stroke="#BE7048" stroke-width="1.8"/><circle cx="860.0" cy="38.8" r="3" fill="#fff" stroke="#BE7048" stroke-width="1.8"/><circle cx="974.0" cy="33.3" r="3" fill="#fff" stroke="#BE7048" stroke-width="1.8"/><text x="62.0" y="273.0" text-anchor="middle" font-size="10" fill="#6B7280">day 7</text><text x="176.0" y="273.0" text-anchor="middle" font-size="10" fill="#6B7280">day 14</text><text x="290.0" y="273.0" text-anchor="middle" font-size="10" fill="#6B7280">day 30</text><text x="404.0" y="273.0" text-anchor="middle" font-size="10" fill="#6B7280">day 45</text><text x="518.0" y="273.0" text-anchor="middle" font-size="10" fill="#6B7280">day 60</text><text x="632.0" y="273.0" text-anchor="middle" font-size="10" fill="#6B7280">day 90</text><text x="746.0" y="273.0" text-anchor="middle" font-size="10" fill="#6B7280">day 120</text><text x="860.0" y="273.0" text-anchor="middle" font-size="10" fill="#6B7280">day 180</text><text x="974.0" y="273.0" text-anchor="middle" font-size="10" fill="#6B7280">1 year</text><rect x="62" y="304" width="8" height="8" fill="#0F4C5C" rx="2"/><text x="75" y="312" font-size="10.5" fill="#6B7280">Still in force</text><rect x="163.8" y="304" width="8" height="8" fill="#BE7048" rx="2"/><text x="176.8" y="312" font-size="10.5" fill="#6B7280">Lapsed</text></svg><div class="cnote">Every paid Bandra membership bought since January 2024 that has had time to run, n = 3,838. Memberships still open count as surviving to today, so the curve is a floor, not a ceiling.</div></figure>
+
+<h2 id="the-shape-of-the-churn-book">The shape of the churn book</h2>
+<div class="sub">93.5% of every membership Bandra has ever sold is now lapsed. The live book is a thin sliver of the lifetime book.</div>
+
+<p>At Bandra the derived statuses read: <strong>7,745 lapsed</strong> (89.0%),
+371 in a renewal grace period, 352 never activated,
+111 active and 77 renewed.</p>
+
+<p>That ratio is less alarming than it looks, because it counts every instance since 2022 including free and promotional entries &mdash;
+4,519 of the 8,707 rows are complimentary or staff entries rather than purchases. Restricted to paid memberships the picture softens but does not
+change shape: of 3,974 paid memberships, <strong>89.7% are lapsed</strong> and only
+8.2% are live or renewing.</p>
+
+<div class="call b"><h4>What a 43.0% thirty-day survival rate means commercially</h4>
+<p>A studio that loses 57.0% of its memberships inside a month is not running a retention business. It is running an acquisition business with a very
+short billing cycle &mdash; and every month it must refill 57.0% of the book from scratch simply to stand still. That is the reason the studio&rsquo;s lead
+engine has to run as hard as it does, and it reframes acquisition from growth activity into maintenance cost.</p></div>
+
+<figure class="chart"><figcaption>How long paid memberships lasted, by count</figcaption><svg viewBox="0 0 1000 257" width="100%" style="height:auto;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif"><rect x="210" y="28.0" width="608.4" height="16" fill="#0F4C5C" rx="2"/><text x="200" y="42.5" text-anchor="end" font-size="11.5" fill="#12161A">2–7 days</text><text x="826.4" y="42.5" font-size="11" fill="#6B7280">1,087</text><rect x="210" y="57.0" width="698.0" height="16" fill="#0F4C5C" rx="2"/><text x="200" y="71.5" text-anchor="end" font-size="11.5" fill="#12161A">8–30 days</text><text x="916.0" y="71.5" font-size="11" fill="#6B7280">1,247</text><rect x="210" y="86.0" width="455.6" height="16" fill="#0F4C5C" rx="2"/><text x="200" y="100.5" text-anchor="end" font-size="11.5" fill="#12161A">31–60 days</text><text x="673.6" y="100.5" font-size="11" fill="#6B7280">814</text><rect x="210" y="115.0" width="207.1" height="16" fill="#3F7F8C" rx="2"/><text x="200" y="129.5" text-anchor="end" font-size="11.5" fill="#12161A">61–90 days</text><text x="425.1" y="129.5" font-size="11" fill="#6B7280">370</text><rect x="210" y="144.0" width="133.8" height="16" fill="#3F7F8C" rx="2"/><text x="200" y="158.5" text-anchor="end" font-size="11.5" fill="#12161A">91–180 days</text><text x="351.8" y="158.5" font-size="11" fill="#6B7280">239</text><rect x="210" y="173.0" width="38.1" height="16" fill="#A6C4C9" rx="2"/><text x="200" y="187.5" text-anchor="end" font-size="11.5" fill="#12161A">181–365 days</text><text x="256.1" y="187.5" font-size="11" fill="#6B7280">68</text><rect x="210" y="202.0" width="10.1" height="16" fill="#A6C4C9" rx="2"/><text x="200" y="216.5" text-anchor="end" font-size="11.5" fill="#12161A">over a year</text><text x="228.1" y="216.5" font-size="11" fill="#6B7280">18</text></svg></figure>
+
+<h2 id="the-two-ways-to-lose-a-member">The two ways to lose a member</h2>
+<div class="sub">Half the churn is people who never engaged. Half is people who engaged and then withdrew. They need opposite responses.</div>
+
+<p>Sort the paid memberships by how often they cancelled and a useful split appears. <strong>2,084 memberships never cancelled a single class</strong> &mdash;
+and they completed an average of just 2.3 sessions. They did not leave because something went wrong; they never arrived. At the
+other end, 467 memberships cancelled more than half of everything they booked, averaging 10.8 late cancellations each.
+Those members were present, engaged, and visibly losing the habit before they stopped.</p>
+
+<p>Two failure modes, two fixes. The first is a <strong>first-fortnight activation problem</strong> &mdash; the product was bought and not used. The second is a
+<strong>habit-decay problem</strong> &mdash; the rhythm broke. A single win-back campaign aimed at both will be efficient at neither, which is why the
+recommendations in this report keep them apart.</p>
+
+<figure class="chart"><figcaption>Memberships by how often they cancelled</figcaption><svg viewBox="0 0 1000 199" width="100%" style="height:auto;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif"><rect x="210" y="28.0" width="698.0" height="16" fill="#0F4C5C" rx="2"/><text x="200" y="42.5" text-anchor="end" font-size="11.5" fill="#12161A">never cancels</text><text x="916.0" y="42.5" font-size="11" fill="#6B7280">2,084</text><rect x="210" y="57.0" width="49.2" height="16" fill="#3F7F8C" rx="2"/><text x="200" y="71.5" text-anchor="end" font-size="11.5" fill="#12161A">up to 10%</text><text x="267.2" y="71.5" font-size="11" fill="#6B7280">147</text><rect x="210" y="86.0" width="139.0" height="16" fill="#3F7F8C" rx="2"/><text x="200" y="100.5" text-anchor="end" font-size="11.5" fill="#12161A">11–25%</text><text x="357.0" y="100.5" font-size="11" fill="#6B7280">415</text><rect x="210" y="115.0" width="288.4" height="16" fill="#BE7048" rx="2"/><text x="200" y="129.5" text-anchor="end" font-size="11.5" fill="#12161A">26–50%</text><text x="506.4" y="129.5" font-size="11" fill="#6B7280">861</text><rect x="210" y="144.0" width="156.4" height="16" fill="#BE7048" rx="2"/><text x="200" y="158.5" text-anchor="end" font-size="11.5" fill="#12161A">over 50%</text><text x="374.4" y="158.5" font-size="11" fill="#6B7280">467</text></svg><div class="cnote">10,104 late cancellations across the paid book; the worst 10% of memberships carry four in five of them.</div></figure>
+<figure class="chart"><figcaption>Engagement rises with cancelling, then collapses</figcaption><svg viewBox="0 0 1000 290" width="100%" style="height:auto;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif"><line x1="62" y1="216.0" x2="974" y2="216.0" stroke="#E7E5E2"/><text x="53" y="220.0" text-anchor="end" font-size="10" fill="#6B7280">0.0</text><line x1="62" y1="168.5" x2="974" y2="168.5" stroke="#E7E5E2"/><text x="53" y="172.5" text-anchor="end" font-size="10" fill="#6B7280">5</text><line x1="62" y1="121.0" x2="974" y2="121.0" stroke="#E7E5E2"/><text x="53" y="125.0" text-anchor="end" font-size="10" fill="#6B7280">10</text><line x1="62" y1="73.5" x2="974" y2="73.5" stroke="#E7E5E2"/><text x="53" y="77.5" text-anchor="end" font-size="10" fill="#6B7280">15</text><line x1="62" y1="26.0" x2="974" y2="26.0" stroke="#E7E5E2"/><text x="53" y="30.0" text-anchor="end" font-size="10" fill="#6B7280">20</text><path d="M62.0,193.9 L290.0,34.1 L518.0,61.3 L746.0,63.0 L974.0,120.9" fill="none" stroke="#0F4C5C" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="62.0" cy="193.9" r="3" fill="#fff" stroke="#0F4C5C" stroke-width="1.8"/><circle cx="290.0" cy="34.1" r="3" fill="#fff" stroke="#0F4C5C" stroke-width="1.8"/><circle cx="518.0" cy="61.3" r="3" fill="#fff" stroke="#0F4C5C" stroke-width="1.8"/><circle cx="746.0" cy="63.0" r="3" fill="#fff" stroke="#0F4C5C" stroke-width="1.8"/><circle cx="974.0" cy="120.9" r="3" fill="#fff" stroke="#0F4C5C" stroke-width="1.8"/><text x="62.0" y="233.0" text-anchor="middle" font-size="10" fill="#6B7280">never cancels</text><text x="290.0" y="233.0" text-anchor="middle" font-size="10" fill="#6B7280">up to 10%</text><text x="518.0" y="233.0" text-anchor="middle" font-size="10" fill="#6B7280">11–25%</text><text x="746.0" y="233.0" text-anchor="middle" font-size="10" fill="#6B7280">26–50%</text><text x="974.0" y="233.0" text-anchor="middle" font-size="10" fill="#6B7280">over 50%</text><rect x="62" y="264" width="8" height="8" fill="#0F4C5C" rx="2"/><text x="75" y="272" font-size="10.5" fill="#6B7280">Mean classes completed</text></svg><div class="cnote">A member who cancels is a member who is trying. The collapse only starts past the halfway mark.</div></figure>
+
+<details class="ev"><summary><span class="evi"></span>Evidence — cancellation behaviour against outcome</summary><div class="evb"><table class="num"><thead><tr><th>How often they cancelled</th><th>Memberships</th><th>Mean classes completed</th><th>Mean late cancellations</th><th>Share ever renewed</th></tr></thead><tbody><tr><td>never cancels</td><td>2084</td><td>2.3</td><td>0.0</td><td>0.9%</td></tr><tr><td>up to 10%</td><td>147</td><td>19.1</td><td>0.8</td><td>2.0%</td></tr><tr><td>11–25%</td><td>415</td><td>16.3</td><td>2.0</td><td>3.4%</td></tr><tr><td>26–50%</td><td>861</td><td>16.1</td><td>4.8</td><td>0.9%</td></tr><tr><td>over 50%</td><td>467</td><td>10.0</td><td>10.8</td><td>1.5%</td></tr></tbody></table><p style="font-size:13.5px;color:#6B7280;margin-top:14px">Note how flat the renewal rate is across every band. Cancelling a lot is an early symptom rather than a cause, which is exactly why it is worth acting on the first time it appears.</p></div></details>
+
+<h2 id="did-they-use-what-they-paid-for">Did they use what they paid for?</h2>
+<div class="sub">Most did. The ones who did not are identifiable at the point of sale, and they are carrying a lot of unspent money.</div>
+
+<p>Session allowance is recorded for 802 package and credit memberships. Of those, <strong>332 (41.4%)
+used every class they bought</strong>, and a further 103 used more than three-quarters. At the other end,
+<strong>145 memberships (18.1%) used a quarter or less</strong>, leaving 1,953 unused classes in total.</p>
+
+<p>The unused-credit group is the one to act on, commercially as much as humanly. A member who has paid and not attended has received nothing for their money;
+the studio has banked revenue it will eventually have to earn or give back in goodwill. It is also a countable, visible, unfinished transaction sitting in the
+CRM: memberships in the lowest usage band are carrying <strong>8 and 7 unspent classes</strong>.</p>
+
+<figure class="chart"><figcaption>What people bought against what they used</figcaption><svg viewBox="0 0 1000 310" width="100%" style="height:auto;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif"><line x1="62" y1="236.0" x2="980" y2="236.0" stroke="#E7E5E2"/><text x="53" y="240.0" text-anchor="end" font-size="10" fill="#6B7280">0.0</text><line x1="62" y1="183.5" x2="980" y2="183.5" stroke="#E7E5E2"/><text x="53" y="187.5" text-anchor="end" font-size="10" fill="#6B7280">90</text><line x1="62" y1="131.0" x2="980" y2="131.0" stroke="#E7E5E2"/><text x="53" y="135.0" text-anchor="end" font-size="10" fill="#6B7280">180</text><line x1="62" y1="78.5" x2="980" y2="78.5" stroke="#E7E5E2"/><text x="53" y="82.5" text-anchor="end" font-size="10" fill="#6B7280">270</text><line x1="62" y1="26.0" x2="980" y2="26.0" stroke="#E7E5E2"/><text x="53" y="30.0" text-anchor="end" font-size="10" fill="#6B7280">360</text><rect x="94.5" y="196.9" width="44.0" height="39.1" fill="#0F4C5C" rx="2"/><text x="116.5" y="191.9" text-anchor="middle" font-size="9" fill="#6B7280">67</text><rect x="138.5" y="234.5" width="44.0" height="1.5" fill="#BE7048" rx="2"/><text x="160.5" y="229.5" text-anchor="middle" font-size="9" fill="#6B7280">0</text><text x="138.5" y="253.0" text-anchor="middle" font-size="10" fill="#6B7280">used ≤10%</text><rect x="247.5" y="190.5" width="44.0" height="45.5" fill="#0F4C5C" rx="2"/><text x="269.5" y="185.5" text-anchor="middle" font-size="9" fill="#6B7280">78</text><rect x="291.5" y="234.5" width="44.0" height="1.5" fill="#BE7048" rx="2"/><text x="313.5" y="229.5" text-anchor="middle" font-size="9" fill="#6B7280">2</text><text x="291.5" y="253.0" text-anchor="middle" font-size="10" fill="#6B7280">11–25%</text><rect x="400.5" y="185.8" width="44.0" height="50.2" fill="#0F4C5C" rx="2"/><text x="422.5" y="180.8" text-anchor="middle" font-size="9" fill="#6B7280">86</text><rect x="444.5" y="233.9" width="44.0" height="2.1" fill="#BE7048" rx="2"/><text x="466.5" y="228.9" text-anchor="middle" font-size="9" fill="#6B7280">4</text><text x="444.5" y="253.0" text-anchor="middle" font-size="10" fill="#6B7280">26–50%</text><rect x="553.5" y="156.7" width="44.0" height="79.3" fill="#0F4C5C" rx="2"/><text x="575.5" y="151.7" text-anchor="middle" font-size="9" fill="#6B7280">136</text><rect x="597.5" y="232.6" width="44.0" height="3.4" fill="#BE7048" rx="2"/><text x="619.5" y="227.6" text-anchor="middle" font-size="9" fill="#6B7280">6</text><text x="597.5" y="253.0" text-anchor="middle" font-size="10" fill="#6B7280">51–75%</text><rect x="706.5" y="175.9" width="44.0" height="60.1" fill="#0F4C5C" rx="2"/><text x="728.5" y="170.9" text-anchor="middle" font-size="9" fill="#6B7280">103</text><rect x="750.5" y="230.5" width="44.0" height="5.5" fill="#BE7048" rx="2"/><text x="772.5" y="225.5" text-anchor="middle" font-size="9" fill="#6B7280">9</text><text x="750.5" y="253.0" text-anchor="middle" font-size="10" fill="#6B7280">76–99%</text><rect x="859.5" y="47.6" width="44.0" height="188.4" fill="#0F4C5C" rx="2"/><text x="881.5" y="42.6" text-anchor="middle" font-size="9" fill="#6B7280">323</text><rect x="903.5" y="231.1" width="44.0" height="4.9" fill="#BE7048" rx="2"/><text x="925.5" y="226.1" text-anchor="middle" font-size="9" fill="#6B7280">8</text><text x="903.5" y="253.0" text-anchor="middle" font-size="10" fill="#6B7280">used 100%</text><rect x="62" y="284" width="8" height="8" fill="#0F4C5C" rx="2"/><text x="75" y="292" font-size="10.5" fill="#6B7280">Memberships in this band</text><rect x="225.8" y="284" width="8" height="8" fill="#BE7048" rx="2"/><text x="238.8" y="292" font-size="10.5" fill="#6B7280">Mean classes actually used</text></svg><div class="cnote">Session allowance is recorded for package and credit products only, so this covers 802 memberships. The clay bars are mean classes used, on the same axis.</div></figure>
+
+<h2 id="the-decline-that-comes-first">The decline that comes first</h2>
+<div class="sub">Almost every lost member slowed down before they stopped. The slowdown is measurable, and it happens while the membership is still live.</div>
+
+<p>Splitting each membership period in half and comparing the two shows the shape of a departure. <strong>10.5% of measurable memberships ended with a
+second half in which the member did not attend at all</strong>, and a further 26.7% more than halved their frequency. Together,
+<strong>37.2% of memberships ran a second half that was half the first or worse</strong>, against just 36.4% that held or grew.</p>
+
+<p>This is a warning the studio already owns and does not use. The decline is visible from the mid-point of any monthly or quarterly cycle. A member whose visits
+halve in the second fortnight of a one-month membership is stating exactly what is about to happen, and nothing in the current process reads that signal.</p>
+
+<figure class="chart"><figcaption>The second half of a membership, measured against its first half</figcaption><svg viewBox="0 0 1000 170" width="100%" style="height:auto;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif"><rect x="210" y="28.0" width="201.2" height="16" fill="#BE7048" rx="2"/><text x="200" y="42.5" text-anchor="end" font-size="11.5" fill="#12161A">wound down to nothing</text><text x="419.2" y="42.5" font-size="11" fill="#6B7280">1049.9%</text><rect x="210" y="57.0" width="511.4" height="16" fill="#BE7048" rx="2"/><text x="200" y="71.5" text-anchor="end" font-size="11.5" fill="#12161A">more than halved</text><text x="729.4" y="71.5" font-size="11" fill="#6B7280">2668.6%</text><rect x="210" y="86.0" width="496.8" height="16" fill="#3F7F8C" rx="2"/><text x="200" y="100.5" text-anchor="end" font-size="11.5" fill="#12161A">slipped a little</text><text x="714.8" y="100.5" font-size="11" fill="#6B7280">2592.4%</text><rect x="210" y="115.0" width="698.0" height="16" fill="#0F4C5C" rx="2"/><text x="200" y="129.5" text-anchor="end" font-size="11.5" fill="#12161A">held steady or grew</text><text x="916.0" y="129.5" font-size="11" fill="#6B7280">3642.2%</text></svg><div class="cnote">1,705 memberships with at least four completed visits, so the halves mean something.</div></figure>
+
+<h2 id="product-by-product">Product by product</h2>
+<div class="sub">Commitment length is the only product feature that reliably predicts survival. Price is not.</div>
+
+<p>Sorted by renewal rate the products separate cleanly. The <strong>6-month unlimited renews at 40%</strong>, the extended 10-class pack at
+22% and the 12-class package at 13%. At the bottom, the
+<strong>2-for-1 introductory pack renews at 5%</strong>, the four-class package at
+4% and the ten-class single pack at 1%.</p>
+
+<p>Two things stand out. The <strong>10-class single pack is the worst performer in the range</strong> &mdash; it sells at almost the same ticket as the 12-class package and converts
+to a renewal 12 points less often. And the gap between the two is not price; it is whether the
+member was sold a <em>programme</em> or a <em>quantity</em>.</p>
+
+<figure class="chart"><figcaption>Share of each product’s memberships that renewed or are still live</figcaption><svg viewBox="0 0 1000 373" width="100%" style="height:auto;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif"><rect x="210" y="28.0" width="24.8" height="16" fill="#BE7048" rx="2"/><text x="200" y="42.5" text-anchor="end" font-size="11.5" fill="#12161A">10 pack</text><text x="242.8" y="42.5" font-size="11" fill="#6B7280">141.8%</text><rect x="210" y="57.0" width="66.8" height="16" fill="#BE7048" rx="2"/><text x="200" y="71.5" text-anchor="end" font-size="11.5" fill="#12161A">4 Class Package</text><text x="284.8" y="71.5" font-size="11" fill="#6B7280">382.8%</text><rect x="210" y="86.0" width="78.1" height="16" fill="#BE7048" rx="2"/><text x="200" y="100.5" text-anchor="end" font-size="11.5" fill="#12161A">2 Week Unlimited</text><text x="296.1" y="100.5" font-size="11" fill="#6B7280">447.8%</text><rect x="210" y="115.0" width="83.1" height="16" fill="#BE7048" rx="2"/><text x="200" y="129.5" text-anchor="end" font-size="11.5" fill="#12161A">Newcomers 2 For 1</text><text x="301.1" y="129.5" font-size="11" fill="#6B7280">476.2%</text><rect x="210" y="144.0" width="91.7" height="16" fill="#BE7048" rx="2"/><text x="200" y="158.5" text-anchor="end" font-size="11.5" fill="#12161A">Single Class</text><text x="309.7" y="158.5" font-size="11" fill="#6B7280">525.8%</text><rect x="210" y="173.0" width="139.6" height="16" fill="#0F4C5C" rx="2"/><text x="200" y="187.5" text-anchor="end" font-size="11.5" fill="#12161A">1 Month Unlimited</text><text x="357.6" y="187.5" font-size="11" fill="#6B7280">800.0%</text><rect x="210" y="202.0" width="194.9" height="16" fill="#0F4C5C" rx="2"/><text x="200" y="216.5" text-anchor="end" font-size="11.5" fill="#12161A">8 Class Package</text><text x="412.9" y="216.5" font-size="11" fill="#6B7280">1116.8%</text><rect x="210" y="231.0" width="205.3" height="16" fill="#0F4C5C" rx="2"/><text x="200" y="245.5" text-anchor="end" font-size="11.5" fill="#12161A">3 Month Unlimited</text><text x="423.3" y="245.5" font-size="11" fill="#6B7280">1176.5%</text><rect x="210" y="260.0" width="226.6" height="16" fill="#0F4C5C" rx="2"/><text x="200" y="274.5" text-anchor="end" font-size="11.5" fill="#12161A">12 Class Package</text><text x="444.6" y="274.5" font-size="11" fill="#6B7280">1298.3%</text><rect x="210" y="289.0" width="375.4" height="16" fill="#0F4C5C" rx="2"/><text x="200" y="303.5" text-anchor="end" font-size="11.5" fill="#12161A">Extended 10 pack</text><text x="593.4" y="303.5" font-size="11" fill="#6B7280">2151.2%</text><rect x="210" y="318.0" width="698.0" height="16" fill="#0F4C5C" rx="2"/><text x="200" y="332.5" text-anchor="end" font-size="11.5" fill="#12161A">6 Month Unlimited</text><text x="916.0" y="332.5" font-size="11" fill="#6B7280">4000.0%</text></svg><div class="cnote">Paid Bandra memberships only, products with fifteen or more sold.</div></figure>
+
+<details class="ev"><summary><span class="evi"></span>Evidence — every paid product at Bandra</summary><div class="evb"><table class="num"><thead><tr><th>Product</th><th>Sold</th><th>Average ticket</th><th>Mean classes completed</th><th>Mean days in force</th><th>Renewed or still live</th></tr></thead><tbody><tr><td>Single Class</td><td>989</td><td>₹1,739</td><td>0.9</td><td>7</td><td>5.3%</td></tr><tr><td>Newcomers 2 For 1</td><td>819</td><td>₹1,753</td><td>1.5</td><td>13</td><td>4.8%</td></tr><tr><td>1 Month Unlimited Membership</td><td>575</td><td>₹15,995</td><td>14.6</td><td>39</td><td>8.0%</td></tr><tr><td>12 Class Package</td><td>362</td><td>₹15,300</td><td>8.9</td><td>56</td><td>13.0%</td></tr><tr><td>4 Class Package</td><td>209</td><td>₹5,847</td><td>3.0</td><td>16</td><td>3.8%</td></tr><tr><td>8 Class Package</td><td>197</td><td>₹10,826</td><td>5.9</td><td>44</td><td>11.2%</td></tr><tr><td>Extended 10 Single Class Pack</td><td>172</td><td>₹15,117</td><td>7.0</td><td>91</td><td>21.5%</td></tr><tr><td>3 Month Unlimited Membership</td><td>153</td><td>₹44,827</td><td>42.4</td><td>126</td><td>11.8%</td></tr><tr><td>10 Single Class Pack</td><td>141</td><td>₹14,935</td><td>7.9</td><td>78</td><td>1.4%</td></tr><tr><td>2 Week Unlimited Membership</td><td>67</td><td>₹9,906</td><td>8.4</td><td>14</td><td>4.5%</td></tr><tr><td>6 Month Unlimited Membership</td><td>40</td><td>₹88,027</td><td>74.2</td><td>240</td><td>40.0%</td></tr></tbody></table></div></details>
+
+<h2 id="who-is-winnable">Who is winnable</h2>
+<div class="sub">The win-back list writes itself, and it is the opposite of the list most studios use.</div>
+
+<p>Sorted by how long it has been since they last came, the paid book splits into three groups with very different economics.
+<strong>316 members are still warm</strong> &mdash; in the room within the last sixty days &mdash; and they paid an average of
+<strong>₹23,011</strong> across 14.4 completed classes. A further 378 are cooling, having paid ₹11,862.
+The remaining <strong>1301 are gone</strong>, absent more than six months, and paid only ₹9,525 on average.</p>
+
+<p>The instinct is to chase whoever spent the most over their lifetime. The data says the opposite: <strong>the members still worth winning are the ones who have
+been gone the least time, and they are also the ones who were worth the most.</strong> Someone last seen three weeks ago who has paid ₹23,011 is a
+lapse. Someone last seen two years ago who paid ₹9,525 is a completed relationship.</p>
+
+<figure class="chart"><figcaption>Time since last visit, against what those members had paid</figcaption><svg viewBox="0 0 1000 310" width="100%" style="height:auto;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif"><line x1="62" y1="236.0" x2="980" y2="236.0" stroke="#E7E5E2"/><text x="53" y="240.0" text-anchor="end" font-size="10" fill="#6B7280">0.0</text><line x1="62" y1="183.5" x2="980" y2="183.5" stroke="#E7E5E2"/><text x="53" y="187.5" text-anchor="end" font-size="10" fill="#6B7280">350</text><line x1="62" y1="131.0" x2="980" y2="131.0" stroke="#E7E5E2"/><text x="53" y="135.0" text-anchor="end" font-size="10" fill="#6B7280">700</text><line x1="62" y1="78.5" x2="980" y2="78.5" stroke="#E7E5E2"/><text x="53" y="82.5" text-anchor="end" font-size="10" fill="#6B7280">1,050</text><line x1="62" y1="26.0" x2="980" y2="26.0" stroke="#E7E5E2"/><text x="53" y="30.0" text-anchor="end" font-size="10" fill="#6B7280">1,400</text><rect x="94.5" y="203.2" width="44.0" height="32.9" fill="#0F4C5C" rx="2"/><text x="116.5" y="198.2" text-anchor="middle" font-size="9" fill="#6B7280">219</text><rect x="138.5" y="193.1" width="44.0" height="42.9" fill="#BE7048" rx="2"/><text x="160.5" y="188.1" text-anchor="middle" font-size="9" fill="#6B7280">286</text><text x="138.5" y="253.0" text-anchor="middle" font-size="10" fill="#6B7280">0–30 days</text><rect x="247.5" y="215.4" width="44.0" height="20.6" fill="#0F4C5C" rx="2"/><text x="269.5" y="210.4" text-anchor="middle" font-size="9" fill="#6B7280">137</text><rect x="291.5" y="216.1" width="44.0" height="19.9" fill="#BE7048" rx="2"/><text x="313.5" y="211.1" text-anchor="middle" font-size="9" fill="#6B7280">133</text><text x="291.5" y="253.0" text-anchor="middle" font-size="10" fill="#6B7280">31–60 days</text><rect x="400.5" y="217.1" width="44.0" height="18.9" fill="#0F4C5C" rx="2"/><text x="422.5" y="212.1" text-anchor="middle" font-size="9" fill="#6B7280">126</text><rect x="444.5" y="219.4" width="44.0" height="16.6" fill="#BE7048" rx="2"/><text x="466.5" y="214.4" text-anchor="middle" font-size="9" fill="#6B7280">110</text><text x="444.5" y="253.0" text-anchor="middle" font-size="10" fill="#6B7280">61–90 days</text><rect x="553.5" y="191.2" width="44.0" height="44.9" fill="#0F4C5C" rx="2"/><text x="575.5" y="186.2" text-anchor="middle" font-size="9" fill="#6B7280">299</text><rect x="597.5" y="217.8" width="44.0" height="18.2" fill="#BE7048" rx="2"/><text x="619.5" y="212.8" text-anchor="middle" font-size="9" fill="#6B7280">121</text><text x="597.5" y="253.0" text-anchor="middle" font-size="10" fill="#6B7280">91–180 days</text><rect x="706.5" y="158.9" width="44.0" height="77.1" fill="#0F4C5C" rx="2"/><text x="728.5" y="153.9" text-anchor="middle" font-size="9" fill="#6B7280">514</text><rect x="750.5" y="221.6" width="44.0" height="14.4" fill="#BE7048" rx="2"/><text x="772.5" y="216.6" text-anchor="middle" font-size="9" fill="#6B7280">96</text><text x="750.5" y="253.0" text-anchor="middle" font-size="10" fill="#6B7280">181–365 days</text><rect x="859.5" y="89.0" width="44.0" height="147.0" fill="#0F4C5C" rx="2"/><text x="881.5" y="84.0" text-anchor="middle" font-size="9" fill="#6B7280">980</text><rect x="903.5" y="221.8" width="44.0" height="14.2" fill="#BE7048" rx="2"/><text x="925.5" y="216.8" text-anchor="middle" font-size="9" fill="#6B7280">95</text><text x="903.5" y="253.0" text-anchor="middle" font-size="10" fill="#6B7280">over a year</text><rect x="62" y="284" width="8" height="8" fill="#0F4C5C" rx="2"/><text x="75" y="292" font-size="10.5" fill="#6B7280">Members</text><rect x="120.4" y="284" width="8" height="8" fill="#BE7048" rx="2"/><text x="133.4" y="292" font-size="10.5" fill="#6B7280">Mean price paid, ₹ hundreds</text></svg><div class="cnote">Read together: the members most recently in the room are also the ones who paid the most. The further away someone has drifted, the smaller they were in the first place.</div></figure>
+
+<details class="ev"><summary><span class="evi"></span>Evidence — the win-back list in numbers</summary><div class="evb"><table class="num"><thead><tr><th>Time since last visit</th><th>Members</th><th>Memberships</th><th>Mean paid</th><th>Mean classes completed</th></tr></thead><tbody><tr><td>0–30 days</td><td>219</td><td>271</td><td>₹28,591</td><td>15.8</td></tr><tr><td>31–60 days</td><td>137</td><td>155</td><td>₹13,255</td><td>11.9</td></tr><tr><td>61–90 days</td><td>126</td><td>136</td><td>₹11,045</td><td>9.0</td></tr><tr><td>91–180 days</td><td>299</td><td>405</td><td>₹12,136</td><td>10.8</td></tr><tr><td>181–365 days</td><td>514</td><td>795</td><td>₹9,587</td><td>7.5</td></tr><tr><td>over a year</td><td>980</td><td>1898</td><td>₹9,500</td><td>8.0</td></tr></tbody></table></div></details>
+
+<h2 id="what-the-lost-book-cost">What the lost book cost</h2>
+<div class="sub">The lapsed memberships represent almost all of the money the studio has taken at Bandra, and most of it was spent fast.</div>
+
+<p>The 3,974 paid Bandra memberships in this ledger represent <strong>₹4,40,74,830 of recorded payments</strong>, at an average ticket of ₹11,091.
+Of that, <strong>₹3,44,72,653 &mdash; 78.2% &mdash; sits against memberships now recorded as lapsed</strong>. That is not money the studio has lost;
+it is money the studio has already banked against relationships that have ended.</p>
+
+<p>The sharper question is how quickly it was earned. With a median membership lasting 19 days and 57.0% finished inside a month, an average ticket of
+₹11,091 is being collected roughly every 19 days and then having to be replaced. The studio is not short of customers. It is short of
+<em>duration</em> &mdash; and duration is the one input that makes every other number in these reports easier.</p>
+
+<figure class="chart"><figcaption>Survival by the year the membership was bought</figcaption><svg viewBox="0 0 1000 310" width="100%" style="height:auto;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif"><line x1="62" y1="236.0" x2="974" y2="236.0" stroke="#E7E5E2"/><text x="53" y="240.0" text-anchor="end" font-size="10" fill="#6B7280">0%</text><line x1="62" y1="183.5" x2="974" y2="183.5" stroke="#E7E5E2"/><text x="53" y="187.5" text-anchor="end" font-size="10" fill="#6B7280">25%</text><line x1="62" y1="131.0" x2="974" y2="131.0" stroke="#E7E5E2"/><text x="53" y="135.0" text-anchor="end" font-size="10" fill="#6B7280">50%</text><line x1="62" y1="78.5" x2="974" y2="78.5" stroke="#E7E5E2"/><text x="53" y="82.5" text-anchor="end" font-size="10" fill="#6B7280">75%</text><line x1="62" y1="26.0" x2="974" y2="26.0" stroke="#E7E5E2"/><text x="53" y="30.0" text-anchor="end" font-size="10" fill="#6B7280">100%</text><path d="M62.0,121.2 L290.0,139.0 L518.0,183.1 L746.0,206.3 L974.0,228.2" fill="none" stroke="#A6C4C9" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="62.0" cy="121.2" r="3" fill="#fff" stroke="#A6C4C9" stroke-width="1.8"/><circle cx="290.0" cy="139.0" r="3" fill="#fff" stroke="#A6C4C9" stroke-width="1.8"/><circle cx="518.0" cy="183.1" r="3" fill="#fff" stroke="#A6C4C9" stroke-width="1.8"/><circle cx="746.0" cy="206.3" r="3" fill="#fff" stroke="#A6C4C9" stroke-width="1.8"/><circle cx="974.0" cy="228.2" r="3" fill="#fff" stroke="#A6C4C9" stroke-width="1.8"/><path d="M62.0,117.6 L290.0,150.1 L518.0,185.8 L746.0,202.1 L974.0,223.6" fill="none" stroke="#3F7F8C" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="62.0" cy="117.6" r="3" fill="#fff" stroke="#3F7F8C" stroke-width="1.8"/><circle cx="290.0" cy="150.1" r="3" fill="#fff" stroke="#3F7F8C" stroke-width="1.8"/><circle cx="518.0" cy="185.8" r="3" fill="#fff" stroke="#3F7F8C" stroke-width="1.8"/><circle cx="746.0" cy="202.1" r="3" fill="#fff" stroke="#3F7F8C" stroke-width="1.8"/><circle cx="974.0" cy="223.6" r="3" fill="#fff" stroke="#3F7F8C" stroke-width="1.8"/><path d="M62.0,109.5 L290.0,145.8 L518.0,187.8 L746.0,202.8 L974.0,222.4" fill="none" stroke="#0F4C5C" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="62.0" cy="109.5" r="3" fill="#fff" stroke="#0F4C5C" stroke-width="1.8"/><circle cx="290.0" cy="145.8" r="3" fill="#fff" stroke="#0F4C5C" stroke-width="1.8"/><circle cx="518.0" cy="187.8" r="3" fill="#fff" stroke="#0F4C5C" stroke-width="1.8"/><circle cx="746.0" cy="202.8" r="3" fill="#fff" stroke="#0F4C5C" stroke-width="1.8"/><circle cx="974.0" cy="222.4" r="3" fill="#fff" stroke="#0F4C5C" stroke-width="1.8"/><text x="62.0" y="253.0" text-anchor="middle" font-size="10" fill="#6B7280">day 14</text><text x="290.0" y="253.0" text-anchor="middle" font-size="10" fill="#6B7280">day 30</text><text x="518.0" y="253.0" text-anchor="middle" font-size="10" fill="#6B7280">day 60</text><text x="746.0" y="253.0" text-anchor="middle" font-size="10" fill="#6B7280">day 90</text><text x="974.0" y="253.0" text-anchor="middle" font-size="10" fill="#6B7280">day 180</text><rect x="62" y="284" width="8" height="8" fill="#A6C4C9" rx="2"/><text x="75" y="292" font-size="10.5" fill="#6B7280">Bought in 2024</text><rect x="163.8" y="284" width="8" height="8" fill="#3F7F8C" rx="2"/><text x="176.8" y="292" font-size="10.5" fill="#6B7280">Bought in 2025</text><rect x="265.6" y="284" width="8" height="8" fill="#0F4C5C" rx="2"/><text x="278.6" y="292" font-size="10.5" fill="#6B7280">Bought in 2026</text></svg><div class="cnote">The 2026 curve sits above the others partly because its memberships are younger and still running. Comparing the first thirty days across all three years is the fair read, and 2026 is not better than 2024.</div></figure>
+
+<details class="ev"><summary><span class="evi"></span>Evidence — the paid book by product, and what happened to each line</summary><div class="evb"><table class="num"><thead><tr><th>Product family</th><th>Memberships sold</th><th>Members</th><th>Cash taken</th><th>Mean ticket</th><th>Lapsed</th></tr></thead><tbody><tr><td>Single Class</td><td>989</td><td>454</td><td>₹17,20,202</td><td>₹1,739</td><td>93.1%</td></tr><tr><td>Newcomers 2 For 1</td><td>819</td><td>816</td><td>₹14,35,947</td><td>₹1,753</td><td>94.4%</td></tr><tr><td>1 Month Unlimited Membership</td><td>575</td><td>283</td><td>₹91,97,174</td><td>₹15,995</td><td>90.3%</td></tr><tr><td>12 Class Package</td><td>362</td><td>246</td><td>₹55,38,645</td><td>₹15,300</td><td>84.3%</td></tr><tr><td>4 Class Package</td><td>209</td><td>156</td><td>₹12,22,013</td><td>₹5,847</td><td>93.3%</td></tr><tr><td>8 Class Package</td><td>197</td><td>132</td><td>₹21,32,788</td><td>₹10,826</td><td>87.3%</td></tr><tr><td>Extended 10 Single Class Pack</td><td>172</td><td>83</td><td>₹26,00,145</td><td>₹15,117</td><td>70.3%</td></tr><tr><td>3 Month Unlimited Membership</td><td>153</td><td>99</td><td>₹68,58,567</td><td>₹44,827</td><td>85.6%</td></tr><tr><td>10 Single Class Pack</td><td>141</td><td>92</td><td>₹21,05,883</td><td>₹14,935</td><td>96.5%</td></tr><tr><td>2 Week Unlimited Membership</td><td>67</td><td>57</td><td>₹6,63,726</td><td>₹9,906</td><td>94.0%</td></tr><tr><td>Single Class.</td><td>58</td><td>21</td><td>₹86,813</td><td>₹1,497</td><td>100.0%</td></tr><tr><td>6 Month Unlimited Membership</td><td>40</td><td>34</td><td>₹35,21,086</td><td>₹88,027</td><td>57.5%</td></tr><tr><td>Annual Unlimited Membership</td><td>28</td><td>22</td><td>₹43,93,149</td><td>₹1,56,898</td><td>32.1%</td></tr><tr><td>20 Single Class Pack</td><td>26</td><td>22</td><td>₹7,90,854</td><td>₹30,417</td><td>88.5%</td></tr></tbody></table></div></details>
+
+<figure class="chart"><figcaption>The paid book by product</figcaption><svg viewBox="0 0 1000 402" width="100%" style="height:auto;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif"><rect x="210" y="28.0" width="698.0" height="16" fill="#0F4C5C" rx="2"/><text x="200" y="42.5" text-anchor="end" font-size="11.5" fill="#12161A">Single Class</text><text x="916.0" y="42.5" font-size="11" fill="#6B7280">989</text><rect x="210" y="57.0" width="578.0" height="16" fill="#0F4C5C" rx="2"/><text x="200" y="71.5" text-anchor="end" font-size="11.5" fill="#12161A">Newcomers 2 For 1</text><text x="796.0" y="71.5" font-size="11" fill="#6B7280">819</text><rect x="210" y="86.0" width="405.8" height="16" fill="#0F4C5C" rx="2"/><text x="200" y="100.5" text-anchor="end" font-size="11.5" fill="#12161A">1 Month Unlimited</text><text x="623.8" y="100.5" font-size="11" fill="#6B7280">575</text><rect x="210" y="115.0" width="255.5" height="16" fill="#0F4C5C" rx="2"/><text x="200" y="129.5" text-anchor="end" font-size="11.5" fill="#12161A">12-class pack</text><text x="473.5" y="129.5" font-size="11" fill="#6B7280">362</text><rect x="210" y="144.0" width="147.5" height="16" fill="#0F4C5C" rx="2"/><text x="200" y="158.5" text-anchor="end" font-size="11.5" fill="#12161A">4-class pack</text><text x="365.5" y="158.5" font-size="11" fill="#6B7280">209</text><rect x="210" y="173.0" width="139.0" height="16" fill="#A6C4C9" rx="2"/><text x="200" y="187.5" text-anchor="end" font-size="11.5" fill="#12161A">8-class pack</text><text x="357.0" y="187.5" font-size="11" fill="#6B7280">197</text><rect x="210" y="202.0" width="121.4" height="16" fill="#A6C4C9" rx="2"/><text x="200" y="216.5" text-anchor="end" font-size="11.5" fill="#12161A">Extended 10 Single Class Pack</text><text x="339.4" y="216.5" font-size="11" fill="#6B7280">172</text><rect x="210" y="231.0" width="108.0" height="16" fill="#A6C4C9" rx="2"/><text x="200" y="245.5" text-anchor="end" font-size="11.5" fill="#12161A">3 Month Unlimited</text><text x="326.0" y="245.5" font-size="11" fill="#6B7280">153</text><rect x="210" y="260.0" width="99.5" height="16" fill="#A6C4C9" rx="2"/><text x="200" y="274.5" text-anchor="end" font-size="11.5" fill="#12161A">10 Single Class Pack</text><text x="317.5" y="274.5" font-size="11" fill="#6B7280">141</text><rect x="210" y="289.0" width="47.3" height="16" fill="#A6C4C9" rx="2"/><text x="200" y="303.5" text-anchor="end" font-size="11.5" fill="#12161A">2 Week Unlimited</text><text x="265.3" y="303.5" font-size="11" fill="#6B7280">67</text><rect x="210" y="318.0" width="40.9" height="16" fill="#A6C4C9" rx="2"/><text x="200" y="332.5" text-anchor="end" font-size="11.5" fill="#12161A">Single Class.</text><text x="258.9" y="332.5" font-size="11" fill="#6B7280">58</text><rect x="210" y="347.0" width="28.2" height="16" fill="#A6C4C9" rx="2"/><text x="200" y="361.5" text-anchor="end" font-size="11.5" fill="#12161A">6 Month Unlimited</text><text x="246.2" y="361.5" font-size="11" fill="#6B7280">40</text></svg><div class="cnote">Everything the studio has sold at Bandra since 2022. Two of the largest lines are entry products.</div></figure>
+
+<details class="ev"><summary><span class="evi"></span>Evidence — membership lifetime bands</summary><div class="evb"><table class="num"><thead><tr><th>How long it lasted</th><th>Memberships</th><th>Mean price paid</th><th>Mean classes completed</th></tr></thead><tbody><tr><td>same day</td><td>57</td><td>₹1,739</td><td>0.0</td></tr><tr><td>2–7 days</td><td>1087</td><td>₹1,907</td><td>1.0</td></tr><tr><td>8–30 days</td><td>1247</td><td>₹5,205</td><td>3.6</td></tr><tr><td>31–60 days</td><td>814</td><td>₹15,306</td><td>12.2</td></tr><tr><td>61–90 days</td><td>370</td><td>₹15,774</td><td>8.7</td></tr><tr><td>91–180 days</td><td>239</td><td>₹33,927</td><td>28.7</td></tr><tr><td>181–365 days</td><td>68</td><td>₹86,131</td><td>79.9</td></tr><tr><td>over a year</td><td>18</td><td>₹1,20,866</td><td>109.8</td></tr></tbody></table></div></details>
+
+<h2 id="recommendations">Recommendations</h2>
+<div class="sub">Nine actions, ordered by the size of the leak they address</div>
+<div class="rec">
+ <div class="rn">01</div>
+ <div class="rb">
+  <h3>Run a fourteen-day activation sequence on every membership sold</h3><div class="ro">Studio Manager + CRM</div>
+  <p><span class="lbl">Reasoning</span><strong>42.7% of paid memberships end within fourteen days and 57.0% within thirty</strong>, and 2,084 memberships never cancelled a single class because they never booked one. The median paid membership at Bandra lasts 19 days.</p>
+  <p class="imp"><span class="lbl">Expected impact</span>Getting one in ten of the memberships that currently die inside a fortnight to reach four visits would add roughly 307 members into the active habit band each year. On the studio’s own attendance economics that is the largest single recoverable block in this report.</p>
+ </div></div><div class="rec">
+ <div class="rn">02</div>
+ <div class="rb">
+  <h3>Treat "bought and never attended" as a same-day alert, not a report line</h3><div class="ro">Front Desk + CRM</div>
+  <p><span class="lbl">Reasoning</span>There are <strong>352 Bandra memberships across 241 people that were paid for and never activated</strong>, and the trend is rising: 36 in 2024, 81 in 2025, 235 so far in 2026.</p>
+  <p class="imp"><span class="lbl">Expected impact</span>A member who has bought and not booked is the highest-intent, lowest-cost call the studio can make. Ringing them within 48 hours of purchase converts a dead transaction into a first visit, and a first visit is the only thing that has ever predicted a second.</p>
+ </div></div><div class="rec">
+ <div class="rn">03</div>
+ <div class="rb">
+  <h3>Put a member on a plan at their first renewal, not a quantity</h3><div class="ro">Studio Manager</div>
+  <p><span class="lbl">Reasoning</span>The 12-class package renews at 13% while the 10-class single pack renews at 1%, at virtually the same ticket. The 4-class package renews at 4% and the 2-for-1 pack at 5%.</p>
+  <p class="imp"><span class="lbl">Expected impact</span>The difference is not price, it is framing. Selling the same money as a scheduled programme rather than a bundle of classes is a script change, not a product change, and it moves the single largest cohort in the book.</p>
+ </div></div><div class="rec">
+ <div class="rn">04</div>
+ <div class="rb">
+  <h3>Write down the unused classes and go and collect them</h3><div class="ro">Studio Manager + CRM</div>
+  <p><span class="lbl">Reasoning</span><strong>1,953 paid classes sit unused</strong> across 802 memberships, and 145 memberships used a quarter or less of what they bought. Memberships that used 10% or less of their allowance are carrying 8 unspent classes each.</p>
+  <p class="imp"><span class="lbl">Expected impact</span>Every one of those classes has already been paid for. Asking a member to come and use what they own is the least expensive contact the studio can make, it requires no discount and no offer, and it puts a body back in the room.</p>
+ </div></div><div class="rec">
+ <div class="rn">05</div>
+ <div class="rb">
+  <h3>Watch the second half of every membership for the halving signal</h3><div class="ro">CRM</div>
+  <p><span class="lbl">Reasoning</span><strong>37% of memberships show a second half that was half the first or worse</strong>, and 10% end with a second half in which the member did not attend at all. Only 36% held or improved.</p>
+  <p class="imp"><span class="lbl">Expected impact</span>This is a leading indicator that already exists in the data and is not being read. A member whose visit rate halves in the middle of a membership should trigger a human contact while the membership is still live, not a win-back campaign after it ends.</p>
+ </div></div><div class="rec">
+ <div class="rn">06</div>
+ <div class="rb">
+  <h3>Segment win-back by recency, not by lifetime value</h3><div class="ro">CRM + Marketing</div>
+  <p><span class="lbl">Reasoning</span>316 members were last in the room within 60 days and paid an average of ₹23,011; 1301 have been gone over six months and paid ₹9,525.</p>
+  <p class="imp"><span class="lbl">Expected impact</span>The instinct is to chase the biggest historical spenders. The evidence is that recency and value travel together: the recently lapsed are both the most winnable and the most valuable. Re-ranking the win-back list by recency would re-point the same effort at roughly double the average ticket.</p>
+ </div></div><div class="rec">
+ <div class="rn">07</div>
+ <div class="rb">
+  <h3>Separate the two churn mechanisms in every dashboard</h3><div class="ro">CRM + Studio Manager</div>
+  <p><span class="lbl">Reasoning</span>2,084 memberships never booked a class, while 467 cancelled more than half of everything they booked. Both are currently reported as one lapsed number.</p>
+  <p class="imp"><span class="lbl">Expected impact</span>An onboarding problem and a habit-decay problem need different owners, different scripts and different timelines. Reporting them as a single churn figure guarantees that the studio treats both with the remedy for whichever is more visible.</p>
+ </div></div><div class="rec">
+ <div class="rn">08</div>
+ <div class="rb">
+  <h3>Freeze, do not lose, the members who are slipping</h3><div class="ro">Front Desk</div>
+  <p><span class="lbl">Reasoning</span>Only 809 of 3,974 paid memberships ever used a freeze, while 241 members never activated at all and 2,084 never booked.</p>
+  <p class="imp"><span class="lbl">Expected impact</span>A two-week freeze costs the studio almost nothing, keeps the contract alive, and converts a lapse into a pause. Offering it proactively at the moment attendance drops is cheaper than any win-back campaign and protects the relationship while the member sorts out whatever interrupted it.</p>
+ </div></div><div class="rec">
+ <div class="rn">09</div>
+ <div class="rb">
+  <h3>Price the churn into the acquisition plan</h3><div class="ro">Management</div>
+  <p><span class="lbl">Reasoning</span>At a 57.0% thirty-day and 76.1% sixty-day end rate, the studio must replace most of its book every two months. That is the real reason the lead engine has to run at 7,822 leads.</p>
+  <p class="imp"><span class="lbl">Expected impact</span>Framing acquisition as the cost of churn rather than as growth changes what the studio is willing to spend on retention. On this data, a one-point improvement in thirty-day survival removes the need for more acquisition than any campaign the studio could run.</p>
+ </div></div><div class="rec">
+ <div class="rn">10</div>
+ <div class="rb">
+  <h3>Sell the first month as a programme, not a class count</h3><div class="ro">Sales + Front Desk</div>
+  <p><span class="lbl">Reasoning</span>Across 945 Bandra first-timers with a recorded first purchase, the product they started on predicts almost the whole of their lifetime value. A member whose first purchase was a 1 Month Unlimited is worth <strong>₹74,283</strong> on average; one whose first purchase was a single class is worth ₹13,689. Same studio, same period, same marketing — a 5.4-fold difference decided at the point of sale.</p>
+  <p class="imp"><span class="lbl">Expected impact</span>The studio’s entry offer is the cheapest thing it can say yes to, and the cheapest thing is producing the least valuable members. Selling the first month as a timed programme with a named start date, rather than a pack of classes the member can spend at leisure, changes the product without changing the price. The trial class should be an audition for ₹74,283, not a coupon for one session.</p>
+ </div></div><div class="rec">
+ <div class="rn">11</div>
+ <div class="rb">
+  <h3>Book the second visit before the member leaves the building</h3><div class="ro">Front Desk + CRM</div>
+  <p><span class="lbl">Reasoning</span>Among 1,527 measurable first-timers, lifetime value falls in a straight line with how long the second visit took. Members back within a day are worth <strong>₹39,768</strong> and are retained at 72%. Those whose second visit took a month or never happened are worth ₹13,918 and retained at 95%.</p>
+  <p class="imp"><span class="lbl">Expected impact</span>The second visit is worth 2.9 times the third, the tenth or anything after it, because everything after it depends on it. It is also the easiest thing in this report to influence: a member standing at the desk on their first day will say yes to a date. Nobody is currently asking.</p>
+ </div></div><div class="rec">
+ <div class="rn">12</div>
+ <div class="rb">
+  <h3>Read the at-risk band fortnightly, not the lapsed band annually</h3><div class="ro">Studio Manager + CRM</div>
+  <p><span class="lbl">Reasoning</span>Of every Bandra first-timer on file, <strong>3,008 are recorded as churned and 642 as lapsed</strong>, against 395 active and only 168 flagged at risk. The members in the at-risk band are worth ₹19,268 each on average against ₹3,812 for the churned band.</p>
+  <p class="imp"><span class="lbl">Expected impact</span>The studio has one band where intervention is cheap and one where it is expensive, and the report it reads monthly is weighted towards the second. Moving the same effort one stage earlier — from the members who have already gone to the members whose visits have just slipped — multiplies the yield of every retention hour the team spends.</p>
+ </div></div>
+<h4>Sources and method</h4>
+<p style="font-size:13.5px;color:#6B7280;line-height:1.7">
+Lapse ledger: <em>Lapsed New - Lapsed</em>, 29,148 membership instances across all locations, filtered to
+Supreme HQ, Bandra (8,707 instances, 3,768 members). Paid memberships are those with a recorded amount paid and no staff,
+complimentary or promotional product name (3,974 instances, 1,699 members). Attendance behaviour is cross-checked against the
+Day End Part 4 check-in ledger. Membership dates arrive in two formats and are parsed accordingly.<br/>
+Survival is measured from purchase to the earlier of the churn date and the membership end date; memberships that are still open are treated as
+surviving to 18 October 2026. Products with fewer than fifteen sales are excluded from product-level rates.
+Session-allowance and remaining-session fields are populated for package and credit products only.<br/>
+Figures are gross value as recorded at snapshot, not contribution margin.</p>
+
+<footer>Supreme HQ, Bandra &middot; September 2026 &middot; prepared 18 October 2026<br/>Revenue figures are gross value as recorded at snapshot, not contribution margin.</footer>
+</div></body></html>

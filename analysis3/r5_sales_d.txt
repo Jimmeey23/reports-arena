@@ -1,0 +1,29 @@
+# ------------------------------------------------------------ round-5 additions: what the first purchase predicts
+N9 = pd.read_csv('/home/user/uploads/Day End Report - Part 1 - New (9).csv', low_memory=False)
+N9 = N9[N9['First Visit Location'] == 'Supreme HQ, Bandra'].copy()
+for _c in ['Ltv', 'No of Visits', 'Days To Second Visit', 'Visits Per Month']:
+    N9[_c] = X.num(N9[_c]) if hasattr(X, 'num') else pd.to_numeric(
+        N9[_c].astype(str).str.replace(r'[,\\s\\u20b9]', '', regex=True), errors='coerce')
+FP = N9[N9['First Purchase Post Trial'].notna()].groupby('First Purchase Post Trial').agg(
+    people=('Member Id', 'size'), ltv=('Ltv', 'mean'), visits=('No of Visits', 'mean'), vpm=('Visits Per Month', 'mean'))
+FP = FP[FP['people'] >= 25].sort_values('ltv', ascending=False)
+FPN = FP.copy(); FPN.index = [str(i).replace('Studio ', '') for i in FPN.index]
+TOP_STARTER = FPN['ltv'].idxmax(); LOW_STARTER = FPN['ltv'].idxmin()
+FP_RATIO = FPN['ltv'].max() / max(FPN['ltv'].min(), 1)
+N9['d2'] = pd.cut(N9['Days To Second Visit'], [-1, 1, 3, 7, 14, 30, 100000],
+                  labels=['same or next day', '2 to 3 days', '4 to 7 days', '8 to 14 days', '15 to 30 days', '31+ or never'])
+SP = N9.groupby('d2', observed=True).agg(people=('Member Id', 'size'), ltv=('Ltv', 'mean'), visits=('No of Visits', 'mean'))
+SP7 = float(SP.loc['4 to 7 days', 'ltv']); SPLAST = float(SP.loc['31+ or never', 'ltv'])
+SPLAST_N = int(SP.loc['31+ or never', 'people'])
+
+CH_FPLTV = hbars([(i, float(r['ltv']), TER if r['ltv'] >= FPN['ltv'].median() else GREY) for i, r in FPN.iterrows()],
+    'Lifetime value of a member, by the first thing they ever bought', maxv=82000,
+    note=f'{len(N9):,} Bandra first-timers with a recorded first purchase. The product a member starts on predicts more about their eventual value than '
+         'anything except how fast they came back a second time.')
+
+CH_SPEED = bars([str(i) for i in SP.index],
+                [('Mean lifetime value, \u20b9 hundreds', [float(r['ltv']) / 100 for _, r in SP.iterrows()], TER),
+                 ('Mean visits (\u00d78, on the same axis)', [float(r['visits']) * 8 for _, r in SP.iterrows()], GREY)],
+    'How fast the second visit came, against what the member went on to be worth', h=320, ymax=430,
+    note='The second visit is decided within days and predicts almost everything after it. Members who returned within a week are worth about three times '
+         'those who took a month, or never came back.')

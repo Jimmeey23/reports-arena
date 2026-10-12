@@ -1,0 +1,11 @@
+ ('12','Lead with the membership, not the single class','Sales + Front Desk',
+  f'A first-time buyer who starts on a <strong>{TOP_STARTER} goes on to be worth {R(FPN["ltv"].max())}</strong>; one who starts on a '
+  f'<strong>{LOW_STARTER} is worth {R(FPN["ltv"].min())}</strong>. There are {int(FPN.loc[LOW_STARTER,"people"])} people in that bottom group and '
+  f'{int(FPN.loc[TOP_STARTER,"people"])} in the top one.',
+  f'Both are sold at the same desk. Presenting the commitment first \\u2014 and treating the trial entry as a route into it rather than as a purchase in its own '
+  f'right \\u2014 changes the mix without touching the price list.'),
+ ('13','Book the second class before the first one ends','Front Desk + Sales + CRM',
+  f'Members who took their second class inside a week are worth <strong>{R(SP7)}</strong>; those who waited a month or never returned are worth '
+  f'<strong>{R(SPLAST)}</strong>. There are {SPLAST_N} people in that last group alone.',
+  f'This is a front-desk action, not a campaign: at the end of every first class, before the client leaves the building, the next visit is chosen and booked. '
+  f'It costs nothing, it is measurable within a week, and on this data it is the highest-value habit the sales and service teams could adopt.'),

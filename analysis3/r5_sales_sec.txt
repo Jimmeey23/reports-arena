@@ -1,0 +1,27 @@
+
+<h2>What the first purchase predicts</h2>
+<div class="sub">Nothing in the sales ledger separates members as sharply as the product they started on &mdash; except how quickly they came back.</div>
+
+<p>Take the {len(N9):,} people whose first visit to Bandra is on record and group them by the first thing they bought. The spread in eventual lifetime value is
+not marginal, it is structural. A member who started on a <strong>{TOP_STARTER} is worth {R(FPN['ltv'].max())} to the studio</strong>. One who started on a
+<strong>{LOW_STARTER} is worth {R(FPN['ltv'].min())}</strong>. Between them sit every other product in the range, in a consistent order: memberships first,
+packages second, single classes last.</p>
+
+<p>The obvious caution applies, and it is worth stating plainly: members who chose a bigger commitment were already more committed. But the gap is
+<strong>{FP_RATIO:.1f}-fold</strong>, and the studio sells both products from the same front desk within the same minute. What a new client is offered first is
+not a neutral choice.</p>
+
+{CH_FPLTV}
+
+<p>The second predictor is time, and it is even more directly actionable. Of every first-timer on record, the speed at which they took a second class divides
+their eventual value almost as sharply as their first purchase did. Members who returned <strong>within a week are worth {R(SP7)} on average</strong>; those who
+took a month, or never came back at all, are worth <strong>{R(SPLAST)}</strong>.</p>
+
+{CH_SPEED}
+
+{ev('Evidence &mdash; first purchase and speed to the second visit',
+    T(['First purchase', 'People', 'Mean lifetime value', 'Mean visits', 'Visits per month'],
+      [[i, int(r['people']), R(r['ltv']), f"{r['visits']:.1f}", f"{r['vpm']:.1f}"] for i, r in FPN.iterrows()], 'num') +
+    '<p style="font-size:13.5px;color:#6B7280;margin-top:16px"><strong>By speed to the second visit</strong></p>' +
+    T(['Second visit within', 'People', 'Mean lifetime value', 'Mean visits'],
+      [[str(i), int(r['people']), R(r['ltv']), f"{r['visits']:.1f}"] for i, r in SP.iterrows()], 'num'))}

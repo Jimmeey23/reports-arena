@@ -1,0 +1,58 @@
+# ------------------------------------------------------------ round-5 additions: the controlled comparison
+_S = D.XB[D.XB['dt'] >= '2026-01-01'].copy()
+_S['capr'] = _S['Capacity'] / _S['Classes'].clip(lower=1)
+_S['slot'] = _S['Class'].astype(str) + ' | ' + _S['Day'].astype(str) + ' | ' + _S['Time'].astype(str)
+_G = _S.groupby('slot').agg(n=('SessionID', 'size'), trainers=('Trainer', 'nunique'))
+_rows = []
+for _sl, _r in _G[_G['trainers'] >= 2].iterrows():
+    _sub = _S[_S['slot'] == _sl]
+    _t = _sub.groupby('Trainer').agg(n=('SessionID', 'size'), att=('CheckedIn', 'mean'), rev=('Revenue', 'mean'))
+    _t = _t[_t['n'] >= 3]
+    if len(_t) < 2:
+        continue
+    _t = _t.sort_values('att', ascending=False)
+    _rows.append(dict(slot=_sl, best=_t.index[0], best_att=float(_t['att'].iloc[0]), worst=_t.index[-1],
+                      worst_att=float(_t['att'].iloc[-1]), spread=float(_t['att'].iloc[0] - _t['att'].iloc[-1]),
+                      spread_pct=float((_t['att'].iloc[0] - _t['att'].iloc[-1]) / max(_t['att'].iloc[-1], .01) * 100),
+                      n_trainers=len(_t)))
+CSLOT = pd.DataFrame(_rows).sort_values('spread', ascending=False)
+CS_N = len(CSLOT)
+CS_BEST = float(CSLOT['best_att'].mean()); CS_WORST = float(CSLOT['worst_att'].mean())
+CS_MED = float(CSLOT['spread'].median()); CS_BIG = int((CSLOT['spread'] > 4).sum())
+CS_PCT = CS_BIG / max(CS_N, 1) * 100
+
+def _slotlab(sl):
+    _p = sl.split(' | ')
+    return f"{_p[0].replace('Studio ','')} \\u2014 {_p[1]} {str(_p[2])[:5]}"
+CH_CTRL = hbars([(_slotlab(r['slot']), r['spread'], TER if r['spread'] >= 3 else GREY) for _, r in CSLOT.head(10).iterrows()],
+    'Same class, same day, same time, different trainer \\u2014 the attendance gap', unit=' people',
+    note=f'Each bar is one slot in which two or more trainers have each taught at least three times during 2026. '
+         f'Only {CS_BIG} of {CS_N} slots show a gap wider than four people.')
+
+# teaching cost by discipline, against fill
+_PY = pd.read_csv('/home/user/uploads/Day End Report - Part 1 - Payroll (4).csv', low_memory=False)
+_PY = _PY[_PY['Location'] == 'Supreme HQ, Bandra'].copy()
+for _c in ['Cycle Sessions', 'Cycle Paid', 'Strength Sessions', 'Strength Paid', 'Barre Sessions', 'Barre Paid',
+           'Total Sessions', 'Total Customers', 'New', 'Converted', 'Retained']:
+    _PY[_c] = pd.to_numeric(_PY[_c].astype(str).str.replace(r'[,\\s\\u20b9]', '', regex=True), errors='coerce')
+_DSUM = _PY[['Cycle Sessions', 'Cycle Paid', 'Strength Sessions', 'Strength Paid', 'Barre Sessions', 'Barre Paid']].sum()
+_CYR = _DSUM['Cycle Paid'] / max(_DSUM['Cycle Sessions'], 1)
+_BYR = _DSUM['Barre Paid'] / max(_DSUM['Barre Sessions'], 1)
+_CSH = _DSUM['Cycle Sessions'] / max(_DSUM[['Cycle Sessions', 'Strength Sessions', 'Barre Sessions']].sum(), 1) * 100
+_CFILL = float(FMT.loc['Studio PowerCycle', 'fill']); _BFILL = float(FMT.loc['Studio Barre 57', 'fill'])
+
+CH_DISC = bars(['Cycle', 'Barre'],
+    [('Paid per session, \\u20b9 thousands', [_CYR / 1000, _BYR / 1000], TER),
+     ('Capacity utilisation, %', [_CFILL, _BFILL], GREY)],
+    'What the studio pays for a session, against how full that discipline runs', h=300, ymax=75,
+    note='Cycle sessions carry the highest average amount paid per session in the payroll file and run the emptiest classes in the timetable. '
+         'The two bars share an axis; the first is in thousands of rupees.')
+
+_PY6 = _PY.copy(); _PY6['mo'] = _PY6['Month Year'].astype(str)
+_last6 = sorted(_PY6['mo'].unique())[-6:]
+_PY6 = _PY6[_PY6['mo'].isin(_last6)]
+_CONV = _PY6.groupby('Teacher Name').agg(months=('mo', 'nunique'), sessions=('Total Sessions', 'mean'),
+                                         cust=('Total Customers', 'sum'), new=('New', 'sum'),
+                                         conv=('Converted', 'sum'), ret=('Retained', 'sum'))
+_CONV['conv_rate'] = _CONV['conv'] / _CONV['new'].replace(0, np.nan) * 100
+_CONV = _CONV[_CONV['months'] >= 3].sort_values('conv_rate', ascending=False)
