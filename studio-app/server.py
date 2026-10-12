@@ -318,13 +318,16 @@ class Handler(BaseHTTPRequestHandler):
                 # reach existing runs without a rebuild; the enhancer dedupes.
                 try:
                     data = enhance_report(Path(f).read_text()).encode('utf-8')
-                    self.send_response(200)
-                    self.send_header('Content-Type', 'text/html; charset=utf-8')
-                    self.send_header('Content-Length', str(len(data)))
-                    self.end_headers()
-                    self.wfile.write(data)
                 except Exception:
                     return self._file(f, 'text/html; charset=utf-8')
+                self.send_response(200)
+                self.send_header('Content-Type', 'text/html; charset=utf-8')
+                self.send_header('Content-Length', str(len(data)))
+                self.end_headers()
+                try:
+                    self.wfile.write(data)
+                except BrokenPipeError:
+                    pass
                 return
             if p.startswith('/api/raw/'):
                 parts = p.split('/')
