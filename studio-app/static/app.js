@@ -3,7 +3,12 @@ const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 // A fresh batch per page load; historical exports never enter new calculations.
 const UPLOAD_BATCH = Array.from(crypto.getRandomValues(new Uint8Array(16)), b=>b.toString(16).padStart(2,'0')).join('');
-const apiFetch = (url, options={}) => fetch(url,{...options,headers:{...options.headers,'X-Upload-Batch':UPLOAD_BATCH}});
+const apiFetch = async (url, options={}) => {
+  const res = await fetch(url,{...options,headers:{...options.headers,'X-Upload-Batch':UPLOAD_BATCH}});
+  // Signed out (or session expired): hand over to the server's sign-in page.
+  if(res.status === 401) location.href = '/api/login?next=' + encodeURIComponent(location.pathname + location.search);
+  return res;
+};
 
 const CHAP_ORDER = ['sales','class','instructor','lapse','format','cancels','overview','leads','behaviour'];
 const CHAP_NEEDS = {sales:'sales', class:'sessions', instructor:'sessions', lapse:'lapsed',

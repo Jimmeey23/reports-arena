@@ -26,9 +26,14 @@ Use one backend instance: generation jobs and progress are currently in memory.
 
 Server variables:
 
+- `P57_ACCESS_CODE`: **required.** Shared access code for the sign-in page at
+  `/api/login`. Every `/api/*` route except `/api/health` needs the session
+  cookie it issues. Without it the API answers loopback requests only, so a
+  deployment that is missing it stays closed. Changing the code signs everyone out.
 - `OPENAI_API_KEY`: enables the OpenAI-compatible AI client.
 - `P57_AI_MODEL`: optional model override.
-- `P57_AI_BASE`: optional provider endpoint override.
+- `P57_AI_BASE`: optional provider endpoint override (environment only; the app
+  never accepts an endpoint from a request, because the key is sent to it).
 - `SUPABASE_URL` and `SUPABASE_KEY`: optional Supabase persistence.
 
 Run `studio-app/sql/supabase-schema.sql` in Supabase before enabling that backend.

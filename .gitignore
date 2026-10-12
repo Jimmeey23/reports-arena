@@ -12,3 +12,7 @@ studio-app/runs/
 studio-app/data/ai.sqlite3
 studio-app/data/workspace.sqlite3
 studio-app/data/batches/
+
+# Uploaded exports hold member and lead data; never commit them.
+uploads/
+studio-app/data/uploaded/

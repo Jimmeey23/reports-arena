@@ -105,8 +105,42 @@ class ServerTests(unittest.TestCase):
             status, raw = self.request('/api/ai/key', json.dumps({'model': 'test-model'}).encode())
             self.assertEqual(status, 200, raw)
             self.assertEqual(json.loads(raw), {'ok': True, 'configured': True, 'model': 'test-model'})
-            configure.assert_called_once_with(key=None, model='test-model', base=None)
+            configure.assert_called_once_with(key=None, model='test-model')
             self.assertEqual(config_put.call_args.args[0], 'ai')
+
+    def test_raw_rejects_parent_directory(self):
+        (Path(self.server.RUNS).parent/'secret.txt').write_text('do not serve')
+        self.assertEqual(self.request('/api/raw/../secret.txt')[0], 404)
+        self.assertEqual(self.request('/api/raw/saved/manifest.json')[0], 200)
+
+    def test_ai_status_hides_endpoint(self):
+        _, raw = self.request('/api/ai/status')
+        self.assertNotIn('base', json.loads(raw)['llm'])
+
+    def test_access_code_gate(self):
+        no_redirect = urllib.request.build_opener(type('NoRedirect', (urllib.request.HTTPRedirectHandler,), {'redirect_request': lambda *a: None}))
+        def call(path, body=None, headers=None):
+            req = urllib.request.Request(self.url+path, data=body, headers=headers or {}, method='POST' if body is not None else 'GET')
+            try:
+                with no_redirect.open(req) as r: return r.status, r.headers, r.read()
+            except urllib.error.HTTPError as e: return e.code, e.headers, e.read()
+        with patch.object(self.server, 'ACCESS_CODE', 'letmein'):
+            self.assertEqual(call('/api/health')[0], 200)
+            self.assertEqual(call('/api/state')[0], 401)
+            self.assertEqual(call('/api/ai/key', json.dumps({'base': 'https://evil.example'}).encode())[0], 401)
+            status, headers, _ = call('/api/report/saved/report', headers={'Accept': 'text/html'})
+            self.assertEqual(status, 303)
+            self.assertTrue(headers['Location'].startswith('/api/login?next='))
+            self.assertEqual(call('/api/login', b'code=wrong&next=/', {'Content-Type': 'application/x-www-form-urlencoded'})[0], 401)
+            status, headers, _ = call('/api/login', b'code=letmein&next=//evil.example', {'Content-Type': 'application/x-www-form-urlencoded'})
+            self.assertEqual(status, 303)
+            self.assertEqual(headers['Location'], '/')
+            cookie = headers['Set-Cookie'].split(';', 1)[0]
+            self.assertIn('HttpOnly', headers['Set-Cookie'])
+            self.assertEqual(call('/api/state', headers={'Cookie': cookie})[0], 200)
+            self.assertEqual(call('/api/state', headers={'Cookie': 'p57_session=9999999999.forged'})[0], 401)
+        with patch.object(self.server, 'ACCESS_CODE', 'rotated'):
+            self.assertEqual(call('/api/state', headers={'Cookie': cookie})[0], 401)
 
     def test_download_path_and_legacy_query(self):
         for path in ('/api/download/saved', '/api/download?run=saved'):

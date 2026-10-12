@@ -207,15 +207,13 @@ gear.onclick = () => {
     'Keys are held by the server process only — never stored in your browser.'));
   const key = make('input'); key.type = 'password'; key.placeholder = 'API key (sk-…)'; key.setAttribute('aria-label', 'AI API key');
   const model = make('input'); model.placeholder = 'Model, e.g. gpt-4o-mini'; model.setAttribute('aria-label', 'Model name');
-  const base = make('input'); base.placeholder = 'Endpoint (optional)'; base.setAttribute('aria-label', 'Chat completions endpoint');
   const l1 = make('label', 'API key'); l1.append(key);
   const l2 = make('label', 'Model'); l2.append(model);
-  const l3 = make('label', 'Endpoint'); l3.append(base);
-  wrapEl.append(l1, l2, l3);
+  wrapEl.append(l1, l2);
   const saveBtn = make('button', 'Save AI settings');
   saveBtn.onclick = async () => {
     try{
-      const st = await api('/api/ai/key', {key: key.value, model: model.value, base: base.value});
+      const st = await api('/api/ai/key', {key: key.value, model: model.value});
       llmConfigured = st.configured; setMode();
       foot.textContent = st.configured ? 'Model ' + st.model + ' connected' : 'AI key removed — deterministic mode';
       R.dialog.close();

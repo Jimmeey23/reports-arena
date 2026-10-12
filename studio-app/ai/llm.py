@@ -18,28 +18,27 @@ DEFAULT_MODEL = 'gpt-4o-mini'
 DEFAULT_BASE = 'https://api.openai.com/v1/chat/completions'
 
 # Runtime override (set through /api/ai/key); env remains the source of truth
-# on restart.
-_runtime = dict(key=None, model=None, base=None)
+# on restart. The endpoint is deliberately not overridable at runtime: the key
+# travels to it as a Bearer token.
+_runtime = dict(key=None, model=None)
 
 
 class AIUnavailable(RuntimeError):
     pass
 
 
-def configure(key=None, model=None, base=None):
+def configure(key=None, model=None):
     if key is not None:
         _runtime['key'] = key.strip() or None
     if model is not None:
         _runtime['model'] = model.strip() or None
-    if base is not None:
-        _runtime['base'] = base.strip() or None
 
 
 def status():
     key = _runtime['key'] or os.environ.get('OPENAI_API_KEY', '').strip()
     return dict(configured=bool(key),
                 model=_runtime['model'] or os.environ.get('P57_AI_MODEL') or DEFAULT_MODEL,
-                base=_runtime['base'] or os.environ.get('P57_AI_BASE') or DEFAULT_BASE)
+                base=os.environ.get('P57_AI_BASE') or DEFAULT_BASE)
 
 
 def complete(messages, max_tokens=320, temperature=0.2, timeout=45):

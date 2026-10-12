@@ -6,9 +6,10 @@ Run:  python3 server.py [--port 8000]
 Nothing outside the standard library is required.
 """
 from __future__ import annotations
-import os, sys, json, time, uuid, threading, mimetypes, traceback, sqlite3, shutil
+import os, sys, json, time, uuid, threading, mimetypes, traceback, sqlite3, shutil, hmac, hashlib, html
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
-from urllib.parse import urlparse, parse_qs
+from http.cookies import SimpleCookie
+from urllib.parse import urlparse, parse_qs, quote
 from pathlib import Path
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -29,6 +30,55 @@ SEED = []  # Source files are accepted only from an explicit fresh upload batch.
 STATIC = os.path.join(HERE, 'static')
 for d in (DATA, UPLOADS, RUNS):
     os.makedirs(d, exist_ok=True)
+
+# ---------------------------------------------------------------------- auth
+# Every /api route except health and login needs a session cookie, issued by
+# /api/login in exchange for P57_ACCESS_CODE. Without an access code the API is
+# reachable from loopback only, so a deploy that forgets it fails closed.
+ACCESS_CODE = os.environ.get('P57_ACCESS_CODE', '').strip()
+SESSION_COOKIE = 'p57_session'
+SESSION_DAYS = 30
+OPEN_PATHS = ('/api/health', '/api/login', '/api/logout')
+
+
+def _session_sig(expires):
+    # Keyed on the access code: rotating the code signs everyone out.
+    return hmac.new(ACCESS_CODE.encode(), f'p57-session:{expires}'.encode(), hashlib.sha256).hexdigest()
+
+
+def issue_session():
+    expires = int(time.time()) + SESSION_DAYS * 86400
+    return f'{expires}.{_session_sig(expires)}'
+
+
+def valid_session(token):
+    if not ACCESS_CODE or not token or '.' not in token:
+        return False
+    expires, sig = token.split('.', 1)
+    if not expires.isdigit() or int(expires) < time.time():
+        return False
+    return hmac.compare_digest(sig, _session_sig(expires))
+
+
+def safe_next(target):
+    """Only same-site paths are allowed as a post-login redirect."""
+    target = target or '/'
+    if not target.startswith('/') or target.startswith('//') or '\\' in target:
+        return '/'
+    return target
+
+
+LOGIN_PAGE = '''<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Studio Intelligence - sign in</title>
+<style>body{font:16px system-ui,sans-serif;background:#f6f5f2;color:#1d1d1b;display:grid;place-items:center;min-height:100vh;margin:0;padding:16px;box-sizing:border-box}
+form{background:#fff;padding:28px;border-radius:12px;box-shadow:0 2px 12px #0001;width:100%;max-width:340px}
+h1{font-size:20px;margin:0 0 16px}input,button{font:inherit;width:100%;box-sizing:border-box;padding:10px;border-radius:8px}
+input{border:1px solid #ccc;margin-bottom:12px}button{border:0;background:#1d1d1b;color:#fff;cursor:pointer}.err{color:#b3261e;margin:0 0 12px}
+@media (prefers-color-scheme:dark){body{background:#151514;color:#eee}form{background:#222}input{background:#151514;color:#eee;border-color:#444}button{background:#eee;color:#151514}}</style>
+</head><body><form method="post" action="/api/login"><h1>Studio Intelligence</h1>{error}
+<input type="hidden" name="next" value="{next}">
+<input type="password" name="code" placeholder="Access code" aria-label="Access code" autocomplete="current-password" autofocus required>
+<button type="submit">Sign in</button></form></body></html>'''
 
 # Preserve the bundled report library when starting on a fresh volume.
 bundled_runs = os.path.join(HERE, 'runs')
@@ -293,11 +343,73 @@ class Handler(BaseHTTPRequestHandler):
         except BrokenPipeError:
             pass
 
+    # ------------------------------------------------------------------ auth
+    def _authorized(self, path):
+        if not path.startswith('/api/') or path in OPEN_PATHS:
+            return True
+        if not ACCESS_CODE:
+            return self.client_address[0] in ('127.0.0.1', '::1')
+        jar = SimpleCookie()
+        try:
+            jar.load(self.headers.get('Cookie', ''))
+        except Exception:
+            return False
+        return SESSION_COOKIE in jar and valid_session(jar[SESSION_COOKIE].value)
+
+    def _deny(self, path):
+        # Page navigations (report links, downloads) go to the sign-in page;
+        # API calls get a 401 the client turns into the same redirect.
+        if self.command == 'GET' and 'text/html' in self.headers.get('Accept', ''):
+            target = path + ('?' + urlparse(self.path).query if urlparse(self.path).query else '')
+            return self._send(303, b'', 'text/plain', {'Location': '/api/login?next=' + quote(target, safe='')})
+        return self._send(401, dict(error='sign in required', login='/api/login'))
+
+    def _cookie_header(self, value, max_age):
+        secure = '; Secure' if self.headers.get('X-Forwarded-Proto', '') == 'https' else ''
+        return f'{SESSION_COOKIE}={value}; Path=/; Max-Age={max_age}; HttpOnly; SameSite=Lax{secure}'
+
+    def _login_page(self, nxt, error=''):
+        msg = f'<p class="err">{html.escape(error)}</p>' if error else ''
+        return self._send(401 if error else 200, LOGIN_PAGE.replace('{error}', msg).replace('{next}', html.escape(safe_next(nxt), quote=True)),
+                          'text/html; charset=utf-8')
+
+    def _login(self):
+        n = int(self.headers.get('Content-Length', 0))
+        if n > 4096:
+            return self._send(413, dict(error='Request too large'))
+        raw = self.rfile.read(n).decode('utf-8', 'replace')
+        as_json = 'application/json' in self.headers.get('Content-Type', '')
+        if as_json:
+            try:
+                form = json.loads(raw or '{}')
+            except ValueError:
+                form = {}
+        else:
+            form = {k: v[0] for k, v in parse_qs(raw).items()}
+        code, nxt = str(form.get('code', '')), safe_next(str(form.get('next', '/')))
+        if not ACCESS_CODE:
+            return self._send(503, dict(error='P57_ACCESS_CODE is not set on the server'))
+        if not hmac.compare_digest(code.encode(), ACCESS_CODE.encode()):
+            time.sleep(1)  # Slow down guessing.
+            if as_json:
+                return self._send(401, dict(error='wrong access code'))
+            return self._login_page(nxt, 'Wrong access code.')
+        cookie = {'Set-Cookie': self._cookie_header(issue_session(), SESSION_DAYS * 86400)}
+        if as_json:
+            return self._send(200, dict(ok=True), extra=cookie)
+        return self._send(303, b'', 'text/plain', {**cookie, 'Location': nxt})
+
     # ------------------------------------------------------------------ routes
     def do_GET(self):
         u = urlparse(self.path)
         p, q = u.path, parse_qs(u.query)
+        if not self._authorized(p):
+            return self._deny(p)
         try:
+            if p == '/api/health':
+                return self._send(200, dict(ok=True))
+            if p == '/api/login':
+                return self._login_page(q.get('next', ['/'])[0])
             if p in ('/', '/index.html'):
                 return self._file(os.path.join(STATIC, 'index.html'), 'text/html; charset=utf-8')
             if p.startswith('/static/'):
@@ -341,7 +453,9 @@ class Handler(BaseHTTPRequestHandler):
                 return
             if p.startswith('/api/raw/'):
                 parts = p.split('/')
-                rid, name = parts[3], parts[4] if len(parts) > 4 else ''
+                rid, name = os.path.basename(parts[3]), parts[4] if len(parts) > 4 else ''
+                if rid not in scan_runs():
+                    return self._send(404, dict(error='unknown run'))
                 return self._file(os.path.join(RUNS, rid, os.path.basename(name)))
             if p == '/api/download' or p.startswith('/api/download/'):
                 rid = os.path.basename(p[len('/api/download/'):]) if p.startswith('/api/download/') else q.get('run', [''])[0]
@@ -368,7 +482,9 @@ class Handler(BaseHTTPRequestHandler):
                 return self._send(200, dict(backend=AI_STORE.backend, reports=rows))
             if p == '/api/ai/status':
                 pack = run_pack(q.get('run', [''])[0]) if q.get('run') else None
-                return self._send(200, dict(llm=llm.status(), backend=AI_STORE.backend,
+                st = llm.status()
+                return self._send(200, dict(llm=dict(configured=st['configured'], model=st['model']),
+                                            backend=AI_STORE.backend,
                                             context_tokens=agent.context_estimate(pack) if pack else None))
             if p == '/api/ai/context':
                 pack = run_pack(q.get('run', [''])[0])
@@ -411,7 +527,13 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         u = urlparse(self.path)
+        if not self._authorized(u.path):
+            return self._deny(u.path)
         try:
+            if u.path == '/api/login':
+                return self._login()
+            if u.path == '/api/logout':
+                return self._send(200, dict(ok=True), extra={'Set-Cookie': self._cookie_header('', 0)})
             if u.path in ('/api/workspace','/api/meetings') or u.path.startswith('/api/meetings/'):
                 n = int(self.headers.get('Content-Length',0))
                 if n > 2_100_000:
@@ -499,12 +621,14 @@ class Handler(BaseHTTPRequestHandler):
                     return self._send(413, dict(error='Request too large'))
                 req = json.loads(self.rfile.read(n) or b'{}')
                 if u.path == '/api/ai/key':
-                    llm.configure(key=req.get('key'), model=req.get('model'), base=req.get('base'))
+                    # The endpoint is fixed by P57_AI_BASE; a caller-supplied URL
+                    # would receive the key as a Bearer token.
+                    llm.configure(key=req.get('key'), model=req.get('model'))
                     st = llm.status()
                     # Persist the non-secret configuration so it survives restarts.
                     # The key itself is never stored; it stays in the environment.
                     try:
-                        AI_STORE.config_put('ai', dict(model=st['model'], base=st.get('base', ''),
+                        AI_STORE.config_put('ai', dict(model=st['model'],
                                                        configured=st['configured'],
                                                        updated=_now_iso()))
                     except Exception:
