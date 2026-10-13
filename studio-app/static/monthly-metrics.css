@@ -1,16 +1,25 @@
-.p57-monthly{margin:24px 0;padding:0!important;border:1px solid var(--line);border-radius:12px;background:var(--paper);overflow:hidden}
-.p57-monthly>summary{padding:16px 20px;cursor:pointer;font:600 14px/1.5 var(--font-ui);color:var(--accent);list-style:disclosure-closed}
-.p57-monthly[open]>summary{list-style:disclosure-open;border-bottom:1px solid var(--line)}
-.p57-monthly>summary:focus-visible{outline:2px solid var(--accent);outline-offset:-4px}
-.p57-monthly>p{padding:16px 20px;margin:0!important;font:12px/1.6 var(--font-ui);color:var(--mut);max-width:none!important}
-.p57-mom-scroll{overflow:auto!important;max-height:600px;padding:0 0 8px}
-.p57-mom-scroll table{width:max-content!important;min-width:100%;margin:0!important;border-collapse:separate;border-spacing:0;font:13px/1.5 var(--font-ui)}
-.p57-mom-scroll caption{text-align:left;padding:8px 20px;color:var(--mut);font-size:12px}
-.p57-mom-scroll th,.p57-mom-scroll td{padding:12px 16px!important;min-width:130px;border-bottom:1px solid var(--line);text-align:right!important;vertical-align:top;white-space:nowrap}
-.p57-mom-scroll thead th{position:sticky;top:0;z-index:2;background:var(--soft);color:var(--ink)}
-.p57-mom-scroll tr>:first-child{position:sticky;left:0;z-index:1;background:var(--paper);text-align:left!important;min-width:210px;max-width:280px;white-space:normal}
-.p57-mom-scroll thead tr>:first-child{z-index:3;background:var(--soft)}
-.p57-mom-scroll td small{display:block;margin-top:4px;font-size:11px;color:var(--mut)}
-.p57-mom-missing{color:var(--mut);font-style:italic;font-size:12px}
-@media(max-width:600px){.p57-monthly>summary,.p57-monthly>p{padding:12px}.p57-mom-scroll tr>:first-child{min-width:150px;max-width:180px}}
-@media print{.p57-monthly[open] .p57-mom-scroll{overflow:visible!important;max-height:none}.p57-mom-scroll th{position:static!important}}
+/* Month-by-month register shell. Structure and values from Jimmeey23/atlas:
+   src/design/report-continuous.css (.cr-disclosure), src/design/app.css + refinement.css (.register),
+   src/design/report-deck.css (.deck-register). Atlas tokens are bridged to the report theme here. */
+.p57-monthly{--hairline:var(--line);--hairline-strong:var(--line-strong,var(--line));--surface-1:var(--paper);--surface-2:var(--soft);--surface-3:var(--line);--raised:var(--paper);--text-1:var(--ink);--text-2:var(--mut);--text-3:var(--faint,var(--mut));--attendance:var(--accent);--d-line:var(--line);--pos:#16845b;--neg:#bc4b47}
+.p57-monthly.cr-disclosure{margin:24px 0;padding:0!important;border:1px solid var(--d-line);border-radius:8px;min-width:0;background:var(--surface-1)}
+.p57-monthly.cr-disclosure>summary{cursor:pointer;padding:18px 20px;font:600 14px/1.5 var(--font-ui);color:var(--text-1);list-style:none}
+.p57-monthly.cr-disclosure>summary::-webkit-details-marker{display:none}
+.p57-monthly.cr-disclosure>summary span{float:right;font-size:11px;font-weight:400;color:var(--text-3)}
+.p57-monthly.cr-disclosure>summary:focus-visible{outline:2px solid var(--accent);outline-offset:-4px}
+.p57-monthly.cr-disclosure[open]>:not(summary){margin:0 16px 16px}
+.p57-monthly .register{margin-top:0;padding:20px;border:1px solid var(--hairline);border-radius:12px;background:var(--raised);font-family:var(--font-ui)}
+.p57-monthly .register-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:0 0 16px;border-bottom:1px solid var(--hairline);margin-bottom:16px}
+.p57-monthly .register-title{display:flex;align-items:baseline;gap:12px;min-width:0;flex-wrap:wrap}
+.p57-monthly .register-title .index{padding:4px 7px;border-radius:6px;background:color-mix(in srgb,var(--accent) 9%,var(--surface-1));color:var(--accent);font:700 11px var(--font-display,var(--font-ui))}
+.p57-monthly .register-title .register-name{font:600 17px/1.3 var(--font-ui);letter-spacing:-.4px;color:var(--text-1)}
+.p57-monthly .register-title p{margin:0!important;font-size:11px!important;line-height:1.4!important;color:var(--text-3)}
+.p57-monthly .p57-mom-note{margin:0 0 12px!important;font:11px/1.6 var(--font-ui)!important;color:var(--text-3);max-width:none!important}
+/* Server-rendered register, shown until the Atlas component mounts and in no-script downloads. */
+.p57-mom-scroll{overflow:auto!important;max-height:650px;border:1px solid var(--hairline)}
+.p57-mom-scroll small{display:block;margin-top:2px;font-size:8px;color:var(--text-3);font-weight:400}
+.p57-mom-missing{color:var(--text-3)}
+@media(max-width:600px){.p57-monthly.cr-disclosure>summary{padding:14px 12px}.p57-monthly.cr-disclosure>summary span{display:none}.p57-monthly.cr-disclosure[open]>:not(summary){margin:0 8px 8px}.p57-monthly .register{padding:12px}}
+@media print{.p57-monthly[open] .p57-mom-scroll,.p57-monthly .table-scroll{overflow:visible!important;max-height:none!important}.p57-monthly th{position:static!important}}
+/* Inside the disclosure the register sits flat, as in Atlas ContinuousReport (no card within a card). */
+.p57-monthly.cr-disclosure .register{padding:0;border:0;border-radius:0;background:transparent}

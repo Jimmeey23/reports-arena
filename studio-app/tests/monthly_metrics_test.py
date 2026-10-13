@@ -40,8 +40,24 @@ class MonthlyTests(unittest.TestCase):
             for c in ('sales', 'class')})
         html = '<section id="sales"><h2>Sales</h2></section><section id="class"><h2>Classes</h2></section>'
         result = monthly.inject(html, data=data)
-        self.assertEqual(result.count('class="p57-monthly"'), 2)
+        self.assertEqual(result.count('class="p57-monthly '), 2)
         self.assertEqual(monthly.inject(result, data=data), result)
+
+    def test_refresh_keeps_chapter_when_page_title_was_edited(self):
+        data = dict(studio='Bandra', year=2026, month=9, provenance='Saved reports', chapters=dict(
+            cancels=dict(title='Late Cancellations', slug='late', months={'2026-09': {'Seats released late': '199'}})))
+        html = '<title>Revenue &amp; Capacity Leakage</title><div class="wrap"><p>Body</p></div>'
+        first = monthly.inject(html, data=data, chapter='cancels')
+        refreshed = monthly.inject(first, data=data)
+        self.assertEqual(refreshed.count('data-chapter="cancels"'), 1)
+
+    def test_all_values_parse_units_and_skip_placeholders(self):
+        self.assertEqual(monthly.number('-21.4 pts'), (-21.4, 'pp'))
+        self.assertEqual(monthly.number('2.9×'), (2.9, '×'))
+        self.assertEqual(monthly.number('₹1,85,174'), (185174.0, '₹'))
+        self.assertFalse(monthly.valid('·×'))
+        months = monthly.clean({'2026-08': {'Bought in September': '5', 'Spread': '·×'}})
+        self.assertEqual(months, {'2026-08': {'Bought in report month': '5'}})
 
     def test_saved_history_is_studio_scoped_and_uses_same_snapshot_for_every_view(self):
         with tempfile.TemporaryDirectory() as root:

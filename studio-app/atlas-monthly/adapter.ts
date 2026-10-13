@@ -6,13 +6,16 @@ export function reportFmt(id:string,value:unknown) {
   if(value == null) return 'Unavailable';
   if(typeof value !== 'number') return String(value);
   const unit=definition(id)?.unit||'';
-  const text=value.toLocaleString('en-IN',{maximumFractionDigits:unit==='%'?1:2});
-  return unit==='₹' ? '₹'+text : text+(unit==='%'||unit==='×'?unit:unit?' '+unit:'');
+  const digits=unit==='₹'?0:unit==='%'||unit==='pp'?1:2;
+  const text=value.toLocaleString('en-IN',{minimumFractionDigits:digits===1?1:0,maximumFractionDigits:digits});
+  if(unit==='₹') return '₹'+text;
+  if(unit==='pp') return `${value>0?'+':''}${text} pp`;
+  return text+(unit==='%'||unit==='×'?unit:unit?' '+unit:'');
 }
 export function reportDelta(id:string,value:unknown,prior:unknown) {
   if(typeof value!=='number'||typeof prior!=='number') return '—';
   const difference=value-prior;
-  if(definition(id)?.unit==='%') return `${difference>=0?'+':''}${difference.toFixed(1)} pp`;
+  if(['%','pp'].includes(definition(id)?.unit??'')) return `${difference>=0?'+':''}${difference.toFixed(1)} pp`;
   if(prior===0) return difference===0?'0%':'—';
   const percent=difference/Math.abs(prior)*100;
   return `${percent>=0?'+':''}${percent.toFixed(1)}%`;

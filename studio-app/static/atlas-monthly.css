@@ -1,33 +1,42 @@
-/* Copied from Jimmeey23/atlas src/design/refinement.css at 2de9206a340e4d6a320a38f09022fea48a94f202. */
-.monthly-table-controls { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding: 14px 16px; border-bottom: 1px solid var(--hairline); background: var(--surface-1); }
-.monthly-table-controls label { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; color: var(--text-2); }
-.monthly-table-controls select,.monthly-table-controls input[type=search] { font: inherit; font-size: 11px; border: 1px solid var(--hairline); border-radius: 6px; padding: 7px 8px; background: var(--surface-1); color: var(--text-1); max-width: 180px; }
-.monthly-table-controls .button { font-size: 10px; padding: 7px 9px; }.monthly-table-controls .segmented button { font-size: 10px; padding: 6px 9px; }
-.monthly-table table,.acq-pivot { border-collapse: separate; border-spacing: 0; font-variant-numeric: tabular-nums; }
-.monthly-table table th,.monthly-table table td { height: 38px; max-height: 40px; padding: 6px 12px; border-bottom: 1px solid var(--hairline); text-align: right; background: var(--surface-1); white-space: nowrap; font-size: 11px; }
-.monthly-table table thead th { background: var(--surface-2); color: var(--text-2); font-size: 10px; font-weight: 650; }
-.monthly-table table thead th small { display: block; color: var(--attendance); font-size: 8px; margin-top: 2px; }
-.monthly-table table tr > :first-child { text-align: left; min-width: 180px; position: sticky; left: 0; z-index: 2; background: var(--surface-1); box-shadow: 2px 0 0 var(--hairline); font-weight: 600; }
-.monthly-table table thead tr > :first-child { z-index: 3; background: var(--surface-2); }
-.monthly-table table tr > :last-child { position: static; border-left: 0; background: var(--surface-1); }.monthly-table table thead tr > :last-child { background: var(--surface-2); }
-.monthly-table table .latest-month { border-left: 1px solid var(--hairline-strong); border-right: 1px solid var(--hairline-strong); }
-.monthly-table table tbody tr:hover td,.monthly-table table tbody tr:hover th { background: var(--surface-2); }
-.monthly-value { display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 2px; width: 100%; min-height: 24px; padding: 2px 0; color: var(--text-1); font-size: 11px; font-variant-numeric: tabular-nums; background: none; border: 0; cursor: pointer; }
-.monthly-value:hover { color: var(--attendance); }.monthly-value small { font-size: 8px; color: var(--text-3); font-weight: 400; }
-.monthly-value.positive { color: var(--pos); }.monthly-value.negative { color: var(--neg); }.monthly-value.neutral { color: var(--text-3); }
-.monthly-table.compact table th,.monthly-table.compact table td { padding: 4px 9px; height: 32px; }.monthly-table.comfortable table th,.monthly-table.comfortable table td { height: 40px; }
-/* Local theme bridge; component layout and controls above come from Atlas. */
-.p57-monthly{--hairline:var(--line);--hairline-strong:var(--line);--surface-1:var(--paper);--surface-2:var(--soft);--text-1:var(--ink);--text-2:var(--mut);--text-3:var(--mut);--attendance:var(--accent);--pos:#16845b;--neg:#bc4b47}
+/* Copied from Jimmeey23/atlas at 2de9206a340e4d6a320a38f09022fea48a94f202:
+   src/design/refinement.css (monthly table), app.css (.table-scroll, .mom, .segmented, .button, .ranking-foot),
+   controls.css (select.atlas-dropdown, .table-row-standard), report-deck.css (selected month).
+   Scoped to .p57-monthly; !important only where report table rules (.wrap th/td) would override Atlas geometry. */
 .p57-atlas-monthly{min-width:0;max-width:100%;font-family:var(--font-ui)}
-.p57-atlas-monthly .table-scroll{overflow:auto;max-width:100%;max-height:650px}
-.p57-atlas-monthly table{width:max-content!important;min-width:100%;margin:0!important}
-.p57-atlas-monthly .segmented{display:inline-flex;gap:2px;border:1px solid var(--line);border-radius:7px;padding:3px}
-.p57-atlas-monthly button{font-family:inherit}
-.p57-atlas-monthly .segmented button{border:0;background:transparent;color:var(--mut);border-radius:4px}
-.p57-atlas-monthly .segmented .active{background:var(--accent);color:white}
-.p57-atlas-monthly .button{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink)}
-.p57-atlas-monthly .ranking-foot{padding:12px 16px;margin:0;font-size:11px;color:var(--mut)}
-.p57-atlas-monthly .ranking-foot svg{vertical-align:middle;margin-right:6px}
-.p57-atlas-monthly .deck-selected-month{background:var(--accent-soft)!important}
-.p57-atlas-monthly button:focus-visible,.p57-atlas-monthly select:focus-visible,.p57-atlas-monthly input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-@media(max-width:600px){.monthly-table-controls{padding:12px;gap:8px}.monthly-table-controls input[type=search]{max-width:150px}.monthly-table table tr>:first-child{min-width:150px}}
+.p57-monthly .monthly-table-controls{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:14px 16px;border:1px solid var(--hairline);border-bottom:0;background:var(--surface-1);font-family:var(--font-ui)}
+.p57-monthly .monthly-table-controls label{display:inline-flex;align-items:center;gap:6px;margin:0;font-size:10px;color:var(--text-2);font-weight:400;letter-spacing:0;text-transform:none}
+.p57-monthly .monthly-table-controls input[type=search]{font:inherit;font-size:11px;height:32px;box-sizing:border-box;border:1px solid var(--hairline);border-radius:6px;padding:7px 8px;background:var(--surface-1);color:var(--text-1);max-width:180px}
+.p57-monthly .monthly-table-controls .monthly-check input{margin:0;accent-color:var(--accent)}
+.p57-monthly select.atlas-dropdown{appearance:none;-webkit-appearance:none;box-sizing:border-box;height:32px;min-height:32px;max-height:32px;min-width:0;max-width:180px;padding:0 30px 0 10px;border:1px solid var(--hairline-strong);border-radius:7px;background-color:var(--surface-1);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2377869b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center;background-size:14px;color:var(--text-1);font:500 11px var(--font-ui);line-height:normal;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;box-shadow:0 1px 2px #00000004;transition:border-color 140ms ease,box-shadow 140ms ease}
+.p57-monthly select.atlas-dropdown:hover:not(:disabled){border-color:var(--accent)}
+.p57-monthly select.atlas-dropdown:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 12%,transparent)}
+.p57-monthly .segmented{display:flex;border:1px solid var(--hairline-strong);border-radius:5px;padding:2px;gap:2px;background:var(--surface-1)}
+.p57-monthly .segmented button{font:inherit;font-size:10px;padding:6px 9px;border:0;border-radius:3px;background:transparent;color:var(--text-3);min-height:0;cursor:pointer}
+.p57-monthly .segmented button.active{background:var(--surface-3);color:var(--text-1)}
+.p57-monthly .button{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:32px;padding:7px 9px;border:1px solid var(--hairline-strong);border-radius:8px;background:var(--raised);color:var(--text-1);font:600 10px var(--font-ui);white-space:nowrap;cursor:pointer}
+.p57-monthly .table-row-standard{display:inline-flex;align-items:center;white-space:nowrap;height:28px;padding:0 8px;color:var(--text-3);font-size:10px}
+.p57-monthly .table-scroll{overflow:auto;max-width:100%;max-height:650px;border:1px solid var(--hairline);background:var(--surface-1);position:relative;scrollbar-width:thin;scrollbar-color:var(--hairline-strong) transparent}
+.p57-monthly .monthly-table table{width:max-content!important;min-width:100%;margin:0!important;border:0!important;border-radius:0!important;overflow:visible!important;border-collapse:separate!important;border-spacing:0;font:11px/1.4 var(--font-ui)!important;font-variant-numeric:tabular-nums;background:var(--surface-1)}
+.p57-monthly .monthly-table table th,.p57-monthly .monthly-table table td{height:38px;max-height:40px;padding:6px 12px!important;border-bottom:1px solid var(--hairline)!important;text-align:right!important;background:var(--surface-1)!important;white-space:nowrap;font-size:11px!important;line-height:1.4!important;letter-spacing:0!important;text-transform:none!important;color:var(--text-1)!important;vertical-align:middle}
+.p57-monthly .monthly-table table thead th{position:sticky;top:0;z-index:1;background:var(--surface-2)!important;color:var(--text-2)!important;font-size:10px!important;font-weight:650!important}
+.p57-monthly .monthly-table table thead th small{display:block;color:var(--attendance);font-size:8px;margin-top:2px}
+.p57-monthly .monthly-table table tr>:first-child{text-align:left!important;min-width:180px;position:sticky;left:0;z-index:2;background:var(--surface-1)!important;box-shadow:2px 0 0 var(--hairline);font-weight:600!important}
+.p57-monthly .monthly-table table thead tr>:first-child{z-index:3;background:var(--surface-2)!important}
+.p57-monthly .monthly-table table tr>:last-child{position:static;border-left:0}
+.p57-monthly .monthly-table table .latest-month{border-left:1px solid var(--hairline-strong);border-right:1px solid var(--hairline-strong)}
+.p57-monthly .monthly-table table tbody tr:last-child>*{border-bottom:0!important}
+.p57-monthly .monthly-table table tbody tr:hover td,.p57-monthly .monthly-table table tbody tr:hover th{background:var(--surface-2)!important}
+.p57-monthly .monthly-table.compact table th,.p57-monthly .monthly-table.compact table td{padding:4px 9px!important;height:32px}
+.p57-monthly .monthly-table.comfortable table th,.p57-monthly .monthly-table.comfortable table td{height:40px}
+.p57-monthly .mom td{cursor:pointer}
+.p57-monthly .monthly-value{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:2px;width:100%;min-height:24px;padding:2px 0;margin:0;color:var(--text-1);font:11px var(--font-ui);font-variant-numeric:tabular-nums;background:none;border:0;cursor:pointer}
+.p57-monthly .monthly-value:hover{color:var(--attendance);filter:none}
+.p57-monthly .monthly-value small{font-size:8px;color:var(--text-3);font-weight:400}
+.p57-monthly .monthly-value.positive{color:var(--pos)}.p57-monthly .monthly-value.negative{color:var(--neg)}.p57-monthly .monthly-value.neutral{color:var(--text-3)}
+.p57-monthly .monthly-table .deck-selected-month{background:color-mix(in srgb,var(--accent) 8%,var(--surface-1))!important}
+.p57-monthly .monthly-table th.deck-selected-month{box-shadow:inset 0 -2px 0 var(--accent)}
+.p57-monthly .ranking-foot{display:flex;align-items:center;gap:6px;margin:0!important;padding-top:10px;font:10px/1.5 var(--font-ui)!important;color:var(--text-3)}
+.p57-monthly .empty-state{margin:0;padding:16px;font-size:11px;color:var(--text-3)}
+.p57-monthly button:focus-visible,.p57-monthly input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media(max-width:600px){.p57-monthly .monthly-table-controls{padding:12px;gap:8px}.p57-monthly .monthly-table-controls input[type=search]{max-width:150px}.p57-monthly .monthly-table table tr>:first-child{min-width:150px}}
+@media print{.p57-monthly .monthly-table-controls{display:none!important}}
