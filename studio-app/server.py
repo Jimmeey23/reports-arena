@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Studio Intelligence - a small, dependency-free web app that turns the
+"""Studio Intelligence - a small Python web app that turns the
 studio's own day-end exports into a nine-chapter performance review.
 
 Run:  python3 server.py [--port 8000]
-Nothing outside the standard library is required.
+Install dependencies first: python3 -m pip install -r requirements.txt
 """
 from __future__ import annotations
 import os, sys, json, time, uuid, threading, mimetypes, traceback, sqlite3, shutil, hmac, hashlib, html, re
