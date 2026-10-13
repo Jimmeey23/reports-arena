@@ -328,8 +328,9 @@ def llm(text, key, model='gpt-4o-mini', base='https://api.openai.com/v1/chat/com
     invent facts - the model only sees what the metrics layer produced."""
     from ai import llm as provider
     from ai.agent import _ground
+    from .editorial import instructions as editorial_instructions
     messages = [
-        {'role':'system','content':'Rewrite the supplied studio analysis in simple, direct language. Use short, easily spoken sentences. Headlines and catchphrases should be brief, memorable and lightly witty only when supported by the finding; avoid jargon, melodrama and financial metaphors. Describe payment totals as sales revenue, never money taken, takings, borrowing or loans. Keep sales revenue distinct from delivered session revenue. Preserve every finding, figure, caveat, recommendation and the original reporting scope. Preserve or expand the original sentence count and detail; do not summarise it into fewer sentences. Do not add facts, causal claims or numbers. Return prose only.'},
+        {'role':'system','content':editorial_instructions() + '\nRewrite the supplied studio analysis in simple, direct language. Use short, easily spoken sentences. Headlines should be precise and grounded in the finding; avoid jargon, melodrama and financial metaphors. Describe payment totals as sales revenue, never money taken, takings, borrowing or loans. Keep sales revenue distinct from delivered session revenue. Preserve every finding, figure, caveat, recommendation and the original reporting scope. Preserve or expand the original sentence count and detail; do not summarise it into fewer sentences. Do not add facts, causal claims or numbers. Return prose only.'},
         {'role':'user','content':text},
     ]
     result=provider.complete(messages,max_tokens=max(1200,len(text)//2),temperature=0.4,

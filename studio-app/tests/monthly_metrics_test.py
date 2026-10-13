@@ -2,6 +2,9 @@ import json
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
+from types import SimpleNamespace
+import pandas as pd
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -40,7 +43,7 @@ class MonthlyTests(unittest.TestCase):
         self.assertEqual(result.count('class="p57-monthly"'), 2)
         self.assertEqual(monthly.inject(result, data=data), result)
 
-    def test_saved_history_is_studio_scoped_and_current_snapshot_wins(self):
+    def test_saved_history_is_studio_scoped_and_uses_same_snapshot_for_every_view(self):
         with tempfile.TemporaryDirectory() as root:
             def write(name, studio, value):
                 folder = Path(root, name); folder.mkdir()
@@ -52,7 +55,28 @@ class MonthlyTests(unittest.TestCase):
             write('b', 'Bandra', '₹200')
             write('c', 'Kemps', '₹999')
             data = monthly.saved_history(current)
-            self.assertEqual(data['chapters']['sales']['months']['2026-09']['Revenue'], '₹100')
+            self.assertEqual(data['chapters']['sales']['months']['2026-09']['Revenue'], '₹200')
+
+    def test_full_source_history_ignores_selected_report_period(self):
+        frame = pd.DataFrame({'_loc':['Bandra']*3,
+                              '_dt':pd.to_datetime(['2023-01-01','2025-02-01','2026-10-01'])})
+        D = SimpleNamespace(sales=frame)
+        class FakeMetrics:
+            def __init__(self, dataset, studio, y, m):
+                self.D, self.y, self.m = dataset, y, m
+            def _sl(self, frame, y):
+                return frame[(frame['_dt'].dt.year==y)&(frame['_dt'].dt.month==self.m)]
+        ch = [dict(id='sales',title='Sales',slug='sales')]
+        builders = dict(sales=lambda metric: dict(kpis=[dict(label='Count',value=metric.y*100+metric.m)]))
+        with patch.object(monthly,'Metrics',FakeMetrics):
+            a=monthly.capture(D,'Bandra',2025,2,ch,builders,builders,lambda *args:None)
+            b=monthly.capture(D,'Bandra',2026,9,ch,builders,builders,lambda *args:None)
+        self.assertEqual(a['chapters'],b['chapters'])
+        self.assertEqual(a['periods'],b['periods'])
+        self.assertEqual(a['periods'][0],'2023-01')
+        self.assertEqual(a['periods'][-1],'2026-10')
+        self.assertEqual(len(a['periods']),46)
+        self.assertNotIn('2024-01',a['chapters']['sales']['months'])
 
 
 if __name__ == '__main__':

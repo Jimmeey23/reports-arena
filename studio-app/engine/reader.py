@@ -75,14 +75,14 @@ def enhance_report(html, report_dir=None):
     css = '\n'.join((STATIC / f).read_text() for f in
                     ('report-tools.css', 'presenter.css', 'chapter-explorer.css',
                      'report-edit.css', 'ai-assistant.css', 'report-interface.css', 'atlas-theme.css',
-                     'sticky-notes.css', 'monthly-metrics.css'))
+                     'sticky-notes.css', 'monthly-metrics.css', 'atlas-monthly.css'))
     for font in ('archivo', 'archivo-ext', 'instrument-sans', 'instrument-sans-ext'):
         encoded = base64.b64encode((STATIC / 'fonts' / (font + '.woff2')).read_bytes()).decode()
         css = css.replace('/static/fonts/' + font + '.woff2', 'data:font/woff2;base64,' + encoded)
     js = '\n'.join((STATIC / f).read_text() for f in
                    ('report-tools.js', 'presenter.js', 'chapter-explorer.js',
-                    'report-edit.js', 'ai-assistant.js', 'report-interface.js', 'chapter-art.js',
-                    'chart-interact.js', 'talking-points.js', 'sticky-notes.js', 'presentation-stage.js'))
+                    'report-edit-model.js', 'report-edit.js', 'ai-assistant.js', 'report-interface.js', 'chapter-art.js',
+                    'chart-interact.js', 'talking-points.js', 'sticky-notes.js', 'presentation-stage.js', 'atlas-monthly.js'))
     assets = f'<style id="p57-reader-assets">{css}</style><script>{js}</script>'
     index = html.lower().rfind('</body>')
     return html[:index] + assets + html[index:] if index >= 0 else html + assets

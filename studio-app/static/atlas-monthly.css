@@ -1,0 +1,33 @@
+/* Copied from Jimmeey23/atlas src/design/refinement.css at 2de9206a340e4d6a320a38f09022fea48a94f202. */
+.monthly-table-controls { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding: 14px 16px; border-bottom: 1px solid var(--hairline); background: var(--surface-1); }
+.monthly-table-controls label { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; color: var(--text-2); }
+.monthly-table-controls select,.monthly-table-controls input[type=search] { font: inherit; font-size: 11px; border: 1px solid var(--hairline); border-radius: 6px; padding: 7px 8px; background: var(--surface-1); color: var(--text-1); max-width: 180px; }
+.monthly-table-controls .button { font-size: 10px; padding: 7px 9px; }.monthly-table-controls .segmented button { font-size: 10px; padding: 6px 9px; }
+.monthly-table table,.acq-pivot { border-collapse: separate; border-spacing: 0; font-variant-numeric: tabular-nums; }
+.monthly-table table th,.monthly-table table td { height: 38px; max-height: 40px; padding: 6px 12px; border-bottom: 1px solid var(--hairline); text-align: right; background: var(--surface-1); white-space: nowrap; font-size: 11px; }
+.monthly-table table thead th { background: var(--surface-2); color: var(--text-2); font-size: 10px; font-weight: 650; }
+.monthly-table table thead th small { display: block; color: var(--attendance); font-size: 8px; margin-top: 2px; }
+.monthly-table table tr > :first-child { text-align: left; min-width: 180px; position: sticky; left: 0; z-index: 2; background: var(--surface-1); box-shadow: 2px 0 0 var(--hairline); font-weight: 600; }
+.monthly-table table thead tr > :first-child { z-index: 3; background: var(--surface-2); }
+.monthly-table table tr > :last-child { position: static; border-left: 0; background: var(--surface-1); }.monthly-table table thead tr > :last-child { background: var(--surface-2); }
+.monthly-table table .latest-month { border-left: 1px solid var(--hairline-strong); border-right: 1px solid var(--hairline-strong); }
+.monthly-table table tbody tr:hover td,.monthly-table table tbody tr:hover th { background: var(--surface-2); }
+.monthly-value { display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 2px; width: 100%; min-height: 24px; padding: 2px 0; color: var(--text-1); font-size: 11px; font-variant-numeric: tabular-nums; background: none; border: 0; cursor: pointer; }
+.monthly-value:hover { color: var(--attendance); }.monthly-value small { font-size: 8px; color: var(--text-3); font-weight: 400; }
+.monthly-value.positive { color: var(--pos); }.monthly-value.negative { color: var(--neg); }.monthly-value.neutral { color: var(--text-3); }
+.monthly-table.compact table th,.monthly-table.compact table td { padding: 4px 9px; height: 32px; }.monthly-table.comfortable table th,.monthly-table.comfortable table td { height: 40px; }
+/* Local theme bridge; component layout and controls above come from Atlas. */
+.p57-monthly{--hairline:var(--line);--hairline-strong:var(--line);--surface-1:var(--paper);--surface-2:var(--soft);--text-1:var(--ink);--text-2:var(--mut);--text-3:var(--mut);--attendance:var(--accent);--pos:#16845b;--neg:#bc4b47}
+.p57-atlas-monthly{min-width:0;max-width:100%;font-family:var(--font-ui)}
+.p57-atlas-monthly .table-scroll{overflow:auto;max-width:100%;max-height:650px}
+.p57-atlas-monthly table{width:max-content!important;min-width:100%;margin:0!important}
+.p57-atlas-monthly .segmented{display:inline-flex;gap:2px;border:1px solid var(--line);border-radius:7px;padding:3px}
+.p57-atlas-monthly button{font-family:inherit}
+.p57-atlas-monthly .segmented button{border:0;background:transparent;color:var(--mut);border-radius:4px}
+.p57-atlas-monthly .segmented .active{background:var(--accent);color:white}
+.p57-atlas-monthly .button{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink)}
+.p57-atlas-monthly .ranking-foot{padding:12px 16px;margin:0;font-size:11px;color:var(--mut)}
+.p57-atlas-monthly .ranking-foot svg{vertical-align:middle;margin-right:6px}
+.p57-atlas-monthly .deck-selected-month{background:var(--accent-soft)!important}
+.p57-atlas-monthly button:focus-visible,.p57-atlas-monthly select:focus-visible,.p57-atlas-monthly input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media(max-width:600px){.monthly-table-controls{padding:12px;gap:8px}.monthly-table-controls input[type=search]{max-width:150px}.monthly-table table tr>:first-child{min-width:150px}}

@@ -246,8 +246,8 @@ const originalText=new Map(editables.map(e=>[e,e.textContent]));
 const originalHTML=new Map(editables.map(e=>[e,e.innerHTML]));
 editables.forEach((e,i)=>e.dataset.editId='text-'+i);
 let editing=false;const edit=button('Edit report text',()=>{if(meeting&&!meeting.is_host)return;if(window.P57Edit){window.P57Edit.setLayout(!root.classList.contains('p57-layout-on'));toggleTools(false);return;}editing=!editing;edit.textContent=editing?'Finish editing':'Edit report text';edit.setAttribute('aria-pressed',String(editing));editables.forEach(e=>{e.contentEditable=editing?'true':'false';});toggleTools(false);});
-editables.forEach(e=>e.addEventListener('input',()=>change('edits',e.dataset.editId,e.textContent)));
-function applyEdits(edits=saved.edits){editables.forEach(e=>{if(document.activeElement===e)return;if(Object.hasOwn(edits,e.dataset.editId)){if(e.textContent!==edits[e.dataset.editId])e.textContent=edits[e.dataset.editId];}else if(!window.P57Edit&&e.innerHTML!==originalHTML.get(e))e.innerHTML=originalHTML.get(e);});}
+editables.forEach(e=>e.addEventListener('input',()=>{if(!window.P57Edit)change('edits',e.dataset.editId,e.textContent);}));
+function applyEdits(edits=saved.edits){editables.forEach(e=>{if(document.activeElement===e||e.closest('.p57-block-edited'))return;if(Object.hasOwn(edits,e.dataset.editId)){if(e.textContent!==edits[e.dataset.editId])e.textContent=edits[e.dataset.editId];}else if(!window.P57Edit&&e.innerHTML!==originalHTML.get(e))e.innerHTML=originalHTML.get(e);});window.P57Edit?.cleanup();}
 let annotationSnapshot='';
 function renderAnnotations(values=saved.annotations){const snapshot=JSON.stringify(values||{});if(snapshot===annotationSnapshot)return;annotationSnapshot=snapshot;document.querySelectorAll('.p57-annotation-callout').forEach(e=>e.remove());for(const [id,text]of Object.entries(values||{})){if(!text)continue;const h=document.getElementById(id);if(h){const a=make('aside',text,'p57-annotation-callout');a.setAttribute('aria-label','Report annotation');h.after(a);}}}
 let restoringPreferences=false;

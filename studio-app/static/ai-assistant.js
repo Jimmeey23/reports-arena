@@ -169,9 +169,8 @@ async function runEdit(){
       const p = preview(data.html);
       p.ok.onclick = async () => {
         const el = target;
-        el.innerHTML = data.html;
-        if(window.P57Edit) window.P57Edit.collect();
-        if(window.P57Edit) await window.P57Edit.saveElement(el, el.innerHTML);
+        if(window.P57Edit) await window.P57Edit.saveElement(el, data.html);
+        else el.innerHTML = data.html;
         p.wrap.remove(); bubble('ai', 'Applied. The block is saved for everyone viewing this run.');
         clearCtxBanner(true);
       };

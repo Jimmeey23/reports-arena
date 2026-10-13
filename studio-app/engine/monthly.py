@@ -19,47 +19,63 @@ def key(label):
     return label.strip()
 
 
+def available_periods(D, studio):
+    """Read the full source population, independently of report dates."""
+    stamps = set()
+    for name in ('sales', 'sessions', 'checkins', 'leads', 'lapsed'):
+        frame = getattr(D, name, None)
+        if frame is None or '_loc' not in frame:
+            continue
+        frame = frame[frame['_loc'] == studio]
+        date = 'Purchase Date_d' if name == 'lapsed' and 'Purchase Date_d' in frame else '_dt'
+        if date in frame:
+            stamps.update(frame[date].dropna().dt.strftime('%Y-%m').tolist())
+    if not stamps:
+        return []
+    start, end = min(stamps), max(stamps)
+    first = int(start[:4])*12 + int(start[5:])-1
+    last = int(end[:4])*12 + int(end[5:])-1
+    return [(n//12,n%12+1) for n in range(first,last+1)]
+
+
 def capture(D, studio, year, month, chapters, builders, fallbacks, log):
-    result = dict(studio=studio, year=year, month=month,
-                  provenance='Frozen calculations from this report’s uploaded exports.', chapters={})
+    all_periods = available_periods(D, studio)
+    result = dict(studio=studio, year=year, month=month, scope_version=3, date_independent=True,
+                  periods=[f'{y}-{m:02d}' for y,m in all_periods],
+                  provenance='All available months from the uploaded source exports, independently of report date filters. The latest month may be partial.', chapters={})
     for ch in chapters:
-        result['chapters'][ch['id']] = dict(title=ch['title'], slug=ch['slug'], months={})
-    for y, m in periods(year, month):
+        result['chapters'][ch['id']] = dict(title=ch['title'], slug=ch.get('slug', ''), months={})
+    for y, m in all_periods:
         stamp = f'{y}-{m:02d}'
-        if (y, m) == (year, month):
-            built = chapters
-        else:
+        log(f'  all-month metrics: {studio} · {stamp}')
+        try:
+            metric = Metrics(D, studio, y, m)
+        except Exception as exc:
+            log(f'  monthly metrics {stamp} unavailable: {exc}')
+            continue
+        for ch in chapters:
+            cid = ch['id']
             try:
-                metric = Metrics(D, studio, y, m)
+                required = {'sales': ['sales'], 'class': ['sessions'], 'instructor': ['sessions'],
+                            'format': ['sessions'], 'cancels': ['sessions'], 'behaviour': ['checkins'],
+                            'leads': ['leads'], 'lapse': ['lapsed'],
+                            'overview': ['sales', 'sessions', 'checkins']}[cid]
+                available = False
+                for source in required:
+                    frame = getattr(metric.D, source, None)
+                    if frame is not None and '_loc' in frame and '_dt' in frame:
+                        available |= not metric._sl(frame, y).empty
+                if not available:
+                    continue
+                row = builders[cid](metric)
+                if row is None:
+                    row = fallbacks[cid](metric)
+                if row:
+                    result['chapters'][cid]['months'][stamp] = {
+                        key(k['label']): str(k['value']) for k in row.get('kpis', [])
+                        if k.get('value') not in (None, '', 'nan')}
             except Exception as exc:
-                log(f'  monthly metrics {stamp} unavailable: {exc}')
-                continue
-            built = []
-            for ch in chapters:
-                cid = ch['id']
-                try:
-                    required = {'sales': ['sales'], 'class': ['sessions'], 'instructor': ['sessions'],
-                                'format': ['sessions'], 'cancels': ['sessions'], 'behaviour': ['checkins'],
-                                'leads': ['leads'], 'lapse': ['lapsed'],
-                                'overview': ['sales', 'sessions', 'checkins']}[cid]
-                    available = False
-                    for source in required:
-                        frame = getattr(metric.D, source, None)
-                        if frame is not None and '_loc' in frame and '_dt' in frame:
-                            available |= not metric._sl(frame, y).empty
-                    if not available:
-                        continue
-                    row = builders[cid](metric)
-                    if row is None:
-                        row = fallbacks[cid](metric)
-                    if row:
-                        built.append(row)
-                except Exception as exc:
-                    log(f'  monthly metrics {cid} {stamp} unavailable: {exc}')
-        for ch in built:
-            result['chapters'][ch['id']]['months'][stamp] = {
-                key(k['label']): str(k['value']) for k in ch.get('kpis', [])
-                if k.get('value') not in (None, '', 'nan')}
+                log(f'  monthly metrics {cid} {stamp} unavailable: {exc}')
     return result
 
 
@@ -70,16 +86,14 @@ def saved_history(directory):
                provenance='Saved reports for this studio only. Missing months require reports generated from the original exports.',
                chapters={ch['id']: dict(title=ch['title'], slug=ch.get('slug', ''), months={})
                          for ch in current['chapters']})
-    allowed = {f'{y}-{m:02d}' for y, m in periods(out['year'], out['month'])}
-    # The selected report always wins for its own month; duplicate historical
-    # months use the latest saved run, with no recalculation from newer uploads.
+    # Use the same latest saved snapshot per month for every report view.
+    # Neither the selected report period nor its date filter affects history.
     paths = sorted(directory.parent.glob('*/manifest.json'))
-    paths = [p for p in paths if p.parent != directory] + [directory / 'manifest.json']
     for path in paths:
         try:
             mf = json.loads(path.read_text())
             stamp = f'{mf["year"]}-{mf["month"]:02d}'
-            if mf['studio'] != out['studio'] or stamp not in allowed:
+            if mf['studio'] != out['studio']:
                 continue
             for ch in mf['chapters']:
                 if ch['id'] in out['chapters']:
@@ -111,10 +125,38 @@ def change(value, previous):
     return f'{delta / abs(b[0]) * 100:+.1f}% MoM'
 
 
+def atlas_payload(data, cid, stamps, labels):
+    ch = data['chapters'][cid]
+    definitions = {}
+    ids = []
+    for label in labels:
+        mid = cid + ':' + label
+        ids.append(mid)
+        sample = next((number(values[label]) for values in ch['months'].values()
+                       if label in values and number(values[label]) is not None), None)
+        definitions[mid] = dict(label=label, unit=sample[1] if sample else '',
+                                description='Calculated monthly KPI from uploaded exports; independent of report dates.')
+    history = []
+    for stamp in stamps:
+        row = dict(month=stamp)
+        for label in labels:
+            value = ch['months'].get(stamp, {}).get(label)
+            numeric = number(value) if value is not None else None
+            row[cid + ':' + label] = numeric[0] if numeric else unescape(value) if value is not None else None
+        history.append(row)
+    payload = json.dumps(dict(title=ch['title'], ids=ids, definitions=definitions, history=history), ensure_ascii=False)
+    return ('<div class="p57-atlas-monthly"></div><script type="application/json" '
+            'class="p57-atlas-monthly-data">' + payload.replace('<', '\\u003c') + '</script>')
+
+
 def table(data, cid):
     ch = data['chapters'][cid]
-    ps = periods(data['year'], data['month'])
-    stamps = [f'{y}-{m:02d}' for y, m in ps]
+    stamps = data.get('periods') or sorted({stamp for ch in data['chapters'].values() for stamp in ch['months']})
+    if stamps:
+        first = int(stamps[0][:4])*12 + int(stamps[0][5:])-1
+        last = int(stamps[-1][:4])*12 + int(stamps[-1][5:])-1
+        stamps = [f'{n//12}-{n%12+1:02d}' for n in range(first,last+1)]
+    ps = [(int(stamp[:4]), int(stamp[5:])) for stamp in stamps]
     months = ch['months']
     labels = list(dict.fromkeys(label for stamp in reversed(stamps) for label in months.get(stamp, {})))
     header = '<th scope="col">Metric</th>' + ''.join(
@@ -132,14 +174,14 @@ def table(data, cid):
             body += '</td>'
         body += '</tr>'
     if not labels:
-        body = '<tr><td colspan="13">No saved metrics are available for this chapter.</td></tr>'
-    return (f'<details class="p57-monthly" data-chapter="{escape(cid)}"><summary>Month-on-month metrics</summary>'
+        body = f'<tr><td colspan="{len(stamps)+1}">No saved metrics are available for this chapter.</td></tr>'
+    return (f'<details class="p57-monthly" data-date-independent="true" data-chapter="{escape(cid)}"><summary>Month-on-month metrics</summary>'
             f'<p>{escape(data["provenance"])} Changes compare consecutive calendar months. '
             'Percentage metrics show percentage-point changes. Lead and membership outcomes reflect export status, '
             'not reconstructed historical month-end status.</p><div class="p57-mom-scroll" tabindex="0" '
             f'role="region" aria-label="{escape(ch["title"])} monthly metrics"><table>'
             f'<caption>{escape(ch["title"])} · {escape(data["studio"])} · monthly performance</caption>'
-            f'<thead><tr>{header}</tr></thead><tbody>{body}</tbody></table></div></details>')
+            f'<thead><tr>{header}</tr></thead><tbody>{body}</tbody></table></div>' + atlas_payload(data, cid, stamps, labels) + '</details>')
 
 
 def inject(html, directory=None, data=None, chapter=None):

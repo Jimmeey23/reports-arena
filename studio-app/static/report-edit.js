@@ -11,6 +11,14 @@ const route = location.pathname.match(/^\/api\/report\/([^/]+)/);
 const run = route ? route[1] : null;
 const online = /^https?:$/.test(location.protocol) && !!run;
 const localKey = 'p57-layout-edits:' + (run || document.title);
+const model = window.P57EditModel;
+const cleanup = () => model?.cleanup();
+const undoStack = [], redoStack = [];
+const originalMarkup = new Map();
+let toast = null;
+function remember(change){undoStack.push(change);redoStack.length=0;updateHistory();return change;}
+function updateHistory(){undoBtn.disabled=!undoStack.length;redoBtn.disabled=!redoStack.length;}
+function notice(text){toast?.remove();toast=make('div',null,'p57-edit-toast');toast.setAttribute('role','status');toast.append(make('span',text));const undo=make('button','Undo');undo.onclick=()=>undoChange();const close=make('button','✕');close.setAttribute('aria-label','Dismiss editing notice');close.onclick=()=>toast?.remove();toast.append(undo,close);document.body.append(toast);}
 
 // ------------------------------------------------------------- block model
 const blocks = [];
@@ -28,19 +36,29 @@ function collect(){
   const wrap = document.querySelector('.wrap');
   if(wrap) secs.push(wrap);
   const cover = document.querySelector('body > header');
-  if(cover){ cover.id ||= 'p57-cover-' + (location.pathname.split('/').pop() || 'report'); secs.push(cover); }
+  if(cover){
+    let savedCover;
+    try{savedCover=JSON.parse(document.getElementById('p57-structural-edits')?.textContent||'[]').find(row=>row.el_id?.startsWith('p57-cover-'))?.el_id.split('~')[0];}catch{}
+    cover.id ||= savedCover || 'p57-cover-' + (location.pathname.split('/').pop() || 'report');secs.push(cover);
+  }
   secs.forEach((sec, si) => {
     sec.id = sectionId(sec, si);
+    if(sec.matches('.wrap>section')){sec.dataset.el ||= sec.id+'~container';sec.classList.add('p57-block');blocks.push(sec);if(!originalMarkup.has(sec.dataset.el))originalMarkup.set(sec.dataset.el,sec.innerHTML);}
     [...sec.children].forEach((el, i) => {
-      if(el.tagName === 'SECTION' || el.classList.contains('p57-block-deleted')) return;
+      if(el.tagName === 'SECTION' || el.classList.contains('p57-block-deleted') || el.matches('script,style,.toc,footer')) return;
       if(!el.dataset.el) el.dataset.el = sec.id + '~' + i;
       el.classList.add('p57-block');
       blocks.push(el);
+      if(!originalMarkup.has(el.dataset.el))originalMarkup.set(el.dataset.el,el.innerHTML);
+      if(el.matches('.p57-monthly')) return; // Edit the complete generated register, not React's transient cells.
       el.querySelectorAll('h1,h2,h3,h4,p,li,.kpi,.stat,.v,.l,.d,th,td,figcaption,summary,.chart,svg').forEach((part, j) => {
-        if(part.closest('.rt-table-tools,.p57-block-tools')) return;
+        if(part.closest('.rt-table-tools,.p57-block-tools,.p57-monthly,.p57-art,.p57-marquee')) return;
         if(!part.dataset.el) part.dataset.el = el.dataset.el + '~part-' + j;
         part.classList.add('p57-component');
+        if(!originalMarkup.has(part.dataset.el))originalMarkup.set(part.dataset.el,part.innerHTML);
       });
+      // Add structural row targets without changing legacy part IDs.
+      el.querySelectorAll('tr').forEach((row,j)=>{if(row.closest('.p57-monthly'))return;row.dataset.el ||= el.dataset.el+'~row-'+j;row.classList.add('p57-component');if(!originalMarkup.has(row.dataset.el))originalMarkup.set(row.dataset.el,row.innerHTML);});
     });
   });
 }
@@ -61,13 +79,13 @@ async function apiEdits(){
     const data = await res.json();
     if(!res.ok) throw Error(data.error || 'Could not load edits');
     const queued = [...pendingSaves.values()];
-    edits = (data.edits || []).filter(e=>!queued.some(q=>q.el_id===e.el_id&&q.op===e.op)).concat(queued);
+    edits = (data.edits || []).filter(e=>!queued.some(q=>q.el_id===e.el_id&&(q.op===e.op||(q.op==='restore'&&e.op==='delete')))).concat(queued.filter(q=>q.op!=='restore'));
     persist();
   }catch{ loadInitial(); }
 }
 async function saveEdit(el_id, op, html='', sort=0){
-  edits = edits.filter(e => !(e.el_id === el_id && e.op === op));
-  if(op !== 'delete' || html !== null) edits.push({el_id, op, html, sort});
+  edits = edits.filter(e => !(e.el_id === el_id && (e.op === op || (op==='restore'&&e.op==='delete'))));
+  if(op !== 'restore') edits.push({el_id, op, html, sort});
   pendingSaves.set(el_id+'|'+op,{el_id,op,html,sort});
   persist();
   if(online){
@@ -82,6 +100,8 @@ async function saveEdit(el_id, op, html='', sort=0){
   persist();
 }
 async function clearEdit(el_id, op){
+  pendingSaves.delete(el_id+'|'+op);
+  if(op==='delete') return saveEdit(el_id,'restore');
   edits = edits.filter(e => !(e.el_id === el_id && e.op === op));
   persist();
   if(online){
@@ -103,21 +123,44 @@ function applyAll(){
   sets.sort((a,b)=>a.el_id.split('~').length-b.el_id.split('~').length).forEach(e => { const el = byId(e.el_id); if(el){ el.innerHTML = e.html; el.classList.add('p57-block-edited'); } });
   styles.forEach(e => {const el=byId(e.el_id);if(el)try{Object.entries(JSON.parse(e.html)).forEach(([key,value])=>el.style.setProperty(key,value));}catch{}});
   dels.forEach(e => { const el = byId(e.el_id); if(el && !el.dataset.delHidden) hideDeleted(el); });
+  collect();reindex();cleanup();
 }
 function hideDeleted(el){
   el.dataset.delHidden = '1';
-  const ph = make('div', null, 'p57-block-deleted');
-  ph.dataset.for = el.dataset.el;
-  ph.append(make('span', 'A block was removed here.'));
-  const undo = make('button', 'Undo');
-  undo.onclick = async () => { delete el.dataset.delHidden; ph.remove(); el.hidden = false; await clearEdit(el.dataset.el, 'delete'); };
-  const really = make('button', 'Keep removed');
-  really.onclick = () => { ph.style.opacity = '.55'; really.disabled = true; really.textContent = 'Removed'; };
-  ph.append(undo, really);
   deletedOriginals.set(el.dataset.el, el);
   el.hidden = true;
-  el.after(ph);
+  cleanup();
 }
+async function removeElement(el){
+  removeTools();remember({op:'delete',el,id:el.dataset.el});hideDeleted(el);
+  await saveEdit(el.dataset.el,'delete');notice('Component removed. Layout space released.');
+}
+async function saveElement(el,html,before=el.innerHTML){
+  if(html===before)return;
+  const change=remember({op:'set',el,id:el.dataset.el,before,after:html,beforeStyle:el.style.cssText,afterStyle:el.style.cssText});
+  el.innerHTML=html;el.classList.add('p57-block-edited');
+  await saveEdit(el.dataset.el,'set',html);collect();reindex();cleanup();
+  return change;
+}
+async function historyChange(from,to,reverse){
+  if(editingEl)await commitEdit();
+  const change=from.pop();if(!change)return;const el=byId(change.id)||change.el;
+  removeTools();toast?.remove();
+  if(change.op==='delete'||change.op==='insert'||change.op==='restore'){
+    const restore=change.op==='delete'?reverse:!reverse;
+    if(restore){delete el.dataset.delHidden;el.hidden=false;await clearEdit(change.id,'delete');}
+    else{hideDeleted(el);await saveEdit(change.id,'delete');}
+  }else if(change.op==='style'){
+    el.style.cssText=reverse?change.beforeStyle:change.afterStyle;
+    await saveEdit(change.id,'style',JSON.stringify(Object.fromEntries(Array.from(el.style).map(key=>[key,el.style.getPropertyValue(key)]))));
+  }else{
+    el.innerHTML=reverse?change.before:change.after;await saveEdit(change.id,'set',el.innerHTML);
+    if(change.beforeStyle!==change.afterStyle){el.style.cssText=reverse?change.beforeStyle:change.afterStyle;await saveEdit(change.id,'style',JSON.stringify(Object.fromEntries(Array.from(el.style).map(key=>[key,el.style.getPropertyValue(key)]))));}
+  }
+  to.push(change);collect();reindex();cleanup();updateHistory();
+}
+const undoChange=()=>historyChange(undoStack,redoStack,true);
+const redoChange=()=>historyChange(redoStack,undoStack,false);
 function insertFromEdit(e){
   const split = e.el_id.lastIndexOf('::');
   const anchorId = e.el_id.slice(0, split), pos = e.el_id.slice(split+2).split(':')[0];
@@ -135,6 +178,7 @@ function insertFromEdit(e){
 // ------------------------------------------------------------- layout mode
 let layoutOn = false, banner = null, tools = null, hoverEl = null;
 function setLayout(on){
+  if(on){collect();cleanup();}
   layoutOn = on;
   root.classList.toggle('p57-layout-on', on);
   layoutBtn.textContent = on ? 'Finish editing' : 'Edit components';
@@ -144,29 +188,38 @@ function setLayout(on){
     document.querySelector('.p57-tool-trigger')?.setAttribute('aria-expanded','false');
     if(!banner){
       banner = make('div', null, 'p57-layout-banner');
-      banner.append(make('span', 'Edit components · click a heading, metric, table cell or chart. Save each change, then finish.'));
+      banner.append(make('span', 'Select a part or its container · edit, remove, or Undo. Ctrl/Cmd+Enter saves; Escape cancels.'));
       const done = make('button', 'Done'); done.onclick = () => setLayout(false);
       banner.append(done);
       document.body.append(banner);
     }
+    banner.insertBefore(undoBtn,banner.lastElementChild);
+    banner.insertBefore(redoBtn,banner.lastElementChild);
+    banner.insertBefore(restoreBtn,banner.lastElementChild);
     banner.insertBefore(saveStatus,banner.lastElementChild);
     banner.hidden = false;
-  }else if(banner){ commitEdit(); R.bar.append(saveStatus); banner.hidden = true; removeTools(); }
+  }else if(banner){ commitEdit(); R.bar.append(undoBtn,redoBtn,restoreBtn,saveStatus); banner.hidden = true; removeTools(); }
 }
-function removeTools(){ if(tools){ tools.remove(); tools = null; } hoverEl = null; }
+function removeTools(){ if(tools){ tools.remove(); tools = null; } hoverEl?.classList.remove('p57-edit-selected');hoverEl = null; }
 function toolsFor(el){
   if(!layoutOn || el.classList.contains('p57-block-deleted')) return removeTools();
   if(tools && hoverEl === el) return;
   removeTools();
   hoverEl = el;
+  el.classList.add('p57-edit-selected');
   tools = make('div', null, 'p57-block-tools');
   tools.setAttribute('role', 'toolbar');
+  tools.setAttribute('aria-label','Report component editing');
+  const scope=make('select');scope.setAttribute('aria-label','Editing target');
+  const targets=[['Selected part',el],['Table row',el.closest('tr')],['Containing component',model?.component(el)],['Whole block',el.closest('.p57-block')],['Whole chapter',el.closest('.wrap>section')]].filter((item,i,all)=>item[1]&&!all.slice(0,i).some(x=>x[1]===item[1]));
+  targets.forEach(([label],i)=>{const option=make('option',label);option.value=i;scope.append(option);});
+  scope.onchange=()=>{const target=targets[Number(scope.value)][1];if(!target.dataset.el){target.dataset.el=target.id+'~container';target.classList.add('p57-block');reindex();}toolsFor(target);};tools.append(scope);
   const mk = (label, title, fn, cls='') => { const b = make('button', label); b.title = title; b.className = cls; b.onclick = ev => { ev.stopPropagation(); fn(); }; tools.append(b); return b; };
-  mk('Edit', 'Edit this component', () => beginEdit(el));
+  mk('Edit text', 'Edit this selection inline', () => beginEdit(el));
   mk('Design', 'Edit component markup and appearance', () => designComponent(el));
   mk('＋↑', 'Add a block above', () => addBlock(el, 'before'));
   mk('＋↓', 'Add a block below', () => addBlock(el, 'after'));
-  mk('🗑', 'Delete this block', () => { removeTools(); hideDeleted(el); saveEdit(el.dataset.el, 'delete'); }, 'danger');
+  mk('Remove', 'Remove the selected part or container; Undo remains available', () => removeElement(el), 'danger');
   mk('AI replace', 'Replace this component with AI', () => window.P57AI && window.P57AI.openForElement(el, 'rewrite'));
   mk('AI add', 'Add a component with AI', () => window.P57AI && window.P57AI.openForElement(el.closest('.p57-block') || el, 'create'));
   tools.contentEditable = 'false';
@@ -179,7 +232,7 @@ document.addEventListener('mouseover', e => {
   if(!layoutOn) return;
   if(editingEl || e.target.closest('.p57-block-tools')) return;
   const b = e.target.closest('.p57-component,.p57-block');
-  if(b) toolsFor(b);
+  if(b && !b.closest('[data-del-hidden],[data-p57-empty]')) toolsFor(b);
 });
 
 // ------------------------------------------------------------- inline edit
@@ -187,6 +240,26 @@ let editingEl = null;
 const pendingSaves = new Map();
 try{JSON.parse(localStorage.getItem(localKey+':pending')||'[]').forEach(row=>pendingSaves.set(row.el_id+'|'+row.op,row));}catch{}
 const saveStatus = make('span', '', 'p57-edit-status'); saveStatus.setAttribute('role','status'); R.bar.append(saveStatus);
+const undoBtn=R.button('Undo change',undoChange),redoBtn=R.button('Redo change',redoChange);updateHistory();
+const restoreBtn=R.button('Restore removed components',()=>{
+  const form=make('div',null,'p57-component-inspector');
+  const removed=edits.filter(row=>row.op==='delete'||(row.op==='set'&&byId(row.el_id)&&!model?.hasContent(byId(row.el_id))));
+  if(!removed.length)form.append(make('p','No removed or cleared components in this report.'));
+  removed.forEach(row=>{const el=byId(row.el_id)||deletedOriginals.get(row.el_id);if(!el)return;
+    const item=make('div');item.append(make('p',el.tagName.toLowerCase()+' · '+(el.textContent.trim().slice(0,90)||row.el_id)));
+    R.button(row.op==='delete'?'Restore':'Restore original content',async()=>{
+      if(row.op==='delete'){delete el.dataset.delHidden;el.hidden=false;await clearEdit(row.el_id,'delete');remember({op:'restore',el,id:row.el_id});}
+      else await saveElement(el,originalMarkup.get(row.el_id)||'');
+      applyAll();R.dialog.close();
+    },item);form.append(item);
+  });R.openDialog('Restore removed components',form);
+});
+document.addEventListener('keydown',e=>{
+  if(!layoutOn||editingEl||e.target.closest?.('input,textarea,select,[contenteditable="true"]')||!(e.ctrlKey||e.metaKey))return;
+  const key=e.key.toLowerCase();
+  if(key==='z'){e.preventDefault();e.shiftKey?redoChange():undoChange();}
+  else if(key==='y'){e.preventDefault();redoChange();}
+});
 R.button('Save all changes', async () => { await commitEdit(); for(const [key,row] of [...pendingSaves]){ pendingSaves.delete(key); await saveEdit(row.el_id,row.op,row.html,row.sort); } });
 document.addEventListener('click', e => {
   if(!layoutOn || e.target.closest('.p57-block-tools,.p57-layout-banner')) return;
@@ -225,8 +298,7 @@ async function commitEdit(){
   el.classList.remove('p57-block-editing');
   const html = el.innerHTML;
   if(html === el.dataset.prevHtml) return;
-  if(el.dataset.el.includes('::ins:')) await saveEdit(el.dataset.el, 'set', html);
-  else await saveEdit(el.dataset.el, 'set', html);
+  await saveElement(el,html,el.dataset.prevHtml);
 }
 function cancelEdit(){
   const el = editingEl; if(!el) return;
@@ -253,8 +325,10 @@ function designComponent(el){
     const holder=make('div');holder.innerHTML=source.value;
     holder.querySelectorAll('script,iframe,object,embed,style,link').forEach(node=>node.remove());
     holder.querySelectorAll('*').forEach(node=>[...node.attributes].forEach(attr=>{if(/^on/i.test(attr.name)||/javascript:/i.test(attr.value))node.removeAttribute(attr.name);}));
-    el.innerHTML=holder.innerHTML;const style={};Object.entries(controls).forEach(([key,input])=>{style[key]=input.value;el.style.setProperty(key,input.value);});
-    await saveEdit(el.dataset.el,'set',el.innerHTML);await saveEdit(el.dataset.el,'style',JSON.stringify(style));collect();R.dialog.close();
+    const beforeStyle=el.style.cssText,change=await saveElement(el,holder.innerHTML);const style={};Object.entries(controls).forEach(([key,input])=>{style[key]=input.value;el.style.setProperty(key,input.value);});
+    if(change)change.afterStyle=el.style.cssText;
+    else if(beforeStyle!==el.style.cssText)remember({op:'style',el,id:el.dataset.el,beforeStyle,afterStyle:el.style.cssText});
+    await saveEdit(el.dataset.el,'style',JSON.stringify(style));collect();cleanup();R.dialog.close();
   },form);
   R.openDialog('Component editor',form);
 }
@@ -278,6 +352,7 @@ async function addBlock(anchor, pos, html){
   await saveEdit(anchor.dataset.el + '::' + pos + ':' + addSeq, 'insert', node.innerHTML, addSeq);
   // keep the inserted node's id stable for future edits of the insert row
   node.dataset.el = anchor.dataset.el + '::ins:' + addSeq;
+  remember({op:'insert',el:node,id:node.dataset.el});
   collect();
   beginEdit(node, true);
 }
@@ -291,7 +366,7 @@ window.P57Edit = {
   collect, blocks,
   get edits(){return edits;},
   commitEdit,
-  saveElement: (el, html) => saveEdit(el.dataset.el, 'set', html),
+  saveElement, removeElement, undo:undoChange, redo:redoChange, cleanup,
   addBlock,
   insertAfter: (anchor, html) => addBlock(anchor, 'after', html),
   insertBefore: (anchor, html) => addBlock(anchor, 'before', html),

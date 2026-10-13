@@ -1,0 +1,19 @@
+{
+  "name": "p57-atlas-monthly",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "esbuild entry.tsx --bundle --format=iife --jsx=automatic --minify --define:process.env.NODE_ENV=\"\\\"production\\\"\" --outfile=../static/atlas-monthly.js",
+    "test": "esbuild component.test.tsx --bundle --platform=node --format=esm --jsx=automatic --packages=external --outfile=node_modules/.cache/component.test.mjs && node node_modules/.cache/component.test.mjs && node editor.test.mjs"
+  },
+  "dependencies": {
+    "lucide-react": "0.468.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "jsdom": "^26.1.0",
+    "react-test-renderer": "^18.3.1"
+  }
+}

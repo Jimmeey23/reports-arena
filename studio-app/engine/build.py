@@ -11,6 +11,7 @@ from . import chapters_a as CA, chapters_b as CB
 from . import chapters_deep as CD1, chapters_deep2 as CD2, chapters_deep3 as CD3, chapters_deep4 as CD4
 from . import narrate as NR
 from .insights import executive
+from .editorial import apply as apply_editorial
 
 # the deep builders write the report at full length; the short ones are the
 # fallback for a chapter whose sources are too thin for the deep version
@@ -96,10 +97,11 @@ def build(D, studio, year, month, outdir, log=print, use_llm=None,
         interpretation = executive(M, ch)
         ch['body'] = ch.get('body', '') + interpretation
         ch['narrative_version'] = 2
-        ch['body'], ch['sections'] = _sections(cid, ch.get('body', ''))
         ch['summary'] = NR.summary(M, ch)
         ch['narration'] = NR.narration(M, ch)
         ch['recs'] = NR.recommendations(M, cid, ch.get('recs_extra'))
+        apply_editorial(M, ch)
+        ch['body'], ch['sections'] = _sections(cid, ch.get('body', ''))
         if editorial:
             editorial(M, ch)
         ch['slug'] = _slug(ch['title'])
@@ -149,12 +151,12 @@ def _chapter_page(M, ch, label):
         kpi_html = '<div class="kpis">' + ''.join(
             f'''<div class="kpi"><div class="l">{k['label']}</div><div class="v">{k['value']}</div>
             <div class="d {k.get('tone','neu')}">{k.get('detail','')}</div></div>''' for k in ch['kpis']) + '</div>'
-    sum_html = (f'''<div class="call"><h4>In short</h4><p>{ch['summary']}</p></div>''' if ch.get('summary') else '')
+    sum_html = (f'''<div class="call"><h4>Performance verdict</h4><p>{ch['summary']}</p></div>''' if ch.get('summary') else '')
     rec_html_block = ''
     if ch.get('recs'):
         recs = [(r[0], r[1], r[2], r[3], r[4]) for r in ch['recs']]
-        rec_html_block = (f'''<h2>Recommendations</h2>
-<div class="sub">{len(recs)} actions, ordered by the size of the value each releases</div>'''
+        rec_html_block = (f'''<h2>Recommended response</h2>
+<div class="sub">{len(recs)} proposed actions with owners and success measures</div>'''
                           + rec_html(recs))
     body = kpi_html + sum_html + ch['body'] + rec_html_block
     meta = (f"{M.studio} &middot; {label} &middot; chapter {ch.get('n', 0)} of 9<br/>"
@@ -164,6 +166,7 @@ def _chapter_page(M, ch, label):
 
 
 def _combined(M, chapters, label):
+    chapters = sorted(chapters, key=lambda c: c['id'] != 'overview')
     toc = '<div class="toc"><ol>' + ''.join(
         f'<li><a href="#{c["slug"]}">{c["title"]}</a> <span class="tp">{c.get("subtitle","")}</span></li>'
         for c in chapters) + '</ol></div>'
@@ -177,9 +180,9 @@ def _combined(M, chapters, label):
 <h2>Chapter {c.get('n', 0):02d} &nbsp; {c['title']}</h2>
 <div class="sub">{c.get('subtitle','')}</div>
 {kpi}
-<div class="call"><h4>In short</h4><p>{c.get('summary','')}</p></div>
+<div class="call"><h4>Performance verdict</h4><p>{c.get('summary','')}</p></div>
 {c['body']}
-<h2>Recommendations</h2><div class="sub">{len(c.get('recs', []))} actions for this chapter</div>{recs}
+<h2>Recommended response</h2><div class="sub">{len(c.get('recs', []))} actions for this chapter</div>{recs}
 </section>''')
     meta = (f"{M.studio} &middot; {label}<br/>{len(chapters)} chapters &middot; generated {now_ist():%d %B %Y}<br/>"
             f"Snapshot {now_ist():%d %B %Y}")
@@ -188,7 +191,7 @@ def _combined(M, chapters, label):
     S = M.sales.get(M.y, {}); F = M.room.get(M.y, {}); C = getattr(M,'core',{})
     executive = ''
     if S and F:
-        executive = '<div class="p57-executive-summary" aria-label="Executive summary"><h2 id="executive-summary">This month, at a glance</h2><ul>'
+        executive = '<div class="p57-executive-summary" aria-label="Executive summary"><h2 id="executive-summary">Executive Summary</h2><ul>'
         executive += f'<li><strong>{R(S["cash"])}</strong> in sales revenue from {S["txn"]} distinct sales and {S["buyers"]} buyers.</li>'
         executive += f'<li><strong>{F["fill"]:.1f}% utilisation</strong>: {F["att"]:,.0f} attendances across {F["sessions"]} sessions. Delivered session revenue was {R(F["rev"])}.</li>'
         if C: executive += f'<li>The same <strong>{C["n"]} returning members</strong> made {abs(C["lost"]):,.0f} {"fewer" if C["lost"]>=0 else "more"} visits than {MONTH_NAMES[M.m-1]} {M.y-1} ({abs(C["drop_pct"]):.1f}%).</li>'
