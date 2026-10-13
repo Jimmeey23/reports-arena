@@ -332,7 +332,7 @@ class Handler(BaseHTTPRequestHandler):
         with open(path, 'rb') as f:
             data = f.read()
         if path.startswith(RUNS + os.sep) and path.endswith('.html'):
-            data = enhance_report(data.decode('utf-8')).encode('utf-8')
+            data = enhance_report(data.decode('utf-8'), report_dir=Path(path).parent).encode('utf-8')
         self.send_response(200)
         self.send_header('Content-Type', ctype)
         self.send_header('Content-Length', str(len(data)))
@@ -443,7 +443,7 @@ class Handler(BaseHTTPRequestHandler):
                 # Re-enhance on serve so asset (toolbar/editor/explorer) updates
                 # reach existing runs without a rebuild; the enhancer dedupes.
                 try:
-                    data = enhance_report(Path(f).read_text()).encode('utf-8')
+                    data = enhance_report(Path(f).read_text(), report_dir=Path(f).parent).encode('utf-8')
                 except Exception:
                     return self._file(f, 'text/html; charset=utf-8')
                 self.send_response(200)
@@ -466,7 +466,7 @@ class Handler(BaseHTTPRequestHandler):
                 f = os.path.join(RUNS, rid, 'report.html')
                 if not os.path.isfile(f):
                     return self._send(404, dict(error='unknown run'))
-                data = enhance_report(Path(f).read_text()).encode('utf-8')
+                data = enhance_report(Path(f).read_text(), report_dir=Path(f).parent).encode('utf-8')
                 self.send_response(200)
                 self.send_header('Content-Type', 'text/html; charset=utf-8')
                 self.send_header('Content-Disposition',

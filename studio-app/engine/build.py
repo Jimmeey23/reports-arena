@@ -117,7 +117,12 @@ def build(D, studio, year, month, outdir, log=print, use_llm=None,
                 ch['summary_ai'] = ''
                 log(f'  llm summary failed: {e}')
 
-    combined = _combined(M, out, label).replace('</head>',embed(frozen_records)+'</head>',1)
+    from .monthly import capture, inject
+    monthly = capture(D, studio, year, month, out, DEEP, SHALLOW, log)
+    Path(outdir, 'monthly.json').write_text(json.dumps(monthly, ensure_ascii=False))
+    for ch in out:
+        ch['html'] = inject(ch['html'], data=monthly, chapter=ch['id'])
+    combined = inject(_combined(M, out, label), data=monthly).replace('</head>',embed(frozen_records)+'</head>',1)
     cpath = os.path.join(outdir, 'report.html')
     Path(cpath).write_text(enhance_report(combined))
     for ch in out:

@@ -23,7 +23,10 @@ def studio_hero(html):
     # existing title and metadata, and show the entire photograph below them.
     return re.sub(r'(</div>\s*</header>)', lambda m: hero + m[0], html, count=1)
 
-def enhance_report(html):
+def enhance_report(html, report_dir=None):
+    if report_dir:
+        from .monthly import inject
+        html = inject(html, directory=report_dir)
     html = studio_hero(html)
     # Update visible legacy copy only; leave frozen source data and scripts intact.
     def refresh_copy(match):
@@ -72,7 +75,7 @@ def enhance_report(html):
     css = '\n'.join((STATIC / f).read_text() for f in
                     ('report-tools.css', 'presenter.css', 'chapter-explorer.css',
                      'report-edit.css', 'ai-assistant.css', 'report-interface.css', 'atlas-theme.css',
-                     'sticky-notes.css'))
+                     'sticky-notes.css', 'monthly-metrics.css'))
     for font in ('archivo', 'archivo-ext', 'instrument-sans', 'instrument-sans-ext'):
         encoded = base64.b64encode((STATIC / 'fonts' / (font + '.woff2')).read_bytes()).decode()
         css = css.replace('/static/fonts/' + font + '.woff2', 'data:font/woff2;base64,' + encoded)

@@ -48,6 +48,7 @@ button('Next match',()=>{if(matches.length){match=(match+1)%matches.length;find(
 function download(data,name,type){const url=URL.createObjectURL(new Blob([data],{type}));const a=make('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
 const csvValue=v=>{v=String(v);if(/^[=+@-]/.test(v))v="'"+v;return '"'+v.replace(/"/g,'""')+'"';};
 document.querySelectorAll('.wrap table').forEach((table,ti)=>{
+if(table.closest('.p57-monthly'))return; // KPI rows have different units; never sum them as record totals.
 const rows=[...table.rows],heads=[...rows[0]?.cells||[]];if(!heads.length||!heads.some(c=>c.tagName==='TH'))return;
 const data=rows.slice(1);const titles=heads.map(c=>c.textContent.trim());const wrap=make('div',null,'rt-table-wrap'),tools=make('div',null,'rt-table-tools');table.before(wrap);wrap.append(tools,table);
 const filter=make('input');filter.type='search';filter.placeholder='Filter these records…';filter.setAttribute('aria-label',`Filter table ${ti+1}`);const count=make('span',`${data.length} records`);tools.append(filter,count);
