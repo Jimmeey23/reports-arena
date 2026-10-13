@@ -12,6 +12,7 @@ from . import chapters_deep as CD1, chapters_deep2 as CD2, chapters_deep3 as CD3
 from . import narrate as NR
 from .insights import executive
 from .editorial import apply as apply_editorial
+from .chapter_order import ordered, chapter_number
 
 # the deep builders write the report at full length; the short ones are the
 # fallback for a chapter whose sources are too thin for the deep version
@@ -104,10 +105,13 @@ def build(D, studio, year, month, outdir, log=print, use_llm=None,
         ch['body'], ch['sections'] = _sections(cid, ch.get('body', ''))
         if editorial:
             editorial(M, ch)
+        ch['n'] = chapter_number(cid, ch.get('n', 0))
         ch['slug'] = _slug(ch['title'])
         ch['html'] = enhance_report(_chapter_page(M, ch, label).replace('</head>',embed(frozen_records)+'</head>',1))
         ch['kpis'] = [k for k in ch.get('kpis', []) if k.get('value') not in (None, '', 'nan')]
         out.append(ch)
+
+    out = ordered(out)
 
     # optional rewrite of the summaries through a language model
     if use_llm:
@@ -166,7 +170,8 @@ def _chapter_page(M, ch, label):
 
 
 def _combined(M, chapters, label):
-    chapters = sorted(chapters, key=lambda c: c['id'] != 'overview')
+    # Studio Overview leads; an available Performance Review closes the report.
+    chapters = ordered(chapters)
     toc = '<div class="toc"><ol>' + ''.join(
         f'<li><a href="#{c["slug"]}">{c["title"]}</a> <span class="tp">{c.get("subtitle","")}</span></li>'
         for c in chapters) + '</ol></div>'

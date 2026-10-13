@@ -182,6 +182,12 @@ def from_manifest(manifest):
             mid = LABEL_TO_CANONICAL.get(label.lower()) or c['id'] + ':' + label
             metrics.append(dict(id=mid, label=label,
                                 value=k.get('value'), detail=k.get('detail', ''), chapter=c['id']))
+    # A reviewed source attachment can supersede an older generated population.
+    # Keep fallback answers identical to the reconciled pack even if metrics.json
+    # is absent on deployment. Overrides are frozen in the reviewed manifest.
+    overrides = manifest.get('source_reconciliation', {}).get('metric_overrides', [])
+    ids = {m['id'] for m in overrides}
+    metrics = [m for m in metrics if m['id'] not in ids] + overrides
     return dict(
         studio=manifest.get('studio', ''), period=manifest.get('label', ''),
         year=manifest.get('year'), month=manifest.get('month'),
@@ -203,7 +209,8 @@ def load_pack(runs_dir, rid, manifest=None):
     p = pack_path(runs_dir, rid)
     if os.path.isfile(p):
         try:
-            return json.loads(open(p, encoding='utf-8').read())
+            with open(p, encoding='utf-8') as f:
+                return json.load(f)
         except Exception:
             pass
     if manifest is None:
