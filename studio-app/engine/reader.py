@@ -3,7 +3,28 @@ from pathlib import Path
 import re, base64
 STATIC = Path(__file__).resolve().parent.parent / 'static'
 
+def studio_hero(html):
+    """Keep the supplied Bandra cover inside standalone report downloads."""
+    title = re.search(r'<title>(.*?)</title>', html, re.S | re.I)
+    if (not title or 'bandra' not in title[1].lower() or
+            'performance review' not in title[1].lower() or
+            'id="p57-bandra-hero"' in html):
+        return html
+    photo = STATIC / 'bandra-hero.png'
+    if not photo.is_file():
+        return html
+    encoded = base64.b64encode(photo.read_bytes()).decode()
+    hero = ('<figure id="p57-bandra-hero" style="margin:32px 0 0;width:100%;">'
+            '<img src="data:image/png;base64,' + encoded + '" '
+            'alt="Bandra report hero photograph supplied by the team" width="1448" height="1086" '
+            'fetchpriority="high" style="display:block;width:100%;height:auto;border-radius:16px;" />'
+            '</figure>')
+    # The generated cover header contains a single inner wrapper. Keep its
+    # existing title and metadata, and show the entire photograph below them.
+    return re.sub(r'(</div>\s*</header>)', lambda m: hero + m[0], html, count=1)
+
 def enhance_report(html):
+    html = studio_hero(html)
     # Update visible legacy copy only; leave frozen source data and scripts intact.
     def refresh_copy(match):
         text = match.group(0)
