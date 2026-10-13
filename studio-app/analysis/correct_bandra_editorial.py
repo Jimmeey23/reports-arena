@@ -216,7 +216,7 @@ def main():
             if name!='report.html':
                 byid[cid]['sections']=[dict(n=i+1,id=h['id'],title=h.get_text(' ',strip=True),slug=h['id']) for i,h in enumerate(s.select('.wrap h2[id]'))];byid[cid]['speaker_notes']=notes
         mf['chapters']=sorted(mf['chapters'],key=lambda c:c['id']!='overview')
-        mf['editorial_version']='bandra-review-v1';mf['editorial_reviewed_at']=stamp;mf['editorial_source']='editorial/bandra-september-2026-review.md';mf['editorial_limits']=['Historical review figures excluded where not source-verifiable.','Distinct transactions, discounts and unbooked seats use reconciled frozen definitions.']
+        mf['editorial_version']='bandra-review-v1';mf['editorial_reviewed_at']=stamp;mf['editorial_source']='editorial/bandra-september-2026-review.md';mf['editorial_limits']=['Historical review figures excluded where not source-verifiable.','Distinct transactions, discounts and unbooked seats use reconciled frozen definitions.'];mf['bundle_revision']=1  # Increment to refresh this stable run on persistent deployments.
         (d/'manifest.json').write_text(json.dumps(mf,indent=1,ensure_ascii=False))
         pack=json.loads((d/'metrics.json').read_text())
         for c in pack['chapters']:

@@ -20,9 +20,14 @@ the public domain's target port. The process binds to `0.0.0.0`.
 
 Attach the service's persistent volume at `/data`. The server detects
 `RAILWAY_VOLUME_MOUNT_PATH` and stores uploads, SQLite databases and generated
-reports beneath it. `P57_STORAGE_DIR` can override that storage location. Existing
-bundled reports are copied into a fresh volume without overwriting saved reports.
-Use one backend instance: generation jobs and progress are currently in memory.
+reports beneath it. `P57_STORAGE_DIR` can override that storage location. Missing
+bundled reports are copied into a fresh volume. To publish a revised bundled
+report under its existing dashboard entry, increment its `bundle_revision` in the
+manifest; startup refreshes that run in place only when the bundled revision is
+newer. Deploy/restart the Railway backend to apply this update; a frontend-only
+Vercel deploy does not update the persistent report volume. Deleted reports stay
+deleted. Use one backend instance: generation jobs and progress are currently
+in memory.
 
 Server variables:
 
