@@ -1,0 +1,525 @@
+   PERIOD       This week       Last week        This month        Last month        Last 30 days       This quarter             STUDIOS         All studios       Kemps Corner       Supreme HQ, Bandra              Kenk
+
+
+
+
+   Atlas / Revenue & sales
+   Filters: {"from":"2026-09-01","to":"2026-09-30","location":["Supreme HQ, Bandra"],"trainer":[],"format":[],"source":[],"category":[],"day":[],"time":
+   [],"memberType":"all","imports":false,"sessionType":"all","capacityBand":"all"} / Cross-filters: [] / Estimated instructor rate: ₹1200
+
+
+   Understand what drives sales.
+   Review source-recorded collections, buyers and purchase patterns.
+
+     ← Back / undo        Forward / redo →         Advanced analysis                                                                                                       Global scope · 2026-09-01 — 2026-09-30
+
+
+      ▸ Advanced analysis
+
+     Gross revenue                                                           Net of VAT                                                             Transactions
+
+     ₹15.3L                                                                  ₹14.6L                                                                 195
+     Source-backed                                              Total        Source-backed                                             Total        Source-backed                                           Total
+
+
+     Average order value                                                     Unique buyers                                                          Revenue / buyer
+
+     ₹7,843                                                                  139                                                                    ₹11,003
+     Source-backed                                         Weighted          Source-backed                                             Total        Source-backed                                      Weighted
+
+
+     Discount rate                                                           Deferred balance                                                       Units sold
+
+     8.7%                                                                    ₹2,712                                                                 210
+     Source-backed                                         Weighted          Source-backed                                             Total        Source-backed                                           Total
+
+
+     VAT                                                                     Discount given                                                         Membership revenue share
+
+     ₹72,784                                                                 ₹1.5L                                                                  43.6%
+     Source-backed                                              Total        Source-backed                                             Total        Source-backed                                      Weighted
+
+
+
+
+         02     Daily collections & purchase activity Separate purchase volume from collection value · click a day to inspect it
+
+
+
+
+  Skip to performance data
+           Daily gross collections (left axis) and transactions (right axis); average order value in tooltips. Only dates with source records are shown.                                         Ask
+                                                                                                                                                                          Hover for details / Click    GPT
+                                                                                                                                                                                                    to filter
+
+
+
+
+Physique 57 India · Internal management review                                                                                                                                                                      1 / 10
+       03       The performance register Expand from the business to the individual
+
+            Studio / entity                                                         Transactions               Units sold         Gross revenue     Net of VAT                         VAT          Avera
+
+                         Class Packages                                                     34                       39             ₹6,10,017      ₹5,80,885                     ₹29,133
+
+                              Studio 12 Class Package                                       15                       15             ₹2,59,875      ₹2,47,500                     ₹12,375
+                              Studio 20 Single Class Package                                  1                        1              ₹31,080        ₹29,600                      ₹1,480
+                              Studio 10 Class Package                                         8                      13             ₹2,25,548      ₹2,14,725                     ₹10,823
+                              Studio 8 Class Package                                          4                        4              ₹52,460        ₹49,960                      ₹2,500
+                              Studio 4 Class Package                                          6                        6              ₹41,055        ₹39,100                      ₹1,955
+                         Memberships                                                        20                       20             ₹6,66,610      ₹6,34,866                     ₹31,743
+
+                              Barre 1 month Unlimited                                         3                        3              ₹44,915        ₹42,776                      ₹2,139
+                              Studio 1 Month Unlimited                                      12                       12             ₹2,30,722      ₹2,19,735                     ₹10,987
+                              Barre 3 Month Unlimited                                         1                        1              ₹50,243        ₹47,850                      ₹2,393
+                              Studio 6 Month Unlimited                                        1                        1            ₹1,02,344        ₹97,470                      ₹4,874
+                              Studio Annual Unlimited                                         1                        1            ₹1,75,560      ₹1,67,200                      ₹8,360
+                              Studio Shared 2 Week Unlimited                                  1                        1              ₹13,650        ₹13,000                         ₹650
+                              Studio 3 Month Unlimited                                        1                        1              ₹49,177        ₹46,835                      ₹2,342
+                         Money Credits                                                        3                        3                  ₹2,712     ₹2,712                             ₹0
+
+                              Money Credits                                                   3                        3                  ₹2,712      ₹2,712                            ₹0
+                         Newcomers Special                                                  24                       24               ₹48,562       ₹46,250                       ₹2,313
+
+                              Studio Newcomers 2 For 1                                      24                       24               ₹48,562        ₹46,250                      ₹2,313
+                         Privates                                                             1                        1                  ₹5,250     ₹5,000                          ₹250
+
+                              Studio Private Class                                            1                        1                  ₹5,250      ₹5,000                         ₹250
+                         Retail                                                             42                       50               ₹11,354       ₹10,813                          ₹541
+
+                              Retail - Other Retail                                         12                       13                   ₹2,080      ₹1,981                          ₹99
+                              Retail - Apparel                                                2                        3                  ₹4,099      ₹3,904                         ₹195
+                              Retail - Consumables                                          31                       34                   ₹5,175      ₹4,929                         ₹246
+                         Sessions/Single Classes                                            73                       73             ₹1,84,905      ₹1,76,100                      ₹8,805
+
+           Total in scope 213 records                                                       195                      210            ₹15,29,410     ₹14,56,626                     ₹72,784
+
+      25 visible groups / 4 drill levels / Weighted totals recomputed from source                                                                    0 selected / Enter to drill / ← → to expand
+
+
+
+
+       04       Worth your attention
+
+        Leading the way                                                                                    Room to improve
+
+       1      Newcomers Special                                                                    0.0%    5    Memberships                                                            10.7%
+
+       2      Retail                                                                               0.0%    4    Class Packages                                                           9.7%
+
+       3      Sessions/Single Classes                                                              0.0%    3    Sessions/Single Classes                                                 0.0%
+
+       4      Class Packages                                                                       9.7%    2    Retail                                                                  0.0%
+
+       5      Memberships                                                                          10.7%   1    Newcomers Special                                                       0.0%
+
+      n ≥ 5 source records. 2 groups excluded. Both lists share one scale.
+       Read the signals
+
+
+                       AI SECTION INSIGHTS                                                                                                                       Regenerate
+  Skip to performance data
+
+
+
+
+Physique 57 India · Internal management review                                                                                                                                                     2 / 10
+       04    The relationship behind the result Explore the contributing pattern
+
+
+
+
+         Each point represents an entity in scope                                  Hover for details / Click to filter
+
+
+
+
+  Skip to performance data
+
+
+
+
+Physique 57 India · Internal management review                                                                           3 / 10
+         05        Sales leaders & opportunities Top and bottom groups from successful, non-voided sales in the active scope.
+
+
+          Compare                                  Criterion                   Show                            Minimum transactions
+
+              Products                               Gross revenue              Top / bottom 20                  1                    Find a group…
+
+
+
+                   Top performers
+                   Gross revenue · highest first
+
+
+                     Studio 12 Class Package
+              01     15 transactions · 15 buyers                                                                                                        ₹2.6L
+                     Studio 1 Month Unlimited
+              02     12 transactions · 12 buyers                                                                                                        ₹2.3L
+
+                     Studio 10 Class Package
+              03     8 transactions · 8 buyers                                                                                                          ₹2.3L
+
+                     Studio Annual Unlimited
+              04     1 transactions · 1 buyers                                                                                                          ₹1.8L
+
+                     Session
+              05     37 transactions · 29 buyers                                                                                                        ₹1.1L
+
+                     Studio 6 Month Unlimited
+              06     1 transactions · 1 buyers                                                                                                          ₹1.0L
+
+                     Studio Single Class
+              07     36 transactions · 28 buyers                                                                                                      ₹73,815
+                     Studio 8 Class Package
+              08     4 transactions · 4 buyers                                                                                                        ₹52,460
+
+                     Barre 3 Month Unlimited
+              09     1 transactions · 1 buyers                                                                                                        ₹50,243
+
+                     Studio 3 Month Unlimited
+              10     1 transactions · 1 buyers                                                                                                        ₹49,177
+
+                   Bottom performers
+                   Gross revenue · lowest first
+
+
+                     Retail - Other Retail
+              01     12 transactions · 12 buyers                                                                                                       ₹2,080
+                     Money Credits
+              02     3 transactions · 3 buyers                                                                                                         ₹2,712
+
+                     Retail - Apparel
+              03     2 transactions · 2 buyers                                                                                                         ₹4,099
+
+                     Retail - Consumables
+              04     31 transactions · 20 buyers                                                                                                       ₹5,175
+
+                     Studio Private Class
+              051 transactions
+  Skip to performance     data· 1 buyers
+                                                                                                                                                       ₹5,250
+
+
+
+Physique 57 India · Internal management review                                                                                                                  4 / 10
+                   Studio Shared 2 Week Unlimited
+            06     1 transactions · 1 buyers                                                                                                                                                            ₹13,650
+
+                   Studio 20 Single Class Package
+            07     1 transactions · 1 buyers                                                                                                                                                            ₹31,080
+                   Studio 4 Class Package
+            08     6 transactions · 6 buyers                                                                                                                                                            ₹41,055
+
+                   Barre 1 month Unlimited
+            09     3 transactions · 3 buyers                                                                                                                                                            ₹44,915
+
+                   Studio Newcomers 2 For 1
+            10     24 transactions · 25 buyers                                                                                                                                                          ₹48,562
+      20 qualifying groups · top and bottom lists never duplicate a group. Discount rate ranks lower values first; other criteria rank higher values first. Small transaction samples can make per-buyer and average-order
+      measures volatile. Members group by source member ID; purchases spanning groups can appear in each relevant group.
+
+
+
+
+       06        Month by month 14 completed months available · comparisons ignore date filters; other filters apply
+
+         Performance measure                       Sept 26         Aug 26           Jul 26        Jun 26         May 26           Apr 26         Mar 26         Feb 26          Jan 26         Dec 25          Nov 25         Oct 25
+                                                     Latest
+
+        Transactions                                  195             225             226            179             189            232             182            188             196            172             204           170
+
+        Units sold                                    210             242             261            196             211            270             192            199             206            186             226           201
+
+        Gross revenue                              ₹15.3L          ₹22.8L         ₹18.9L          ₹14.4L         ₹15.0L          ₹27.4L         ₹11.3L          ₹15.4L         ₹20.0L          ₹14.4L         ₹13.2L          ₹10.2L
+
+        Net of VAT                                 ₹14.6L          ₹21.7L         ₹18.0L          ₹13.7L         ₹14.3L          ₹26.1L         ₹10.7L          ₹14.7L         ₹19.1L          ₹13.7L         ₹12.6L           ₹9.7L
+
+        VAT                                      ₹72,784            ₹1.1L        ₹90,687        ₹69,062         ₹72,132           ₹1.3L        ₹53,722        ₹73,950         ₹96,487        ₹67,618         ₹62,758         ₹49,249
+
+        Average order value                        ₹7,843        ₹10,136          ₹8,360          ₹8,030         ₹7,946        ₹11,831          ₹6,193          ₹8,189        ₹10,222          ₹8,384         ₹6,462          ₹6,000
+
+        Discount given                              ₹1.5L           ₹1.8L           ₹1.8L          ₹1.4L           ₹1.4L          ₹6.0L        ₹98,370           ₹2.3L           ₹2.2L          ₹1.5L        ₹78,334         ₹42,978
+
+        Discount rate                                8.7%            7.5%           8.5%            9.1%           8.7%          17.9%            8.0%          13.1%            9.8%            9.2%           5.6%           4.0%
+
+        Unique buyers                                 139             166             168            136             140            172             151            140             166            124             157           125
+
+      Rates recompute from source numerators and denominators. Missing months stay unavailable; changes use percentage points for rates. Index 100 uses the first available value in the full 14-month window. Click a
+      value to scope its month.
+
+
+
+
+  Skip to performance data
+
+
+
+
+Physique 57 India · Internal management review                                                                                                                                                                                5 / 10
+       S1      Discounts scorecard Item discounts × quantity. Discount rate = discounts / (collections + discounts); sale share uses distinct sale IDs.
+
+
+      Group by              Discount code                               Purchased product              + Then by…                         Reset
+
+        Collections                                                                                     Sales
+
+        ₹15.3L                                                                                          195
+        Full active scope                                                                               Full active scope
+
+
+        Members                                                                                         Discount value
+
+        139                                                                                             ₹1.5L
+        Full active scope                                                                               Full active scope
+
+
+
+
+                Search discount codes…                                                                                                                                                  22 groups
+
+
+
+         Discount code                                        Purchased product                Sales     Members            Collections      Net collections   Discount value   Discount rate       Discounted lin
+
+            ZAP10                                             Studio 10 Class Package          8         8                  ₹2.3L            ₹2.1L             ₹24,050          9.6%                13
+            NC-2026-SHQ                                       Studio 12 Class Package          12        12                 ₹2.0L            ₹1.9L             ₹33,750          14.4%               12
+            20OFFSHQ                                          Studio Annual Unlimited          1         1                  ₹1.8L            ₹1.7L             ₹41,800          19.2%               1
+            No code                                           Studio 1 Month Unlimited         8         8                  ₹1.6L            ₹1.5L             ₹0               0.0%                0
+            No code                                           Session                          37        29                 ₹1.1L            ₹1.1L             ₹0               0.0%                0
+            ZAP10                                             Studio 6 Month Unlimited         1         1                  ₹1.0L            ₹97,470           ₹10,830          9.6%                1
+            No code                                           Studio Single Class              36        28                 ₹73,815          ₹70,300           ₹0               0.0%                0
+            NC-2026-SHQ                                       Studio 1 Month Unlimited         4         4                  ₹68,812          ₹65,535           ₹11,565          14.4%               4
+            No code                                           Studio 12 Class Package          3         3                  ₹59,063          ₹56,250           ₹0               0.0%                0
+            No code                                           Studio 8 Class Package           4         4                  ₹52,460          ₹49,960           ₹0               0.0%                0
+            No code                                           Barre 3 Month Unlimited          1         1                  ₹50,243          ₹47,850           ₹0               0.0%                0
+            NC-2026-SHQ                                       Studio 3 Month Unlimited         1         1                  ₹49,177          ₹46,835           ₹8,265           14.4%               1
+            No code                                           Studio Newcomers 2 For 1         24        25                 ₹48,562          ₹46,250           ₹0               0.0%                0
+            NC-2026-SHQ                                       Barre 1 month Unlimited          3         3                  ₹44,915          ₹42,776           ₹7,549           14.4%               3
+            No code                                           Studio 4 Class Package           6         6                  ₹41,055          ₹39,100           ₹0               0.0%                0
+            No code                                           Studio 20 Single Class Package   1         1                  ₹31,080          ₹29,600           ₹7,400           19.2%               1
+            No code                                           Studio Shared 2 Week Unlimited   1         1                  ₹13,650          ₹13,000           ₹0               0.0%                0
+            No code                                           Studio Private Class             1         1                  ₹5,250           ₹5,000            ₹0               0.0%                0
+            No code                                           Retail - Consumables             31        20                 ₹5,175           ₹4,929            ₹0               0.0%                0
+            No code                                           Retail - Apparel                 2         2                  ₹4,099           ₹3,904            ₹0               0.0%                0
+            No code                                           Money Credits                    3         3                  ₹2,712           ₹2,712            ₹0               0.0%                0
+            No code                                           Retail - Other Retail            12        12                 ₹2,080           ₹1,981            ₹0               0.0%                0
+
+         Full scope total                                                                      195       139                ₹15.3L           ₹14.6L            ₹1.5L            8.7%                36
+
+      22 groups · page 1 of 1 · totals cover all active filters                                                                                                                 Previous        Next
+      Discount amounts are present on 210 of 213 payment lines. Missing discounts remain unavailable.
+
+
+
+
+  Skip to performance data
+
+
+
+
+Physique 57 India · Internal management review                                                                                                                                                           6 / 10
+       S2      Membership                          Observed moves to a longer unlimited plan or larger class package than the preceding paid purchase of the same type. History includes earlier dates;
+                                                   same-day plan changes are excluded. Counts cover the first payment date of each observed upgrade.
+               upgrade scorecard
+
+
+      Group by              Previous plan                                  Purchased product                + Then by…
+
+        Collections                                                                                             Sales
+
+        ₹3.1L
+        Full active scope
+                                                                                                                6
+                                                                                                                Full active scope
+
+
+        Members                                                                                                 Net collections
+
+        6                                                                                                       ₹3.0L
+        Full active scope                                                                                       Full active scope
+
+
+
+
+                Search plans…                                                                                                                                                                       5 groups
+
+
+
+         Previous plan                                           Purchased product                  Purchases           Sales       Members    Collections      Net collections     Discount value        Discount rate
+
+         Studio 6 Month Unlimited                                Studio Annual Unlimited            1                   1           1          ₹1.8L            ₹1.7L               ₹41,800               19.2%
+         Studio 1 Month Unlimited                                Barre 3 Month Unlimited            1                   1           1          ₹50,243          ₹47,850             ₹0                    0.0%
+         Studio 4 Class Package                                  Studio 10 Class Package            2                   2           2          ₹34,965          ₹33,300             ₹3,700                9.6%
+         Studio 12 Class Package                                 Studio 20 Single Class Package     1                   1           1          ₹31,080          ₹29,600             ₹7,400                19.2%
+         Studio 2 Week Unlimited                                 Studio 1 Month Unlimited           1                   1           1          ₹20,239          ₹19,275             ₹0                    0.0%
+
+         Full scope total                                                                           6                   6           6          ₹3.1L            ₹3.0L               ₹52,900               14.5%
+
+      5 groups · page 1 of 1 · totals cover all active filters                                                                                                                           Previous        Next
+
+
+
+
+       S3      Annual member purchase tracker Annual, yearly, 12-month and 1-year products. Purchases follow payment dates and the active filters.
+
+
+      Group by              Community member                               Purchase month                       Purchased product                  + Then by…
+
+        Collections                                                                                             Sales
+
+        ₹1.8L                                                                                                   1
+        Full active scope                                                                                       Full active scope
+
+
+        Members                                                                                                 Net collections
+
+        1
+        Full active scope
+                                                                                                                ₹1.7L
+                                                                                                                Full active scope
+
+
+
+
+                Search members or products…                                                                                                                                                         1 groups
+
+
+
+         Community member                                        Purchase month             Purchased product                   Sales    Members     Collections      Net collections      Discount value        Discount r
+
+         Prachi Ghadge                                           2026-09                    Studio Annual Unlimited             1        1           ₹1.8L            ₹1.7L                ₹41,800               19.2%
+
+         Full scope total                                                                                                       1        1           ₹1.8L            ₹1.7L                ₹41,800               19.2%
+
+      1 groups · page 1 of 1 · totals cover all active filters                                                                                                                           Previous        Next
+
+
+
+
+  Skip to performance data
+
+
+
+
+Physique 57 India · Internal management review                                                                                                                                                                     7 / 10
+       S4      Private member purchase tracker Private products and the Privates category, by community member and purchase month.
+
+
+      Group by              Community member                               Purchase month                       Purchased product              + Then by…
+
+        Collections                                                                                             Sales
+
+        ₹5,250                                                                                                  1
+        Full active scope                                                                                       Full active scope
+
+
+        Members                                                                                                 Net collections
+
+        1
+        Full active scope
+                                                                                                                ₹5,000
+                                                                                                                Full active scope
+
+
+
+
+                Search members or products…                                                                                                                                                1 groups
+
+
+
+         Community member                                        Purchase month             Purchased product                Sales   Members    Collections   Net collections    Discount value        Discount rat
+
+         sonam singh                                             2026-09                    Studio Private Class             1       1          ₹5,250        ₹5,000             ₹0                    0.0%
+
+         Full scope total                                                                                                    1       1          ₹5,250        ₹5,000             ₹0                    0.0%
+
+      1 groups · page 1 of 1 · totals cover all active filters                                                                                                                  Previous        Next
+
+
+
+
+  Skip to performance data
+
+
+
+
+Physique 57 India · Internal management review                                                                                                                                                            8 / 10
+       07     Go one level deeper Focused operational registers
+
+
+        Salesperson scorecard                                                                                                                                                 Explore
+
+
+        Payment-method mix                                                                                                                                                    Collapse
+
+
+        Group by       Payment method             + Then by…
+        4 groups / Active global filters apply
+
+
+            Payment method                            Transactions    Units sold     Gross revenue      Net of VAT       VAT     Average order value       Discount given       Sample
+
+             custom                                            140         148              ₹8.9L          ₹8.5L     ₹42,394                   ₹6,378           ₹63,356            151
+             stripe                                            28            28             ₹3.6L          ₹3.4L     ₹17,093               ₹12,820              ₹57,716             28
+             cash                                              15            21             ₹1.0L       ₹95,601       ₹4,777                   ₹6,692            ₹6,591             21
+             multiple-payment-methods                          12            13             ₹1.8L          ₹1.7L      ₹8,520               ₹14,763              ₹17,545             13
+
+
+        Membership liabilities                                                                                                                                                Collapse
+
+
+        Group by       Product                    + Then by…
+        20 groups / Active global filters apply
+
+
+            Product                                   Transactions    Units sold     Gross revenue      Net of VAT       VAT     Average order value       Discount given       Sample
+
+             Studio Single Class                                36           36          ₹73,815         ₹70,300      ₹3,515                   ₹2,050                    ₹0         38
+             Session                                            37           37             ₹1.1L          ₹1.1L      ₹5,290                   ₹3,002                    ₹0         37
+             Retail - Consumables                               31           34           ₹5,175          ₹4,929       ₹246                     ₹167                     ₹0         34
+             Studio Newcomers 2 For 1                           24           24          ₹48,562         ₹46,250      ₹2,313                   ₹2,023                    ₹0         25
+             Studio 12 Class Package                            15           15             ₹2.6L          ₹2.5L     ₹12,375               ₹17,325              ₹33,750             15
+             Retail - Other Retail                              12           13           ₹2,080          ₹1,981        ₹99                     ₹173                     ₹0         13
+             Studio 10 Class Package                             8           13             ₹2.3L          ₹2.1L     ₹10,823               ₹28,193              ₹24,050             13
+             Studio 1 Month Unlimited                           12           12             ₹2.3L          ₹2.2L     ₹10,987               ₹19,227              ₹11,565             12
+             Studio 4 Class Package                              6            6          ₹41,055         ₹39,100      ₹1,955                   ₹6,842                    ₹0          6
+             Studio 8 Class Package                              4            4          ₹52,460         ₹49,960      ₹2,500               ₹13,115                       ₹0          4
+             Money Credits                                       3            3           ₹2,712          ₹2,712         ₹0                     ₹904                     ₹0          3
+             Retail - Apparel                                    2            3           ₹4,099          ₹3,904       ₹195                    ₹2,049                    ₹0          3
+             Barre 1 month Unlimited                             3            3          ₹44,915         ₹42,776      ₹2,139               ₹14,972               ₹7,549              3
+             Studio 3 Month Unlimited                            1            1          ₹49,177         ₹46,835      ₹2,342               ₹49,177               ₹8,265              1
+             Barre 3 Month Unlimited                             1            1          ₹50,243         ₹47,850      ₹2,393               ₹50,243                       ₹0          1
+             Studio Private Class                                1            1           ₹5,250          ₹5,000       ₹250                    ₹5,250                    ₹0          1
+             Studio 20 Single Class Package                      1            1          ₹31,080         ₹29,600      ₹1,480               ₹31,080               ₹7,400              1
+             Studio Annual Unlimited                             1            1             ₹1.8L          ₹1.7L      ₹8,360                    ₹1.8L           ₹41,800              1
+             Studio Shared 2 Week Unlimited                      1            1          ₹13,650         ₹13,000       ₹650                ₹13,650                       ₹0          1
+             Studio 6 Month Unlimited                            1            1             ₹1.0L        ₹97,470      ₹4,874                    ₹1.0L           ₹10,830              1
+
+
+        Failed and voided transactions                                                                                                                                        Collapse
+
+
+        Group by       Status                     + Then by…
+        0 groups / Active global filters apply
+
+
+            Status              Transactions      Units sold         Gross revenue         Net of VAT        VAT         Average order value            Discount given          Sample
+  Skip to performance data
+        No matching records in this scope.
+
+
+
+
+Physique 57 India · Internal management review                                                                                                                                           9 / 10
+   Query completed in 400ms. 213 contributing rows. Amounts in INR. Opportunity values assume observed yield; they are not recoverable revenue forecasts.
+
+
+   Operational insights
+
+
+
+
+Physique 57 India · Internal management review                                                                                                              10 / 10
+
