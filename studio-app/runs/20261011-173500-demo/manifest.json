@@ -9,1829 +9,1017 @@
  "chapters": [
   {
    "id": "overview",
-   "n": 7,
+   "n": 1,
    "title": "Studio Management Scorecard",
-   "kpis": [
-    {
-     "label": "Classes",
-     "value": "259",
-     "detail": "1,404 attendances",
-     "tone": "neu"
-    },
-    {
-     "label": "Utilisation",
-     "value": "42.6%",
-     "detail": "85% of cash delivered",
-     "tone": "neu"
-    },
-    {
-     "label": "Cash",
-     "value": "₹15,29,410",
-     "detail": "139 buyers",
-     "tone": "neu"
-    },
-    {
-     "label": "Visits per member",
-     "value": "3.56",
-     "detail": "394 members",
-     "tone": "neu"
-    }
-   ],
+   "kpis": [],
    "facts": [
-    "Connecting commercial outcomes with the behaviours that drive them. September's results show a studio reaching more customers but generating fewer visits per person. Sales revenue stood at ₹15.29 lakh, while 259 classes produced 1,404 attendances and ₹13.06 lakh in recorded class revenue. Overall utilisation reached 42.6%. The contrast between customer growth and declining visit frequency is particularly significant. The number of attending members increased from 305 to 394 year-on-year, while average attendance per member fell from 4.84 to 3.56. The 78 customers who attended in both comparison months recorded 252 fewer visits this September. The studio received 189 September leads. Historical open-pipeline volume cannot be verified from the available frozen lead population. These findings point to three distinct management priorities: - Customer engagement: Rebuild visit frequency, particularly among established customers showing declining attendance. - Operational productivity: Improve the conversion of scheduled capacity into booked and attended places. - Commercial conversion: Improve lead progression, purchasing continuity and renewal ownership. The studio should assess these priorities together rather than treating sales, attendance and acquisition as independent performance measures."
+    "Margin is improving. Revenue attributed to attended classes rose from ₹9,81,453 to ₹13,06,451 on\n14 fewer classes, and revenue per class rose from ₹3,595 to ₹5,044 . Revenue per attendance rose from ₹665 to ₹931. The average September buyer\nspent ₹11,003 against ₹10,432 a year ago.",
+    "Discipline is improving. Late cancellations fell from 658 to 199, and the share of the board that was ever\nbooked at all fell from 60.5% to 48.7% — which sounds like bad news\nand is, but it is honest news: the studio is no longer counting seats nobody intended to use.",
+    "Acquisition has stalled. Bandra created 189 leads in September 2026, against a 2026 monthly average of\n211 and a 2025 average of 198. Of every lead the studio has ever recorded for this location, 12.9% became a member and 18.4% are retained today.",
+    "Frequency has never been managed. 327 memberships are live, worth ₹85,62,873 of recorded cash. 117 of those members, holding ₹23,65,012, have not been in the studio for fifteen days or more. No one is currently responsible for that list,\nand it is the largest recoverable number in this report."
    ],
-   "subtitle": "September's performance was constrained more by engagement and operating efficiency than by customer reach alone.",
+   "subtitle": "Source-reconciled September chapter; historical populations are separately labelled.",
    "recs_extra": [],
-   "depth": 26851,
+   "depth": 86597,
    "narrative_version": 3,
    "sections": [
     {
      "n": 1,
      "id": "sec-overview-1",
-     "title": "What the numbers reveal",
-     "slug": "sec-overview-1"
+     "title": "Start here"
     },
     {
      "n": 2,
      "id": "sec-overview-2",
-     "title": "Same-month comparisons across years",
-     "slug": "sec-overview-2"
+     "title": "The year in numbers"
     },
     {
      "n": 3,
      "id": "sec-overview-3",
-     "title": "The member base",
-     "slug": "sec-overview-3"
+     "title": "The member base"
     },
     {
      "n": 4,
      "id": "sec-overview-4",
-     "title": "The Returning Core: 252 Fewer Visits from the Same 78 People",
-     "slug": "sec-overview-4"
+     "title": "The returning core"
     },
     {
      "n": 5,
      "id": "sec-overview-5",
-     "title": "September purchase-cohort status",
-     "slug": "sec-overview-5"
+     "title": "What the memberships look like"
     },
     {
      "n": 6,
      "id": "sec-overview-6",
-     "title": "Newcomers and lead progression",
-     "slug": "sec-overview-6"
+     "title": "The acquisition engine"
     },
     {
      "n": 7,
      "id": "sec-overview-7",
-     "title": "Who handles the leads",
-     "slug": "sec-overview-7"
+     "title": "The funnel, end to end"
     },
     {
      "n": 8,
      "id": "sec-overview-8",
-     "title": "Sales mix",
-     "slug": "sec-overview-8"
+     "title": "Who handles the leads"
     },
     {
      "n": 9,
      "id": "sec-overview-9",
-     "title": "The room",
-     "slug": "sec-overview-9"
+     "title": "The book that is already sold"
     },
     {
      "n": 10,
      "id": "sec-overview-10",
-     "title": "Purchased access and expiry dates",
-     "slug": "sec-overview-10"
+     "title": "Where the money comes from"
     },
     {
      "n": 11,
      "id": "sec-overview-11",
-     "title": "What September Establishes—and What Still Needs Investigation",
-     "slug": "sec-overview-11"
+     "title": "The room"
     },
     {
      "n": 12,
      "id": "sec-overview-12",
-     "title": "Supporting tables",
-     "slug": "sec-overview-12"
+     "title": "What the data is telling the studio"
     },
     {
      "n": 13,
      "id": "sec-overview-13",
-     "title": "Method and limitations",
-     "slug": "sec-overview-13"
+     "title": "1. Twelve-month view"
     },
     {
      "n": 14,
      "id": "sec-overview-14",
-     "title": "Commercial implication",
-     "slug": "sec-overview-14"
+     "title": "2. Year to date"
     },
     {
      "n": 15,
-     "id": "recommendations",
-     "title": "Recommended response",
-     "slug": "recommendations"
+     "id": "sec-overview-15",
+     "title": "Recommendations"
     }
    ],
-   "summary": "Connecting commercial outcomes with the behaviours that drive them. September's results show a studio reaching more customers but generating fewer visits per person. Sales revenue stood at ₹15.29 lakh, while 259 classes produced 1,404 attendances and ₹13.06 lakh in recorded class revenue. Overall utilisation reached 42.6%. The contrast between customer growth and declining visit frequency is particularly significant. The number of attending members increased from 305 to 394 year-on-year, while average attendance per member fell from 4.84 to 3.56. The 78 customers who attended in both comparison months recorded 252 fewer visits this September. The studio received 189 September leads. Historical open-pipeline volume cannot be verified from the available frozen lead population. These findings point to three distinct management priorities: - Customer engagement: Rebuild visit frequency, particularly among established customers showing declining attendance. - Operational productivity: Improve the conversion of scheduled capacity into booked and attended places. - Commercial conversion: Improve lead progression, purchasing continuity and renewal ownership. The studio should assess these priorities together rather than treating sales, attendance and acquisition as independent performance measures.",
-   "narration": "Connecting commercial outcomes with the behaviours that drive them. September's results show a studio reaching more customers but generating fewer visits per person. Sales revenue stood at ₹15.29 lakh, while 259 classes produced 1,404 attendances and ₹13.06 lakh in recorded class revenue. Overall utilisation reached 42.6%. The contrast between customer growth and declining visit frequency is particularly significant. The number of attending members increased from 305 to 394 year-on-year, while average attendance per member fell from 4.84 to 3.56. The 78 customers who attended in both comparison months recorded 252 fewer visits this September. The studio received 189 September leads. Historical open-pipeline volume cannot be verified from the available frozen lead population. These findings point to three distinct management priorities: - Customer engagement: Rebuild visit frequency, particularly among established customers showing declining attendance. - Operational productivity: Improve the conversion of scheduled capacity into booked and attended places. - Commercial conversion: Improve lead progression, purchasing continuity and renewal ownership. The studio should assess these priorities together rather than treating sales, attendance and acquisition as independent performance measures.",
-   "recs": [
-    [
-     1,
-     "September's performance was constrained more by engagement and operating efficiency than by customer reach alone.",
-     "Studio Management + CST",
-     "Connecting commercial outcomes with the behaviours that drive them. September's results show a studio reaching more customers but generating fewer visits per person. Sales revenue stood at ₹15.29 lakh, while 259 classes produced 1,404 attendances and ₹13.06 lakh in recorded class revenue. Overall utilisation reached 42.6%. The contrast between cust",
-     "Track the relevant attendance, purchasing or conversion metric over a comparable cohort. No uplift is assumed."
-    ]
-   ],
+   "summary": "Margin is improving. Revenue attributed to attended classes rose from ₹9,81,453 to ₹13,06,451 on\n14 fewer classes, and revenue per class rose from ₹3,595 to ₹5,044 . Revenue per attendance rose from ₹665 to ₹931. The average September buyer\nspent ₹11,003 against ₹10,432 a year ago.",
+   "narration": "Margin is improving. Revenue attributed to attended classes rose from ₹9,81,453 to ₹13,06,451 on\n14 fewer classes, and revenue per class rose from ₹3,595 to ₹5,044 . Revenue per attendance rose from ₹665 to ₹931. The average September buyer\nspent ₹11,003 against ₹10,432 a year ago.",
+   "recs": [],
    "summary_ai": "",
-   "speaker_notes": {
-    "sec-overview-1": [
-     "Lead with: What the numbers reveal",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-overview-2": [
-     "Lead with: Same-month comparisons across years",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-overview-3": [
-     "Lead with: The member base",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-overview-4": [
-     "Lead with: The Returning Core: 252 Fewer Visits from the Same 78 People",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-overview-5": [
-     "Lead with: September purchase-cohort status",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-overview-6": [
-     "Lead with: Newcomers and lead progression",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-overview-7": [
-     "Lead with: Who handles the leads",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-overview-8": [
-     "Lead with: Sales mix",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-overview-9": [
-     "Lead with: The room",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-overview-10": [
-     "Lead with: Purchased access and expiry dates",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-overview-11": [
-     "Lead with: What September Establishes—and What Still Needs Investigation",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-overview-12": [
-     "Lead with: Supporting tables",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-overview-13": [
-     "Lead with: Method and limitations",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-overview-14": [
-     "Lead with: Commercial implication",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "recommendations": [
-     "Lead with: Recommended response",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ]
-   },
+   "speaker_notes": [],
    "slug": "studio-overview-and-intelligence",
-   "editorial_version": "bandra-review-v1"
+   "editorial_version": "bandra-source-reconciliation-v1",
+   "source_reference": "Bandra_September_2026_7_Studio_Overview.html",
+   "source_sha256": "19d64c538dd68faee0c509f82e3811a9b6208cd559d6d8759af11d1faab76261"
   },
   {
    "id": "sales",
-   "n": 1,
+   "n": 2,
    "title": "Sales & Revenue Health",
    "kpis": [
     {
-     "label": "Sales revenue",
+     "label": "Cash received",
      "value": "₹15,29,410",
-     "detail": "-2.3% on September 2025",
-     "tone": "neg"
-    },
-    {
-     "label": "Transactions",
-     "value": "196",
-     "detail": "139 buyers",
+     "detail": "▼ 2.3% against September 2025 — the till held",
      "tone": "neu"
     },
     {
-     "label": "Average buyer",
+     "label": "Transactions",
+     "value": "195",
+     "detail": "from 139 paying members — 93% of last September's paying base",
+     "tone": "neu"
+    },
+    {
+     "label": "Average order value",
+     "value": "₹7,843",
+     "detail": "▼ ₹60 against the HTML’s prior-year ₹7,903; prior-year definition unverified",
+     "tone": "neu"
+    },
+    {
+     "label": "Revenue per buyer",
      "value": "₹11,003",
-     "detail": "+5.5% on the year",
-     "tone": "pos"
+     "detail": "Gross collections / 139 unique buyers",
+     "tone": "neu"
+    },
+    {
+     "label": "Memberships",
+     "value": "43.6%",
+     "detail": "of cash — still the largest line, but the mix inside it has shortened",
+     "tone": "neu"
+    },
+    {
+     "label": "Class packages",
+     "value": "39.9%",
+     "detail": "▲ +₹14,035 on the year",
+     "tone": "neu"
     },
     {
      "label": "Discount given",
      "value": "₹1,45,209",
-     "detail": "9% of gross",
+     "detail": "8.7% of list value, on 31 distinct sales out of 195",
+     "tone": "neu"
+    },
+    {
+     "label": "From new clients",
+     "value": "19.6%",
+     "detail": "only ₹3,00,229 came from members making their first-ever Bandra purchase",
+     "tone": "neu"
+    },
+    {
+     "label": "Net of VAT",
+     "value": "₹14,56,626",
+     "detail": "PDF page 1",
+     "tone": "neu"
+    },
+    {
+     "label": "VAT",
+     "value": "₹72,784",
+     "detail": "Gross less net of VAT",
+     "tone": "neu"
+    },
+    {
+     "label": "Units sold",
+     "value": "210",
+     "detail": "Quantity; not transaction count",
+     "tone": "neu"
+    },
+    {
+     "label": "Deferred balance",
+     "value": "₹2,712",
+     "detail": "PDF-reported balance; not inferred from attendance",
      "tone": "neu"
     }
    ],
    "facts": [
-    "Higher spend per buyer helped offset a decline in purchasing customers. September closed at ₹15,29,410 across 196 distinct transactions (213 sale lines) from 139 unique buyers. Revenue declined by ₹35,322 (2.3%) compared with September 2025, while the number of buyers fell from 150 to 139. Average spend per buyer increased from ₹10,432 to ₹11,003, suggesting that higher individual purchasing helped cushion the reduction in customer volume. Memberships and Class Packages generated ₹12.77 lakh collectively, contributing approximately 83% of monthly sales revenue. The studio remains commercially dependent on converting customer interest into these two core product categories. The more important question is not simply how to increase monthly sales, but how to grow the number of purchasing customers while improving the consistency and quality of their subsequent purchases. Commercial implication: Protect the existing purchasing base, strengthen repeat-purchase opportunities and monitor whether customers are progressing towards longer-term commitments or relying increasingly on smaller, shorter-duration products."
+    "Scope: Supreme HQ, Bandra, 1–30 September 2026. The supplied Atlas PDF (pages 1–9) governs overlapping sales metrics; the supplied HTML retains historical, attendance, cohort and salesperson detail absent from the PDF. Where they conflict, the PDF’s explicit distinct-sale and quantity definitions take precedence. No new source data has been substituted.",
+    "195 distinct sales · 210 units · 213 contributing payment rows · 139 unique buyers. Counts by product/category can overlap; never sum grouped distinct-sale or buyer counts to obtain the overall population. PDF lakh labels remain rounded where no exact value is supplied. HTML-only evidence is identified below.",
+    "September 2026 banked ₹15,29,410 across 195 distinct transactions — a fall of just 2.3% on September 2025 and, read on its own, an unremarkable month. Average order value is ₹7,843 (gross collections / 195 distinct sales). The HTML’s prior-year average is ₹7,903; its median comparison is retained as HTML-only evidence, not verified by the PDF. On the headline numbers this is a steady month.",
+    "Three things underneath it are not steady, and they are what this report is about."
    ],
-   "subtitle": "Revenue held relatively steady. The purchasing base became smaller.",
+   "subtitle": "Source-reconciled September chapter; historical populations are separately labelled.",
    "recs_extra": [],
-   "depth": 86892,
+   "depth": 104319,
    "narrative_version": 3,
    "sections": [
     {
      "n": 1,
      "id": "sec-sales-1",
-     "title": "What the numbers reveal",
-     "slug": "sec-sales-1"
+     "title": "Start here"
     },
     {
      "n": 2,
      "id": "sec-sales-2",
-     "title": "Member count and visit frequency",
-     "slug": "sec-sales-2"
+     "title": "The base is widening"
     },
     {
      "n": 3,
      "id": "sec-sales-3",
-     "title": "Returning Members and Visit Frequency",
-     "slug": "sec-sales-3"
+     "title": "The loyal core halved its frequency"
     },
     {
      "n": 4,
      "id": "sec-sales-4",
-     "title": "Revenue Mix: Which Products Sustained September?",
-     "slug": "sec-sales-4"
+     "title": "Where the money came from"
     },
     {
      "n": 5,
      "id": "sec-sales-5",
-     "title": "Are Customers Committing to Less?",
-     "slug": "sec-sales-5"
+     "title": "Source performance register"
     },
     {
      "n": 6,
      "id": "sec-sales-6",
-     "title": "Product Pricing: Value, Commitment and Purchase Behaviour",
-     "slug": "sec-sales-6"
+     "title": "The commitment-length problem"
     },
     {
      "n": 7,
      "id": "sec-sales-7",
-     "title": "Revenue Timing: When Did Customers Buy?",
-     "slug": "sec-sales-7"
+     "title": "Pricing and the product ladder"
     },
     {
      "n": 8,
      "id": "sec-sales-8",
-     "title": "Transaction Value and Repeat Purchasing",
-     "slug": "sec-sales-8"
+     "title": "Trading pattern through the year"
     },
     {
      "n": 9,
      "id": "sec-sales-9",
-     "title": "Sales Contribution by Associate",
-     "slug": "sec-sales-9"
+     "title": "Month-by-month source scorecard"
     },
     {
      "n": 10,
      "id": "sec-sales-10",
-     "title": "Discount Dependency and Revenue Protection",
-     "slug": "sec-sales-10"
+     "title": "How September was paid for"
     },
     {
      "n": 11,
      "id": "sec-sales-11",
-     "title": "How members paid",
-     "slug": "sec-sales-11"
+     "title": "Who sold it"
     },
     {
      "n": 12,
      "id": "sec-sales-12",
-     "title": "Customer Concentration: Who Sustains Revenue?",
-     "slug": "sec-sales-12"
+     "title": "Discounting"
     },
     {
      "n": 13,
      "id": "sec-sales-13",
-     "title": "Retail",
-     "slug": "sec-sales-13"
+     "title": "How the money arrived"
     },
     {
      "n": 14,
      "id": "sec-sales-14",
-     "title": "First Purchase Behaviour and Long-Term Customer Value",
-     "slug": "sec-sales-14"
+     "title": "Who the money came from"
     },
     {
      "n": 15,
      "id": "sec-sales-15",
-     "title": "Other explanations to check",
-     "slug": "sec-sales-15"
+     "title": "Retail"
     },
     {
      "n": 16,
      "id": "sec-sales-16",
-     "title": "Supporting tables",
-     "slug": "sec-sales-16"
+     "title": "What the first purchase predicts"
     },
     {
      "n": 17,
      "id": "sec-sales-17",
-     "title": "Method and limitations",
-     "slug": "sec-sales-17"
+     "title": "Observed membership upgrades"
     },
     {
      "n": 18,
      "id": "sec-sales-18",
-     "title": "Commercial implication",
-     "slug": "sec-sales-18"
+     "title": "Annual and private member purchases"
     },
     {
      "n": 19,
-     "id": "recommendations",
-     "title": "Recommended response",
-     "slug": "recommendations"
+     "id": "sec-sales-19",
+     "title": "24. Cash reconciliation"
+    },
+    {
+     "n": 20,
+     "id": "sec-sales-20",
+     "title": "Recommendations"
+    },
+    {
+     "n": 21,
+     "id": "sec-sales-21",
+     "title": "Method and limitations"
     }
    ],
-   "summary": "Higher spend per buyer helped offset a decline in purchasing customers. September closed at ₹15,29,410 across 196 distinct transactions (213 sale lines) from 139 unique buyers. Revenue declined by ₹35,322 (2.3%) compared with September 2025, while the number of buyers fell from 150 to 139. Average spend per buyer increased from ₹10,432 to ₹11,003, suggesting that higher individual purchasing helped cushion the reduction in customer volume. Memberships and Class Packages generated ₹12.77 lakh collectively, contributing approximately 83% of monthly sales revenue. The studio remains commercially dependent on converting customer interest into these two core product categories. The more important question is not simply how to increase monthly sales, but how to grow the number of purchasing customers while improving the consistency and quality of their subsequent purchases. Commercial implication: Protect the existing purchasing base, strengthen repeat-purchase opportunities and monitor whether customers are progressing towards longer-term commitments or relying increasingly on smaller, shorter-duration products.",
-   "narration": "Higher spend per buyer helped offset a decline in purchasing customers. September closed at ₹15,29,410 across 196 distinct transactions (213 sale lines) from 139 unique buyers. Revenue declined by ₹35,322 (2.3%) compared with September 2025, while the number of buyers fell from 150 to 139. Average spend per buyer increased from ₹10,432 to ₹11,003, suggesting that higher individual purchasing helped cushion the reduction in customer volume. Memberships and Class Packages generated ₹12.77 lakh collectively, contributing approximately 83% of monthly sales revenue. The studio remains commercially dependent on converting customer interest into these two core product categories. The more important question is not simply how to increase monthly sales, but how to grow the number of purchasing customers while improving the consistency and quality of their subsequent purchases. Commercial implication: Protect the existing purchasing base, strengthen repeat-purchase opportunities and monitor whether customers are progressing towards longer-term commitments or relying increasingly on smaller, shorter-duration products.",
-   "recs": [
-    [
-     1,
-     "Revenue held relatively steady. The purchasing base became smaller.",
-     "Studio Management + CST",
-     "Higher spend per buyer helped offset a decline in purchasing customers. September closed at ₹15,29,410 across 196 distinct transactions (213 sale lines) from 139 unique buyers. Revenue declined by ₹35,322 (2.3%) compared with September 2025, while the number of buyers fell from 150 to 139. Average spend per buyer increased from ₹10,432 to ₹11,003, ",
-     "Track the relevant attendance, purchasing or conversion metric over a comparable cohort. No uplift is assumed."
-    ]
-   ],
+   "summary": "Scope: Supreme HQ, Bandra, 1–30 September 2026. The supplied Atlas PDF (pages 1–9) governs overlapping sales metrics; the supplied HTML retains historical, attendance, cohort and salesperson detail absent from the PDF. Where they conflict, the PDF’s explicit distinct-sale and quantity definitions take precedence. No new source data has been substituted.",
+   "narration": "Scope: Supreme HQ, Bandra, 1–30 September 2026. The supplied Atlas PDF (pages 1–9) governs overlapping sales metrics; the supplied HTML retains historical, attendance, cohort and salesperson detail absent from the PDF. Where they conflict, the PDF’s explicit distinct-sale and quantity definitions take precedence. No new source data has been substituted.",
+   "recs": [],
    "summary_ai": "",
-   "speaker_notes": {
-    "sec-sales-1": [
-     "Lead with: What the numbers reveal",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-sales-2": [
-     "Lead with: Member count and visit frequency",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-sales-3": [
-     "Lead with: Returning Members and Visit Frequency",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-sales-4": [
-     "Lead with: Revenue Mix: Which Products Sustained September?",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-sales-5": [
-     "Lead with: Are Customers Committing to Less?",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-sales-6": [
-     "Lead with: Product Pricing: Value, Commitment and Purchase Behaviour",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-sales-7": [
-     "Lead with: Revenue Timing: When Did Customers Buy?",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-sales-8": [
-     "Lead with: Transaction Value and Repeat Purchasing",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-sales-9": [
-     "Lead with: Sales Contribution by Associate",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-sales-10": [
-     "Lead with: Discount Dependency and Revenue Protection",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-sales-11": [
-     "Lead with: How members paid",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-sales-12": [
-     "Lead with: Customer Concentration: Who Sustains Revenue?",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-sales-13": [
-     "Lead with: Retail",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-sales-14": [
-     "Lead with: First Purchase Behaviour and Long-Term Customer Value",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-sales-15": [
-     "Lead with: Other explanations to check",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-sales-16": [
-     "Lead with: Supporting tables",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-sales-17": [
-     "Lead with: Method and limitations",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-sales-18": [
-     "Lead with: Commercial implication",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "recommendations": [
-     "Lead with: Recommended response",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ]
-   },
+   "speaker_notes": [],
    "slug": "sales-performance",
-   "editorial_version": "bandra-review-v1"
+   "editorial_version": "bandra-source-reconciliation-v1",
+   "source_reference": "Bandra_September_2026_1_Sales_Performance.html",
+   "source_sha256": "6f28c5644e1e3666be68c764f713dcec353a9bd36e009bbaf0087800599e77e6"
   },
   {
    "id": "class",
-   "n": 2,
+   "n": 3,
    "title": "Class Demand & Capacity Utilisation",
    "kpis": [
     {
-     "label": "Classes taught",
+     "label": "Classes run",
      "value": "259",
-     "detail": "-14 on last year",
+     "detail": "▼ 5.1% against September 2025 — fewer, fuller classes",
      "tone": "neu"
     },
     {
-     "label": "Utilisation",
+     "label": "Capacity utilisation",
      "value": "42.6%",
-     "detail": "+0.8 points",
-     "tone": "pos"
+     "detail": "▲ from 41.8% — the best of the three Septembers",
+     "tone": "neu"
     },
     {
      "label": "Attendances",
      "value": "1,404",
-     "detail": "88% of booked seats",
+     "detail": "▼ 4.9% on the year",
+     "tone": "neu"
+    },
+    {
+     "label": "Class revenue",
+     "value": "₹13,06,451",
+     "detail": "▲ 33% — the only line in the studio that grew",
      "tone": "neu"
     },
     {
      "label": "Revenue per class",
      "value": "₹5,044",
-     "detail": "₹931 per attendance",
+     "detail": "▲ from ₹3,595 — up 40%",
+     "tone": "neu"
+    },
+    {
+     "label": "Revenue per attendee",
+     "value": "₹931",
+     "detail": "▲ from ₹665 — members are on richer plans",
+     "tone": "neu"
+    },
+    {
+     "label": "Empty sessions",
+     "value": "11",
+     "detail": "14 last September — but 49 ran to two people or fewer",
+     "tone": "neu"
+    },
+    {
+     "label": "Late cancellations",
+     "value": "199",
+     "detail": "↓ 12.5 points year on year",
      "tone": "neu"
     }
    ],
    "facts": [
-    "Only 43% of available class capacity translated into attendance. September delivered 259 classes, offering 3,293 available seats and recording 1,404 attendances. Overall utilisation reached 42.6%, compared with 41.8% in September 2025. This modest improvement should be viewed alongside the reduction in scheduled classes, from 273 to 259 year-on-year. The booking funnel reveals two separate opportunities. Of 1,604 recorded bookings, 1,404 resulted in attendance. There were 1,689 places without a recorded booking and 1,889 unoccupied places in total. Of the 200 bookings that did not convert into attendance, 199 were recorded as late cancellations; one booking was neither attended nor recorded as late-cancelled. This distinction is commercially important. Improving booking conversion and recovering cancellations can increase realised attendance, but neither replaces the need to address substantial unbooked capacity. Operational implication: The studio needs to manage three different outcomes independently: attracting bookings into available classes, improving attendance against confirmed bookings and ensuring the timetable reflects actual customer demand."
+    "Class performance is the one part of Bandra’s September that improved on nearly every measure, and it deserves to be said clearly before the problems. The studio ran 259 classes against 273 a year earlier — a leaner timetable — and filled 42.6% of the seats against 41.8% . Revenue attributed to attended classes rose from ₹9,81,453 to ₹13,06,451 , up 33%, making it the only revenue line in the studio that grew. Revenue per class rose 40% to ₹5,044; revenue per attendee rose from ₹665 to ₹931. Late cancellations fell from 658 to 199.",
+    "Every one of those is a genuine operational gain, and two Septembers of improvement in a row — from 27.3% in 2024 to 41.8% to 42.6% — is a trend rather than noise.",
+    "What the same numbers also show is a large and specific inefficiency that has been carried for three years without being addressed. The studio holds a fixed-cost timetable and fills just over two seats in five. In September 2026 it offered 3,293 seats and used 1,404 of them. The unused 1,889 seats are not evenly spread: they are concentrated in particular formats, particular days and particular hours, and the concentration is stable enough across two years to be treated as a design flaw rather than a bad month.",
+    "The single most useful sentence in this report is this: Studio PowerCycle runs 35% of the timetable and fills 35.0% of it, while Studio FIT runs 15% of the timetable and fills 71.0%. Both are good products with loyal followings. Only one of them is being given the right amount of the week."
    ],
-   "subtitle": "The timetable has capacity. The challenge is filling it consistently.",
+   "subtitle": "Source-reconciled September chapter; historical populations are separately labelled.",
    "recs_extra": [],
-   "depth": 98325,
+   "depth": 116786,
    "narrative_version": 3,
    "sections": [
     {
      "n": 1,
      "id": "sec-class-1",
-     "title": "What the numbers reveal",
-     "slug": "sec-class-1"
+     "title": "Start here"
     },
     {
      "n": 2,
      "id": "sec-class-2",
-     "title": "Attendance changed with the timetable",
-     "slug": "sec-class-2"
+     "title": "The loyal core halved its frequency"
     },
     {
      "n": 3,
      "id": "sec-class-3",
-     "title": "Bookings, attendance and no-shows",
-     "slug": "sec-class-3"
+     "title": "Nobody was lost. Nothing was converted."
     },
     {
      "n": 4,
      "id": "sec-class-4",
-     "title": "Capacity Is Available, but Demand Is Unevenly Distributed",
-     "slug": "sec-class-4"
+     "title": "What the booking book says"
     },
     {
      "n": 5,
      "id": "sec-class-5",
-     "title": "Complimentary attendance",
-     "slug": "sec-class-5"
+     "title": "The room is bigger than the demand"
     },
     {
      "n": 6,
      "id": "sec-class-6",
-     "title": "Newcomers and conversion",
-     "slug": "sec-class-6"
+     "title": "16 per cent of the room was free"
     },
     {
      "n": 7,
      "id": "sec-class-7",
-     "title": "Format by format",
-     "slug": "sec-class-7"
+     "title": "Who a first class brings in — and whether they come back"
     },
     {
      "n": 8,
      "id": "sec-class-8",
-     "title": "The hours members attend",
-     "slug": "sec-class-8"
+     "title": "Format by format"
     },
     {
      "n": 9,
      "id": "sec-class-9",
-     "title": "Underperforming Classes: Where Capacity Is Being Lost",
-     "slug": "sec-class-9"
+     "title": "When the studio is busy"
     },
     {
      "n": 10,
      "id": "sec-class-10",
-     "title": "Attendance across the month",
-     "slug": "sec-class-10"
+     "title": "The classes nobody came to"
     },
     {
      "n": 11,
      "id": "sec-class-11",
-     "title": "Delivered session revenue",
-     "slug": "sec-class-11"
+     "title": "The month within the month"
     },
     {
      "n": 12,
      "id": "sec-class-12",
-     "title": "Signature partnership experiences",
-     "slug": "sec-class-12"
+     "title": "How the room pays for itself"
     },
     {
      "n": 13,
      "id": "sec-class-13",
-     "title": "Other explanations to check",
-     "slug": "sec-class-13"
+     "title": "Hosted and partner classes"
     },
     {
      "n": 14,
      "id": "sec-class-14",
-     "title": "Supporting tables",
-     "slug": "sec-class-14"
+     "title": "3b. Canonical basis"
     },
     {
      "n": 15,
      "id": "sec-class-15",
-     "title": "Method and limitations",
-     "slug": "sec-class-15"
+     "title": "3c. Gap decomposition"
     },
     {
      "n": 16,
      "id": "sec-class-16",
-     "title": "Commercial implication",
-     "slug": "sec-class-16"
+     "title": "5. Driver table"
     },
     {
      "n": 17,
-     "id": "recommendations",
-     "title": "Recommended response",
-     "slug": "recommendations"
+     "id": "sec-class-17",
+     "title": "6. Correlations"
+    },
+    {
+     "n": 18,
+     "id": "sec-class-18",
+     "title": "7. Festival phases"
+    },
+    {
+     "n": 19,
+     "id": "sec-class-19",
+     "title": "Recommendations"
+    },
+    {
+     "n": 20,
+     "id": "sec-class-20",
+     "title": "Method and limitations"
     }
    ],
-   "summary": "Only 43% of available class capacity translated into attendance. September delivered 259 classes, offering 3,293 available seats and recording 1,404 attendances. Overall utilisation reached 42.6%, compared with 41.8% in September 2025. This modest improvement should be viewed alongside the reduction in scheduled classes, from 273 to 259 year-on-year. The booking funnel reveals two separate opportunities. Of 1,604 recorded bookings, 1,404 resulted in attendance. There were 1,689 places without a recorded booking and 1,889 unoccupied places in total. Of the 200 bookings that did not convert into attendance, 199 were recorded as late cancellations; one booking was neither attended nor recorded as late-cancelled. This distinction is commercially important. Improving booking conversion and recovering cancellations can increase realised attendance, but neither replaces the need to address substantial unbooked capacity. Operational implication: The studio needs to manage three different outcomes independently: attracting bookings into available classes, improving attendance against confirmed bookings and ensuring the timetable reflects actual customer demand.",
-   "narration": "Only 43% of available class capacity translated into attendance. September delivered 259 classes, offering 3,293 available seats and recording 1,404 attendances. Overall utilisation reached 42.6%, compared with 41.8% in September 2025. This modest improvement should be viewed alongside the reduction in scheduled classes, from 273 to 259 year-on-year. The booking funnel reveals two separate opportunities. Of 1,604 recorded bookings, 1,404 resulted in attendance. There were 1,689 places without a recorded booking and 1,889 unoccupied places in total. Of the 200 bookings that did not convert into attendance, 199 were recorded as late cancellations; one booking was neither attended nor recorded as late-cancelled. This distinction is commercially important. Improving booking conversion and recovering cancellations can increase realised attendance, but neither replaces the need to address substantial unbooked capacity. Operational implication: The studio needs to manage three different outcomes independently: attracting bookings into available classes, improving attendance against confirmed bookings and ensuring the timetable reflects actual customer demand.",
-   "recs": [
-    [
-     1,
-     "The timetable has capacity. The challenge is filling it consistently.",
-     "Studio Management + CST",
-     "Only 43% of available class capacity translated into attendance. September delivered 259 classes, offering 3,293 available seats and recording 1,404 attendances. Overall utilisation reached 42.6%, compared with 41.8% in September 2025. This modest improvement should be viewed alongside the reduction in scheduled classes, from 273 to 259 year-on-yea",
-     "Track the relevant attendance, purchasing or conversion metric over a comparable cohort. No uplift is assumed."
-    ]
-   ],
+   "summary": "Class performance is the one part of Bandra’s September that improved on nearly every measure, and it deserves to be said clearly before the problems. The studio ran 259 classes against 273 a year earlier — a leaner timetable — and filled 42.6% of the seats against 41.8% . Revenue attributed to attended classes rose from ₹9,81,453 to ₹13,06,451 , up 33%, making it the only revenue line in the studio that grew. Revenue per class rose 40% to ₹5,044; revenue per attendee rose from ₹665 to ₹931. Late cancellations fell from 658 to 199.",
+   "narration": "Class performance is the one part of Bandra’s September that improved on nearly every measure, and it deserves to be said clearly before the problems. The studio ran 259 classes against 273 a year earlier — a leaner timetable — and filled 42.6% of the seats against 41.8% . Revenue attributed to attended classes rose from ₹9,81,453 to ₹13,06,451 , up 33%, making it the only revenue line in the studio that grew. Revenue per class rose 40% to ₹5,044; revenue per attendee rose from ₹665 to ₹931. Late cancellations fell from 658 to 199.",
+   "recs": [],
    "summary_ai": "",
-   "speaker_notes": {
-    "sec-class-1": [
-     "Lead with: What the numbers reveal",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-class-2": [
-     "Lead with: Attendance changed with the timetable",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-class-3": [
-     "Lead with: Bookings, attendance and no-shows",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-class-4": [
-     "Lead with: Capacity Is Available, but Demand Is Unevenly Distributed",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-class-5": [
-     "Lead with: Complimentary attendance",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-class-6": [
-     "Lead with: Newcomers and conversion",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-class-7": [
-     "Lead with: Format by format",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-class-8": [
-     "Lead with: The hours members attend",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-class-9": [
-     "Lead with: Underperforming Classes: Where Capacity Is Being Lost",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-class-10": [
-     "Lead with: Attendance across the month",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-class-11": [
-     "Lead with: Delivered session revenue",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-class-12": [
-     "Lead with: Signature partnership experiences",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-class-13": [
-     "Lead with: Other explanations to check",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-class-14": [
-     "Lead with: Supporting tables",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-class-15": [
-     "Lead with: Method and limitations",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-class-16": [
-     "Lead with: Commercial implication",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "recommendations": [
-     "Lead with: Recommended response",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ]
-   },
+   "speaker_notes": [],
    "slug": "class-performance",
-   "editorial_version": "bandra-review-v1"
+   "editorial_version": "bandra-source-reconciliation-v1",
+   "source_reference": "Bandra_September_2026_2_Class_Performance.html",
+   "source_sha256": "1c08a500b152c6edd8b113dbf8bc5e3718d7b0245fcedff61553e00b461e3c16"
   },
   {
    "id": "instructor",
-   "n": 3,
+   "n": 4,
    "title": "Instructor Contribution & Effectiveness",
-   "kpis": [
-    {
-     "label": "Trainers",
-     "value": "14",
-     "detail": "259 classes",
-     "tone": "neu"
-    },
-    {
-     "label": "Utilisation spread",
-     "value": "2.2×",
-     "detail": "29% to 63%",
-     "tone": "neg"
-    },
-    {
-     "label": "Revenue per attendee",
-     "value": "₹931",
-     "detail": "flat, whatever the room size",
-     "tone": "neu"
-    },
-    {
-     "label": "Empty classes",
-     "value": "11",
-     "detail": "4.2% of all classes",
-     "tone": "neg"
-    }
-   ],
-   "facts": [
-    "Assessing contribution beyond headline utilisation. Fourteen instructors collectively delivered 259 classes, generating 1,404 attendances and ₹13.06 lakh in recorded class revenue. Instructor-level utilisation ranged from 29.1% to 62.7%, demonstrating a substantial spread in attendance outcomes. However, these differences should not be interpreted as direct measures of teaching effectiveness. Individual results are influenced by the formats assigned, class frequency, timetable placement, available capacity and the customer groups attending each session. A meaningful assessment must therefore consider both absolute contribution and performance within comparable scheduling conditions. Management priority: Identify which instructors perform consistently well within specific formats and time slots, where additional support may improve results and where timetable allocation is affecting the fairness of existing performance comparisons."
-   ],
-   "subtitle": "Instructor results vary significantly. The timetable must be part of the comparison.",
+   "kpis": [],
+   "facts": [],
+   "subtitle": "Source-reconciled September chapter; historical populations are separately labelled.",
    "recs_extra": [],
-   "depth": 84937,
+   "depth": 528,
    "narrative_version": 3,
-   "sections": [
-    {
-     "n": 1,
-     "id": "sec-instructor-1",
-     "title": "What the numbers reveal",
-     "slug": "sec-instructor-1"
-    },
-    {
-     "n": 2,
-     "id": "sec-instructor-2",
-     "title": "Attendance and Utilisation by Instructor",
-     "slug": "sec-instructor-2"
-    },
-    {
-     "n": 3,
-     "id": "sec-instructor-3",
-     "title": "Like-for-Like Performance: Separating Instructor Impact from Schedule Impact",
-     "slug": "sec-instructor-3"
-    },
-    {
-     "n": 4,
-     "id": "sec-instructor-4",
-     "title": "Instructor session patterns",
-     "slug": "sec-instructor-4"
-    },
-    {
-     "n": 5,
-     "id": "sec-instructor-5",
-     "title": "What changed in a year",
-     "slug": "sec-instructor-5"
-    },
-    {
-     "n": 6,
-     "id": "sec-instructor-6",
-     "title": "Sessions by day and time",
-     "slug": "sec-instructor-6"
-    },
-    {
-     "n": 7,
-     "id": "sec-instructor-7",
-     "title": "Post-Class Engagement and Conversion",
-     "slug": "sec-instructor-7"
-    },
-    {
-     "n": 8,
-     "id": "sec-instructor-8",
-     "title": "Recorded instructor scores",
-     "slug": "sec-instructor-8"
-    },
-    {
-     "n": 9,
-     "id": "sec-instructor-9",
-     "title": "Recorded instructor payouts",
-     "slug": "sec-instructor-9"
-    },
-    {
-     "n": 10,
-     "id": "sec-instructor-10",
-     "title": "First-Class Conversion by Instructor",
-     "slug": "sec-instructor-10"
-    },
-    {
-     "n": 11,
-     "id": "sec-instructor-11",
-     "title": "Other explanations to check",
-     "slug": "sec-instructor-11"
-    },
-    {
-     "n": 12,
-     "id": "sec-instructor-12",
-     "title": "Supporting tables",
-     "slug": "sec-instructor-12"
-    },
-    {
-     "n": 13,
-     "id": "sec-instructor-13",
-     "title": "Method and limitations",
-     "slug": "sec-instructor-13"
-    },
-    {
-     "n": 14,
-     "id": "sec-instructor-14",
-     "title": "Commercial implication",
-     "slug": "sec-instructor-14"
-    },
-    {
-     "n": 15,
-     "id": "recommendations",
-     "title": "Recommended response",
-     "slug": "recommendations"
-    }
-   ],
-   "summary": "Assessing contribution beyond headline utilisation. Fourteen instructors collectively delivered 259 classes, generating 1,404 attendances and ₹13.06 lakh in recorded class revenue. Instructor-level utilisation ranged from 29.1% to 62.7%, demonstrating a substantial spread in attendance outcomes. However, these differences should not be interpreted as direct measures of teaching effectiveness. Individual results are influenced by the formats assigned, class frequency, timetable placement, available capacity and the customer groups attending each session. A meaningful assessment must therefore consider both absolute contribution and performance within comparable scheduling conditions. Management priority: Identify which instructors perform consistently well within specific formats and time slots, where additional support may improve results and where timetable allocation is affecting the fairness of existing performance comparisons.",
-   "narration": "Assessing contribution beyond headline utilisation. Fourteen instructors collectively delivered 259 classes, generating 1,404 attendances and ₹13.06 lakh in recorded class revenue. Instructor-level utilisation ranged from 29.1% to 62.7%, demonstrating a substantial spread in attendance outcomes. However, these differences should not be interpreted as direct measures of teaching effectiveness. Individual results are influenced by the formats assigned, class frequency, timetable placement, available capacity and the customer groups attending each session. A meaningful assessment must therefore consider both absolute contribution and performance within comparable scheduling conditions. Management priority: Identify which instructors perform consistently well within specific formats and time slots, where additional support may improve results and where timetable allocation is affecting the fairness of existing performance comparisons.",
-   "recs": [
-    [
-     1,
-     "Instructor results vary significantly. The timetable must be part of the comparison.",
-     "Studio Management + CST",
-     "Assessing contribution beyond headline utilisation. Fourteen instructors collectively delivered 259 classes, generating 1,404 attendances and ₹13.06 lakh in recorded class revenue. Instructor-level utilisation ranged from 29.1% to 62.7%, demonstrating a substantial spread in attendance outcomes. However, these differences should not be interpreted ",
-     "Track the relevant attendance, purchasing or conversion metric over a comparable cohort. No uplift is assumed."
-    ]
-   ],
+   "sections": [],
+   "summary": "",
+   "narration": "",
+   "recs": [],
    "summary_ai": "",
-   "speaker_notes": {
-    "sec-instructor-1": [
-     "Lead with: What the numbers reveal",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-instructor-2": [
-     "Lead with: Attendance and Utilisation by Instructor",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-instructor-3": [
-     "Lead with: Like-for-Like Performance: Separating Instructor Impact from Schedule Impact",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-instructor-4": [
-     "Lead with: Instructor session patterns",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-instructor-5": [
-     "Lead with: What changed in a year",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-instructor-6": [
-     "Lead with: Sessions by day and time",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-instructor-7": [
-     "Lead with: Post-Class Engagement and Conversion",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-instructor-8": [
-     "Lead with: Recorded instructor scores",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-instructor-9": [
-     "Lead with: Recorded instructor payouts",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-instructor-10": [
-     "Lead with: First-Class Conversion by Instructor",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-instructor-11": [
-     "Lead with: Other explanations to check",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-instructor-12": [
-     "Lead with: Supporting tables",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-instructor-13": [
-     "Lead with: Method and limitations",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-instructor-14": [
-     "Lead with: Commercial implication",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "recommendations": [
-     "Lead with: Recommended response",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ]
-   },
+   "speaker_notes": [],
    "slug": "instructor-performance",
-   "editorial_version": "bandra-review-v1"
+   "editorial_version": "bandra-source-reconciliation-v1",
+   "source_reference": "Bandra_September_2026_3_Instructor_Performance.html",
+   "source_sha256": "f28065f49f1d84410f93f5ceb367400b4dd2cbfdc1b012d81e114e6f59a40986"
   },
   {
    "id": "lapse",
-   "n": 4,
+   "n": 5,
    "title": "Membership Health, Retention & Lapse",
-   "kpis": [
-    {
-     "label": "Churned in September",
-     "value": "164",
-     "detail": "₹4,61,481 closed out",
-     "tone": "neg"
-    },
-    {
-     "label": "Bought in September",
-     "value": "121",
-     "detail": "₹13,96,809 of new money",
-     "tone": "pos"
-    },
-    {
-     "label": "Memberships purchased in selected month",
-     "value": "325",
-     "detail": "245 people",
-     "tone": "neu"
-    },
-    {
-     "label": "Paid memberships",
-     "value": "121",
-     "detail": "₹13,96,809 of recorded money",
-     "tone": "neu"
-    },
-    {
-     "label": "Median observed days",
-     "value": "8 days",
-     "detail": "through month-end; not completed lifetime",
-     "tone": "neg"
-    },
-    {
-     "label": "Expiring next 30 days",
-     "value": "298",
-     "detail": "₹24,21,521 at risk",
-     "tone": "neg"
-    }
-   ],
+   "kpis": [],
    "facts": [
-    "Membership expiry is visible. Customer disengagement requires a separate attendance and purchasing assessment. The frozen September purchase cohort contains 325 membership records, including 121 paid purchases. Product status and usage reflect the uploaded export, rather than reconstructed September month-end outcomes. The median observed follow-up is eight days through month-end, not a completed membership lifetime. A product reaching its end date does not establish customer churn. Review subsequent purchases, latest attendance, entitlement validity and the interval since expiry before identifying customer inactivity. Distinguish members approaching expiry with healthy attendance, members with valid entitlements and declining engagement, and customers whose products ended without a subsequent recorded purchase. Each group requires a different response. Retention priority: Identify declining engagement while members still have valid reasons to return. The review’s broader historical counts and unused-credit totals cannot be verified from this frozen monthly cohort; retained historical reference tables must not be quoted as September findings."
+    "Every membership ever sold at Bandra sits in this ledger: 8,707 memberships taken out by 3,768 people , of which\n3,974 were paid memberships from 1,699 members. Read forward from purchase, the pattern is stark and consistent across two years of\ntrading: one in five paid memberships ends within a week. More than half end within a month. Only 3.2% are still in force a year later.",
+    "The median paid Bandra membership lasts 19 days . Not months — days. And it has shortened: the median membership bought in 2024\nran 29 days, one bought in 2025 ran 17, and one bought so far in 2026 is running 19.\nEvery retention, referral and frequency conversation the studio has depends on that number, and it is getting worse.",
+    "The reassuring reading is in how people are lost rather than how many. Among memberships with enough visits to measure a trend, 37.2% ran a second half that was half the first or worse — and\n10.5% ended with a second half in which the member did not attend at all. They did not cancel, complain or ask for a refund. They\ndrifted, while the membership was still live and still contactable. That is a recoverable failure, and it is what this report is built around.",
+    "At Bandra the derived statuses read: 7,745 lapsed (89.0%),\n371 in a renewal grace period, 352 never activated,\n111 active and 77 renewed."
    ],
-   "subtitle": "Membership expiry is visible. Disengagement needs to be identified earlier.",
+   "subtitle": "Source-reconciled September chapter; historical populations are separately labelled.",
    "recs_extra": [],
-   "depth": 95843,
+   "depth": 56165,
    "narrative_version": 3,
    "sections": [
     {
      "n": 1,
      "id": "sec-lapse-1",
-     "title": "What the numbers reveal",
-     "slug": "sec-lapse-1"
+     "title": "Start here"
     },
     {
      "n": 2,
      "id": "sec-lapse-2",
-     "title": "September 2026, dated",
-     "slug": "sec-lapse-2"
+     "title": "The shape of the churn book"
     },
     {
      "n": 3,
      "id": "sec-lapse-3",
-     "title": "Purchase and expiry dates",
-     "slug": "sec-lapse-3"
+     "title": "The two ways to lose a member"
     },
     {
      "n": 4,
      "id": "sec-lapse-4",
-     "title": "Purchase-cohort status and observation time",
-     "slug": "sec-lapse-4"
+     "title": "Did they use what they paid for?"
     },
     {
      "n": 5,
      "id": "sec-lapse-5",
-     "title": "Product Completion Is Not the Same as Customer Churn",
-     "slug": "sec-lapse-5"
+     "title": "The decline that comes first"
     },
     {
      "n": 6,
      "id": "sec-lapse-6",
-     "title": "Did they use what they paid for?",
-     "slug": "sec-lapse-6"
+     "title": "Product by product"
     },
     {
      "n": 7,
      "id": "sec-lapse-7",
-     "title": "Declining Visit Frequency Is an Earlier Retention Signal",
-     "slug": "sec-lapse-7"
+     "title": "Who is winnable"
     },
     {
      "n": 8,
      "id": "sec-lapse-8",
-     "title": "Product by product",
-     "slug": "sec-lapse-8"
+     "title": "What the lost book cost"
     },
     {
      "n": 9,
      "id": "sec-lapse-9",
-     "title": "Unused Credits: An Opportunity to Rebuild Engagement",
-     "slug": "sec-lapse-9"
+     "title": "15. Base health"
     },
     {
      "n": 10,
      "id": "sec-lapse-10",
-     "title": "Amounts on memberships marked lapsed",
-     "slug": "sec-lapse-10"
-    },
-    {
-     "n": 11,
-     "id": "sec-lapse-11",
-     "title": "Other explanations to check",
-     "slug": "sec-lapse-11"
-    },
-    {
-     "n": 12,
-     "id": "sec-lapse-12",
-     "title": "Supporting tables",
-     "slug": "sec-lapse-12"
-    },
-    {
-     "n": 13,
-     "id": "sec-lapse-13",
-     "title": "Method and limitations",
-     "slug": "sec-lapse-13"
-    },
-    {
-     "n": 14,
-     "id": "sec-lapse-14",
-     "title": "Commercial implication",
-     "slug": "sec-lapse-14"
-    },
-    {
-     "n": 15,
-     "id": "recommendations",
-     "title": "Recommended response",
-     "slug": "recommendations"
+     "title": "Recommendations"
     }
    ],
-   "summary": "Membership expiry is visible. Customer disengagement requires a separate attendance and purchasing assessment. The frozen September purchase cohort contains 325 membership records, including 121 paid purchases. Product status and usage reflect the uploaded export, rather than reconstructed September month-end outcomes. The median observed follow-up is eight days through month-end, not a completed membership lifetime. A product reaching its end date does not establish customer churn. Review subsequent purchases, latest attendance, entitlement validity and the interval since expiry before identifying customer inactivity. Distinguish members approaching expiry with healthy attendance, members with valid entitlements and declining engagement, and customers whose products ended without a subsequent recorded purchase. Each group requires a different response. Retention priority: Identify declining engagement while members still have valid reasons to return. The review’s broader historical counts and unused-credit totals cannot be verified from this frozen monthly cohort; retained historical reference tables must not be quoted as September findings.",
-   "narration": "Membership expiry is visible. Customer disengagement requires a separate attendance and purchasing assessment. The frozen September purchase cohort contains 325 membership records, including 121 paid purchases. Product status and usage reflect the uploaded export, rather than reconstructed September month-end outcomes. The median observed follow-up is eight days through month-end, not a completed membership lifetime. A product reaching its end date does not establish customer churn. Review subsequent purchases, latest attendance, entitlement validity and the interval since expiry before identifying customer inactivity. Distinguish members approaching expiry with healthy attendance, members with valid entitlements and declining engagement, and customers whose products ended without a subsequent recorded purchase. Each group requires a different response. Retention priority: Identify declining engagement while members still have valid reasons to return. The review’s broader historical counts and unused-credit totals cannot be verified from this frozen monthly cohort; retained historical reference tables must not be quoted as September findings.",
-   "recs": [
-    [
-     1,
-     "Membership expiry is visible. Disengagement needs to be identified earlier.",
-     "Studio Management + CST",
-     "Membership expiry is visible. Customer disengagement requires a separate attendance and purchasing assessment. The frozen September purchase cohort contains 325 membership records, including 121 paid purchases. Product status and usage reflect the uploaded export, rather than reconstructed September month-end outcomes. The median observed follow-up",
-     "Track the relevant attendance, purchasing or conversion metric over a comparable cohort. No uplift is assumed."
-    ]
-   ],
+   "summary": "Every membership ever sold at Bandra sits in this ledger: 8,707 memberships taken out by 3,768 people , of which\n3,974 were paid memberships from 1,699 members. Read forward from purchase, the pattern is stark and consistent across two years of\ntrading: one in five paid memberships ends within a week. More than half end within a month. Only 3.2% are still in force a year later.",
+   "narration": "Every membership ever sold at Bandra sits in this ledger: 8,707 memberships taken out by 3,768 people , of which\n3,974 were paid memberships from 1,699 members. Read forward from purchase, the pattern is stark and consistent across two years of\ntrading: one in five paid memberships ends within a week. More than half end within a month. Only 3.2% are still in force a year later.",
+   "recs": [],
    "summary_ai": "",
-   "speaker_notes": {
-    "sec-lapse-1": [
-     "Lead with: What the numbers reveal",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-lapse-2": [
-     "Lead with: September 2026, dated",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-lapse-3": [
-     "Lead with: Purchase and expiry dates",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-lapse-4": [
-     "Lead with: Purchase-cohort status and observation time",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-lapse-5": [
-     "Lead with: Product Completion Is Not the Same as Customer Churn",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-lapse-6": [
-     "Lead with: Did they use what they paid for?",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-lapse-7": [
-     "Lead with: Declining Visit Frequency Is an Earlier Retention Signal",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-lapse-8": [
-     "Lead with: Product by product",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-lapse-9": [
-     "Lead with: Unused Credits: An Opportunity to Rebuild Engagement",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-lapse-10": [
-     "Lead with: Amounts on memberships marked lapsed",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-lapse-11": [
-     "Lead with: Other explanations to check",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-lapse-12": [
-     "Lead with: Supporting tables",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-lapse-13": [
-     "Lead with: Method and limitations",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-lapse-14": [
-     "Lead with: Commercial implication",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "recommendations": [
-     "Lead with: Recommended response",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ]
-   },
+   "speaker_notes": [],
    "slug": "memberships-lapsed-and-churned",
-   "editorial_version": "bandra-review-v1"
+   "editorial_version": "bandra-source-reconciliation-v1",
+   "source_reference": "Bandra_September_2026_4_Lapsed_Churned.html",
+   "source_sha256": "23a86f7a9ab7abb71350e210805052ec81ebaf93cdf4e74b98e2c88613225318"
   },
   {
    "id": "format",
-   "n": 5,
+   "n": 6,
    "title": "Format Performance & Programming Strategy",
-   "kpis": [
-    {
-     "label": "Formats",
-     "value": "12",
-     "detail": "259 classes",
-     "tone": "neu"
-    },
-    {
-     "label": "Fullest",
-     "value": "86%",
-     "detail": "Hosted Class",
-     "tone": "pos"
-    },
-    {
-     "label": "Emptiest",
-     "value": "0%",
-     "detail": "Trainer's Choice",
-     "tone": "neg"
-    },
-    {
-     "label": "Best per class",
-     "value": "₹7,252",
-     "detail": "PowerCycle Express",
-     "tone": "neu"
-    }
-   ],
+   "kpis": [],
    "facts": [
-    "Evaluating reach, repeat attendance, utilisation and commercial contribution. Twelve formats collectively delivered 259 classes and ₹13.06 lakh in recorded class revenue during September. PowerCycle generated the highest attendance, with 410 visits, followed by Barre 57 (331) and FIT (277). Together, these three formats accounted for approximately 73% of monthly attendance. However, attendance volume alone does not establish which formats are performing most effectively. Each format serves a different commercial and customer purpose. Some attract a wider audience, some generate more regular attendance, and others support programme variety, introductory experiences or specialist demand. Format performance should therefore be assessed through four complementary measures: customer reach, repeat participation, utilisation and revenue per class. Special events and low-volume formats should be identified separately to prevent unusually high or low results from distorting decisions about recurring programming. Programming priority: Strengthen proven formats, improve weaker recurring slots and test opportunities for cross-format participation before making broad changes to the timetable."
+    "September 2026 ran 259 classes across 12 formats , drew 1,404 attendances and attributed ₹13,06,451 of revenue to them. But the three largest formats are almost identical in scale and wildly different in behaviour. PowerCycle and Barre 57 together carry 55% of the timetable and fill\n35.0% and 44.6% respectively. Studio FIT carries 15% and fills 71.0%.",
+    "The reason this is not simply a scheduling problem is visible in the member data. PowerCycle reaches 181 distinct members in the month — more than any other format — while FIT reaches 104. But of FIT’s members, 23.1% came four or more times inside the month . Of PowerCycle’s, 17.1% did.\nFIT is not a bigger product. It is a stickier one, and the studio is giving the stickier product less than half the week.",
+    "Set the formats side by side and a division of labour emerges that the studio is not currently managing deliberately. FIT wins on fill (71.0%),\nrevenue per class (₹6,999) and regularity (23.1%). Mat 57 is second on fill at\n55.1% on a small timetable. PowerCycle leads on absolute attendance simply because it runs 90 sessions.\nAnd the express formats — PowerCycle X at 52.6%, Cardio Barre X at 15.3% —\nare the widest spread in the table, which tells the studio that format length matters more than format family.",
+    "Read on revenue per head, however, the differences almost vanish: ₹858 to ₹1,142 , a spread of\n33%. That is a striking result. It means the audience is worth roughly the same per person wherever they sit. Formats do not differ in the value of the member. They differ in how many members the studio can get into the room."
    ],
-   "subtitle": "Not every format needs to play the same role in the business.",
+   "subtitle": "Source-reconciled September chapter; historical populations are separately labelled.",
    "recs_extra": [],
-   "depth": 77466,
+   "depth": 57210,
    "narrative_version": 3,
    "sections": [
     {
      "n": 1,
      "id": "sec-format-1",
-     "title": "What the numbers reveal",
-     "slug": "sec-format-1"
+     "title": "Start here"
     },
     {
      "n": 2,
      "id": "sec-format-2",
-     "title": "Format Performance Scorecard",
-     "slug": "sec-format-2"
+     "title": "The league table"
     },
     {
      "n": 3,
      "id": "sec-format-3",
-     "title": "Customer Reach vs Repeat Engagement",
-     "slug": "sec-format-3"
+     "title": "Reach against regularity"
     },
     {
      "n": 4,
      "id": "sec-format-4",
-     "title": "Does Cross-Format Participation Increase Engagement?",
-     "slug": "sec-format-4"
+     "title": "The multi-format multiplier"
     },
     {
      "n": 5,
      "id": "sec-format-5",
-     "title": "Single-Format Loyalty vs Multi-Format Participation",
-     "slug": "sec-format-5"
+     "title": "What a devotee is worth"
     },
     {
      "n": 6,
      "id": "sec-format-6",
-     "title": "Demand Patterns by Format and Time Slot",
-     "slug": "sec-format-6"
+     "title": "When each format is used"
     },
     {
      "n": 7,
      "id": "sec-format-7",
-     "title": "Complimentary Attendance and Promotional Allocation",
-     "slug": "sec-format-7"
+     "title": "Where the free seats sit"
     },
     {
      "n": 8,
      "id": "sec-format-8",
-     "title": "Other explanations to check",
-     "slug": "sec-format-8"
-    },
-    {
-     "n": 9,
-     "id": "sec-format-9",
-     "title": "Supporting tables",
-     "slug": "sec-format-9"
-    },
-    {
-     "n": 10,
-     "id": "sec-format-10",
-     "title": "Method and limitations",
-     "slug": "sec-format-10"
-    },
-    {
-     "n": 11,
-     "id": "sec-format-11",
-     "title": "Commercial implication",
-     "slug": "sec-format-11"
-    },
-    {
-     "n": 12,
-     "id": "recommendations",
-     "title": "Recommended response",
-     "slug": "recommendations"
+     "title": "Recommendations"
     }
    ],
-   "summary": "Evaluating reach, repeat attendance, utilisation and commercial contribution. Twelve formats collectively delivered 259 classes and ₹13.06 lakh in recorded class revenue during September. PowerCycle generated the highest attendance, with 410 visits, followed by Barre 57 (331) and FIT (277). Together, these three formats accounted for approximately 73% of monthly attendance. However, attendance volume alone does not establish which formats are performing most effectively. Each format serves a different commercial and customer purpose. Some attract a wider audience, some generate more regular attendance, and others support programme variety, introductory experiences or specialist demand. Format performance should therefore be assessed through four complementary measures: customer reach, repeat participation, utilisation and revenue per class. Special events and low-volume formats should be identified separately to prevent unusually high or low results from distorting decisions about recurring programming. Programming priority: Strengthen proven formats, improve weaker recurring slots and test opportunities for cross-format participation before making broad changes to the timetable.",
-   "narration": "Evaluating reach, repeat attendance, utilisation and commercial contribution. Twelve formats collectively delivered 259 classes and ₹13.06 lakh in recorded class revenue during September. PowerCycle generated the highest attendance, with 410 visits, followed by Barre 57 (331) and FIT (277). Together, these three formats accounted for approximately 73% of monthly attendance. However, attendance volume alone does not establish which formats are performing most effectively. Each format serves a different commercial and customer purpose. Some attract a wider audience, some generate more regular attendance, and others support programme variety, introductory experiences or specialist demand. Format performance should therefore be assessed through four complementary measures: customer reach, repeat participation, utilisation and revenue per class. Special events and low-volume formats should be identified separately to prevent unusually high or low results from distorting decisions about recurring programming. Programming priority: Strengthen proven formats, improve weaker recurring slots and test opportunities for cross-format participation before making broad changes to the timetable.",
-   "recs": [
-    [
-     1,
-     "Not every format needs to play the same role in the business.",
-     "Studio Management + CST",
-     "Evaluating reach, repeat attendance, utilisation and commercial contribution. Twelve formats collectively delivered 259 classes and ₹13.06 lakh in recorded class revenue during September. PowerCycle generated the highest attendance, with 410 visits, followed by Barre 57 (331) and FIT (277). Together, these three formats accounted for approximately ",
-     "Track the relevant attendance, purchasing or conversion metric over a comparable cohort. No uplift is assumed."
-    ]
-   ],
+   "summary": "September 2026 ran 259 classes across 12 formats , drew 1,404 attendances and attributed ₹13,06,451 of revenue to them. But the three largest formats are almost identical in scale and wildly different in behaviour. PowerCycle and Barre 57 together carry 55% of the timetable and fill\n35.0% and 44.6% respectively. Studio FIT carries 15% and fills 71.0%.",
+   "narration": "September 2026 ran 259 classes across 12 formats , drew 1,404 attendances and attributed ₹13,06,451 of revenue to them. But the three largest formats are almost identical in scale and wildly different in behaviour. PowerCycle and Barre 57 together carry 55% of the timetable and fill\n35.0% and 44.6% respectively. Studio FIT carries 15% and fills 71.0%.",
+   "recs": [],
    "summary_ai": "",
-   "speaker_notes": {
-    "sec-format-1": [
-     "Lead with: What the numbers reveal",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-format-2": [
-     "Lead with: Format Performance Scorecard",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-format-3": [
-     "Lead with: Customer Reach vs Repeat Engagement",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-format-4": [
-     "Lead with: Does Cross-Format Participation Increase Engagement?",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-format-5": [
-     "Lead with: Single-Format Loyalty vs Multi-Format Participation",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-format-6": [
-     "Lead with: Demand Patterns by Format and Time Slot",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-format-7": [
-     "Lead with: Complimentary Attendance and Promotional Allocation",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-format-8": [
-     "Lead with: Other explanations to check",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-format-9": [
-     "Lead with: Supporting tables",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-format-10": [
-     "Lead with: Method and limitations",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-format-11": [
-     "Lead with: Commercial implication",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "recommendations": [
-     "Lead with: Recommended response",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ]
-   },
+   "speaker_notes": [],
    "slug": "format-comparisons",
-   "editorial_version": "bandra-review-v1"
+   "editorial_version": "bandra-source-reconciliation-v1",
+   "source_reference": "Bandra_September_2026_5_Format_Comparisons.html",
+   "source_sha256": "33e7a890d7cf6433deebe46d89379b63d2c6edb4a7849c968f96af498c90c9b5"
   },
   {
    "id": "cancels",
-   "n": 6,
+   "n": 7,
    "title": "Revenue & Capacity Leakage",
-   "kpis": [
-    {
-     "label": "Seats released late",
-     "value": "199",
-     "detail": "12.4% of the book",
-     "tone": "neg"
-    },
-    {
-     "label": "Value at average",
-     "value": "₹1,85,174",
-     "detail": "opportunity cost, not a booked loss",
-     "tone": "neu"
-    },
-    {
-     "label": "Discount given",
-     "value": "₹1,45,209",
-     "detail": "8.7% depth",
-     "tone": "neu"
-    },
-    {
-     "label": "Year on year",
-     "value": "-18.4 pts",
-     "detail": "September 2025 was 30.8%",
-     "tone": "neu"
-    }
-   ],
+   "kpis": [],
    "facts": [
-    "Protecting booked attendance and maintaining pricing discipline. September recorded 199 late cancellations from 1,604 bookings, equivalent to a 12.4% late-cancellation rate. Using the studio's average delivered revenue of ₹931 per attendance, these cancelled bookings represent approximately ₹1.85 lakh in indicative attendance value. This figure should be interpreted as an opportunity estimate rather than confirmed lost cash revenue. Actual recovery depends on whether the cancelled seats could have been occupied by other customers and how those attendances would have been monetised. Separately, September's sales report records ₹1,45,209 in discounts. The two figures represent different challenges. Late cancellations reduce the conversion of booked capacity into realised attendance, while discounts affect the value captured from purchases. Both require clear operating rules, consistent measurement and individual accountability. Commercial priority: Improve attendance recovery from released seats while establishing greater visibility into discount approvals, product-level discounting and the revenue contribution of promotional activity."
+    "Start with the good news, because it is real and it is measurable. Across every seat booked at Bandra this year, 86.3% were attended and only\n12.9% became a late cancellation . In 2025 those figures were 72.8% and 27.1%; in 2024, 80.4% and\n19.2%. Late cancellations fell from 6,660 seats in 2025 to 2,064 this year , while the number of attending visits rose.\nWhatever changed in how the studio communicates expections around bookings, it worked.",
+    "In September 2026 specifically, 199 seats were released late against 1,404 attendances. That is 14.2 late cancellations for every\nhundred classes attended — a level the studio can live with, and one it can reduce further.",
+    "The discount story moves the other way. The studio discounted ₹19,99,121 in 2026 so far, at a depth of 10.7% of gross , against\n8.0% in 2024. Discount spread has fallen — fewer sales carry an offer — but the offers that are made are deeper, and they are concentrated\non the products that needed them least. That is the finding worth acting on.",
+    "The value of a released seat is not fixed. It is worth almost nothing in a half-empty room and a great deal in a full one. In September the board ran at 48.7% occupancy on the booking book when those 199 seats were released, against 60.5% in September 2025.\nMore than half the seats were unsold at the moment they were given back."
    ],
-   "subtitle": "Protect booked attendance and maintain pricing discipline.",
+   "subtitle": "Source-reconciled September chapter; historical populations are separately labelled.",
    "recs_extra": [],
-   "depth": 60995,
+   "depth": 51177,
    "narrative_version": 3,
    "sections": [
     {
      "n": 1,
      "id": "sec-cancels-1",
-     "title": "What the numbers reveal",
-     "slug": "sec-cancels-1"
+     "title": "Start here"
     },
     {
      "n": 2,
      "id": "sec-cancels-2",
-     "title": "Released capacity, not booked losses",
-     "slug": "sec-cancels-2"
+     "title": "What a released seat costs"
     },
     {
      "n": 3,
      "id": "sec-cancels-3",
-     "title": "Who cancels, and when",
-     "slug": "sec-cancels-3"
+     "title": "Who cancels, and when"
     },
     {
      "n": 4,
      "id": "sec-cancels-4",
-     "title": "Cancellation patterns and member activity",
-     "slug": "sec-cancels-4"
+     "title": "What cancelling actually predicts"
     },
     {
      "n": 5,
      "id": "sec-cancels-5",
-     "title": "Where discounts were recorded",
-     "slug": "sec-cancels-5"
+     "title": "The discount book"
     },
     {
      "n": 6,
      "id": "sec-cancels-6",
-     "title": "Discounts and subsequent activity",
-     "slug": "sec-cancels-6"
+     "title": "Do discounts work?"
     },
     {
      "n": 7,
      "id": "sec-cancels-7",
-     "title": "Cancellations and the timetable",
-     "slug": "sec-cancels-7"
-    },
-    {
-     "n": 8,
-     "id": "sec-cancels-8",
-     "title": "Other explanations to check",
-     "slug": "sec-cancels-8"
-    },
-    {
-     "n": 9,
-     "id": "sec-cancels-9",
-     "title": "Supporting tables",
-     "slug": "sec-cancels-9"
-    },
-    {
-     "n": 10,
-     "id": "sec-cancels-10",
-     "title": "Method and limitations",
-     "slug": "sec-cancels-10"
-    },
-    {
-     "n": 11,
-     "id": "sec-cancels-11",
-     "title": "Commercial implication",
-     "slug": "sec-cancels-11"
-    },
-    {
-     "n": 12,
-     "id": "recommendations",
-     "title": "Recommended response",
-     "slug": "recommendations"
+     "title": "Recommendations"
     }
    ],
-   "summary": "Protecting booked attendance and maintaining pricing discipline. September recorded 199 late cancellations from 1,604 bookings, equivalent to a 12.4% late-cancellation rate. Using the studio's average delivered revenue of ₹931 per attendance, these cancelled bookings represent approximately ₹1.85 lakh in indicative attendance value. This figure should be interpreted as an opportunity estimate rather than confirmed lost cash revenue. Actual recovery depends on whether the cancelled seats could have been occupied by other customers and how those attendances would have been monetised. Separately, September's sales report records ₹1,45,209 in discounts. The two figures represent different challenges. Late cancellations reduce the conversion of booked capacity into realised attendance, while discounts affect the value captured from purchases. Both require clear operating rules, consistent measurement and individual accountability. Commercial priority: Improve attendance recovery from released seats while establishing greater visibility into discount approvals, product-level discounting and the revenue contribution of promotional activity.",
-   "narration": "Protecting booked attendance and maintaining pricing discipline. September recorded 199 late cancellations from 1,604 bookings, equivalent to a 12.4% late-cancellation rate. Using the studio's average delivered revenue of ₹931 per attendance, these cancelled bookings represent approximately ₹1.85 lakh in indicative attendance value. This figure should be interpreted as an opportunity estimate rather than confirmed lost cash revenue. Actual recovery depends on whether the cancelled seats could have been occupied by other customers and how those attendances would have been monetised. Separately, September's sales report records ₹1,45,209 in discounts. The two figures represent different challenges. Late cancellations reduce the conversion of booked capacity into realised attendance, while discounts affect the value captured from purchases. Both require clear operating rules, consistent measurement and individual accountability. Commercial priority: Improve attendance recovery from released seats while establishing greater visibility into discount approvals, product-level discounting and the revenue contribution of promotional activity.",
-   "recs": [
-    [
-     1,
-     "Protect booked attendance and maintain pricing discipline.",
-     "Studio Management + CST",
-     "Protecting booked attendance and maintaining pricing discipline. September recorded 199 late cancellations from 1,604 bookings, equivalent to a 12.4% late-cancellation rate. Using the studio's average delivered revenue of ₹931 per attendance, these cancelled bookings represent approximately ₹1.85 lakh in indicative attendance value. This figure sho",
-     "Track the relevant attendance, purchasing or conversion metric over a comparable cohort. No uplift is assumed."
-    ]
-   ],
+   "summary": "Start with the good news, because it is real and it is measurable. Across every seat booked at Bandra this year, 86.3% were attended and only\n12.9% became a late cancellation . In 2025 those figures were 72.8% and 27.1%; in 2024, 80.4% and\n19.2%. Late cancellations fell from 6,660 seats in 2025 to 2,064 this year , while the number of attending visits rose.\nWhatever changed in how the studio communicates expections around bookings, it worked.",
+   "narration": "Start with the good news, because it is real and it is measurable. Across every seat booked at Bandra this year, 86.3% were attended and only\n12.9% became a late cancellation . In 2025 those figures were 72.8% and 27.1%; in 2024, 80.4% and\n19.2%. Late cancellations fell from 6,660 seats in 2025 to 2,064 this year , while the number of attending visits rose.\nWhatever changed in how the studio communicates expections around bookings, it worked.",
+   "recs": [],
    "summary_ai": "",
-   "speaker_notes": {
-    "sec-cancels-1": [
-     "Lead with: What the numbers reveal",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-cancels-2": [
-     "Lead with: Released capacity, not booked losses",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-cancels-3": [
-     "Lead with: Who cancels, and when",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-cancels-4": [
-     "Lead with: Cancellation patterns and member activity",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-cancels-5": [
-     "Lead with: Where discounts were recorded",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-cancels-6": [
-     "Lead with: Discounts and subsequent activity",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-cancels-7": [
-     "Lead with: Cancellations and the timetable",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-cancels-8": [
-     "Lead with: Other explanations to check",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-cancels-9": [
-     "Lead with: Supporting tables",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-cancels-10": [
-     "Lead with: Method and limitations",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-cancels-11": [
-     "Lead with: Commercial implication",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "recommendations": [
-     "Lead with: Recommended response",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ]
-   },
+   "speaker_notes": [],
    "slug": "late-cancellations-and-discounts",
-   "editorial_version": "bandra-review-v1"
+   "editorial_version": "bandra-source-reconciliation-v1",
+   "source_reference": "Bandra_September_2026_6_Cancellations_Discounts.html",
+   "source_sha256": "2a4a2565377c0254b7f4e7b8a91b7946809ab05c1cec836d5f44d65d6ff70065"
   },
   {
    "id": "leads",
    "n": 8,
    "title": "Lead Funnel & Acquisition Health",
-   "kpis": [
-    {
-     "label": "Leads in selected month",
-     "value": "189",
-     "detail": "189 in September 2026",
-     "tone": "neu"
-    },
-    {
-     "label": "Trialled",
-     "value": "54.5%",
-     "detail": "103 people",
-     "tone": "neu"
-    },
-    {
-     "label": "Won",
-     "value": "6.3%",
-     "detail": "12 memberships",
-     "tone": "neu"
-    },
-    {
-     "label": "Open file",
-     "value": "49",
-     "detail": "mean age 13 days",
-     "tone": "neg"
-    }
-   ],
+   "kpis": [],
    "facts": [
-    "Trial progression is a useful intermediate acquisition milestone; subsequent purchasing and engagement remain the commercial outcomes. September’s frozen cohort contains 189 enquiries, 103 recorded trials and 12 recorded conversions at export. The recorded conversion rate is 6.3%. More recent enquiries have had less time to progress, so compare cohorts over a consistent observation window. The original historical lead export is unavailable. The review’s lifetime counts, open-pipeline totals and historical 26.1% versus 2.2% conversion comparison cannot be independently verified from the saved September population and are excluded from performance conclusions. Acquisition priority: Review trial scheduling, completion and follow-up ownership within the available cohort, qualify open opportunities and track trial-to-purchase progression without treating trial completion as the final acquisition goal."
+    "Read the whole file and three things stand out above everything else.",
+    "First, the trial decides everything. 3,493 of 7,822 leads completed a trial; 911 of them bought. Of the 4,329 who never took a trial, 95 ever bought anything . The trial is not a step in the funnel — it is the funnel.",
+    "Second, the sale happens the day the enquiry arrives. 61% of every membership Bandra sells is sold on the same day ,\nand the median lead buys on the day it enquires. Everything after that is a small, slow tail.",
+    "Third, the studio’s biggest channel is its weakest. Website and online sources deliver 3,714 leads — 47% of the file —\nand convert 8.9% of them at ₹4,120 of lifetime value. Calls, messages and referrals together deliver 1,920 leads and convert\n23.9% of them at ₹9,031."
    ],
-   "subtitle": "Trial completion is a major conversion differentiator. Pipeline quality is the next constraint to address.",
+   "subtitle": "Source-reconciled September chapter; historical populations are separately labelled.",
    "recs_extra": [],
-   "depth": 56911,
+   "depth": 69885,
    "narrative_version": 3,
    "sections": [
     {
      "n": 1,
      "id": "sec-leads-1",
-     "title": "What the numbers reveal",
-     "slug": "sec-leads-1"
+     "title": "Start here"
     },
     {
      "n": 2,
      "id": "sec-leads-2",
-     "title": "Trials and recorded wins",
-     "slug": "sec-leads-2"
+     "title": "The trial is the gate"
     },
     {
      "n": 3,
      "id": "sec-leads-3",
-     "title": "Response times and recorded wins",
-     "slug": "sec-leads-3"
+     "title": "Speed decides it"
     },
     {
      "n": 4,
      "id": "sec-leads-4",
-     "title": "Recorded follow-up activity",
-     "slug": "sec-leads-4"
+     "title": "Where the leads come from"
     },
     {
      "n": 5,
      "id": "sec-leads-5",
-     "title": "Lead sources and outcomes",
-     "slug": "sec-leads-5"
+     "title": "What leads ask for"
     },
     {
      "n": 6,
      "id": "sec-leads-6",
-     "title": "Prospects’ stated interests",
-     "slug": "sec-leads-6"
+     "title": "Who handles the leads"
     },
     {
      "n": 7,
      "id": "sec-leads-7",
-     "title": "Who handles the leads",
-     "slug": "sec-leads-7"
+     "title": "The file the studio is not working"
     },
     {
      "n": 8,
      "id": "sec-leads-8",
-     "title": "Pipeline Hygiene: Which Open Leads Are Actionable?",
-     "slug": "sec-leads-8"
+     "title": "Lead flow through 2026"
     },
     {
      "n": 9,
      "id": "sec-leads-9",
-     "title": "Other explanations to check",
-     "slug": "sec-leads-9"
+     "title": "19. Lead drop-off reasons"
     },
     {
      "n": 10,
      "id": "sec-leads-10",
-     "title": "Supporting tables",
-     "slug": "sec-leads-10"
-    },
-    {
-     "n": 11,
-     "id": "sec-leads-11",
-     "title": "Method and limitations",
-     "slug": "sec-leads-11"
-    },
-    {
-     "n": 12,
-     "id": "sec-leads-12",
-     "title": "Commercial implication",
-     "slug": "sec-leads-12"
-    },
-    {
-     "n": 13,
-     "id": "recommendations",
-     "title": "Recommended response",
-     "slug": "recommendations"
+     "title": "Recommendations"
     }
    ],
-   "summary": "Trial progression is a useful intermediate acquisition milestone; subsequent purchasing and engagement remain the commercial outcomes. September’s frozen cohort contains 189 enquiries, 103 recorded trials and 12 recorded conversions at export. The recorded conversion rate is 6.3%. More recent enquiries have had less time to progress, so compare cohorts over a consistent observation window. The original historical lead export is unavailable. The review’s lifetime counts, open-pipeline totals and historical 26.1% versus 2.2% conversion comparison cannot be independently verified from the saved September population and are excluded from performance conclusions. Acquisition priority: Review trial scheduling, completion and follow-up ownership within the available cohort, qualify open opportunities and track trial-to-purchase progression without treating trial completion as the final acquisition goal.",
-   "narration": "Trial progression is a useful intermediate acquisition milestone; subsequent purchasing and engagement remain the commercial outcomes. September’s frozen cohort contains 189 enquiries, 103 recorded trials and 12 recorded conversions at export. The recorded conversion rate is 6.3%. More recent enquiries have had less time to progress, so compare cohorts over a consistent observation window. The original historical lead export is unavailable. The review’s lifetime counts, open-pipeline totals and historical 26.1% versus 2.2% conversion comparison cannot be independently verified from the saved September population and are excluded from performance conclusions. Acquisition priority: Review trial scheduling, completion and follow-up ownership within the available cohort, qualify open opportunities and track trial-to-purchase progression without treating trial completion as the final acquisition goal.",
-   "recs": [
-    [
-     1,
-     "Trial completion is a major conversion differentiator. Pipeline quality is the next constraint to address.",
-     "Studio Management + CST",
-     "Trial progression is a useful intermediate acquisition milestone; subsequent purchasing and engagement remain the commercial outcomes. September’s frozen cohort contains 189 enquiries, 103 recorded trials and 12 recorded conversions at export. The recorded conversion rate is 6.3%. More recent enquiries have had less time to progress, so compare coh",
-     "Track the relevant attendance, purchasing or conversion metric over a comparable cohort. No uplift is assumed."
-    ]
-   ],
+   "summary": "Read the whole file and three things stand out above everything else.",
+   "narration": "Read the whole file and three things stand out above everything else.",
+   "recs": [],
    "summary_ai": "",
-   "speaker_notes": {
-    "sec-leads-1": [
-     "Lead with: What the numbers reveal",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-leads-2": [
-     "Lead with: Trials and recorded wins",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-leads-3": [
-     "Lead with: Response times and recorded wins",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-leads-4": [
-     "Lead with: Recorded follow-up activity",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-leads-5": [
-     "Lead with: Lead sources and outcomes",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-leads-6": [
-     "Lead with: Prospects’ stated interests",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-leads-7": [
-     "Lead with: Who handles the leads",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-leads-8": [
-     "Lead with: Pipeline Hygiene: Which Open Leads Are Actionable?",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-leads-9": [
-     "Lead with: Other explanations to check",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-leads-10": [
-     "Lead with: Supporting tables",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-leads-11": [
-     "Lead with: Method and limitations",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-leads-12": [
-     "Lead with: Commercial implication",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "recommendations": [
-     "Lead with: Recommended response",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ]
-   },
+   "speaker_notes": [],
    "slug": "lead-performance-and-insights",
-   "editorial_version": "bandra-review-v1"
+   "editorial_version": "bandra-source-reconciliation-v1",
+   "source_reference": "Bandra_September_2026_8_Lead_Performance.html",
+   "source_sha256": "f50c29f5bf51b58867b2703fcf68d037d32fdf06ecb25799c89bafdbb0ff374d"
   },
   {
    "id": "behaviour",
    "n": 9,
    "title": "Member Engagement & Attendance Behaviour",
-   "kpis": [
-    {
-     "label": "Members who came",
-     "value": "394",
-     "detail": "1,404 visits",
-     "tone": "neu"
-    },
-    {
-     "label": "Visits per member",
-     "value": "3.56",
-     "detail": "median gap 1 days",
-     "tone": "neg"
-    },
-    {
-     "label": "Came exactly once",
-     "value": "205",
-     "detail": "52% of the base",
-     "tone": "neg"
-    },
-    {
-     "label": "Top tenth of members",
-     "value": "42%",
-     "detail": "39 people",
-     "tone": "neg"
-    }
-   ],
+   "kpis": [],
    "facts": [
-    "Understanding the visiting habits behind September's attendance. 394 unique individuals generated 1,404 visits in September, averaging 3.56 visits per attending member. However, the average conceals two very different engagement patterns. 205 individuals—52% of the attending base—visited exactly once during the month. At the other end of the spectrum, the most frequent 10% of members generated approximately 42% of all attendance. This distribution highlights the importance of managing engagement at an individual level rather than relying exclusively on an overall frequency average. Member engagement priority: Create distinct retention strategies for occasional visitors, emerging regulars and highly engaged customers. Each group represents a different opportunity to improve frequency and sustain the studio's existing attendance base."
+    "The studio’s members are morning people. 249 of 394 members do most of their training before noon, against 129 who come in the evening.\nThe busiest hours of September were 11:00 (265 check-ins) and 09:00 (252), and the busiest day was Tuesday.",
+    "They come in clusters, not on a schedule. The median gap between a member’s visits is 1 day , and 85% of every gap on record is a\nweek or less. Bandra members do not train twice a week; they come three days running and then not for a fortnight.",
+    "And the loss is concentrated in one step. Across 1,785 first-timers, 40.5% make a second visit, and of those 70% go on to a third .\n59.5 points of the cohort are lost at the first repeat visit — and then the curve reverses: from the second visit onward, each next visit is more likely than the last.",
+    "This studio does not leak members steadily. It loses most of them once, in their first fortnight, and it never sees the moment coming because it measures attendance rather than the interval between visits."
    ],
-   "subtitle": "Half the attending members visited only once. A small group generated nearly half the attendance.",
+   "subtitle": "Source-reconciled September chapter; historical populations are separately labelled.",
    "recs_extra": [],
-   "depth": 85829,
+   "depth": 68155,
    "narrative_version": 3,
    "sections": [
     {
      "n": 1,
      "id": "sec-behaviour-1",
-     "title": "What the numbers reveal",
-     "slug": "sec-behaviour-1"
+     "title": "Start here"
     },
     {
      "n": 2,
      "id": "sec-behaviour-2",
-     "title": "When members come",
-     "slug": "sec-behaviour-2"
+     "title": "When members come"
     },
     {
      "n": 3,
      "id": "sec-behaviour-3",
-     "title": "The Average Member Does Not Represent the Typical Member",
-     "slug": "sec-behaviour-3"
+     "title": "How often members come"
     },
     {
      "n": 4,
      "id": "sec-behaviour-4",
-     "title": "How often members buy",
-     "slug": "sec-behaviour-4"
+     "title": "How often members buy"
     },
     {
      "n": 5,
      "id": "sec-behaviour-5",
-     "title": "Attendance Across Comparable Reporting Weeks",
-     "slug": "sec-behaviour-5"
+     "title": "The rhythm of the month"
     },
     {
      "n": 6,
      "id": "sec-behaviour-6",
-     "title": "One-time visitors and regular attendance",
-     "slug": "sec-behaviour-6"
+     "title": "The shape of the base"
     },
     {
      "n": 7,
      "id": "sec-behaviour-7",
-     "title": "Preferred times and format variety",
-     "slug": "sec-behaviour-7"
+     "title": "Frequency through the year"
     },
     {
      "n": 8,
      "id": "sec-behaviour-8",
-     "title": "Newcomer visits after the first session",
-     "slug": "sec-behaviour-8"
+     "title": "Routine and variety"
     },
     {
      "n": 9,
      "id": "sec-behaviour-9",
-     "title": "Other explanations to check",
-     "slug": "sec-behaviour-9"
+     "title": "Recommendations"
+    }
+   ],
+   "summary": "The studio’s members are morning people. 249 of 394 members do most of their training before noon, against 129 who come in the evening.\nThe busiest hours of September were 11:00 (265 check-ins) and 09:00 (252), and the busiest day was Tuesday.",
+   "narration": "The studio’s members are morning people. 249 of 394 members do most of their training before noon, against 129 who come in the evening.\nThe busiest hours of September were 11:00 (265 check-ins) and 09:00 (252), and the busiest day was Tuesday.",
+   "recs": [],
+   "summary_ai": "",
+   "speaker_notes": [],
+   "slug": "member-behaviour-and-patterns",
+   "editorial_version": "bandra-source-reconciliation-v1",
+   "source_reference": "Bandra_September_2026_9_Member_Behaviour.html",
+   "source_sha256": "4f8b3fe419495304350d786abbeaac9cf161f57415b74291acf2cb52586fa0bc"
+  },
+  {
+   "id": "review",
+   "title": "Performance Review",
+   "slug": "performance-review",
+   "kpis": [
+    {
+     "label": "New clients",
+     "value": "143",
+     "detail": "▲ 44% above September 2025 — the strongest September on record",
+     "tone": "neu"
+    },
+    {
+     "label": "Share of network intake",
+     "value": "36.6%",
+     "detail": "▲ up from 27.7% in September 2025",
+     "tone": "neu"
+    },
+    {
+     "label": "Genuine 2nd-visit rate",
+     "value": "9.1%",
+     "detail": "▼ not the headline 16.8% — 11 of 24 \"returns\" were pre-paid",
+     "tone": "neu"
+    },
+    {
+     "label": "Projected value shortfall",
+     "value": "₹3,15,243",
+     "detail": "September cohort, against normal lifetime yield",
+     "tone": "neu"
+    },
+    {
+     "label": "Studio cash received",
+     "value": "₹15,29,410",
+     "detail": "▬ within 2.3% of September 2025 — the till held",
+     "tone": "neu"
+    },
+    {
+     "label": "Funded by the existing base",
+     "value": "87.5%",
+     "detail": "▲ new clients contributed only 12.5% of September",
+     "tone": "neu"
+    },
+    {
+     "label": "Lead-to-member win rate",
+     "value": "6.3%",
+     "detail": "▼ from 17.0% a year ago, on 40% more leads",
+     "tone": "neu"
+    },
+    {
+     "label": "Footfall",
+     "value": "1,404",
+     "detail": "▬ against 1,476 last September — essentially flat",
+     "tone": "neu"
+    }
+   ],
+   "facts": [
+    "The most important fact about September 2026 is what it is not . It is not the month the studio's fundamentals broke. Over the twelve months to September, Bandra's second-visit rate held at 29.2% versus 29.1% the year before , and the revenue generated per new client within 90 days rose to ₹2,431 from ₹2,259 — the second consecutive annual improvement. Volume across the trailing twelve months was effectively flat, at 1,439 clients against 1,475.",
+    "Year-to-date the picture is equally reassuring on the metric that matters most. Across January to September 2026, the share of new clients who returned for a second class was 39.1%, against 39.2% in 2025 and 37.4% in 2024. Whatever went wrong in September, it did not go wrong for the year.",
+    "One qualification belongs here rather than in a footnote, because it cuts across every retention figure in this report and is quantified in full later. Roughly a third of what the studio records as a \"second visit\" is the pre-paid second half of a Newcomers 2 For 1 intro pack — a class the client has already bought and is simply using up. These year-level rates are therefore the right measure for spotting change over time, because the same distortion runs through all three years, but they overstate the absolute level of genuine repeat demand. Where a true return rate is quoted below, the pre-paid visits have been removed.",
+    "What September did was concentrate a set of already-visible weaknesses into a single month, in a way that is now measurable and therefore fixable. This edition adds three further sources — the full 150,895-row check-in ledger, the 25,315-record lead register and the 25,044-record sales ledger — which together make it possible to say not just what happened in September but where it happened and who it happened to."
+   ],
+   "recs": [],
+   "n": 10,
+   "sections": [
+    {
+     "n": 1,
+     "id": "sec-review-1",
+     "title": "Start here"
+    },
+    {
+     "n": 2,
+     "id": "sec-review-2",
+     "title": "The number that explains the others"
+    },
+    {
+     "n": 3,
+     "id": "sec-review-3",
+     "title": "The September picture"
+    },
+    {
+     "n": 4,
+     "id": "sec-review-4",
+     "title": "What went well"
+    },
+    {
+     "n": 5,
+     "id": "sec-review-5",
+     "title": "Root cause"
+    },
+    {
+     "n": 6,
+     "id": "sec-review-6",
+     "title": "The finding that was hiding"
+    },
+    {
+     "n": 7,
+     "id": "sec-review-7",
+     "title": "The pipeline problem"
+    },
+    {
+     "n": 8,
+     "id": "sec-review-8",
+     "title": "The intro pack, and an honest second-visit rate"
+    },
+    {
+     "n": 9,
+     "id": "sec-review-9",
+     "title": "What the studio did not see"
     },
     {
      "n": 10,
-     "id": "sec-behaviour-10",
-     "title": "Supporting tables",
-     "slug": "sec-behaviour-10"
+     "id": "sec-review-10",
+     "title": "Where the value went"
     },
     {
      "n": 11,
-     "id": "sec-behaviour-11",
-     "title": "Method and limitations",
-     "slug": "sec-behaviour-11"
+     "id": "sec-review-11",
+     "title": "The largest lever"
     },
     {
      "n": 12,
-     "id": "sec-behaviour-12",
-     "title": "Commercial implication",
-     "slug": "sec-behaviour-12"
+     "id": "sec-review-12",
+     "title": "The biggest opportunity"
     },
     {
      "n": 13,
-     "id": "recommendations",
-     "title": "Recommended response",
-     "slug": "recommendations"
+     "id": "sec-review-13",
+     "title": "The studio base"
+    },
+    {
+     "n": 14,
+     "id": "sec-review-14",
+     "title": "Trainer effect"
+    },
+    {
+     "n": 15,
+     "id": "sec-review-15",
+     "title": "Recommendations"
+    },
+    {
+     "n": 16,
+     "id": "sec-review-16",
+     "title": "Method and limitations"
     }
    ],
-   "summary": "Understanding the visiting habits behind September's attendance. 394 unique individuals generated 1,404 visits in September, averaging 3.56 visits per attending member. However, the average conceals two very different engagement patterns. 205 individuals—52% of the attending base—visited exactly once during the month. At the other end of the spectrum, the most frequent 10% of members generated approximately 42% of all attendance. This distribution highlights the importance of managing engagement at an individual level rather than relying exclusively on an overall frequency average. Member engagement priority: Create distinct retention strategies for occasional visitors, emerging regulars and highly engaged customers. Each group represents a different opportunity to improve frequency and sustain the studio's existing attendance base.",
-   "narration": "Understanding the visiting habits behind September's attendance. 394 unique individuals generated 1,404 visits in September, averaging 3.56 visits per attending member. However, the average conceals two very different engagement patterns. 205 individuals—52% of the attending base—visited exactly once during the month. At the other end of the spectrum, the most frequent 10% of members generated approximately 42% of all attendance. This distribution highlights the importance of managing engagement at an individual level rather than relying exclusively on an overall frequency average. Member engagement priority: Create distinct retention strategies for occasional visitors, emerging regulars and highly engaged customers. Each group represents a different opportunity to improve frequency and sustain the studio's existing attendance base.",
-   "recs": [
-    [
-     1,
-     "Half the attending members visited only once. A small group generated nearly half the attendance.",
-     "Studio Management + CST",
-     "Understanding the visiting habits behind September's attendance. 394 unique individuals generated 1,404 visits in September, averaging 3.56 visits per attending member. However, the average conceals two very different engagement patterns. 205 individuals—52% of the attending base—visited exactly once during the month. At the other end of the spectr",
-     "Track the relevant attendance, purchasing or conversion metric over a comparable cohort. No uplift is assumed."
-    ]
-   ],
+   "subtitle": "Source-reconciled September chapter; historical populations are separately labelled.",
+   "depth": 168569,
+   "summary": "The most important fact about September 2026 is what it is not . It is not the month the studio's fundamentals broke. Over the twelve months to September, Bandra's second-visit rate held at 29.2% versus 29.1% the year before , and the revenue generated per new client within 90 days rose to ₹2,431 from ₹2,259 — the second consecutive annual improvement. Volume across the trailing twelve months was effectively flat, at 1,439 clients against 1,475.",
+   "narration": "The most important fact about September 2026 is what it is not . It is not the month the studio's fundamentals broke. Over the twelve months to September, Bandra's second-visit rate held at 29.2% versus 29.1% the year before , and the revenue generated per new client within 90 days rose to ₹2,431 from ₹2,259 — the second consecutive annual improvement. Volume across the trailing twelve months was effectively flat, at 1,439 clients against 1,475.",
    "summary_ai": "",
-   "speaker_notes": {
-    "sec-behaviour-1": [
-     "Lead with: What the numbers reveal",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-behaviour-2": [
-     "Lead with: When members come",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-behaviour-3": [
-     "Lead with: The Average Member Does Not Represent the Typical Member",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-behaviour-4": [
-     "Lead with: How often members buy",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-behaviour-5": [
-     "Lead with: Attendance Across Comparable Reporting Weeks",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-behaviour-6": [
-     "Lead with: One-time visitors and regular attendance",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-behaviour-7": [
-     "Lead with: Preferred times and format variety",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-behaviour-8": [
-     "Lead with: Newcomer visits after the first session",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-behaviour-9": [
-     "Lead with: Other explanations to check",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-behaviour-10": [
-     "Lead with: Supporting tables",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-behaviour-11": [
-     "Lead with: Method and limitations",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "sec-behaviour-12": [
-     "Lead with: Commercial implication",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ],
-    "recommendations": [
-     "Lead with: Recommended response",
-     "Discuss the adjacent source-backed finding and proposed response."
-    ]
-   },
-   "slug": "member-behaviour-and-patterns",
-   "editorial_version": "bandra-review-v1"
+   "recs_extra": [],
+   "speaker_notes": [],
+   "source_reference": "Bandra_September_2026_Performance_Review.html",
+   "source_sha256": "54ce9e9e6f53cd3622c7d65f5a5efce6b19a2fd52d68c9e5b90c807cb415b0fc",
+   "editorial_version": "bandra-source-reconciliation-v1"
   }
  ],
  "sources": [
@@ -1841,10 +1029,25 @@
   "Day End Report - Part 4 - Checkins (12).csv",
   "Lapsed New - Lapsed (20).csv",
   "Sales - Raw - Sales (23).csv",
-  "❖ PM - Leads ❖ - ◉ Leads (31).csv"
+  "❖ PM - Leads ❖ - ◉ Leads (31).csv",
+  "Bandra_September_2026_1_Sales_Performance.html",
+  "Bandra_September_2026_2_Class_Performance.html",
+  "Bandra_September_2026_3_Instructor_Performance.html",
+  "Bandra_September_2026_4_Lapsed_Churned.html",
+  "Bandra_September_2026_5_Format_Comparisons.html",
+  "Bandra_September_2026_6_Cancellations_Discounts.html",
+  "Bandra_September_2026_7_Studio_Overview.html",
+  "Bandra_September_2026_8_Lead_Performance.html",
+  "Bandra_September_2026_9_Member_Behaviour.html",
+  "Bandra_September_2026_Data.xlsx",
+  "Bandra_September_2026_Reports_4-9_Data.xlsx",
+  "Bandra_September_2026_Reports_Data.xlsx",
+  "Bandra_September_2026_Performance_Review.html"
  ],
  "warnings": [
-  "Lead source is the complete saved September population; original CSV and historical lead rows are unavailable."
+  "Lead source is the complete saved September population; original CSV and historical lead rows are unavailable.",
+  "Reconciled against the nine supplied Bandra chapter files and three workbooks on 13 October 2026. September metrics and historical/export-wide populations are labelled separately. The sales reference specifies 195 distinct sales, 210 units and 213 payment rows; these counts are not interchangeable. Workbook breakdowns take precedence over conflicting prose. Source files retain their printed precision. Some reference files label their snapshot 18 October 2026, after this reconciliation date; those snapshot-dependent outcomes are reproduced as supplied, not independently verified as of today. Historical associations and illustrative revenue scenarios are not causal findings or forecasts. Product expiry is not customer churn. Collections and class-attributed revenue are different ledgers, not a measure of consumed purchases or deferred liabilities.",
+  "Reconciled against the nine supplied Bandra chapter files, the Performance Review, and three workbooks on 13 October 2026. September metrics and historical/export-wide populations are labelled separately. The sales reference specifies 195 distinct sales, 210 units and 213 payment rows; these counts are not interchangeable. Workbook breakdowns take precedence over conflicting prose. Source files retain their printed precision. Some reference files label their snapshot 18 October 2026, after this reconciliation date; those snapshot-dependent outcomes are reproduced as supplied, not independently verified as of today. Historical associations and illustrative revenue scenarios are not causal findings or forecasts. Product expiry is not customer churn. Collections and class-attributed revenue are different ledgers, not a measure of consumed purchases or deferred liabilities."
  ],
  "refined_at": "20261012-233846",
  "source_receipt": [
@@ -1888,5 +1091,129 @@
  "editorial_limits": [
   "Historical review figures excluded where not source-verifiable.",
   "Distinct transactions, discounts and unbooked seats use reconciled frozen definitions."
- ]
+ ],
+ "source_reconciliation": {
+  "version": 2,
+  "chapter_order": [
+   "overview",
+   "sales",
+   "class",
+   "instructor",
+   "lapse",
+   "format",
+   "cancels",
+   "leads",
+   "behaviour",
+   "review"
+  ],
+  "date": "2026-10-13",
+  "sources": [
+   "Bandra_September_2026_7_Studio_Overview.html",
+   "Bandra_September_2026_1_Sales_Performance.html",
+   "Bandra_September_2026_2_Class_Performance.html",
+   "Bandra_September_2026_3_Instructor_Performance.html",
+   "Bandra_September_2026_4_Lapsed_Churned.html",
+   "Bandra_September_2026_5_Format_Comparisons.html",
+   "Bandra_September_2026_6_Cancellations_Discounts.html",
+   "Bandra_September_2026_8_Lead_Performance.html",
+   "Bandra_September_2026_9_Member_Behaviour.html",
+   "Bandra_September_2026_Performance_Review.html",
+   "Bandra_September_2026_Data.xlsx",
+   "Bandra_September_2026_Reports_4-9_Data.xlsx",
+   "Bandra_September_2026_Reports_Data.xlsx"
+  ],
+  "metric_overrides": [
+   {
+    "id": "transactions",
+    "value": 195,
+    "unit": "count",
+    "chapter": "sales",
+    "detail": "Distinct sales; 213 payment rows; 210 units"
+   },
+   {
+    "id": "aov",
+    "value": 7843,
+    "unit": "INR",
+    "chapter": "sales",
+    "detail": "Gross collections / 195 distinct sales; source rounded"
+   }
+  ],
+  "sha256": {
+   "Bandra_September_2026_7_Studio_Overview.html": "19d64c538dd68faee0c509f82e3811a9b6208cd559d6d8759af11d1faab76261",
+   "Bandra_September_2026_1_Sales_Performance.html": "6f28c5644e1e3666be68c764f713dcec353a9bd36e009bbaf0087800599e77e6",
+   "Bandra_September_2026_2_Class_Performance.html": "1c08a500b152c6edd8b113dbf8bc5e3718d7b0245fcedff61553e00b461e3c16",
+   "Bandra_September_2026_3_Instructor_Performance.html": "f28065f49f1d84410f93f5ceb367400b4dd2cbfdc1b012d81e114e6f59a40986",
+   "Bandra_September_2026_4_Lapsed_Churned.html": "23a86f7a9ab7abb71350e210805052ec81ebaf93cdf4e74b98e2c88613225318",
+   "Bandra_September_2026_5_Format_Comparisons.html": "33e7a890d7cf6433deebe46d89379b63d2c6edb4a7849c968f96af498c90c9b5",
+   "Bandra_September_2026_6_Cancellations_Discounts.html": "2a4a2565377c0254b7f4e7b8a91b7946809ab05c1cec836d5f44d65d6ff70065",
+   "Bandra_September_2026_8_Lead_Performance.html": "f50c29f5bf51b58867b2703fcf68d037d32fdf06ecb25799c89bafdbb0ff374d",
+   "Bandra_September_2026_9_Member_Behaviour.html": "4f8b3fe419495304350d786abbeaac9cf161f57415b74291acf2cb52586fa0bc",
+   "Bandra_September_2026_Performance_Review.html": "54ce9e9e6f53cd3622c7d65f5a5efce6b19a2fd52d68c9e5b90c807cb415b0fc",
+   "Bandra_September_2026_Data.xlsx": "4056ba41bf5b56902df581fd897b0b82d799c44c70a658a018825451b76f75ee",
+   "Bandra_September_2026_Reports_4-9_Data.xlsx": "d19e7555833442c28255dd96500a44b5c22307239db3f90dfa29302faefad35a",
+   "Bandra_September_2026_Reports_Data.xlsx": "bf2a7b11b2c45461aa52ef1c513ab756b4037c9610b03553867ff6e9dc065591"
+  },
+  "supplements": {
+   "overview": [
+    "1. Twelve-month view",
+    "2. Year to date"
+   ],
+   "class": [
+    "3b. Canonical basis",
+    "3c. Gap decomposition",
+    "5. Driver table",
+    "6. Correlations",
+    "7. Festival phases"
+   ],
+   "lapse": [
+    "15. Base health"
+   ],
+   "leads": [
+    "19. Lead drop-off reasons"
+   ],
+   "sales": [
+    "24. Cash reconciliation"
+   ]
+  },
+  "duplicate_evidence_replaced": [
+   {
+    "chapter": "sales",
+    "owner": "sales",
+    "anchor": "sales-evidence-32",
+    "kind": "table"
+   },
+   {
+    "chapter": "class",
+    "owner": "class",
+    "anchor": "class-evidence-79",
+    "kind": "table"
+   },
+   {
+    "chapter": "leads",
+    "owner": "overview",
+    "anchor": "overview-evidence-16",
+    "kind": "table"
+   },
+   {
+    "chapter": "review",
+    "owner": "review",
+    "anchor": "review-evidence-188",
+    "kind": "table"
+   },
+   {
+    "chapter": "review",
+    "owner": "review",
+    "anchor": "review-evidence-189",
+    "kind": "table"
+   },
+   {
+    "chapter": "review",
+    "owner": "review",
+    "anchor": "review-evidence-186",
+    "kind": "table"
+   }
+  ],
+  "precedence": "Reconciled sales reference for sales counts; workbook detailed rows over conflicting prose; chapter HTML for other narrative and historical scope.",
+  "limitations": "Reconciled against the nine supplied Bandra chapter files, the Performance Review, and three workbooks on 13 October 2026. September metrics and historical/export-wide populations are labelled separately. The sales reference specifies 195 distinct sales, 210 units and 213 payment rows; these counts are not interchangeable. Workbook breakdowns take precedence over conflicting prose. Source files retain their printed precision. Some reference files label their snapshot 18 October 2026, after this reconciliation date; those snapshot-dependent outcomes are reproduced as supplied, not independently verified as of today. Historical associations and illustrative revenue scenarios are not causal findings or forecasts. Product expiry is not customer churn. Collections and class-attributed revenue are different ledgers, not a measure of consumed purchases or deferred liabilities."
+ }
 }

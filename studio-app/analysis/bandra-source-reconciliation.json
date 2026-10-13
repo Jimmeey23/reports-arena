@@ -1,0 +1,124 @@
+{
+  "version": 2,
+  "chapter_order": [
+    "overview",
+    "sales",
+    "class",
+    "instructor",
+    "lapse",
+    "format",
+    "cancels",
+    "leads",
+    "behaviour",
+    "review"
+  ],
+  "date": "2026-10-13",
+  "sources": [
+    "Bandra_September_2026_7_Studio_Overview.html",
+    "Bandra_September_2026_1_Sales_Performance.html",
+    "Bandra_September_2026_2_Class_Performance.html",
+    "Bandra_September_2026_3_Instructor_Performance.html",
+    "Bandra_September_2026_4_Lapsed_Churned.html",
+    "Bandra_September_2026_5_Format_Comparisons.html",
+    "Bandra_September_2026_6_Cancellations_Discounts.html",
+    "Bandra_September_2026_8_Lead_Performance.html",
+    "Bandra_September_2026_9_Member_Behaviour.html",
+    "Bandra_September_2026_Performance_Review.html",
+    "Bandra_September_2026_Data.xlsx",
+    "Bandra_September_2026_Reports_4-9_Data.xlsx",
+    "Bandra_September_2026_Reports_Data.xlsx"
+  ],
+  "metric_overrides": [
+    {
+      "id": "transactions",
+      "value": 195,
+      "unit": "count",
+      "chapter": "sales",
+      "detail": "Distinct sales; 213 payment rows; 210 units"
+    },
+    {
+      "id": "aov",
+      "value": 7843,
+      "unit": "INR",
+      "chapter": "sales",
+      "detail": "Gross collections / 195 distinct sales; source rounded"
+    }
+  ],
+  "sha256": {
+    "Bandra_September_2026_7_Studio_Overview.html": "19d64c538dd68faee0c509f82e3811a9b6208cd559d6d8759af11d1faab76261",
+    "Bandra_September_2026_1_Sales_Performance.html": "6f28c5644e1e3666be68c764f713dcec353a9bd36e009bbaf0087800599e77e6",
+    "Bandra_September_2026_2_Class_Performance.html": "1c08a500b152c6edd8b113dbf8bc5e3718d7b0245fcedff61553e00b461e3c16",
+    "Bandra_September_2026_3_Instructor_Performance.html": "f28065f49f1d84410f93f5ceb367400b4dd2cbfdc1b012d81e114e6f59a40986",
+    "Bandra_September_2026_4_Lapsed_Churned.html": "23a86f7a9ab7abb71350e210805052ec81ebaf93cdf4e74b98e2c88613225318",
+    "Bandra_September_2026_5_Format_Comparisons.html": "33e7a890d7cf6433deebe46d89379b63d2c6edb4a7849c968f96af498c90c9b5",
+    "Bandra_September_2026_6_Cancellations_Discounts.html": "2a4a2565377c0254b7f4e7b8a91b7946809ab05c1cec836d5f44d65d6ff70065",
+    "Bandra_September_2026_8_Lead_Performance.html": "f50c29f5bf51b58867b2703fcf68d037d32fdf06ecb25799c89bafdbb0ff374d",
+    "Bandra_September_2026_9_Member_Behaviour.html": "4f8b3fe419495304350d786abbeaac9cf161f57415b74291acf2cb52586fa0bc",
+    "Bandra_September_2026_Performance_Review.html": "54ce9e9e6f53cd3622c7d65f5a5efce6b19a2fd52d68c9e5b90c807cb415b0fc",
+    "Bandra_September_2026_Data.xlsx": "4056ba41bf5b56902df581fd897b0b82d799c44c70a658a018825451b76f75ee",
+    "Bandra_September_2026_Reports_4-9_Data.xlsx": "d19e7555833442c28255dd96500a44b5c22307239db3f90dfa29302faefad35a",
+    "Bandra_September_2026_Reports_Data.xlsx": "bf2a7b11b2c45461aa52ef1c513ab756b4037c9610b03553867ff6e9dc065591"
+  },
+  "supplements": {
+    "overview": [
+      "1. Twelve-month view",
+      "2. Year to date"
+    ],
+    "class": [
+      "3b. Canonical basis",
+      "3c. Gap decomposition",
+      "5. Driver table",
+      "6. Correlations",
+      "7. Festival phases"
+    ],
+    "lapse": [
+      "15. Base health"
+    ],
+    "leads": [
+      "19. Lead drop-off reasons"
+    ],
+    "sales": [
+      "24. Cash reconciliation"
+    ]
+  },
+  "duplicate_evidence_replaced": [
+    {
+      "chapter": "sales",
+      "owner": "sales",
+      "anchor": "sales-evidence-32",
+      "kind": "table"
+    },
+    {
+      "chapter": "class",
+      "owner": "class",
+      "anchor": "class-evidence-79",
+      "kind": "table"
+    },
+    {
+      "chapter": "leads",
+      "owner": "overview",
+      "anchor": "overview-evidence-16",
+      "kind": "table"
+    },
+    {
+      "chapter": "review",
+      "owner": "review",
+      "anchor": "review-evidence-188",
+      "kind": "table"
+    },
+    {
+      "chapter": "review",
+      "owner": "review",
+      "anchor": "review-evidence-189",
+      "kind": "table"
+    },
+    {
+      "chapter": "review",
+      "owner": "review",
+      "anchor": "review-evidence-186",
+      "kind": "table"
+    }
+  ],
+  "precedence": "Reconciled sales reference for sales counts; workbook detailed rows over conflicting prose; chapter HTML for other narrative and historical scope.",
+  "limitations": "Reconciled against the nine supplied Bandra chapter files, the Performance Review, and three workbooks on 13 October 2026. September metrics and historical/export-wide populations are labelled separately. The sales reference specifies 195 distinct sales, 210 units and 213 payment rows; these counts are not interchangeable. Workbook breakdowns take precedence over conflicting prose. Source files retain their printed precision. Some reference files label their snapshot 18 October 2026, after this reconciliation date; those snapshot-dependent outcomes are reproduced as supplied, not independently verified as of today. Historical associations and illustrative revenue scenarios are not causal findings or forecasts. Product expiry is not customer churn. Collections and class-attributed revenue are different ledgers, not a measure of consumed purchases or deferred liabilities."
+}
