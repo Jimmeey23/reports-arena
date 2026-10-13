@@ -16,6 +16,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 from engine.data import Dataset, discover, sniff
 from engine.build import build
+from engine.bundles import sync_bundled_runs
 from engine.reader import enhance_report
 from engine.workspace import Workspace, WorkspaceError
 from engine.metrics import MONTH_NAMES
@@ -82,14 +83,11 @@ input{border:1px solid #ccc;margin-bottom:12px}button{border:0;background:#1d1d1
 
 WORKSPACE = Workspace(os.environ.get('P57_WORKSPACE_DB', os.path.join(DATA, 'workspace.sqlite3')))
 
-# Preserve the bundled report library when starting on a fresh volume.
+# Seed a fresh volume and refresh only reports whose bundled revision advanced.
 bundled_runs = os.path.join(HERE, 'runs')
-if os.path.abspath(RUNS) != os.path.abspath(bundled_runs) and os.path.isdir(bundled_runs):
-    for rid in os.listdir(bundled_runs):
-        source = os.path.join(bundled_runs, rid)
-        target = os.path.join(RUNS, rid)
-        if os.path.isfile(os.path.join(source, 'manifest.json')) and not os.path.exists(target) and rid not in WORKSPACE.deleted_reports():
-            shutil.copytree(source, target)
+seeded_runs = sync_bundled_runs(bundled_runs, RUNS, WORKSPACE.deleted_reports())
+if seeded_runs:
+    print(f'  installed {len(seeded_runs)} bundled report update(s)')
 
 AI_STORE = Store(os.path.join(DATA, 'ai.sqlite3'))
 LOCK = threading.Lock()
@@ -162,7 +160,7 @@ def scan_runs():
             continue
         STATE['runs'][rid] = dict(
             _manifest_mtime=os.stat(mf).st_mtime_ns, id=rid, dir=d, label=m.get('label', ''), studio=m.get('studio', ''), built=m.get('built', ''),
-            seconds=m.get('seconds'), sources=m.get('sources', []), warnings=m.get('warnings', []),
+            bundle_revision=m.get('bundle_revision', 0), seconds=m.get('seconds'), sources=m.get('sources', []), warnings=m.get('warnings', []),
             chapters=[dict(id=c['id'], n=c.get('n'), title=c['title'], subtitle=c.get('subtitle'),
                            kpis=c.get('kpis'), summary=c.get('summary'), summary_ai=c.get('summary_ai', ''),
                            facts=c.get('facts', []), narration=c.get('narration'),
